@@ -244,12 +244,12 @@
                     <p>Подпишитесь на мой YouTube канал и поддержите проект!</p>
                     <div class="rules">
                         <p>Текущее количество подписчиков: <span id="subscribersCount">Загрузка...</span></p>
-                        <button class="subscribe-btn" onclick="window.location.href='https://www.youtube.com/channel/ВашID';">Подписаться</button>
+                        <button class="subscribe-btn" onclick="window.location.href='https://www.youtube.com/channel/@Anonimpodkast';">Подписаться</button>
                     </div>
                 </div>
 
                 <script>
-                    fetch('https://www.googleapis.com/youtube/v3/channels?part=statistics&id=ВашID&key=ВАШ_API_КЛЮЧ')
+                    fetch('https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UCYJn6m7IYLo2qQixB8HhUtA&key=AIzaSyAErgczUEsjVGb3EsMFd1EcdntqGzqm8GQ')
                         .then(response => response.json())
                         .then(data => {
                             document.getElementById('subscribersCount').innerText = data.items[0].statistics.subscriberCount;
@@ -258,6 +258,7 @@
                             document.getElementById('subscribersCount').innerText = 'Ошибка при загрузке';
                         });
                 </script>
+            \`;}
     </script>
 </body>
 </html>
