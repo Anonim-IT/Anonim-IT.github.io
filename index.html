@@ -85,6 +85,22 @@
             margin: 20px;
             border-radius: 10px;
         }
+
+        .subscribe-btn {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-left: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .subscribe-btn:hover {
+            background-color: #cc0000;
+        }
     </style>
 </head>
 <body>
@@ -95,6 +111,7 @@
             <button class="discord-btn" onclick="window.location.href='https://discord.gg/kFyQAzmTXk';">Discord</button>
             <button class="discord-btn" onclick="window.location.href='https://www.twitch.tv/anonimaudio';">Twitch</button>
             <button class="discord-btn" onclick="showRules()">Правила</button>
+            <button class="subscribe-btn" onclick="showYouTube()">Подписаться</button>
         </div>
     </div>
 
@@ -106,7 +123,7 @@
         <div class="description">
             <div class="card">
                 <h2>Обо мне:</h2>
-                <p>1. Веду канал на твиче и дзене, помогаю людям.<br>2. Возраст: 23 года.<br>3. Живу в РФ.</p>
+                <p>1. Веду канал на твиче и дзене, помогаю людям.<br>2. Возраст: 23 года.<br>3. Живу в РФ.<br>4. ОС: Linux</p>
             </div>
             <div class="card">
                 <h2>Увлечения, хобби</h2>
@@ -117,11 +134,18 @@
                 <p>Просто переходите по кнопкам, которые есть на сайте!</p>
             </div>
         </div>
+
+        <!-- Яндекс Поисковая строка -->
+        <div style="margin: 50px 0;">
+            <form action="https://yandex.ru/search/" method="get">
+                <input type="text" name="text" placeholder="Искать в Яндексе..." style="padding: 10px; border-radius: 5px; width: 250px;">
+                <input type="submit" value="Поиск" class="discord-btn" style="padding: 10px 20px; margin-left: 10px;">
+            </form>
+        </div>
     </div>
 
     <script>
         function showRules() {
-            // Заменяем содержимое страницы на правила
             document.body.innerHTML = `
                 <div class="navbar">
                     <div class="logo">Anonim Community</div>
@@ -142,8 +166,7 @@
                         <p>4. Соблюдайте правила сообщества.</p>
                         <p>5. Будьте вежлевы и добролюбивыми!</p>
                         <p>6. Соблюдайте порядок и дисцеплину в чатах проекта.</p>
-                    
-                    
+
                         <h1>Правила (Telegram группы "Чаты проекта")</h1>
                         <p>⛔️1. Запрещена реклама и коммерция (1 раз — блокировка аккаунта).</p>
                         <p>⛔️2. Запрещены фейки (представление себя как известной личности или компании)<br> 1 раз — предупреждение, 2 раза — блокировка.</p>
@@ -161,8 +184,7 @@
         }
 
         function showHome() {
-            // Возвращаемся на главную страницу
-            document.body.innerHTML = `
+            document.body.innerHTML = \`
                 <div class="navbar">
                     <div class="logo">Anonim Community</div>
                     <div class="menu">
@@ -170,6 +192,7 @@
                         <button class="discord-btn" onclick="window.location.href='https://discord.gg/kFyQAzmTXk';">Discord</button>
                         <button class="discord-btn" onclick="window.location.href='https://www.twitch.tv/anonimaudio';">Twitch</button>
                         <button class="discord-btn" onclick="showRules()">Правила</button>
+                        <button class="subscribe-btn" onclick="showYouTube()">Подписаться</button>
                     </div>
                 </div>
 
@@ -192,8 +215,50 @@
                             <p>Просто переходите по кнопкам, которые есть на сайте!</p>
                         </div>
                     </div>
+
+                    <!-- Яндекс Поисковая строка -->
+                    <div style="margin: 50px 0;">
+                        <form action="https://yandex.ru/search/" method="get">
+                            <input type="text" name="text" placeholder="Искать в Яндексе..." style="padding: 10px; border-radius: 5px; width: 250px;">
+                            <input type="submit" value="Поиск" class="discord-btn" style="padding: 10px 20px; margin-left: 10px;">
+                        </form>
+                    </div>
                 </div>
-            `;
+            \`;
+        }
+
+        function showYouTube() {
+            document.body.innerHTML = \`
+                <div class="navbar">
+                    <div class="logo">Anonim Community</div>
+                    <div class="menu">
+                        <button class="discord-btn" onclick="window.location.href='https://t.me/perehodnikAnonimCompani';">Telegram</button>
+                        <button class="discord-btn" onclick="window.location.href='https://discord.gg/kFyQAzmTXk';">Discord</button>
+                        <button class="discord-btn" onclick="window.location.href='https://www.twitch.tv/anonimaudio';">Twitch</button>
+                        <button class="discord-btn" onclick="showHome()">На главную</button>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <h1>Подписка на YouTube канал</h1>
+                    <p>Подпишитесь на мой YouTube канал и поддержите проект!</p>
+                    <div class="rules">
+                        <p>Текущее количество подписчиков: <span id="subscribersCount">Загрузка...</span></p>
+                        <button class="subscribe-btn" onclick="window.location.href='https://www.youtube.com/channel/ВашID';">Подписаться</button>
+                    </div>
+                </div>
+
+                <script>
+                    fetch('https://www.googleapis.com/youtube/v3/channels?part=statistics&id=ВашID&key=ВАШ_API_КЛЮЧ')
+                        .then(response => response.json())
+                        .then(data => {
+                            document.getElementById('subscribersCount').innerText = data.items[0].statistics.subscriberCount;
+                        })
+                        .catch(error => {
+                            document.getElementById('subscribersCount').innerText = 'Ошибка при загрузке';
+                        });
+                </script>
+            \`;
         }
     </script>
 </body>
