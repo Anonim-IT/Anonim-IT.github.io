@@ -98,84 +98,13 @@
         </div>
     </div>
 
-    <div class="content" id="main-content">
-        <h1>Welcome to my site</h1>
-        <p>На этом сайте вы сможете по лучше узнать меня и так же найти где можно меня найти и вообще правила проекта тоже тут будут)</p>
-        <button class="discord-btn primary-btn" onclick="window.location.href='https://dzen.ru/anonimaudio';">My Dzen</button>
+    <!-- Контейнер для динамического контента -->
+    <div id="page-content"></div>
 
-        <div class="description">
-            <div class="card">
-                <h2>Обо мне:</h2>
-                <p>1. Веду канал на твиче и дзене, помогаю людям.<br>2. Возраст: 23 года.<br>3. Живу в РФ.<br>4. Работаю на ОС Linux, Windows 10.</p>
-            </div>
-            <div class="card">
-                <h2>Увлечения, хобби</h2>
-                <p>Обожаю катание на велосипеде, так же люблю РП и фурри.</p>
-            </div>
-            <div class="card">
-                <h2>Где меня найти и как?</h2>
-                <p>Просто переходите по кнопкам, которые есть на сайте!</p>
-            </div>
-        </div>
-    </div>
-
-        <script>
-        function showRules() {
-            // Строки с содержимым HTML для замены содержимого страницы на правила
-            const navbarHTML = `
-                <div class="navbar">
-                    <div class="logo">Anonim Community</div>
-                    <div class="menu">
-                        <button class="discord-btn" onclick="window.location.href='https://t.me/perehodnikAnonimCompani';">Telegram</button>
-                        <button class="discord-btn" onclick="window.location.href='https://discord.gg/kFyQAzmTXk';">Discord</button>
-                        <button class="discord-btn" onclick="window.location.href='https://www.twitch.tv/anonimaudio';">Twitch</button>
-                        <button class="discord-btn" onclick="showHome()">На главную</button>
-                    </div>
-                </div>`;
-            
-            const rulesHTML = `
-                <div class="content">
-                    <h1>Основные правила</h1>
-                    <div class="rules">
-                        <p>1. Уважайте других участников.</p>
-                        <p>2. Не используйте ненормативную лексику.</p>
-                        <p>3. Не распространяйте спам или рекламу.</p>
-                        <p>4. Соблюдайте правила сообщества.</p>
-                        <p>5. Будьте вежлевы и добролюбивыми!</p>
-                        <p>6. Соблюдайте порядок и дисциплину в чатах проекта.</p>
-                    
-                        <h1>Правила (Telegram группы "Чаты проекта")</h1>
-                        <p>⛔️1. Запрещена реклама и коммерция (1 раз — блокировка аккаунта).</p>
-                        <p>⛔️2. Запрещены фейки (представление себя как известной личности или компании)<br> 1 раз — предупреждение, 2 раза — блокировка.</p>
-                        <p>⛔️3. Запрещены оскорбления и дискриминация<br> 1 раз — мут + 2 варна, 2 раза — блокировка.</p>
-                        <p>⛔️4. Запрещена политика — 1-3 раза — мут + варн, 4 раза — блокировка.</p>
-                        <p>⛔️5. Запрещен спам и флуд (повторяющиеся сообщения или медиа)<br> 2-4 раза — мут + варн, 5 раз — блокировка.</p>
-                        <p>⛔️6. Запрещены капс и нецензурная лексика — 1 раз — мут.</p>
-                        <p>⛔️7. Запрещены шокирующий контент и личная информация<br> 1-3 раза — мут + варн, 4 раза — блокировка.</p>
-                        <p>⛔️8. Запрещено попрошайничество — 1-3 раза — мут + варн, 4 раза — блокировка.</p>
-                        <p>⛔️9. Мат — 1-3 раза — мут, 4 раза — блокировка.</p>
-                        <p>Важно: Заходя в чат, вы принимаете все правила. Нарушения можно сообщать @admin.<br> Модераторы могут применять санкции без причины.</p>
-                    </div>
-                </div>`;
-            
-            // Заменяем содержимое страницы на правила
-            document.body.innerHTML = navbarHTML + rulesHTML;
-        }
-
+    <script>
         function showHome() {
-            // Строки с содержимым HTML для возврата на главную страницу
-            const navbarHTML = `
-                <div class="navbar">
-                    <div class="logo">Anonim Community</div>
-                    <div class="menu">
-                        <button class="discord-btn" onclick="window.location.href='https://t.me/perehodnikAnonimCompani';">Telegram</button>
-                        <button class="discord-btn" onclick="window.location.href='https://discord.gg/kFyQAzmTXk';">Discord</button>
-                        <button class="discord-btn" onclick="window.location.href='https://www.twitch.tv/anonimaudio';">Twitch</button>
-                        <button class="discord-btn" onclick="showRules()">Правила</button>
-                    </div>
-                </div>`;
-            
-            const mainContentHTML = `
+            // Главная страница
+            document.getElementById('page-content').innerHTML = `
                 <div class="content" id="main-content">
                     <h1>Welcome to my site</h1>
                     <p>На этом сайте вы сможете по лучше узнать меня и так же найти где можно меня найти и вообще правила проекта тоже тут будут)</p>
@@ -196,24 +125,38 @@
                         </div>
                     </div>
                 </div>`;
-            
-            // Возвращаемся на главную страницу
-            document.body.innerHTML = navbarHTML + mainContentHTML;
         }
-    </script>
-                <div class="navbar">
-                    <div class="logo">Anonim Community</div>
-                    <div class="menu">
-                        <button class="discord-btn" onclick="window.location.href='https://t.me/perehodnikAnonimCompani';">Telegram</button>
-                        <button class="discord-btn" onclick="window.location.href='https://discord.gg/kFyQAzmTXk';">Discord</button>
-                        <button class="discord-btn" onclick="window.location.href='https://www.twitch.tv/anonimaudio';">Twitch</button>
-                        <button class="discord-btn" onclick="showRules()">Правила</button>
-                    </div>
-                </div>
 
-                
-            ;
+        function showRules() {
+            // Страница с правилами
+            document.getElementById('page-content').innerHTML = `
+                <div class="content">
+                    <h1>Основные правила</h1>
+                    <div class="rules">
+                        <p>1. Уважайте других участников.</p>
+                        <p>2. Не используйте ненормативную лексику.</p>
+                        <p>3. Не распространяйте спам или рекламу.</p>
+                        <p>4. Соблюдайте правила сообщества.</p>
+                        <p>5. Будьте вежливыми и доброжелательными!</p>
+                        <p>6. Соблюдайте порядок и дисциплину в чатах проекта.</p>
+
+                        <h1>Правила (Telegram группы "Чаты проекта")</h1>
+                        <p>⛔️1. Запрещена реклама и коммерция (1 раз — блокировка аккаунта).</p>
+                        <p>⛔️2. Запрещены фейки (представление себя как известной личности или компании)<br> 1 раз — предупреждение, 2 раза — блокировка.</p>
+                        <p>⛔️3. Запрещены оскорбления и дискриминация<br> 1 раз — мут + 2 варна, 2 раза — блокировка.</p>
+                        <p>⛔️4. Запрещена политика — 1-3 раза — мут + варн, 4 раза — блокировка.</p>
+                        <p>⛔️5. Запрещен спам и флуд (повторяющиеся сообщения или медиа)<br> 2-4 раза — мут + варн, 5 раз — блокировка.</p>
+                        <p>⛔️6. Запрещены капс и нецензурная лексика — 1 раз — мут.</p>
+                        <p>⛔️7. Запрещены шокирующий контент и личная информация<br> 1-3 раза — мут + варн, 4 раза — блокировка.</p>
+                        <p>⛔️8. Запрещено попрошайничество — 1-3 раза — мут + варн, 4 раза — блокировка.</p>
+                        <p>⛔️9. Мат — 1-3 раза — мут, 4 раза — блокировка.</p>
+                        <p>Важно: Заходя в чат, вы принимаете все правила. Нарушения можно сообщать @admin.<br> Модераторы могут применять санкции без причины.</p>
+                    </div>
+                </div>`;
         }
+
+        // Загружаем главную страницу при первой загрузке
+        showHome();
     </script>
 </body>
 </html>
