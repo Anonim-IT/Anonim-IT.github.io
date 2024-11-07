@@ -41,6 +41,7 @@
       text-align: left;
       border-right: 2px solid #34495e;
       padding-left: 20px; /* Отступ слева для текста */
+      transition: width 0.3s ease;
     }
 
     .sidebar .logo {
@@ -80,6 +81,7 @@
       background: url('https://static.tildacdn.com/tild6531-3133-4133-a539-386231333533/-/resize/504x/Desktop.jpeg') no-repeat center center fixed;
       background-size: cover;
       padding-top: 60px;
+      transition: margin-left 0.3s ease;
     }
 
     /* Стиль сообщений */
@@ -166,6 +168,71 @@
       background-color: #2980b9;
     }
 
+    /* Адаптивность для разных экранов */
+    @media (max-width: 1024px) {
+      .sidebar {
+        width: 200px; /* Уменьшаем ширину боковой панели */
+      }
+
+      .content {
+        margin-left: 200px; /* Уменьшаем отступ для контента */
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 150px; /* Уменьшаем ширину боковой панели еще больше */
+      }
+
+      .content {
+        margin-left: 150px; /* Уменьшаем отступ */
+        padding: 15px;
+      }
+
+      .sidebar ul li {
+        font-size: 16px; /* Уменьшаем размер шрифта для мобильных */
+      }
+
+      .telegram-message {
+        font-size: 14px; /* Уменьшаем размер шрифта сообщений */
+        padding: 10px 15px; /* Уменьшаем отступы в сообщениях */
+      }
+
+      .theme-toggle-btn {
+        font-size: 20px; /* Уменьшаем размер кнопки */
+      }
+
+      .modal-content {
+        width: 90%; /* Увеличиваем ширину модального окна */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .sidebar {
+        width: 120px; /* Уменьшаем боковую панель для очень маленьких экранов */
+      }
+
+      .content {
+        margin-left: 120px; /* Уменьшаем отступ для очень маленьких экранов */
+      }
+
+      .sidebar ul li {
+        font-size: 14px; /* Еще уменьшаем шрифт */
+      }
+
+      .telegram-message {
+        font-size: 12px; /* Уменьшаем размер шрифта для маленьких экранов */
+      }
+
+      .theme-toggle-btn {
+        font-size: 18px; /* Уменьшаем кнопку */
+      }
+
+      .modal-content {
+        width: 95%; /* Увеличиваем ширину модального окна */
+        padding: 15px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -235,11 +302,8 @@
           <div class="telegram-message">
             1. Будьте вежливыми и уважительными в общении.<br>
             2. Не нарушайте законы и правила платформ.<br>
-            3. Не публикуйте оскорбительный контент так же NSFW/NSFL контент и шок контент.<br>
-            4. Слушайте модераторов и уважайте мнение других участников.<br>
-            5. Не распространяйте спам или рекламу.<br>
-            6. Не используйте ненормативную лексику.<br>
-            7. Запрещена политика.
+            3. Не публикуйте оскорбительный контент.<br>
+            4. Слушайте модераторов и уважайте мнение других участников.
           </div>
 
           <button onclick="closeSettings()">Закрыть</button>
@@ -264,14 +328,6 @@
     // Закрыть настройки
     function closeSettings() {
       document.getElementById('settingsModal').style.display = 'none';
-    }
-
-    // Переключение темы
-    function toggleTheme() {
-      document.body.classList.toggle('dark-theme');
-      const isDark = document.body.classList.contains('dark-theme');
-      document.body.style.backgroundColor = isDark ? '#333' : '#f8f9fa';
-      document.body.style.color = isDark ? '#f8f9fa' : '#333';
     }
 
     // Начальная настройка: показываем главную страницу
