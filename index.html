@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Anonim Community</title>
   <style>
-    /* Оставляем все стили без изменений, как в оригинальном файле */
     * {
       margin: 0;
       padding: 0;
@@ -85,7 +84,6 @@
       transition: margin-left 0.3s ease;
     }
 
-    /* Стиль сообщений */
     .telegram-message {
       background-color: rgba(255, 255, 255, 0.9);
       border-radius: 12px;
@@ -105,27 +103,7 @@
       color: white;
     }
 
-    .theme-toggle-btn {
-      font-size: 24px;
-      cursor: pointer;
-      margin-top: 20px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 10px;
-      background: #ecf0f1;
-      border: 2px solid #3498db;
-      border-radius: 12px;
-      display: block;
-      text-align: center;
-      transition: background-color 0.3s ease;
-    }
-
-    .theme-toggle-btn:hover {
-      background-color: #3498db;
-      color: white;
-    }
-
-    /* Модальное окно для настроек */
+    /* Модальное окно */
     .modal {
       display: none;
       position: fixed;
@@ -170,71 +148,6 @@
       background-color: #2980b9;
     }
 
-    /* Адаптивность для разных экранов */
-    @media (max-width: 1024px) {
-      .sidebar {
-        width: 200px;
-      }
-
-      .content {
-        margin-left: 200px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .sidebar {
-        width: 150px;
-      }
-
-      .content {
-        margin-left: 150px;
-        padding: 15px;
-      }
-
-      .sidebar ul li {
-        font-size: 16px;
-      }
-
-      .telegram-message {
-        font-size: 14px;
-        padding: 10px 15px;
-      }
-
-      .theme-toggle-btn {
-        font-size: 20px;
-      }
-
-      .modal-content {
-        width: 90%;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .sidebar {
-        width: 120px;
-      }
-
-      .content {
-        margin-left: 120px;
-      }
-
-      .sidebar ul li {
-        font-size: 14px;
-      }
-
-      .telegram-message {
-        font-size: 12px;
-      }
-
-      .theme-toggle-btn {
-        font-size: 18px;
-      }
-
-      .modal-content {
-        width: 95%;
-        padding: 15px;
-      }
-    }
   </style>
 </head>
 <body>
@@ -244,69 +157,64 @@
     <div class="sidebar">
       <div class="logo">Anonim BIO</div>
       <ul>
-        <li onclick="loadContent('home')">🏠<span>Home</span></li>
-        <li onclick="loadContent('information')">ℹ️<span>Information</span></li>
+        <li onclick="window.location.href='index.html'">🏠<span>Home</span></li>
+        <li onclick="window.location.href='information.html'">ℹ️<span>Information</span></li>
         <li onclick="showSettings()">⚙️<span>Settings</span></li>
       </ul>
     </div>
 
     <!-- Контент -->
     <div class="content">
-      <!-- Главная страница -->
-      <div id="home" class="page active">
-        <div class="telegram-message">
-          Welcome to the Anonim Community!
-        </div>
+      <div class="telegram-message">
+        <strong>Обо мне:</strong><br>
+        <strong>Возраст:</strong> 23 года<br>
+        <strong>Работа:</strong> Работаю на ОС Linux<br>
+        <strong>Веду канал:</strong> На Twitch и Дзене, помогаю людям
       </div>
 
-      <!-- Страница Информация -->
-      <div id="information" class="page">
-        <div class="telegram-message">
-          <strong>Information:</strong><br>
-          This is an informational page about the community and its members.
-        </div>
+      <div class="telegram-message">
+        <strong>Увлечения:</strong><br>
+        <strong>Хобби:</strong> Обожаю катание на велосипеде, люблю РП и фурри.
       </div>
 
-      <!-- Модальное окно для настроек -->
-      <div id="settingsModal" class="modal">
-        <div class="modal-content">
-          <h2>Настройки:</h2>
-          <p>Переходите по ссылкам, чтобы найти меня:</p>
-          <div class="telegram-message" onclick="window.location.href='https://t.me/perehodnikAnonimCompani';">
-            Telegram
-          </div>
-          <div class="telegram-message" onclick="window.location.href='https://discord.gg/kFyQAzmTXk';">
-            Discord
-          </div>
-          <div class="telegram-message" onclick="window.location.href='https://www.twitch.tv/anonimaudio';">
-            Twitch
-          </div>
-          <div class="telegram-message" onclick="window.location.href='https://dzen.ru/anonimaudio';">
-            Дзен
-          </div>
-
-          <h3>Правила:</h3>
-          <div class="telegram-message">
-            1. Будьте вежливыми и уважительными в общении.<br>
-            2. Не нарушайте законы и правила платформ.<br>
-            3. Не публикуйте оскорбительный контент.<br>
-            4. Слушайте модераторов и уважайте мнение других участников.
-          </div>
-
-          <button onclick="closeSettings()">Закрыть</button>
-        </div>
+      <div class="telegram-message">
+        <strong>Канал:</strong><br>
+        Я веду каналы на <strong>Twitch</strong> и <strong>Дзен</strong>. На этих платформах делюсь своими знаниями и опытом. Переходите и присоединяйтесь!
       </div>
     </div>
   </div>
 
-  <script>
-    // Функция для отображения разных страниц
-    function loadContent(pageId) {
-      const pages = document.querySelectorAll('.page');
-      pages.forEach(page => page.classList.remove('active'));
-      document.getElementById(pageId).classList.add('active');
-    }
+  <!-- Модальное окно для настроек -->
+  <div id="settingsModal" class="modal">
+    <div class="modal-content">
+      <h2>Настройки:</h2>
+      <p>Переходите по ссылкам, чтобы найти меня:</p>
+      <div class="telegram-message" onclick="window.location.href='https://t.me/perehodnikAnonimCompani';">
+        Telegram
+      </div>
+      <div class="telegram-message" onclick="window.location.href='https://discord.gg/kFyQAzmTXk';">
+        Discord
+      </div>
+      <div class="telegram-message" onclick="window.location.href='https://www.twitch.tv/anonimaudio';">
+        Twitch
+      </div>
+      <div class="telegram-message" onclick="window.location.href='https://dzen.ru/anonimaudio';">
+        Дзен
+      </div>
 
+      <h3>Правила:</h3>
+      <div class="telegram-message">
+        1. Будьте вежливыми и уважительными в общении.<br>
+        2. Не нарушайте законы и правила платформ.<br>
+        3. Не публикуйте оскорбительный контент.<br>
+        4. Слушайте модераторов и уважайте мнение других участников.
+      </div>
+
+      <button onclick="closeSettings()">Закрыть</button>
+    </div>
+  </div>
+
+  <script>
     // Показать настройки
     function showSettings() {
       document.getElementById('settingsModal').style.display = 'flex';
@@ -316,9 +224,7 @@
     function closeSettings() {
       document.getElementById('settingsModal').style.display = 'none';
     }
-
-    // Начальная настройка: показываем главную страницу
-    loadContent('home');
   </script>
+
 </body>
 </html>
