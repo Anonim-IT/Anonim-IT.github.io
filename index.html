@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anonim Community</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+  <div class="container">
+    <!-- Боковая панель -->
+    <div id="sidebar"></div>
+
+    <!-- Контент -->
+    <div class="content">
+      <div class="telegram-message">
+        <p style="text-decoration: underline;">Данный сайт является официальным сайтом проекта, 
+        и только на нем вы сможете найти всю подробную информацию о проекте, а также ссылки на наши соцсети и документацию! Все ссылки вы найдете по кнопке: ⚙️ Settings</p><br>
+        <strong>Проект разделен на 3 модуля:</strong><br>
+        <strong>AnonimCommunity (Главный модуль):</strong> Этот модуль был основан в 2023 году и является основным в проекте.<br>
+        <strong>AnonimForum:</strong> Второстепенный модуль был основан в 2024 году и будет доработан в 2025 году<br>
+        <strong>AnonimWiki:</strong> Данный модуль находиться на стадии разработки<br>
+        <strong>AnonimWorld:</strong> Модуль запланирован
+      </div>
+
+      <div class="telegram-message">
+        <strong>Об проекте :</strong><br>
+                Данный проект состовляет из себя смесь серверов и чатов!<br>
+        <strong>Включая в себя:</strong><br>
+        <ul>
+        <li>YouTube канал(Имеется),</li>
+        <li>Яндекс Dzen(Имеется),</li>
+        <li>Minecraft server (В разработке!),</li>
+        <li>Telegram канал и чаты(Имеется),</li>
+        <li>Хостинг Minecraft (Еще тока в планах).</li>
+        </ul>
+      </div>
+    <div class="telegram-message">
+      <div class="info-box">
+        <i class="fas fa-exclamation-circle"></i>
+        <div class="message">
+          <strong>Новогоднее обновление:</strong><br>
+          Тут я вам скажу что Новогоднее обновление готовиться и оно будет выпущено уже совсем скоро!<br>
+          Так же обновлению подвергнутся как сервера так и сам форум так что ожидайте (все полезные ссылки найдете в нашей документации)<br><br>
+        </div>
+      </div>    
+      </div>
+    </div>
+  </div>
+
+  <!-- Модальное окно для настроек -->
+  <div id="settingsModal" class="modal">
+    <div class="modal-content">
+      <h2>Настройки:</h2>
+      <p>Переходите по ссылкам, чтобы найти меня:</p>
+      <div class="telegram-message" onclick="window.location.href='https://t.me/perehodnikAnonimCompani';">
+        Telegram
+      </div>
+      <div class="telegram-message" onclick="window.location.href='http://y92105hy.beget.tech/index.php';">
+        Наш официальный форум проекта
+      </div>
+      <div class="telegram-message" onclick="window.location.href='https://www.twitch.tv/anonimaudio';">
+        Twitch
+      </div>
+      <div class="telegram-message" onclick="window.location.href='https://dzen.ru/anonimaudio';">
+        Дзен
+      </div>
+      <div class="telegram-message" onclick="window.location.href='https://discord.gg/';">
+        Discord проекта Anonim Community
+      </div>
+      <div class="telegram-message" onclick="window.location.href='https://anonim-3.gitbook.io/anonimcommpany';">
+        Наш GitBook
+      </div>
+
+      <h3>Правила:</h3>
+      <div class="telegram-message">
+        1. Будьте вежливыми и уважительными в общении.<br>
+        2. Не нарушайте законы и правила платформ.<br>
+        3. Не публикуйте оскорбительный контент.<br>
+        4. Слушайте модераторов и уважайте мнение других участников.
+      </div>
+
+      <button onclick="closeSettings()">Закрыть</button>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
