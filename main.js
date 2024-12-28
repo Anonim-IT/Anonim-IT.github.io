@@ -1,7 +1,4 @@
-function showSettings() {
-  document.getElementById('settingsModal').style.display = 'flex';
-}
-
-function closeSettings() {
-  document.getElementById('settingsModal').style.display = 'none';
-}
+// main.js
+document.addEventListener('DOMContentLoaded', function() {
+  // Логика для добавления интерактивности, если потребуется.
+});

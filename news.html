@@ -1,35 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anonim Community - News</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новости проекта</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <!-- Sidebar -->
-    <div id="sidebar"></div>
+    <!-- Подключаем навигационную панель -->
+    <div id="navbar-container"></div>
 
-    <!-- Content -->
-    <div class="content">
-      <div class="info-box">
-        <h2>Latest News</h2>
-        <p>Stay tuned for updates about the project!</p>
-      </div>
+    <main>
+        <section class="content-section">
+            <h1>Новости проекта</h1>
+            <p>Все последние новости публикуются на нашем форуме. Не забудьте посетить его для получения самой актуальной информации!</p>
+            <p>Для получения самых свежих новостей и обсуждений, заходите на наш форум:</p>
+            <a href="http://y92105hy.beget.tech/index.php" class="button">Перейти на форум</a>
+        </section>
 
-      <div class="info-box">
-        <h3>Upcoming Features</h3>
-        <ul>
-          <li>New server additions in 2025</li>
-          <li>Forum improvements and feature updates</li>
-          <li>Collaborations with other projects</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+        <section class="content-section">
+            <h1>У нас есть бот?!</h1>
+            <p>Ура ура ура! Да, дорогие друзья, я рад как создатель данного проекта вывести его на новый уровень. А именно, я сейчас занимаюсь разработкой нашего Discord бота.<br/>
+            И хотя мы двигаемся в хорошем направлении, что будет дальше я пока не могу точно сказать, ибо как говорится: не загадывай на будущее, то что не знаешь!<br/>
+            Также хочу сообщить, что данный бот уже доступен у нас на сервере, так что вы можете спокойно с ним взаимодействовать!</p>
+            <p>Ник нашего бота: <span class="bot-name">Anonim Community#8577</span></p>
+        </section>
+    </main>
 
-  <script src="main.js"></script>
+    <footer>
+        <p>&copy; 2024 Anonim Community</p>
+    </footer>
+
+    <script>
+      // Загрузка навигационного меню
+      fetch('navbar.html')
+          .then(response => response.text())
+          .then(data => {
+              document.getElementById('navbar-container').innerHTML = data;
+          })
+          .catch(error => {
+              console.error('Ошибка при загрузке навигационной панели:', error);
+          });
+
+      // Получаем элементы меню
+      const menuToggle = document.querySelector('.menu-toggle');
+      const menuList = document.querySelector('.menu-list');
+
+      // Обработчик клика для открытия и закрытия меню
+      menuToggle.addEventListener('click', () => {
+        menuList.classList.toggle('open'); // Переключаем класс 'open' для отображения/скрытия меню
+      });
+    </script>
 </body>
 </html>

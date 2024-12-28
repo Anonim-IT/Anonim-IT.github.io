@@ -1,78 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anonim Community</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonim Community</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Контейнер для навигационной панели -->
+    <div id="navbar-container"></div>
 
-  <div class="container">
-    <!-- Sidebar -->
-    <div id="sidebar"></div>
+    <main>
+        <!-- Главный блок -->
+        <section class="content-section">
+            <h1>Добро пожаловать в Anonim Community</h1>
+            <p>Этот сайт — официальное место для всего, что связано с проектом Anonim Community. Здесь можно найти подробную информацию о проекте, новости и все необходимые ресурсы в настройках ⚙️</p>
+        </section>
 
-    <!-- Content -->
-    <div class="content">
-      <div class="info-box">
-        <h2>Welcome to Anonim Community</h2>
-        <p>This website is the official place for everything related to the Anonim Community project. You can find detailed information about the project, news, and all necessary resources in the Settings ⚙️</p>
-        <p><strong>The project consists of the following modules:</strong></p>
-        <ul>
-          <li><strong>AnonimCommunity:</strong> Our main module, founded in 2023.</li>
-          <li><strong>AnonimForum:</strong> A secondary module founded in 2024, under further development.</li>
-          <li><strong>AnonimWiki:</strong> A module in progress.</li>
-          <li><strong>AnonimWorld:</strong> Planned for the future.</li>
-        </ul>
-      </div>
+        <!-- Блок с модулями -->
+        <section class="content-section">
+            <h2>Проект состоит из следующих модулей:</h2>
+            <ul>
+                <li><strong>AnonimCommunity:</strong> Наш основной модуль, основанный в 2023 году.</li>
+                <li><strong>AnonimForum:</strong> Вторичный модуль, основанный в 2024 году, в процессе разработки.</li>
+                <li><strong>AnonimWiki:</strong> Модуль в процессе.</li>
+                <li><strong>AnonimWorld:</strong> Запланирован на будущее.</li>
+            </ul>
+        </section>
 
-      <div class="info-box">
-        <h3>About the Project</h3>
-        <p>This project is a network of servers and chats across various platforms. Some components of the project include:</p>
-        <ul>
-          <li>YouTube channel (Available)</li>
-          <li>Yandex Dzen (Available)</li>
-          <li>Minecraft server (Under development)</li>
-          <li>Telegram channel and chats (Available)</li>
-          <li>Minecraft hosting (Planned)</li>
-        </ul>
-      </div>
+        <!-- Блок с важной информацией -->
+        <section class="content-section important-info">
+            <h3>Новогоднее обновление:</h3>
+            <p><strong>Новогоднее обновление в процессе!</strong> Оно будет выпущено скоро и затронет наши серверы и форум. Следите за новыми подробностями. Вы можете ознакомиться с документацией для получения дополнительной информации.</p>
+        </section>
 
-      <div class="info-box new-year">
-        <i class="fas fa-exclamation-circle"></i>
-        <div class="message">
-          <strong>New Year Update:</strong><br>
-          The New Year update is in progress! It will be released soon and will affect our servers and forum. Stay tuned for more details. You can check the documentation for more information.
-        </div>
-      </div>
-    </div>
-  </div>
+        <!-- Блок с информацией о проекте -->
+        <section class="content-section">
+            <h2>О проекте</h2>
+            <p>Этот проект представляет собой сеть серверов и чатов на различных платформах. Некоторые компоненты проекта:</p>
+            <ul>
+                <li><strong>YouTube канал</strong> — Доступен</li>
+                <li><strong>Яндекс Дзен</strong> — Доступен</li>
+                <li><strong>Сервер Minecraft</strong> — В разработке</li>
+                <li><strong>Телеграм канал и чаты</strong> — Доступны</li>
+                <li><strong>Хостинг Minecraft</strong> — Запланирован</li>
+            </ul>
+        </section>
 
-  <!-- Settings Modal -->
-  <div id="settingsModal" class="modal">
-    <div class="modal-content">
-      <h2>Settings:</h2>
-      <p>Follow us on:</p>
-      <div class="link-button" onclick="window.location.href='https://t.me/';">Telegram</div>
-      <div class="link-button" onclick="window.location.href='http://y92105hy.beget.tech/index.php';">Official Project Forum</div>
-      <div class="link-button" onclick="window.location.href='https://www.twitch.tv/anonimaudio';">Twitch</div>
-      <div class="link-button" onclick="window.location.href='https://dzen.ru/anonimaudio';">Dzen</div>
-      <div class="link-button" onclick="window.location.href='https://discord.gg/KmYcbRu5H8';">Anonim Community Discord</div>
-      <div class="link-button" onclick="window.location.href='https://anonim-3.gitbook.io/anonimcommpany';">Our GitBook</div>
+    </main>
 
-      <h3>Rules:</h3>
-      <div class="rules-box">
-        <p>1. Be respectful and polite.</p>
-        <p>2. Follow the law and platform rules.</p>
-        <p>3. No offensive content.</p>
-        <p>4. Listen to moderators and respect other users.</p>
-      </div>
+    <footer>
+        <p>&copy; 2024 Anonim Community</p>
+    </footer>
 
-      <button onclick="closeSettings()">Close</button>
-    </div>
-  </div>
+    <script>
+        // Загрузка навигационного меню
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-container').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Ошибка при загрузке навигационной панели:', error);
+            });
 
-  <script src="main.js"></script>
+        // Получаем элементы для бургер-меню
+        const burgerMenu = document.querySelector('.burger-menu');
+        const menuList = document.querySelector('nav ul');
+
+        // Обработчик клика для открытия и закрытия меню
+        burgerMenu.addEventListener('click', () => {
+            burgerMenu.classList.toggle('active');
+            menuList.classList.toggle('open'); // Переключаем класс 'open' для отображения/скрытия меню
+        });
+    </script>
 </body>
 </html>

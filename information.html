@@ -1,44 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anonim Community - Information</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Информация о проекте</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <!-- Sidebar -->
-    <div id="sidebar"></div>
+    <!-- Подключаем навигационную панель -->
+    <div id="navbar-container"></div>
 
-    <!-- Content -->
-    <div class="content">
-      <div class="info-box">
-        <h2>Project Information</h2>
-        <p>The Anonim Community is a collection of interconnected projects focused on privacy and anonymity. Below is some key information about the different modules:</p>
-        <ul>
-          <li><strong>AnonimCommunity:</strong> The main module.</li>
-          <li><strong>AnonimForum:</strong> Community-driven forum for discussion.</li>
-          <li><strong>AnonimWiki:</strong> Information repository for project-related content.</li>
-          <li><strong>AnonimWorld:</strong> Future module for exploring anonymous interactions.</li>
-        </ul>
-      </div>
+    <main>
+        <section class="content-section">
+            <h1>Информация о проекте</h1>
+            <p>Здесь будет размещена подробная информация о проекте Anonim Community.</p>
 
-      <div class="info-box">
-        <h3>Supported Platforms</h3>
-        <p>Our project is available across a variety of platforms. You can find us on:</p>
-        <ul>
-          <li>YouTube</li>
-          <li>Twitch</li>
-          <li>Yandex Dzen</li>
-          <li>Discord</li>
-          <li>GitBook</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+            <p><strong>Наш проект включает несколько ключевых модулей, которые развиваются с учетом потребностей сообщества:</strong></p>
+            <ul>
+                <li><a href="https://discord.gg/ePNT2UxhGE">AnonimCommunity Server</a> — Наш официальный Discord сервер.</li>
+                <li><a href="http://y92105hy.beget.tech/index.php">AnonimForum</a> — Форум проекта, где обсуждаются новости и вопросы, связанные с проектом.</li>
+                <li><a href="#">AnonimWiki</a> — Вики-страница проекта с подробной информацией о каждом модуле.</li>
+                <li><a href="#">AnonimWorld</a> — Сайт с будущими проектами и планами, которые будут реализованы в рамках Anonim Community.</li>
+            </ul>
+        </section>
+    </main>
 
-  <script src="main.js"></script>
+    <footer>
+        <p>&copy; 2024 Anonim Community</p>
+    </footer>
+
+    <script>
+        // Загрузка навигационного меню
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-container').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Ошибка при загрузке навигационной панели:', error);
+            });
+
+        // Получаем элементы для бургер-меню
+        const burgerMenu = document.querySelector('.burger-menu');
+        const menuList = document.querySelector('nav ul');
+
+        // Обработчик клика для открытия и закрытия меню
+        burgerMenu.addEventListener('click', () => {
+            burgerMenu.classList.toggle('active');
+            menuList.classList.toggle('open'); // Переключаем класс 'open' для отображения/скрытия меню
+        });
+    </script>
 </body>
 </html>

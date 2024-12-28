@@ -1,169 +1,238 @@
-/* Общие настройки */
-* {
+/* Основной стиль страницы */
+body {
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #181818;
-  color: #e0e0e0;
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); /* Градиент для фона страницы */
+  color: #616161;  /* Темный текст для контента */
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  height: 100vh;
-  padding: 0;
+  min-height: 100vh;
+  padding-top: 50px; /* Уменьшенный отступ для пространства под фиксированное меню */
 }
 
-.container {
-  display: flex;
-  margin-top: 60px; /* Добавляем отступ сверху для шапки */
-  height: 100%;
-  width: 100%;
-}
-
-.content {
-  flex-grow: 1;
-  padding: 20px;
-  background-color: #1f1f1f;
-  color: #e0e0e0;
-  margin-left: 260px; /* Сдвигаем контент вправо, чтобы не перекрывать меню */
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  transition: margin-left 0.3s ease;
-  overflow-y: auto;
-}
-
-/* Стиль для бокового меню */
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 260px;
-  background-color: #2c3e50;
+/* Навигационная панель */
+header {
+  background-color: #333;
   color: white;
-  padding: 20px;
-  height: 100%;
-  text-align: left;
-  border-right: 2px solid #34495e;
-}
-
-.sidebar .logo {
-  font-size: 24px;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #3498db;
-  margin-bottom: 20px;
-}
-
-.sidebar ul {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-.sidebar ul li {
-  padding: 15px;
-  font-size: 18px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.sidebar ul li:hover {
-  background-color: #2980b9;
-}
-
-.sidebar ul li span {
-  margin-left: 10px;
-}
-
-/* Модальные окна */
-.modal {
-  display: none;
-  position: fixed;
+  padding: 15px 0; /* Уменьшены отступы */
+  border-radius: 9px; /* Закругление углов для навигационного меню */
+  position: fixed; /* Закрепляем меню сверху */
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
+  z-index: 1000; /* Чтобы меню всегда было поверх контента */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Добавляем небольшую тень для разделения */
 }
 
-.modal-content {
-  background-color: #2c3e50;
-  border-radius: 12px;
-  padding: 30px;
-  max-width: 500px;
+nav ul {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+  margin: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin: 0 8px; /* Уменьшено расстояние между пунктами меню */
+}
+
+nav ul li a {
   color: white;
+  text-decoration: none;
+  font-size: 14px; /* Уменьшен размер шрифта */
+  padding: 8px 18px; /* Уменьшены отступы для кнопок */
+  border-radius: 8px; /* Закругление углов */
+  background-color: transparent; /* Сделан фон прозрачным */
+  transition: background-color 0.3s ease, padding 0.3s ease; /* Плавное изменение фона и отступов */
 }
 
-.modal-content h2 {
-  margin-bottom: 20px;
+nav ul li a:hover {
+  background-color: #a9a9a9; /* Темно-серый цвет фона при наведении */
+  padding: 8px 24px; /* Увеличиваются отступы при наведении */
+  color: white; /* Белый текст при наведении */
 }
 
-.modal-content button {
-  background-color: #3498db;
-  color: white;
-  padding: 12px 25px;
-  border-radius: 8px;
-  width: 100%;
-  cursor: pointer;
-  border: none;
+/* Блоки контента */
+.content-section {
+  background: rgba(255, 255, 255, 0.8); /* Прозрачный белый фон для контента */
+  padding: 9px; /* Уменьшены отступы */
+  margin: 10px auto; /* Уменьшены внешние отступы и центрирование блока */
+  border-radius: 12px; /* Закругленные углы */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1); /* Легкая тень */
+  flex: 1; /* Позволяет контенту растягиваться, занимая оставшееся пространство */
+  max-width: 1000px; /* Максимальная ширина блока */
+  background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%); /* Легкий градиент для фона */
+  transition: all 0.3s ease; /* Плавные изменения */
+  margin-bottom: 20px; /* Уменьшены отступы снизу */
 }
 
-.modal-content button:hover {
-  background-color: #2980b9;
+.content-section:hover {
+  transform: translateY(-3px); /* Легкое поднятие блока при наведении */
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2); /* Более выраженная тень при наведении */
 }
 
-/* Стиль для ссылок в модальном окне */
-.link-button {
-  background-color: #3498db;
+/* Заголовки в блоках контента */
+.content-section h1, .content-section h2, .content-section h3 {
+  font-size: 1.6em; /* Уменьшен размер шрифта для заголовков */
+  margin-bottom: 10px;
+  color: #333; /* Темный цвет для заголовков */
+  font-weight: 600; /* Немного более жирные заголовки */
+}
+
+/* Тексты внутри блоков */
+.content-section p {
+  font-size: 1.1em; /* Уменьшен размер текста */
+  line-height: 1.5; /* Уменьшена межстрочная высота */
+  margin-bottom: 12px;
+  color: #555; /* Цвет текста для лучшего контраста */
+}
+
+/* Стили для списка */
+.content-section ul {
+  padding-left: 18px;
+}
+
+.content-section ul li {
+  font-size: 1.1em;
+  margin-bottom: 8px; /* Уменьшены отступы для элементов списка */
+  list-style-type: circle; /* Круглые маркеры списка */
+  color: #555; /* Цвет текста списка */
+}
+
+/* Ссылки в блоках контента */
+.content-section a {
+  color: #2575fc; /* Синий цвет для ссылок */
+  text-decoration: none; /* Убираем подчеркивание */
+  font-weight: bold; /* Жирный шрифт для ссылок */
+  transition: color 0.3s ease;
+}
+
+.content-section a:hover {
+  color: #6a11cb; /* Цвет при наведении на ссылку */
+}
+
+/* Блок важной информации (плашечка) */
+.important-info {
+  background: linear-gradient(135deg, #ff5100 0%, #f865217a 100%); /* Градиент для важной информации */
+  padding: 0 15px; /* Уменьшены отступы */
+  border-radius: 12px; /* Закругление углов */
+  width: auto; /* Ширина подстраивается под контент */
+  max-width: 800px; /* Ограничиваем максимальную ширину */
+  margin: 0 auto 9px; /* Центрируем блок и добавляем отступ снизу */
+  position: relative;
+  top: -10px; /* Поднимаем блок выше основной информации */
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Добавляем тень */
+  text-align: center; /* Центрируем текст */
+}
+
+/* Стиль для кнопок */
+.button {
+  background-color: transparent; /* Прозрачный фон */
+  color: rgb(54, 54, 54); /* Белый текст */
+  border: 2px solid transparent; /* Сделаем границу прозрачной */
+  padding: 10px 20px; /* Уменьшены отступы для кнопки */
+  font-size: 14px; /* Уменьшен размер шрифта */
+  border-radius: 8px; /* Закругление углов */
+  text-decoration: none; /* Убираем подчеркивание */
+  display: inline-block; /* Позволяет использовать как ссылку */
+  text-align: center; /* Выравнивание текста по центру */
+  transition: all 0.3s ease; /* Плавное изменение стилей */
+  cursor: pointer; /* Курсор в виде руки */
+}
+
+/* Эффект при наведении */
+.button:hover {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); /* Градиентный фон при наведении */
+  color: white; /* Белый текст при наведении */
+  border: 2px solid #2575fc; /* Граница синего цвета */
+  padding: 10px 22px; /* Увеличиваем отступы */
+}
+
+.button:focus {
+  outline: none; /* Убираем обводку при фокусе */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); /* Легкая тень при фокусе */
+}
+
+/* Стили для футера */
+footer {
+  background: #333;
   color: white;
   text-align: center;
-  padding: 12px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  margin: 10px 0;
-  text-decoration: none;
-  display: block;
+  padding: 10px; /* Уменьшены отступы */
+  position: fixed;  /* Закрепляем футер внизу */
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: auto;
+  border-radius: 9px 9px 0 0; /* Закругление углов для футера */
+  z-index: 999; /* Футер должен быть ниже, чем меню */
 }
 
-.link-button:hover {
-  background-color: #2980b9;
+footer p {
+  margin: 0;
+  font-size: 12px; /* Уменьшен шрифт футера */
 }
 
-/* Блоки с информацией */
-.info-box {
-  background-color: #34495e;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 12px;
+/* Адаптивность для мобильных устройств */
+@media screen and (max-width: 768px) {
+  /* Уменьшаем размер шрифта для мобильных */
+  nav ul li a {
+    font-size: 12px;
+    padding: 6px 12px; /* Уменьшены отступы для кнопок */
+  }
+
+  .content-section {
+    padding: 8px; /* Меньше отступов для контента */
+    margin: 8px auto;
+  }
+
+  .content-section h1, .content-section h2, .content-section h3 {
+    font-size: 1.4em; /* Уменьшенный размер заголовков */
+  }
+
+  .content-section p {
+    font-size: 1em; /* Уменьшенный размер текста */
+  }
+
+  .button {
+    font-size: 12px; /* Уменьшенный размер шрифта для кнопок */
+    padding: 8px 16px; /* Уменьшены отступы для кнопок */
+  }
+
+  footer {
+    font-size: 10px; /* Уменьшенный размер шрифта футера */
+    padding: 8px;
+  }
 }
 
-.info-box h2, .info-box h3 {
-  font-size: 24px;
-  color: #fff;
-}
+@media screen and (max-width: 480px) {
+  /* Уменьшаем размер шрифта для маленьких экранов */
+  nav ul li a {
+    font-size: 11px;
+    padding: 5px 10px; /* Еще меньше отступы для кнопок */
+  }
 
-.info-box ul {
-  list-style-type: none;
-  padding-left: 20px;
-}
+  .content-section {
+    padding: 6px; /* Еще меньше отступов для контента */
+    margin: 5px auto;
+  }
 
-.info-box ul li {
-  font-size: 18px;
-  color: #e0e0e0;
-  margin: 8px 0;
-}
+  .content-section h1, .content-section h2, .content-section h3 {
+    font-size: 1.2em; /* Уменьшенный размер заголовков */
+  }
 
-.rules-box {
-  background-color: #444444;
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 10px;
-}
+  .content-section p {
+    font-size: 0.9em; /* Еще меньший размер текста */
+  }
 
-.rules-box p {
-  font-size: 16px;
+  .button {
+    font-size: 11px; /* Меньший размер для кнопок */
+    padding: 6px 12px; /* Уменьшены отступы для кнопок */
+  }
+
+  footer {
+    font-size: 10px;
+    padding: 7px;
+  }
 }
