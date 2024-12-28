@@ -1,133 +1,134 @@
 /* Основной стиль страницы */
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-  color: #616161;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  padding-top: 50px;
+  font-family: Arial, sans-serif; /* Шрифт для всего документа */
+  margin: 0; /* Убирает стандартные внешние отступы браузера */
+  padding: 0; /* Убирает стандартные внутренние отступы */
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); /* Градиентный фон с углом 135 градусов */
+  color: #616161; /* Цвет текста */
+  display: flex; /* Используем flexbox для вертикального выравнивания контента */
+  flex-direction: column; /* Элементы будут располагаться по вертикали */
+  min-height: 100vh; /* Страница будет занимать как минимум всю высоту экрана */
+  padding-top: 50px; /* Отступ сверху для того, чтобы контент не перекрывался фиксированным меню */
 }
+
 /* Навигационная панель */
 header {
-  background-color: #333;
-  color: white;
-  padding: 15px 0;
-  border-radius: 9px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #333; /* Темный фон для навигации */
+  color: white; /* Белый цвет текста в меню */
+  padding: 15px 0; /* Вертикальные отступы для увеличения высоты меню */
+  border-radius: 9px; /* Закругление углов меню */
+  position: fixed; /* Закрепление меню вверху страницы */
+  top: 0; /* Позиционируем сверху */
+  left: 0; /* Слева */
+  right: 0; /* Справа */
+  z-index: 1000; /* Высокий z-index, чтобы меню было поверх других элементов */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Легкая тень для создания эффекта "плавающего" меню */
 }
 
 nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  text-align: center;
-  display: flex;
-  justify-content: center;
+  list-style: none; /* Убирает стандартные маркеры списка */
+  padding: 0; /* Убирает отступы внутри списка */
+  margin: 0; /* Убирает внешние отступы */
+  text-align: center; /* Выравнивание текста по центру */
+  display: flex; /* Используем flexbox для расположения элементов в строку */
+  justify-content: center; /* Выравнивание элементов по центру горизонтально */
 }
 
 nav ul li {
-  margin: 0 12px;
+  margin: 0 12px; /* Отступы между пунктами меню */
 }
 
 nav ul li a {
-  color: white;
-  text-decoration: none;
-  font-size: 13px;
-  padding: 8px 18px;
-  border-radius: 8px;
-  background-color: transparent;
-  transition: background-color 0.3s ease, padding 0.3s ease;
+  color: white; /* Белый цвет текста */
+  text-decoration: none; /* Убирает подчеркивание с ссылок */
+  font-size: 13px; /* Размер шрифта */
+  padding: 8px 18px; /* Отступы вокруг текста ссылки */
+  border-radius: 8px; /* Закругление углов ссылки */
+  background-color: transparent; /* Прозрачный фон */
+  transition: background-color 0.3s ease, padding 0.3s ease; /* Плавные переходы при изменении фона и отступов */
 }
 
 nav ul li a:hover {
-  background-color: #a9a9a9;
-  padding: 8px 24px;
-  color: white;
+  background-color: #a9a9a9; /* Цвет фона при наведении */
+  padding: 8px 24px; /* Увеличение отступов при наведении */
+  color: white; /* Белый цвет текста при наведении */
 }
 
 /* Стили для иконок */
 .material-symbols-outlined {
-  vertical-align: middle;
-  margin-right: 7px;
+  vertical-align: middle; /* Выравнивание иконки по вертикали */
+  margin-right: 7px; /* Отступ справа от иконки */
   font-size: 10px; /* Размер иконки */
 }
 
 /* Блоки контента */
 .content-section {
-  background: rgba(255, 255, 255, 0.8); /* Светлый фон с прозрачностью */
-  padding: 15px; /* Увеличенные отступы для удобства чтения */
-  margin: 20px auto;
-  border-radius: 12px;
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
-  flex: 1;
-  max-width: 1000px;
-  background: linear-gradient(135deg, #ffffff 0%, #f4f4f4 100%);
-  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.651); /* Полупрозрачный белый фон */
+  padding: 15px; /* Внутренние отступы для удобства чтения */
+  margin: 20px auto; /* Отступы сверху и снизу, автоматическое выравнивание по центру */
+  border-radius: 12px; /* Закругление углов блока */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1); /* Легкая тень для блока */
+  flex: 1; /* Этот блок будет растягиваться, занимая оставшееся пространство */
+  max-width: 1000px; /* Максимальная ширина блока */
+  background: linear-gradient(135deg, #ffffff 0%, #f4f4f4 100%); /* Градиентный фон блока */
+  transition: all 0.3s ease; /* Плавные переходы для всех изменений */
 }
 
 .content-section:hover {
-  transform: translateY(-3px); /* Эффект поднятия блока */
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px); /* Легкое поднятие блока при наведении */
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2); /* Более выраженная тень при наведении */
 }
 
 /* Адаптивность */
 @media screen and (max-width: 768px) {
   nav ul li a {
-    font-size: 12px;
-    padding: 8px 14px;
+    font-size: 12px; /* Меньший размер шрифта для мобильных устройств */
+    padding: 8px 14px; /* Уменьшенные отступы */
   }
 
   .content-section {
-    padding: 10px;
-    margin: 15px auto;
+    padding: 10px; /* Меньше отступов в контенте */
+    margin: 15px auto; /* Меньше внешних отступов */
   }
 
   footer {
-    font-size: 10px;
-    padding: 10px;
+    font-size: 10px; /* Меньше размер шрифта для футера */
+    padding: 10px; /* Меньше отступов в футере */
   }
 }
 
 @media screen and (max-width: 480px) {
   nav ul li a {
-    font-size: 11px;
-    padding: 6px 10px;
+    font-size: 11px; /* Еще меньше шрифт для маленьких экранов */
+    padding: 6px 10px; /* Еще меньше отступы для мобильных */
   }
 
   .content-section {
-    padding: 8px;
-    margin: 10px auto;
+    padding: 8px; /* Еще меньше отступов в контенте */
+    margin: 10px auto; /* Меньше внешних отступов */
   }
 
   footer {
-    font-size: 10px;
-    padding: 8px;
+    font-size: 10px; /* Размер шрифта футера */
+    padding: 8px; /* Меньше отступов в футере */
   }
 }
 
 /* Футер */
 footer {
-  background: #333;
-  color: #fff;
-  text-align: center;
-  padding: 15px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  box-sizing: border-box;
-  border-radius: 9px 9px 0 0;
-  z-index: 999;
+  background: #333; /* Темный фон для футера */
+  color: #fff; /* Белый цвет текста */
+  text-align: center; /* Выравнивание текста по центру */
+  padding: 15px; /* Внутренние отступы */
+  position: fixed; /* Фиксация футера внизу страницы */
+  bottom: 0; /* Закрепляем футер внизу */
+  width: 100%; /* Футер растягивается на всю ширину страницы */
+  box-sizing: border-box; /* Включаем отступы в общую ширину */
+  border-radius: 9px 9px 0 0; /* Закругление углов сверху */
+  z-index: 999; /* Футер будет под меню */
 }
 
 footer p {
-  margin: 0;
-  font-size: 16px;
+  margin: 0; /* Убираем внешние отступы у параграфа футера */
+  font-size: 16px; /* Размер шрифта в футере */
 }
