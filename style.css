@@ -1,70 +1,118 @@
-/* Основной стиль страницы */
+/* Основной стиль */
 body {
-  font-family: Arial, sans-serif; /* Шрифт для всего документа */
-  margin: 0; /* Убирает стандартные внешние отступы браузера */
-  padding: 0; /* Убирает стандартные внутренние отступы */
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); /* Градиентный фон с углом 135 градусов */
-  color: #616161; /* Цвет текста */
-  display: flex; /* Используем flexbox для вертикального выравнивания контента */
-  flex-direction: column; /* Элементы будут располагаться по вертикали */
-  min-height: 100vh; /* Страница будет занимать как минимум всю высоту экрана */
-  /*padding-top: 10px; /* Отступ сверху для того, чтобы контент не перекрывался фиксированным меню */
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  color: #616161;
+  min-height: 100vh;
 }
 
-/* Стили для навигации */
+/* Стили для header */
+header {
+  background: rgba(0, 0, 0, 0.24);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  height: 50px; /* Уменьшаем высоту меню */
+  border-radius: 15px; /* Закругляем углы у меню */
+}
+
+/* Стили для футера */
+footer {
+  background: rgba(0, 0, 0, 0.582); /* Прозрачный черный фон */
+  color: #bbbbbb;
+  text-align: center;
+  padding: 8px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 999; /* Футер будет поверх других элементов */
+  font-size: 14px;
+  border-radius: 20px; /* Закругление углов меню */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Легкая тень для эффекта "плавания" */
+}
+
+/* Убираем подчеркивание и выделение текста */
+footer a {
+  text-decoration: none; /* Убирает подчеркивание */
+  color: inherit; /* Наследует цвет родительского элемента, т.е. не изменяет цвет */
+  outline: none; /* Убирает выделение при фокусе */
+}
+
+/* Стили для верхней навигации */
+nav {
+  position: fixed; /* Закрепляем меню сверху */
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8); /* Прозрачный черный фон */
+  color: white;
+  padding: 5px 0; /* Уменьшаем отступы в меню */
+  z-index: 1000; /* Меню будет поверх других элементов */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Тень для плавного эффекта */
+  border-radius: 20px; /* Закругление углов меню */
+}
+
+/* Стили для списка меню */
 nav ul {
-  list-style: none; /* Убирает маркеры списка */
-  padding: 0; /* Убирает внутренние отступы у списка */
-  margin: 0; /* Убирает внешние отступы у списка */
-  text-align: center; /* Выравнивает элементы по центру */
-  display: flex; /* Использует flexbox для горизонтального выравнивания */
-  justify-content: center; /* Центрирует элементы по горизонтали */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 nav ul li {
-  margin: 0 12px; /* Отступы между пунктами меню */
-  position: relative; /* Для позиционирования всплывающих описаний */
+  margin: 0 12px;
 }
 
 nav ul li a {
-  color: white; /* Белый цвет текста */
-  text-decoration: none; /* Убирает подчеркивание ссылок */
-  font-size: 24px; /* Размер шрифта для ссылок */
-  display: block; /* Делает ссылки блочными элементами, чтобы можно было задавать отступы */
-  padding: 10px; /* Внутренние отступы внутри ссылки */
-  transition: transform 0.3s ease; /* Плавное изменение масштаба при наведении */
+  color: white;
+  text-decoration: none;
+  font-size: 20px; /* Уменьшаем размер шрифта для меню */
+  display: block;
+  padding: 10px;
+  transition: transform 0.3s ease;
 }
 
 nav ul li a:hover {
-  transform: scale(1.2); /* Увеличение иконки при наведении */
+  transform: scale(1.2);
 }
 
 /* Всплывающее описание при наведении */
 nav ul li a::after {
-  content: attr(data-title); /* Текст, который берем из атрибута data-title */
-  position: absolute; /* Абсолютное позиционирование для всплывающего текста */
-  bottom: -35px; /* Расположение текста ниже ссылки */
-  left: 50%; /* Центрирование по горизонтали */
-  transform: translateX(-50%); /* Двигаем на 50% влево, чтобы центрировать */
-  background-color: #333; /* Темный фон для подсказки */
-  color: white; /* Белый цвет текста */
-  padding: 5px; /* Отступы внутри подсказки */
-  font-size: 12px; /* Размер шрифта */
-  border-radius: 5px; /* Скругление углов подсказки */
-  opacity: 0; /* Изначально скрыто */
-  visibility: hidden; /* Изначально невидимо */
-  transition: opacity 0.3s ease; /* Плавный переход появления */
+  content: attr(data-title);
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 5px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
 }
 
 nav ul li a:hover::after {
-  opacity: 1; /* При наведении текст становится видимым */
-  visibility: visible; /* Показываем подсказку */
+  opacity: 1;
+  visibility: visible;
 }
 
 /* Блоки контента */
 .content-section {
   background: rgba(255, 255, 255, 0.651); /* Полупрозрачный белый фон */
-  padding: 15px; /* Внутренние отступы для удобства чтения */
+  padding: 20px; /* Внутренние отступы для удобства чтения */
   margin: 20px auto; /* Отступы сверху и снизу, автоматическое выравнивание по центру */
   border-radius: 12px; /* Закругление углов блока */
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1); /* Легкая тень для блока */
@@ -74,10 +122,10 @@ nav ul li a:hover::after {
   transition: all 0.3s ease; /* Плавные переходы для всех изменений */
 }
 
-/*.content-section:hover {
-  transform: translateY(-3px); /* Легкое поднятие блока при наведении */
-  /*box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2); /* Более выраженная тень при наведении */
-/*}*/
+/* Добавляем отступ у основного контента */
+.content {
+  padding-top: 80px; /* Отступ, равный высоте меню */
+}
 
 /* Стиль для класса bot-name */
 .bot-name {
@@ -88,93 +136,9 @@ nav ul li a:hover::after {
   letter-spacing: 1px; /* Увеличиваем расстояние между буквами */
 }
 
-/* Стиль для кнопки */
+/* Убираем подчеркивание и выделение текста */
 .button {
-  background-color: #142cff; /* Основной цвет фона кнопки */
-  color: rgb(177, 176, 176); /* Белый цвет текста */
-  font-size: 14px; /* Размер шрифта */
-  padding: 12px 13px; /* Больше внутренних отступов */
-  border-radius: 30px; /* Закругленные углы */
-  border: none; /* Убираем рамку */
-  cursor: pointer; /* Указатель курсора при наведении */
-  text-align: center; /* Выравнивание текста по центру */
-  font-weight: bold; /* Жирный шрифт */
-  letter-spacing: 0.5px; /* Немного увеличиваем расстояние между буквами */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Легкая тень для кнопки */
-  transition: all 0.3s ease; /* Плавные переходы для всех эффектов */
-}
-
-/* Эффект при наведении на кнопку */
-.button:hover {
-  background-color: #0b3aa000; /* Темный оттенок при наведении */
-  /*transform: scale(1.1); /* Легкое увеличение кнопки */
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Увеличенная тень при наведении */
-}
-
-/* Эффект при активном нажатии на кнопку */
-.button:active {
-  background-color: #256cd6; /* Еще более темный оттенок при нажатии */
-  transform: scale(1.05); /* Легкое уменьшение кнопки при нажатии */
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1); /* Уменьшенная тень при нажатии */
-}
-
-/* Кнопка с фокусом (если она активирована через клавиатуру) */
-.button:focus {
-  outline: none; /* Убираем стандартную рамку */
-  box-shadow: 0 0 5px 2px rgba(38, 101, 255, 0.7); /* Светящийся эффект вокруг кнопки */
-}
-
-
-/* Адаптивность */
-@media screen and (max-width: 768px) {
-  nav ul li a {
-    font-size: 12px; /* Меньший размер шрифта для мобильных устройств */
-    padding: 8px 14px; /* Уменьшенные отступы */
-  }
-
-  .content-section {
-    padding: 10px; /* Меньше отступов в контенте */
-    margin: 15px auto; /* Меньше внешних отступов */
-  }
-
-  footer {
-    font-size: 10px; /* Меньше размер шрифта для футера */
-    padding: 10px; /* Меньше отступов в футере */
-  }
-}
-
-@media screen and (max-width: 480px) {
-  nav ul li a {
-    font-size: 11px; /* Еще меньше шрифт для маленьких экранов */
-    padding: 6px 10px; /* Еще меньше отступы для мобильных */
-  }
-
-  .content-section {
-    padding: 8px; /* Еще меньше отступов в контенте */
-    margin: 10px auto; /* Меньше внешних отступов */
-  }
-
-  footer {
-    font-size: 10px; /* Размер шрифта футера */
-    padding: 8px; /* Меньше отступов в футере */
-  }
-}
-
-/* Футер */
-footer {
-  background: #33333300; /* Темный фон для футера */
-  color: #bbbbbb; /* Белый цвет текста */
-  text-align: center; /* Выравнивание текста по центру */
-  padding: 15px; /* Внутренние отступы */
-  position: fixed; /* Фиксация футера внизу страницы */
-  bottom: 0; /* Закрепляем футер внизу */
-  width: 100%; /* Футер растягивается на всю ширину страницы */
-  box-sizing: border-box; /* Включаем отступы в общую ширину */
-  border-radius: 9px 9px 0 0; /* Закругление углов сверху */
-  z-index: 999; /* Футер будет под меню */
-}
-
-footer p {
-  margin: 0; /* Убираем внешние отступы у параграфа футера */
-  font-size: 16px; /* Размер шрифта в футере */
+  text-decoration: none; /* Убирает подчеркивание */
+  color: inherit; /* Наследует цвет родительского элемента, т.е. не изменяет цвет */
+  outline: none; /* Убирает выделение при фокусе */
 }
