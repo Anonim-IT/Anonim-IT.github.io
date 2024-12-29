@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>Anonim Community - Minecraft Server</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Контейнер для навигационной панели -->
+    <div id="navbar-container"></div>
+
+    <main>
+        <!-- Главный блок с информацией о сервере -->
+        <section class="content-section">
+            <h1>Наш Minecraft-сервер</h1>
+            <p>Добро пожаловать в мир Minecraft от <strong>Anonim Community</strong>! 3 майнкрафт проекта где вы дорогие друзья сможете играть как с модами так и на лицензии так же и просто выживать!</p>
+            <ul>
+                <h3><strong>Версия для пк(Java)</strong></h3>
+                <li>
+                    <strong>Версия сервера:</strong> 1.16.5 - 1.21.4
+                </li>
+                <li>
+                    <strong>IP-адрес (точного пока нет):</strong> 
+                    <span id="ip1" onclick="copyToClipboard('ip1')" class="clickable-ip">anonimcommunity.aternos.me</span>
+                </li>
+                <li>
+                    <strong>Особенности:</strong> выживание, лицензионная ванила, PvP, сборки модов, гриферское выживание и многое другое.
+                </li>
+            </ul>
+            <ul>
+                <h3><strong>Версия для Телефонов(Bedrock)</strong></h3>
+                <li>
+                    <strong>IP-адрес (точного пока нет):</strong> 
+                    <span id="ip2" onclick="copyToClipboard('ip2')" class="clickable-ip">anonimcommunity.aternos.me:32013</span>
+                </li>
+                <li>
+                    <strong>Особенности:</strong> выживание, лицензионная ванила, PvP, сборки модов, гриферское выживание и многое другое.
+                </li>
+            </ul>
+            <a href="https://discord.gg/ePNT2UxhGE" target="_blank" class="button">Присоединиться к Discord</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Anonim Community | <a href="https://github.com/AnonimCompani/Privacy_Policy" target="_blank">Политика конфиденциальности</a></p>
+    </footer>
+
+    <script>
+        // Загрузка навигационного меню
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-container').innerHTML = data;
+
+                // Добавляем функционал бургер-меню после загрузки
+                const burgerMenu = document.querySelector('.burger-menu');
+                const menuList = document.querySelector('nav ul');
+
+                if (burgerMenu && menuList) {
+                    burgerMenu.addEventListener('click', () => {
+                        burgerMenu.classList.toggle('active');
+                        menuList.classList.toggle('open');
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка при загрузке навигационной панели:', error);
+            });
+
+        // Функция для копирования текста в буфер обмена
+        function copyToClipboard(elementId) {
+            const textToCopy = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(textToCopy)
+                .then(() => {
+                    alert('IP-адрес скопирован в буфер обмена: ' + textToCopy);
+                })
+                .catch(err => {
+                    console.error('Ошибка копирования: ', err);
+                });
+        }
+    </script>
+</body>
+</html>

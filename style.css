@@ -142,3 +142,13 @@ nav ul li a:hover::after {
   color: inherit; /* Наследует цвет родительского элемента, т.е. не изменяет цвет */
   outline: none; /* Убирает выделение при фокусе */
 }
+
+.clickable-ip {
+  cursor: pointer;
+  color: #5a5a5a; /* Синий цвет для выделения */
+  /*text-decoration: underline; /* Подчеркивание */
+  transition: color 0.3s;
+}
+.clickable-ip:hover {
+  color: #5a5a5a; /* Темнее при наведении */
+}
