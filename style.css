@@ -46,67 +46,69 @@ footer a {
   outline: none; /* Убирает выделение при фокусе */
 }
 
-/* Стили для верхней навигации */
-nav {
-  position: fixed; /* Закрепляем меню сверху */
-  top: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.8); /* Прозрачный черный фон */
-  color: white;
-  padding: 5px 0; /* Уменьшаем отступы в меню */
-  z-index: 1000; /* Меню будет поверх других элементов */
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Тень для плавного эффекта */
-  border-radius: 20px; /* Закругление углов меню */
-}
-
-/* Стили для списка меню */
-nav ul {
-  list-style: none;
+/* Общие стили */
+* {
   margin: 0;
   padding: 0;
-  text-align: center;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif; /* Простой и четкий шрифт */
+}
+
+/* Стили для навигационного меню */
+nav {
+  background-color: #222; /* Темный фон для меню */
+  padding: 16px 32px; /* Стандартные отступы */
+}
+
+.nav-list {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly; /* Элементы выравниваются равномерно */
+  list-style: none;
 }
 
-nav ul li {
-  margin: 0 12px;
+.nav-list li {
+  margin: 0;
 }
 
-nav ul li a {
-  color: white;
-  text-decoration: none;
-  font-size: 20px; /* Уменьшаем размер шрифта для меню */
-  display: block;
-  padding: 10px;
-  transition: transform 0.3s ease;
+.nav-list a {
+  color: #fff; /* Белый текст для всех ссылок */
+  text-decoration: none; /* Без подчеркиваний */
+  font-size: 14px; /* Размер текста стандартный */
+  font-weight: normal; /* Не жирный шрифт */
+  transition: color 0.3s; /* Плавный переход цвета */
+  padding: 8px 16px; /* Умеренные отступы */
+  display: flex;
+  align-items: center; /* Вертикальное выравнивание иконки и текста */
 }
 
-nav ul li a:hover {
-  transform: scale(1.2);
+.nav-list a span.material-symbols-outlined {
+  font-size: 18px; /* Размер иконки */
+  margin-right: 8px; /* Отступ между иконкой и текстом */
 }
 
-/* Всплывающее описание при наведении */
-nav ul li a::after {
-  content: attr(data-title);
-  position: absolute;
-  bottom: -35px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #333;
-  color: white;
-  padding: 5px;
-  font-size: 12px;
-  border-radius: 5px;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease;
+.nav-list a:hover {
+  color: #ddd; /* Светлый цвет текста при наведении */
 }
 
-nav ul li a:hover::after {
-  opacity: 1;
-  visibility: visible;
+/* Основной контент */
+main.content {
+  padding: 40px;
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 768px) {
+  .nav-list {
+      flex-direction: column; /* Элементы выстраиваются вертикально */
+      align-items: center; /* Центрируем элементы */
+  }
+
+  .nav-list a {
+      padding: 10px 20px; /* Больше отступов на мобильных */
+  }
+
+  .nav-list a span.material-symbols-outlined {
+      font-size: 16px; /* Немного уменьшаем иконки на мобильных */
+  }
 }
 
 /* Блоки контента */
