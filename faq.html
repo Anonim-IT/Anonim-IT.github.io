@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>Anonim Community - FAQ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Подключаем навигационную панель -->
+    <div id="navbar-container"></div>
+
+    <main>
+        <section class="content-section faq-section">
+            <h1>Часто задаваемые вопросы (FAQ)</h1>
+            
+            <!-- Вопрос 1 -->
+            <div class="faq-item">
+                <h2 class="faq-question">Как присоединиться к Minecraft серверу?</h2>
+                <p class="faq-answer">Чтобы присоединиться, вам нужно использовать IP-адрес сервера <strong>anonimcommunity.aternos.me</strong>. Если у вас возникли проблемы, присоединяйтесь к нашему Discord для получения помощи.</p>
+            </div>
+
+            <!-- Вопрос 2 -->
+            <div class="faq-item">
+                <h2 class="faq-question">Где можно найти правила проекта?</h2>
+                <p class="faq-answer">Правила проекта можно найти на нашей странице <a href="https://github.com/AnonimCompani/AnonimCommunityRules" target="_blank">GitHub</a>.</p>
+            </div>
+
+            <!-- Вопрос 3 -->
+            <div class="faq-item">
+                <h2 class="faq-question">Как стать администратором на сервере?</h2>
+                <p class="faq-answer">Для того чтобы стать администратором, нужно проявить активность, помочь другим игрокам и пройти процедуру отбора. Подробности можно узнать в Discord.</p>
+            </div>
+
+            <!-- Вопрос 4 -->
+            <div class="faq-item">
+                <h2 class="faq-question">Какие особенности у Minecraft сервера?</h2>
+                <p class="faq-answer">Наш сервер предлагает различные игровые режимы, включая выживание, PvP, моды и многое другое. IP-адрес: <strong>anonimcommunity.aternos.me</strong></p>
+            </div>
+
+            <!-- Вопрос 5 -->
+            <div class="faq-item">
+                <h2 class="faq-question">Как поддерживать проект?</h2>
+                <p class="faq-answer">Вы можете поддержать проект через платформу <a href="https://boosty.to/admin_ru" target="_blank">Boosty</a> или присоединившись к нашему Discord серверу.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Anonim Community | <a href="https://github.com/AnonimCompani/Privacy_Policy" target="_blank">Политика конфиденциальности</a></p>
+    </footer>
+
+    <script>
+      // Загрузка навигационного меню
+      fetch('navbar.html')
+          .then(response => response.text())
+          .then(data => {
+              document.getElementById('navbar-container').innerHTML = data;
+          })
+          .catch(error => {
+              console.error('Ошибка при загрузке навигационной панели:', error);
+          });
+    </script>
+</body>
+</html>
