@@ -14,29 +14,6 @@ body {
   flex-direction: column;
 }
 
-/* Новогодняя плашка */
-.new-year-banner {
-  background: linear-gradient(135deg, #ff7675, #fdcb6e);
-  color: #fff;
-  text-align: center;
-  padding: 40px 20px;
-  margin: 20px 0;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  position: relative;
-  overflow: hidden;
-}
-
-.new-year-banner h2 {
-  font-size: 2.5em;
-  margin-bottom: 10px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.new-year-banner p {
-  font-size: 1.2em;
-}
-
 /* Падающий снег */
 #snow {
   position: fixed;
@@ -53,39 +30,13 @@ body {
 /* Анимация снега */
 @keyframes snow {
   from {
-      transform: translateY(-100%);
+    transform: translateY(-100%);
   }
   to {
-      transform: translateY(100%);
+    transform: translateY(100%);
   }
 }
 
-/* Основной контент */
-.content-section {
-  padding: 20px;
-  margin: 20px auto;
-  max-width: 800px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Кнопки 
-button, a.button {
-  background: linear-gradient(135deg, #ff757500, #fdcb6e00);
-  border: none;
-  border-radius: 20px;
-  color: rgb(94, 94, 94);
-  padding: 10px 20px;
-  text-decoration: none;
-  font-size: 1em;
-  cursor: pointer;
-  transition: background 0.3s;
-}*/
-
-/*button:hover, a.button:hover {
-  background: linear-gradient(135deg, #fdcb6e, #ff7675);
-}
 /* Новогодняя плашка */
 .new-year-banner {
   background: linear-gradient(135deg, #ff7675, #fdcb6e); /* Градиент новогодних цветов */
@@ -101,8 +52,7 @@ button, a.button {
 
 /* Новогодний текст */
 .new-year-banner h2 {
-  font-size: 2em;
-  font-weight: bold;
+  font-size: 2.5em;
   margin-bottom: 10px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Тень текста */
 }
@@ -135,12 +85,13 @@ button, a.button {
 /* Анимация снежинок */
 @keyframes snow {
   0% {
-      transform: translateY(-50px) rotate(0deg);
+    transform: translateY(-50px) rotate(0deg);
   }
   100% {
-      transform: translateY(50px) rotate(360deg);
+    transform: translateY(50px) rotate(360deg);
   }
 }
+
 /* Стили для header */
 header {
   background: rgba(0, 0, 0, 0.24);
@@ -222,49 +173,18 @@ nav {
 .nav-list a:hover {
   color: #ddd; /* Светлый цвет текста при наведении */
 }
+
+/* Контент страницы */
 .content {
   padding-top: 80px; /* Отступ, равный высоте меню */
 }
 
-/* Падающий снег */
-#snow {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1000;
-  background: url('https://i.imgur.com/LE2bzzq.png') repeat;
-  animation: snow 10s linear infinite;
-}
-
-/* Анимация снега */
-@keyframes snow {
-  from {
-      transform: translateY(-100%);
-  }
-  to {
-      transform: translateY(100%);
-  }
-}
-
-/* Новогодняя плашка */
-.new-year-banner {
-  background: linear-gradient(135deg, #ff7675, #fdcb6e);
-  color: #fff;
-  text-align: center;
-  padding: 40px 20px;
-  margin: 20px 0;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.new-year-banner h2 {
-  font-size: 2.5em;
-  margin-bottom: 10px;
-}
-
-.new-year-banner p {
-  font-size: 1.2em;
+/* Основной контент */
+.content-section {
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 800px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }

@@ -4,47 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <title>Anonim Community - Minecraft Server</title>
+    <title>Anonim Community - Minecraft 🎄</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Контейнер для навигационной панели -->
+    <!-- Подключаем навигационную панель -->
     <div id="navbar-container"></div>
 
     <main>
-        <!-- Главный блок с информацией о сервере -->
         <section class="content-section">
-            <h1>Наш Minecraft-сервер</h1>
-            <p>Добро пожаловать в мир Minecraft от <strong>Anonim Community</strong>! 3 майнкрафт проекта где вы дорогие друзья сможете играть как с модами так и на лицензии так же и просто выживать!</p>
+            <h1>🎮 Наш Minecraft-сервер 🎄</h1>
+            <p>
+                Добро пожаловать в мир Minecraft от <strong>Anonim Community</strong>! 🎅
+                Мы предлагаем три уникальных проекта, где вы сможете играть с модами, на лицензии или просто наслаждаться выживанием! ❄
+            </p>
+
+            <h2>🖥️ Версия для ПК (Java)</h2>
             <ul>
-                <h3><strong>Версия для пк(Java)</strong></h3>
+                <li><strong>Версия сервера:</strong> 1.16.5 - 1.21.4</li>
                 <li>
-                    <strong>Версия сервера:</strong> 1.16.5 - 1.21.4
-                </li>
-                <li>
-                    <strong>IP-адрес (точного пока нет):</strong> 
+                    <strong>IP-адрес:</strong> 
                     <span id="ip1" onclick="copyToClipboard('ip1')" class="clickable-ip">anonimcommunity.aternos.me</span>
                 </li>
-                <li>
-                    <strong>Особенности:</strong> выживание, лицензионная ванила, PvP, сборки модов, гриферское выживание и многое другое.
-                </li>
+                <li><strong>Особенности:</strong> выживание, PvP, моды, гриферское выживание и многое другое. 🌟</li>
             </ul>
+
+            <h2>📱 Версия для Телефонов (Bedrock)</h2>
             <ul>
-                <h3><strong>Версия для Телефонов(Bedrock)</strong></h3>
                 <li>
-                    <strong>IP-адрес (точного пока нет):</strong> 
+                    <strong>IP-адрес:</strong> 
                     <span id="ip2" onclick="copyToClipboard('ip2')" class="clickable-ip">anonimcommunity.aternos.me:32013</span>
                 </li>
-                <li>
-                    <strong>Особенности:</strong> выживание, лицензионная ванила, PvP, сборки модов, гриферское выживание и многое другое.
-                </li>
+                <li><strong>Особенности:</strong> выживание, PvP, моды, гриферское выживание и многое другое. ❄</li>
             </ul>
-            <a href="https://discord.gg/ePNT2UxhGE" target="_blank" class="button">Присоединиться к Discord</a>
+
+            <h2>🎅 Новогодние мероприятия</h2>
+            <p>
+                В декабре и январе вас ждут уникальные новогодние ивенты, конкурсы и розыгрыши подарков! 
+                Не пропустите праздничное настроение на сервере. 🎁 
+            </p>
+
+            <a href="https://discord.gg/ePNT2UxhGE" target="_blank" class="button">🎄 Присоединиться к Discord</a>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 Anonim Community | <a href="https://github.com/AnonimCompani/Privacy_Policy" target="_blank">Политика конфиденциальности</a></p>
+        <p>&copy; 2024 Anonim Community 🎅 | <a href="https://github.com/AnonimCompani/Privacy_Policy" target="_blank">Политика конфиденциальности</a> | 
+        Сделано с любовью 🎁</p>
     </footer>
 
     <script>
@@ -53,17 +59,6 @@
             .then(response => response.text())
             .then(data => {
                 document.getElementById('navbar-container').innerHTML = data;
-
-                // Добавляем функционал бургер-меню после загрузки
-                const burgerMenu = document.querySelector('.burger-menu');
-                const menuList = document.querySelector('nav ul');
-
-                if (burgerMenu && menuList) {
-                    burgerMenu.addEventListener('click', () => {
-                        burgerMenu.classList.toggle('active');
-                        menuList.classList.toggle('open');
-                    });
-                }
             })
             .catch(error => {
                 console.error('Ошибка при загрузке навигационной панели:', error);
@@ -74,7 +69,7 @@
             const textToCopy = document.getElementById(elementId).textContent;
             navigator.clipboard.writeText(textToCopy)
                 .then(() => {
-                    alert('IP-адрес скопирован в буфер обмена: ' + textToCopy);
+                    alert('IP-адрес скопирован в буфер обмена: ' + textToCopy + ' 🎄');
                 })
                 .catch(err => {
                     console.error('Ошибка копирования: ', err);
