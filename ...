@@ -257,3 +257,9 @@ h1 {
   margin-bottom: 20px;
   color: #222;
 }
+
+
+
+
+    <!-- Падающий снег -->
+    <div id="snow"></div>
