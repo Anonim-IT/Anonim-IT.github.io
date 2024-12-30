@@ -14,7 +14,6 @@ body {
   flex-direction: column;
 }
 
-/* Падающий снег */
 #snow {
   position: fixed;
   top: 0;
@@ -23,7 +22,7 @@ body {
   height: 100%;
   pointer-events: none;
   z-index: 1000;
-  background: url('https://i.imgur.com/LE2bzzq.png') repeat;
+  background: url('https://www.transparenttextures.com/patterns/snow.png') repeat;
   animation: snow 10s linear infinite;
 }
 
