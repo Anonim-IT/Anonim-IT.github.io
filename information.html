@@ -8,6 +8,9 @@
         <link rel="stylesheet" href="style.css">
     </head>
 <body>
+    <!-- Падающий снег -->
+    <div id="snow"></div>
+
     <!-- Подключаем навигационную панель -->
     <div id="navbar-container"></div>
 
@@ -18,17 +21,18 @@
 
             <p><strong>Наш проект включает несколько ключевых модулей, которые развиваются с учетом потребностей сообщества:</strong></p>
             <ul>
-                <li><a href="https://discord.gg/ePNT2UxhGE"  class="button">AnonimCommunity Server</a> — Наш официальный Discord сервер.</li>
-                <li><a href="http://y92105hy.beget.tech/index.php"  class="button">AnonimForum</a> — Форум проекта, где обсуждаются новости и вопросы, связанные с проектом.</li>
-                <li><a href="#"  class="button">AnonimWiki</a> — Вики-страница проекта с подробной информацией о каждом модуле.</li>
-                <li><a href="minecraft.html"  class="button">AnonimWorld</a> — Сайт с будущими проектами и планами, которые будут реализованы в рамках Anonim Community.</li>
+                <li><a href="https://discord.gg/ePNT2UxhGE" class="button">AnonimCommunity Server</a> — Наш официальный Discord сервер.</li>
+                <li><a href="http://y92105hy.beget.tech/index.php" class="button">AnonimForum</a> — Форум проекта, где обсуждаются новости и вопросы, связанные с проектом.</li>
+                <li><a href="#" class="button">AnonimWiki</a> — Вики-страница проекта с подробной информацией о каждом модуле.</li>
+                <li><a href="minecraft.html" class="button">AnonimWorld</a> — Сайт с будущими проектами и планами, которые будут реализованы в рамках Anonim Community.</li>
             </ul>
         </section>
+
         <section class="content-section">
             <h1>Информация</h1>
             <p>Ребят, хотелось бы сообщить что мы готовим глобальное обновление в 2025 году. Что данный сайт это тока верхушка айзберга и в 2025 году
             мы выпустим обновление для данного сайта в котором сделаем личный кабинет и многое другое так что не забывайте следить за новостями на нашем форуме и на нашем YouTube канале
-        а на сегодня это все что я хотел вам сказать до новых встречь!</p>
+            а на сегодня это все что я хотел вам сказать до новых встречь!</p>
         </section>
     </main>
 
@@ -46,16 +50,6 @@
             .catch(error => {
                 console.error('Ошибка при загрузке навигационной панели:', error);
             });
-
-        // Получаем элементы для бургер-меню
-        const burgerMenu = document.querySelector('.burger-menu');
-        const menuList = document.querySelector('nav ul');
-
-        // Обработчик клика для открытия и закрытия меню
-        burgerMenu.addEventListener('click', () => {
-            burgerMenu.classList.toggle('active');
-            menuList.classList.toggle('open'); // Переключаем класс 'open' для отображения/скрытия меню
-        });
     </script>
 </body>
 </html>

@@ -8,42 +8,27 @@
         <link rel="stylesheet" href="style.css">
     </head>
 <body>
+    <!-- Падающий снег -->
+    <div id="snow"></div>
+
     <!-- Контейнер для навигационной панели -->
     <div id="navbar-container"></div>
 
     <main>
-        <!-- Главный блок -->
+        <section class="new-year-banner">
+            <div class="banner-content">
+                <h2>С Новым 2025 Годом!</h2>
+                <p>Anonim Community поздравляет вас с праздником! Пусть этот год принесет радость, успехи и новые достижения!</p>
+                <p>Спасибо, что остаетесь с нами!</p>
+            </div>
+        </section>
         <section class="content-section">
-            <h1>Добро пожаловать на официальный сайт Anonim Community</h1>
-    <p>Вы попали на официальный ресурс проекта <strong>Anonim Community</strong>, который является центром всей информации, связанной с нашим проектом. Здесь вы сможете ознакомиться с подробными данными о проекте, узнать важные правила и свод законов, а также следить за последними новостями и обновлениями.<br><br>
+            <h1>Добро пожаловать на сайт Anonim Community</h1>
+            <p>Anonim Community — это платформа для развития и взаимодействия. Мы создаем пространство, в котором каждый участник может найти что-то полезное.</p>
 
-        Мы создаем безопасное и анонимное пространство для всех участников, где каждый может найти полезную информацию и быть в курсе всех изменений, которые происходят в проекте.<br><br>
-        
-        Присоединяйтесь к <strong>Anonim Community</strong> и следите за развитием проекта, не пропуская важные события и новшества, которые мы готовим для вас в будущем.</p>
+            <p>Узнайте больше о <a href="about.html" class="button">нашем проекте</a>, включая информацию о модулях и будущих планах.</p>
         </section>
-
-        <!-- Блок с модулями -->
-        <section class="content-section">
-            <h2>Проект состоит из следующих модулей:</h2>
-            <ul>
-                <li><strong>AnonimCommunity:</strong> Наш основной модуль, основанный в 2023 году.</li>
-                <li><strong>AnonimForum:</strong> Вторичный модуль, основанный в 2024 году, в процессе разработки.</li>
-                <li><strong>AnonimWiki:</strong> Модуль в процессе.</li>
-                <li><strong>AnonimWorld:</strong> Запланирован на будущее.</li>
-            </ul>
-        </section>
-        <!-- Блок с информацией о проекте -->
-        <section class="content-section">
-            <h2>О проекте</h2>
-            <p>Этот проект представляет собой сеть серверов и чатов на различных платформах. Некоторые компоненты проекта:</p>
-            <ul>
-                <li><strong>YouTube канал</strong> — Доступен</li>
-                <li><strong>Яндекс Дзен</strong> — Доступен</li>
-                <li><strong>Сервер Minecraft</strong> — В разработке</li>
-                <li><strong>Телеграм канал и чаты</strong> — Доступны</li>
-                <li><strong>Хостинг Minecraft</strong> — Запланирован</li>
-            </ul>
-        </section>
+    </section>
     </main>
 
     <footer>
@@ -60,16 +45,6 @@
             .catch(error => {
                 console.error('Ошибка при загрузке навигационной панели:', error);
             });
-
-        // Получаем элементы для бургер-меню
-        const burgerMenu = document.querySelector('.burger-menu');
-        const menuList = document.querySelector('nav ul');
-
-        // Обработчик клика для открытия и закрытия меню
-        burgerMenu.addEventListener('click', () => {
-            burgerMenu.classList.toggle('active');
-            menuList.classList.toggle('open'); // Переключаем класс 'open' для отображения/скрытия меню
-        });
     </script>
 </body>
 </html>

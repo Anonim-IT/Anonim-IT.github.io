@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+        <title>Anonim Community - О проекте</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+<body>
+    <!-- Подключаем навигационную панель -->
+    <div id="navbar-container"></div>
+
+    <main>
+        <section class="content-section">
+            <h2>О проекте</h2>
+            <p>Проект <strong>Anonim Community</strong> включает в себя множество компонентов, которые создаются для вашего удобства и комфорта. Вот текущий статус наших ключевых элементов:</p>
+            <ul>
+                <li><strong>YouTube канал:</strong> Доступен и активно обновляется. Подписывайтесь, чтобы не пропускать новинки и анонсы.</li>
+                <li><strong>Яндекс Дзен:</strong> Доступен. Там публикуются статьи и полезные материалы для участников сообщества.</li>
+                <li><strong>Сервер Minecraft:</strong> В процессе разработки. Мы работаем над созданием уникального игрового опыта.</li>
+                <li><strong>Телеграм канал и чаты:</strong> Полностью доступны. Присоединяйтесь для общения и получения оперативных новостей.</li>
+                <li><strong>Хостинг Minecraft:</strong> Планируется к запуску. Следите за нашими анонсами, чтобы узнать больше.</li>
+            </ul>
+            <p>Мы активно работаем над развитием проекта и ценим вашу поддержку. Если у вас есть предложения или вопросы, свяжитесь с нами через <a href="https://discord.gg/ePNT2UxhGE" target="_blank">наш Discord</a>.</p>
+        </section>
+
+        <section class="content-section">
+            <h2>Проект состоит из следующих модулей:</h2>
+            <ul>
+                <li><strong>AnonimCommunity:</strong> Основной модуль, основанный в 2023 году.</li>
+                <li><strong>AnonimForum:</strong> Вторичный модуль, основанный в 2024 году, в процессе разработки.</li>
+                <li><strong>AnonimWiki:</strong> Модуль для информации, в разработке.</li>
+                <li><strong>AnonimWorld:</strong> Запланирован на будущее.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Anonim Community | <a href="https://github.com/AnonimCompani/Privacy_Policy" target="_blank">Политика конфиденциальности</a></p>
+    </footer>
+
+    <script>
+        // Загрузка навигационного меню
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-container').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Ошибка при загрузке навигационной панели:', error);
+            });
+    </script>
+</body>
+</html>

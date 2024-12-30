@@ -60,3 +60,200 @@
   outline: none; /* Убираем стандартную рамку */
   box-shadow: 0 0 5px 2px rgba(38, 101, 255, 0.7); /* Светящийся эффект вокруг кнопки */
 }
+
+/* Основной стиль */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  color: #616161;
+  min-height: 100vh;
+}
+
+/* Стили для header */
+header {
+  background: rgba(0, 0, 0, 0.24);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  height: 50px; /* Уменьшаем высоту меню */
+  border-radius: 15px; /* Закругляем углы у меню */
+}
+
+/* Стили для футера */
+footer {
+  background: rgba(0, 0, 0, 0.582); /* Прозрачный черный фон */
+  color: #bbbbbb;
+  text-align: center;
+  padding: 8px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 999; /* Футер будет поверх других элементов */
+  font-size: 14px;
+  border-radius: 20px; /* Закругление углов меню */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Легкая тень для эффекта "плавания" */
+}
+
+/* Убираем подчеркивание и выделение текста */
+footer a {
+  text-decoration: none; /* Убирает подчеркивание */
+  color: inherit; /* Наследует цвет родительского элемента, т.е. не изменяет цвет */
+  outline: none; /* Убирает выделение при фокусе */
+}
+
+/* Общие стили */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif; /* Простой и четкий шрифт */
+}
+
+/* Стили для навигационного меню */
+nav {
+  background-color: #222; /* Темный фон для меню */
+  padding: 16px 32px; /* Стандартные отступы */
+}
+
+.nav-list {
+  display: flex;
+  justify-content: space-evenly; /* Элементы выравниваются равномерно */
+  list-style: none;
+}
+
+.nav-list li {
+  margin: 0;
+}
+
+.nav-list a {
+  color: #fff; /* Белый текст для всех ссылок */
+  text-decoration: none; /* Без подчеркиваний */
+  font-size: 14px; /* Размер текста стандартный */
+  font-weight: normal; /* Не жирный шрифт */
+  transition: color 0.3s; /* Плавный переход цвета */
+  padding: 8px 16px; /* Умеренные отступы */
+  display: flex;
+  align-items: center; /* Вертикальное выравнивание иконки и текста */
+}
+
+.nav-list a span.material-symbols-outlined {
+  font-size: 18px; /* Размер иконки */
+  margin-right: 8px; /* Отступ между иконкой и текстом */
+}
+
+.nav-list a:hover {
+  color: #ddd; /* Светлый цвет текста при наведении */
+}
+
+/* Основной контент */
+main.content {
+  padding: 40px;
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 768px) {
+  .nav-list {
+      flex-direction: column; /* Элементы выстраиваются вертикально */
+      align-items: center; /* Центрируем элементы */
+  }
+
+  .nav-list a {
+      padding: 10px 20px; /* Больше отступов на мобильных */
+  }
+
+  .nav-list a span.material-symbols-outlined {
+      font-size: 16px; /* Немного уменьшаем иконки на мобильных */
+  }
+}
+
+/* Блоки контента */
+.content-section {
+  background: rgba(255, 255, 255, 0.651); /* Полупрозрачный белый фон */
+  padding: 20px; /* Внутренние отступы для удобства чтения */
+  margin: 20px auto; /* Отступы сверху и снизу, автоматическое выравнивание по центру */
+  border-radius: 12px; /* Закругление углов блока */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1); /* Легкая тень для блока */
+  flex: 1; /* Этот блок будет растягиваться, занимая оставшееся пространство */
+  max-width: 1300px; /* Максимальная ширина блока */
+  background: linear-gradient(135deg, #ffffff 0%, #f4f4f4 100%); /* Градиентный фон блока */
+  transition: all 0.3s ease; /* Плавные переходы для всех изменений */
+}
+
+/* Добавляем отступ у основного контента */
+.content {
+  padding-top: 80px; /* Отступ, равный высоте меню */
+}
+
+/* Стиль для класса bot-name */
+.bot-name {
+  font-weight: bold; /* Жирный шрифт */
+  color: #5a5a5a; /* Цвет текста */
+  font-size: 14px; /* Размер шрифта */
+  text-transform: uppercase; /* Преобразуем текст в верхний регистр */
+  letter-spacing: 1px; /* Увеличиваем расстояние между буквами */
+}
+
+/* Убираем подчеркивание и выделение текста */
+.button {
+  text-decoration: none; /* Убирает подчеркивание */
+  color: inherit; /* Наследует цвет родительского элемента, т.е. не изменяет цвет */
+  outline: none; /* Убирает выделение при фокусе */
+}
+
+.clickable-ip {
+  cursor: pointer;
+  color: #5a5a5a; /* Синий цвет для выделения */
+  /*text-decoration: underline; /* Подчеркивание */
+  transition: color 0.3s;
+}
+.clickable-ip:hover {
+  color: #5a5a5a; /* Темнее при наведении */
+}
+/* Стили для страницы FAQ */
+.faq-section {
+  padding: 10px;
+}
+
+.faq-item {
+  background-color: #dadada;  /* Легкий серый фон для каждого блока */
+  padding: 15px;
+  margin-bottom: 20px; /* Отступ снизу */
+  border-radius: 8px; /* Округленные углы */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Легкая тень для блока */
+}
+
+.faq-question {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px; /* Отступ под вопросом */
+  color: #333;  /* Темный цвет текста */
+}
+
+.faq-answer {
+  font-size: 1em;
+  color: #555;  /* Более светлый цвет для ответа */
+}
+
+.faq-answer a {
+  color: #757575;  /* Синие ссылки */
+  text-decoration: none;
+}
+
+.faq-answer a:hover {
+  text-decoration: underline;
+}
+
+/* Заголовок страницы FAQ */
+h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #222;
+}
