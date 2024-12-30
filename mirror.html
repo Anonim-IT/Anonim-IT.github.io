@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+        <title>Anonim Community - Зеркало 🪞</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+<body>
+    <!-- Контейнер для навигационной панели -->
+    <div id="navbar-container"></div>
+
+    <main>
+        <section class="content-section">
+            <h1>Добро пожаловать в Anonim Community - Зеркало</h1>
+            <p>Здесь вы можете скачать различные файлы и ресурсы.</p>
+        </section>
+        <section class="content-section">
+            <h2>Доступные файлы</h2>
+            <ul>
+                <li><a href="fail/-" target="_blank">Файл 1 (file1.zip)</a></li>
+                <li><a href="fail/-" target="_blank">Файл 2 (file2.tar.gz)</a></li>
+                <li><a href="fail/-" target="_blank">Файл 3 (file3.iso)</a></li>
+                <li><a href="fail/-" target="_blank">Файл 4 (file4.tar.bz2)</a></li>
+            </ul>
+        </section>
+    
+        <section class="content-section">
+            <h2>Дополнительные ресурсы</h2>
+            <ul>
+                <li><a href="https://archlinux.org/" target="_blank">Arch Linux Официальный сайт</a></li>
+                <li><a href="https://mirror.yandex.ru/archlinux/" target="_blank">Зеркало Arch Linux от Yandex</a></li>
+                <li><a href="https://disk.yandex.ru/d/QqRNAoesX-0ITg" target="_blank">Яндекс Диск Проекта</a></li>
+                <li><a href="https://modrinth.com/plugin/simple-voice-chat" target="_blank">Simple Voice-Chat Ресурс</a></li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Anonim Community | <a href="https://github.com/AnonimCompani/Privacy_Policy" target="_blank">Политика конфиденциальности</a> | Благодарим вас за участие в нашем сообществе! 🎁</p>
+    </footer>
+
+    <script>
+        // Загрузка навигационного меню
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-container').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Ошибка при загрузке навигационной панели:', error);
+            });
+    </script>
+</body>
+</html>
