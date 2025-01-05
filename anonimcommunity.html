@@ -7,18 +7,20 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Подключаем общее меню -->
+
+    <!-- Подключаем общее меню 
     <header>
         <nav>
             <ul class="nav-list">
                 <li><a href="index.html"><span class="material-symbols-outlined">home</span>Главная</a></li>
                 <li><a href="anonimcommunity.html"><span class="material-symbols-outlined">update</span>Журнал обновлений</a></li>
                 <li><a href="information.html"><span class="material-symbols-outlined">info</span>Информация</a></li>
-                <!-- Остальные пункты меню -->
+                
             </ul>
         </nav>
-    </header>
-
+    </header> -->
+    <!-- Подключаем навигационную панель -->
+    <div id="navbar-container"></div>
     <main class="content">
         <section class="updates-log">
             <article class="update-entry">
@@ -52,12 +54,19 @@
             </article>
         </section>
     </main>
-
     <footer>
         <p>&copy; 2024 Anonim Community | <a href="https://github.com/AnonimCompani/Privacy_Policy" target="_blank">Политика конфиденциальности</a> | Благодарим вас за участие в нашем проекте! 🎁</p>
     </footer>
-
-
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap" rel="stylesheet">
+    <script>
+        // Загрузка навигационного меню
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-container').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Ошибка при загрузке навигационной панели:', error);
+            });
+      </script>
 </body>
 </html>
