@@ -1,7 +1,10 @@
 /* Основной градиент для фона */
 html {
   height: 100%;
-  background: linear-gradient(135deg, #4a90e2 0%, #50c9c3 100%);
+  background: linear-gradient(135deg, #4b0082 0%, #6a5acd 100%); /* Фиолетово-синий градиент */
+  background-attachment: fixed; /* Фон фиксируется при прокрутке */
+  background-size: cover;
+  margin: 0;
 }
 
 /* Стили для навигационного меню */
@@ -11,7 +14,7 @@ html {
   list-style: none;
   padding: 10px 10px;
   margin: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(25, 25, 25, 0.8); /* Темный фон */
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
@@ -80,58 +83,19 @@ html {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Стили для больших экранов (настольные ПК) */
-@media (min-width: 768px) {
-  .nav-list {
-      flex-direction: row;
-  }
-}
-
-/* Стили для планшетов и небольших экранов */
-@media (max-width: 768px) {
-  .nav-list {
-      flex-direction: column;
-      align-items: flex-start;
-  }
-
-  .nav-list li {
-      margin: 5px 0;
-  }
-
-  .nav-list a {
-      width: 100%;
-      text-align: left;
-  }
-}
-
-/* Стили для телефонов */
-@media (max-width: 480px) {
-  body {
-      font-size: 14px;
-  }
-
-  .nav-list {
-      background: #333;
-      padding: 10px;
-  }
-
-  .nav-list a {
-      padding: 10px;
-      font-size: 16px;
-  }
-}
-
 /* Контент страницы */
 .content {
   padding-top: 70px;
   padding: 20px;
+  color: #dcdcdc; /* Светлый текст */
 }
 
 /* Основной блок контента */
 .content-section {
-  background: #fff;
+  background: #2b2b2b; /* Темный фон для контента */
+  color: #dcdcdc;
   margin: 20px auto;
-  max-width: 1000px;
+  max-width: 900px;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -139,7 +103,7 @@ html {
 
 /* Стили для футера */
 footer {
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(25, 25, 25, 0.9);
   color: #fff;
   text-align: center;
   padding: 10px 20px;
@@ -153,18 +117,18 @@ footer {
 }
 
 footer a {
-  color: #ffcb6e;
+  color: #9b59b6; /* Фиолетовый акцент */
   text-decoration: none;
   transition: color 0.3s;
 }
 
 footer a:hover {
-  color: #ffd36e;
+  color: #8e44ad; /* Более темный фиолетовый */
 }
 
 /* Новогодняя плашка */
 .new-year-banner {
-  background: linear-gradient(135deg, #ff6e7f, #bfe9ff);
+  background: linear-gradient(135deg, #6a5acd, #8a2be2); /* Плавный переход от синего к фиолетовому */
   color: #fff;
   text-align: center;
   padding: 20px;
@@ -184,34 +148,6 @@ footer a:hover {
   font-size: 1.2rem;
 }
 
-.new-year-banner::before,
-.new-year-banner::after {
-  content: "❄";
-  font-size: 4rem;
-  color: rgba(255, 255, 255, 0.3);
-  position: absolute;
-  animation: snow-fall 8s linear infinite;
-}
-
-.new-year-banner::before {
-  top: -30px;
-  left: 10%;
-}
-
-.new-year-banner::after {
-  bottom: -30px;
-  right: 10%;
-}
-
-@keyframes snow-fall {
-  0% {
-    transform: translateY(-50px) rotate(0deg);
-  }
-  100% {
-    transform: translateY(50px) rotate(360deg);
-  }
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -228,25 +164,28 @@ h1, h2, h3, p {
 }
 
 a {
-  color: #4a90e2;
+  color: #9b59b6; /* Фиолетовый акцент */
   text-decoration: none;
   transition: color 0.3s;
 }
 
 a:hover {
-  color: #3a7abf;
+  color: #8e44ad; /* Более темный фиолетовый */
 }
 
 /* Стили для блока обновлений */
 .updates-log {
-  margin: 20px 0;
+  margin: 10px 0;
+  padding: 10px;
+  margin: 10px auto;
+  max-width: 900px;
 }
 
 .update-entry {
   margin-bottom: 20px;
   padding: 20px;
-  background: rgba(240, 240, 240, 1);
-  border-left: 5px solid #4a90e2;
+  background: rgba(40, 40, 40, 1); /* Темный фон для записей */
+  border-left: 5px solid #6a5acd; /* Синий акцент */
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
@@ -259,7 +198,7 @@ a:hover {
 
 .update-entry h2 {
   font-size: 1.5rem;
-  color: #333;
+  color: #dcdcdc;
   margin-bottom: 10px;
 }
 
@@ -272,38 +211,89 @@ a:hover {
 .update-entry ul li {
   font-size: 1rem;
   margin: 5px 0;
-  color: #555;
+  color: #bbb;
 }
 
 /* Раздел горячей линии */
 .hotline-section {
-  background: #ffefef;
-  border: 1px solid #ff5e57;
+  background: #3e3e3e; /* Темный фон */
+  border: 1px solid #6a5acd; /* Синий акцент */
   border-radius: 10px;
   padding: 20px;
   margin: 20px auto;
-  max-width: 800px;
-  box-shadow: 0 4px 10px rgba(255, 94, 87, 0.2);
+  max-width: 900px;
+  box-shadow: 0 4px 10px rgba(106, 92, 222, 0.2);
 }
 
 .hotline-section h2 {
-  color: #ff5e57;
+  color: #6a5acd; /* Синий акцент */
   font-size: 1.8rem;
   margin-bottom: 10px;
 }
 
 .hotline-section p {
   font-size: 1rem;
-  color: #333;
+  color: #dcdcdc;
   margin: 5px 0;
 }
 
 .hotline-section a {
-  color: #ff5e57;
+  color: #6a5acd;
   text-decoration: none;
   font-weight: bold;
 }
 
 .hotline-section a:hover {
   text-decoration: underline;
+}
+
+/* Стили для блока с Discord-ботом */
+.discord-section {
+  background-color: #2C3E50;
+  color: #ffffff;
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-top: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.discord-section h2 {
+  font-size: 1.6em;
+  color: #6a5acd; /* Синий акцент */
+  margin-bottom: 10px;
+}
+
+.discord-section p {
+  font-size: 1.0em;
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.discord-section a {
+  color: #6a5acd;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.discord-section a:hover {
+  text-decoration: underline;
+}
+
+.discord-section .button {
+  background-color: #6a5acd;
+  color: #ffffff;
+  padding: 8px 15px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 4px;
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 1.0em;
+}
+
+.discord-section .button:hover {
+  background-color: #5b4db3; /* Темнее синий */
 }
