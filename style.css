@@ -103,28 +103,35 @@ html {
 
 /* Стили для футера */
 footer {
-  background: rgba(25, 25, 25, 0.9);
-  color: #fff;
-  text-align: center;
-  padding: 10px 20px;
+  background: rgba(25, 25, 25, 0.767); /* Темный фон с прозрачностью */
+  color: #fff; /* Белый цвет текста */
+  display: flex;
+  justify-content: center; /* Горизонтальное выравнивание по центру */
+  align-items: center; /* Вертикальное выравнивание по центру */
+  text-align: center; /* Центрируем текст */
+  border-radius: 10px; /* Скругление всех углов */
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2); /* Легкая тень сверху */
+  padding: 5px 20px; /* Уменьшенные отступы */
+  font-size: 14px; /* Меньший размер шрифта */
   position: fixed;
-  bottom: 0;
   left: 0;
   right: 0;
+  bottom: 10px; /* Прижимаем футер немного выше от нижнего края */
   z-index: 999;
-  border-radius: 10px 10px 0 0;
-  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
 }
 
+
+/* Стиль ссылок в футере */
 footer a {
   color: #9b59b6; /* Фиолетовый акцент */
   text-decoration: none;
-  transition: color 0.3s;
+  transition: color 0.3s; /* Плавный переход */
 }
 
 footer a:hover {
-  color: #8e44ad; /* Более темный фиолетовый */
+  color: #8e44ad; /* Более темный фиолетовый при наведении */
 }
+
 
 /* Новогодняя плашка */
 .new-year-banner {
