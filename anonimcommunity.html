@@ -44,13 +44,13 @@
                 </ul>
             </article>
 
-            <article class="update-entry">
+            <!--<article class="update-entry last-update">
                 <h2>Версия 1.0.0 (25 декабря 2024 года)</h2>
                 <ul>
                     <li>Запуск проекта Anonim Community.</li>
                     <li>Создана структура сайта, добавлено главное меню и стили.</li>
                 </ul>
-            </article>
+            </article>-->
         </section>
     </main>
 
@@ -68,6 +68,19 @@
             .catch(error => {
                 console.error('Ошибка при загрузке навигационной панели:', error);
             });
+
+        // Отслеживаем прокрутку страницы
+        window.addEventListener('scroll', function() {
+            const lastUpdate = document.querySelector('.last-update'); // Последний <article> с классом last-update
+            const scrollPosition = window.scrollY + window.innerHeight; // Текущая позиция прокрутки + высота окна
+            const lastUpdatePosition = lastUpdate.offsetTop + lastUpdate.offsetHeight; // Позиция последнего элемента
+
+            if (scrollPosition >= lastUpdatePosition) {
+                lastUpdate.classList.add('hidden'); // Добавляем класс, чтобы скрыть элемент
+            } else {
+                lastUpdate.classList.remove('hidden'); // Убираем класс, чтобы показать элемент
+            }
+        });
     </script>
 </body>
 </html>
