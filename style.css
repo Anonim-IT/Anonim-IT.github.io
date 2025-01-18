@@ -1,10 +1,11 @@
-/* Основной градиент для фона */
+/* Основной фон */
 html {
   height: 100%;
-  background: linear-gradient(135deg, #4b0082 0%, #6a5acd 100%); /* Фиолетово-синий градиент */
-  background-attachment: fixed; /* Фон фиксируется при прокрутке */
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); /* Холодные, строгие оттенки синего */
+  background-attachment: fixed;
   background-size: cover;
   margin: 0;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Более строгий шрифт */
 }
 
 /* Стили для навигационного меню */
@@ -14,20 +15,20 @@ html {
   list-style: none;
   padding: 10px 10px;
   margin: 0;
-  background: rgba(25, 25, 25, 0.8); /* Темный фон */
+  background: rgba(40, 40, 40, 0.9); /* Более строгий темный фон */
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
 .nav-list li {
   position: relative;
-  margin: 0 10px;
+  margin: 0 15px;
 }
 
 .nav-list a {
-  color: #fff;
+  color: #ecf0f1; /* Светлый текст */
   text-decoration: none;
-  padding: 10px 15px;
+  padding: 10px 20px;
   display: flex;
   align-items: center;
   border-radius: 10px;
@@ -35,13 +36,13 @@ html {
 }
 
 .nav-list a:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(236, 240, 241, 0.15); /* Легкий светлый акцент */
   transform: scale(1.05);
 }
 
 /* Иконки в меню */
 .nav-list a span.material-symbols-outlined {
-  font-size: 15px;
+  font-size: 16px;
   margin-right: 8px;
 }
 
@@ -55,7 +56,7 @@ html {
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: #333;
+  background-color: #2c3e50; /* Холодный темный фон */
   padding: 10px;
   border-radius: 5px;
   list-style: none;
@@ -71,7 +72,7 @@ html {
 }
 
 .dropdown-menu a {
-  color: #fff;
+  color: #ecf0f1;
   text-decoration: none;
   padding: 8px 10px;
   display: block;
@@ -80,67 +81,67 @@ html {
 }
 
 .dropdown-menu a:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(236, 240, 241, 0.2);
 }
 
 /* Контент страницы */
 .content {
   padding-top: 70px;
   padding: 20px;
-  color: #dcdcdc; /* Светлый текст */
+  color: #bdc3c7; /* Более холодный светлый текст */
 }
 
 /* Основной блок контента */
 .content-section {
-  background: #2b2b2b; /* Темный фон для контента */
-  color: #dcdcdc;
+  background: #34495e; /* Строгий темный фон для контента */
+  color: #ecf0f1;
   margin: 20px auto;
   max-width: 900px;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
 /* Стили для футера */
 footer {
-  background: rgba(25, 25, 25, 0.767); /* Темный фон с прозрачностью */
-  color: #fff; /* Белый цвет текста */
+  background: rgba(40, 40, 40, 0.85); /* Темный фон с прозрачностью */
+  color: #ecf0f1; /* Светлый текст */
   display: flex;
-  justify-content: center; /* Горизонтальное выравнивание по центру */
-  align-items: center; /* Вертикальное выравнивание по центру */
-  text-align: center; /* Центрируем текст */
-  border-radius: 10px; /* Скругление всех углов */
-  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2); /* Легкая тень сверху */
-  padding: 5px 20px; /* Уменьшенные отступы */
-  font-size: 14px; /* Меньший размер шрифта */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.4);
+  padding: 5px 20px;
+  font-size: 14px;
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 10px; /* Прижимаем футер немного выше от нижнего края */
+  bottom: 10px;
   z-index: 999;
 }
 
 /* Стиль ссылок в футере */
 footer a {
-  color: #9b59b6; /* Фиолетовый акцент */
+  color: #3498db; /* Голубой акцент */
   text-decoration: none;
-  transition: color 0.3s; /* Плавный переход */
+  transition: color 0.3s;
 }
 
 footer a:hover {
-  color: #8e44ad; /* Более темный фиолетовый при наведении */
+  color: #2980b9; /* Более темный голубой при наведении */
 }
 
-/* Новогодняя плашка */
+/* Новый год (если нужен) */
 .new-year-banner {
-  background: linear-gradient(135deg, #6a5acd, #8a2be2); /* Плавный переход от синего к фиолетовому */
-  color: #fff;
+  background: linear-gradient(135deg, #2c3e50, #34495e); /* Холодный градиент */
+  color: #ecf0f1;
   text-align: center;
   padding: 20px;
   border-radius: 10px;
   margin: 20px auto;
   max-width: 900px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   animation: fadeIn 1.5s ease-out;
 }
 
@@ -153,6 +154,7 @@ footer a:hover {
   font-size: 1.2rem;
 }
 
+/* Плавное появление */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -169,13 +171,13 @@ h1, h2, h3, p {
 }
 
 a {
-  color: #9b59b6; /* Фиолетовый акцент */
+  color: #3498db; /* Голубой акцент */
   text-decoration: none;
   transition: color 0.3s;
 }
 
 a:hover {
-  color: #8e44ad; /* Более темный фиолетовый */
+  color: #2980b9;
 }
 
 /* Стили для блока обновлений */
@@ -190,7 +192,7 @@ a:hover {
   margin-bottom: 20px;
   padding: 20px;
   background: rgba(40, 40, 40, 1); /* Темный фон для записей */
-  border-left: 5px solid #6a5acd; /* Синий акцент */
+  border-left: 5px solid #3498db; /* Строгий голубой акцент */
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
@@ -203,7 +205,7 @@ a:hover {
 
 .update-entry h2 {
   font-size: 1.5rem;
-  color: #dcdcdc;
+  color: #ecf0f1;
   margin-bottom: 10px;
 }
 
@@ -216,13 +218,13 @@ a:hover {
 .update-entry ul li {
   font-size: 1rem;
   margin: 5px 0;
-  color: #bbb;
+  color: #bdc3c7;
 }
 
 /* Раздел горячей линии */
 .hotline-section {
-  background: #3e3e3e; /* Темный фон */
-  border: 1px solid #6a5acd; /* Синий акцент */
+  background: #2c3e50; /* Строгий темный фон */
+  border: 1px solid #3498db; /* Голубой акцент */
   border-radius: 10px;
   padding: 20px;
   margin: 20px auto;
@@ -231,19 +233,19 @@ a:hover {
 }
 
 .hotline-section h2 {
-  color: #6a5acd; /* Синий акцент */
+  color: #3498db; /* Голубой акцент */
   font-size: 1.8rem;
   margin-bottom: 10px;
 }
 
 .hotline-section p {
   font-size: 1rem;
-  color: #dcdcdc;
+  color: #ecf0f1;
   margin: 5px 0;
 }
 
 .hotline-section a {
-  color: #6a5acd;
+  color: #3498db;
   text-decoration: none;
   font-weight: bold;
 }
@@ -254,7 +256,7 @@ a:hover {
 
 /* Стили для блока с Discord-ботом */
 .discord-section {
-  background-color: #2C3E50;
+  background-color: #2c3e50;
   color: #ffffff;
   padding: 15px 20px;
   border-radius: 8px;
@@ -267,7 +269,7 @@ a:hover {
 
 .discord-section h2 {
   font-size: 1.6em;
-  color: #6a5acd; /* Синий акцент */
+  color: #3498db;
   margin-bottom: 10px;
 }
 
@@ -278,7 +280,7 @@ a:hover {
 }
 
 .discord-section a {
-  color: #6a5acd;
+  color: #3498db;
   font-weight: bold;
   text-decoration: none;
 }
@@ -288,7 +290,7 @@ a:hover {
 }
 
 .discord-section .button {
-  background-color: #6a5acd;
+  background-color: #3498db;
   color: #ffffff;
   padding: 8px 15px;
   text-align: center;
@@ -300,15 +302,45 @@ a:hover {
 }
 
 .discord-section .button:hover {
-  background-color: #5b4db3; /* Темнее синий */
+  background-color: #2980b9;
 }
-/* Стили для последнего <article> 
-.last-update {
-  transition: opacity 0.6s ease; /* Плавное затухание
-}*/
+/* Стили для календаря */
+.calendar-section {
+  margin: 20px auto;
+  max-width: 80%;
+  text-align: center;
+}
 
-/* Скрытие последнего <article> 
-.last-update.hidden {
-  opacity: 0; /* Скрываем элемент при добавлении класса 
-  visibility: hidden; /* Делаем элемент невидимым 
-}*/
+#calendar {
+  width: 100%; /* Ограничиваем ширину календаря */
+  max-width: 800px; /* Ограничиваем максимальную ширину */
+  margin: 0 auto;
+  background-color: #fff; /* Белый фон */
+  border-radius: 10px; /* Закругленные углы */
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Тень */
+  border: 1px solid #e0e0e0; /* Легкая граница */
+}
+
+/* Настройка шрифтов и цвета */
+h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.fc-header-toolbar {
+  background-color: #f4f4f4; /* Легкий фон для панели */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.fc-button {
+  background-color: #3498db; /* Цвет кнопок */
+  color: white;
+  border: none;
+}
+
+.fc-button:hover {
+  background-color: #2980b9;
+}
