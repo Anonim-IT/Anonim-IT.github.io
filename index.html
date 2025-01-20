@@ -62,33 +62,38 @@
         });
 
         $(document).ready(function() {
-            // Инициализация календаря с событиями
-            $('#calendar').fullCalendar({
-                events: [
-                    
-                    // Добавьте другие события здесь по аналогии
-                ],
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
-                },
-                eventClick: function(event) {
-                    alert('Описание: ' + event.description);
-                },
-                // Уменьшаем размер шрифта
-                eventTextColor: '#fff',
-                buttonText: {
-                    today: 'Сегодня',
-                    month: 'Месяц',
-                    week: 'Неделя',
-                    day: 'День'
-                },
-                // Оформление календаря
-                height: 400,  // Уменьшаем высоту
-                aspectRatio: 1.5,  // Меняем соотношение сторон
-                themeSystem: 'bootstrap3', // Используем стили Bootstrap для календаря
-            });
+            // Загружаем события из файла JSON
+            fetch('events.json')
+                .then(response => response.json())
+                .then(events => {
+                    // Инициализация календаря с событиями из файла JSON
+                    $('#calendar').fullCalendar({
+                        events: events, // Подключаем события
+                        header: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'month,agendaWeek,agendaDay'
+                        },
+                        eventClick: function(event) {
+                            alert('Описание: ' + event.description);
+                        },
+                        // Уменьшаем размер шрифта
+                        eventTextColor: '#fff',
+                        buttonText: {
+                            today: 'Сегодня',
+                            month: 'Месяц',
+                            week: 'Неделя',
+                            day: 'День'
+                        },
+                        // Оформление календаря
+                        height: 400,  // Уменьшаем высоту
+                        aspectRatio: 1.5,  // Меняем соотношение сторон
+                        themeSystem: 'bootstrap3', // Используем стили Bootstrap для календаря
+                    });
+                })
+                .catch(error => {
+                    console.error('Ошибка загрузки данных событий:', error);
+                });
         });
     </script>
 </body>
