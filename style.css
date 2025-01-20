@@ -344,3 +344,49 @@ h2 {
 .fc-button:hover {
   background-color: #2980b9;
 }
+.news-section {
+  padding: 20px;
+}
+
+.news-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.news-card h2 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.news-card p {
+  margin: 10px 0;
+}
+
+.add-news button {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-news button:hover {
+  background-color: #218838;
+}
+
+button {
+  padding: 5px 10px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #c82333;
+}

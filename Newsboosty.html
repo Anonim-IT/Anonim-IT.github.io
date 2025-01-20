@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>Новости Бусти - Web Dev</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Навигационная панель -->
+    <header>
+        <nav id="navbar">
+            <!-- Контент загрузится динамически -->
+        </nav>
+    </header>
+
+    <main>
+        <section class="news-section">
+            <h1>Новости с Бусти</h1>
+
+            <!-- Секция для отображения новостей -->
+            <div id="news-list">
+                <!-- Новости будут загружаться сюда -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Web Dev | <a href="https://github.com/WebDevCompany/Privacy_Policy" target="_blank">Политика конфиденциальности</a> | Благодарим вас за участие в нашем проекте! 🌟</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Динамическая загрузка навигационной панели
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('navbar.html') // Замените на путь к вашему файлу с навигационным меню
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Ошибка загрузки: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('navbar').innerHTML = data;
+                })
+                .catch(error => console.error('Ошибка загрузки навигационного меню:', error));
+
+            // Загрузка новостей из JSON-файла
+            fetch('news.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Ошибка загрузки новостей: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(newsData => {
+                    displayNews(newsData);
+                })
+                .catch(error => console.error('Ошибка загрузки новостей:', error));
+        });
+
+        // Функция для отображения новостей
+        function displayNews(newsData) {
+            const newsListContainer = document.getElementById('news-list');
+            newsData.forEach(news => {
+                const newsItem = `
+                    <div class="news-card">
+                        <h2>${news.title}</h2>
+                        <p>${news.content}</p>
+                        <small>Дата: ${news.date}</small>
+                    </div>
+                `;
+                newsListContainer.innerHTML += newsItem;
+            });
+        }
+    </script>
+
+</body>
+</html>
