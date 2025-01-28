@@ -5,15 +5,32 @@ body {
   color: #e2e2e2;
   margin: 0;
   padding: 0;
+  scroll-behavior: smooth;
+  font-size: 12px; /* Уменьшил общий размер шрифта */
 }
-/* Стили для навигационного меню */
+
+/* Навигационное меню */
+header {
+  background-color: #222;
+  padding: 10px 20px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.8em;
+  color: #ecf0f1;
+  letter-spacing: 2px;
+}
+
 .nav-list {
   display: flex;
   justify-content: center;
   list-style: none;
   padding: 9px 10px;
   margin: 0;
-  background: rgba(65, 65, 65, 0.9); /* Более строгий темный фон */
+  background: rgba(65, 65, 65, 0.9);
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
@@ -24,25 +41,26 @@ body {
 }
 
 .nav-list a {
-  color: #ecf0f1; /* Светлый текст */
+  color: #ecf0f1;
   text-decoration: none;
-  padding: 10px 20px;
+  padding: 8px 15px;
   display: flex;
   align-items: center;
   border-radius: 10px;
+  font-size: 14px;
   transition: background 0.3s, transform 0.2s;
 }
 
 .nav-list a:hover {
-  background: rgba(236, 240, 241, 0.15); /* Легкий светлый акцент */
+  background: rgba(236, 240, 241, 0.15);
   transform: scale(1.05);
 }
 
-/* Иконки в меню */
 .nav-list a span.material-symbols-outlined {
   font-size: 16px;
   margin-right: 8px;
 }
+
 /* Стили для выпадающих меню */
 .dropdown {
   position: relative;
@@ -53,7 +71,7 @@ body {
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: #2b2b2c; /* Холодный темный фон */
+  background-color: #2b2b2c;
   padding: 10px;
   border-radius: 5px;
   list-style: none;
@@ -74,12 +92,14 @@ body {
   padding: 8px 10px;
   display: block;
   border-radius: 3px;
+  font-size: 13px;
   transition: background 0.3s;
 }
 
 .dropdown-menu a:hover {
   background: rgba(236, 240, 241, 0.2);
 }
+
 /* Секция героя */
 .hero {
   text-align: center;
@@ -87,6 +107,57 @@ body {
   padding: 50px 20px;
   color: #fff;
   text-shadow: 1px 1px 2px #000;
+}
+
+.hero h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.2em;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+/* Основной контент */
+main {
+  padding: 20px;
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  margin: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+  font-size: 2em;
+  border-bottom: 2px solid #4caf50;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+section {
+  margin-bottom: 30px;
+}
+
+section ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+section ul li {
+  margin: 10px 0;
+  padding-left: 20px;
+  position: relative;
+  font-size: 15px;
+}
+
+section ul li::before {
+  content: "✔️";
+  position: absolute;
+  left: 0;
+  color: #4caf50;
 }
 
 /* Список особенностей */
@@ -105,35 +176,38 @@ body {
 
 .features li {
   margin: 10px 0;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 /* Стили для футера */
 footer {
-  background: rgba(40, 40, 40, 0.85); /* Темный фон с прозрачностью */
-  color: #ecf0f1; /* Светлый текст */
+  background: rgba(40, 40, 40, 0.85);
+  color: #ecf0f1;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   border-radius: 10px;
   box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.4);
-  padding: 5px 20px;
-  font-size: 14px;
+  padding: 10px 20px;
+  font-size: 12px;
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 10px;
+  bottom: 0;
   z-index: 999;
 }
 
-/* Стиль ссылок в футере */
+footer p {
+  margin: 0;
+}
+
 footer a {
-  color: #3498db; /* Голубой акцент */
+  color: #3498db;
   text-decoration: none;
   transition: color 0.3s;
 }
 
 footer a:hover {
-  color: #2980b9; /* Более темный голубой при наведении */
+  color: #2980b9;
 }
