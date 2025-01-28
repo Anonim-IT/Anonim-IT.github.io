@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>WebBlocks - Новости</title>
+    <!-- Подключение Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <!-- Подключение Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+    <!-- Навигационная панель -->
+    <header>
+        <nav id="navbar"></nav>
+    </header>
+
+    <!-- Основной контент -->
+    <main>
+        <!-- Герой-секция -->
+        <section class="hero">
+            <h1><i class="fas fa-cube"></i> Новости WebBlocks</h1>
+            <p><i class="fas fa-info-circle"></i> Следите за последними обновлениями и новостями нашего проекта! Здесь вы найдете все актуальные изменения.</p>
+        </section>
+
+        <!-- Секция новостей -->
+        <section class="news-section">
+            <h2><i class="fas fa-newspaper"></i> Последние новости</h2>
+            <div id="news-list" class="news-container"></div>
+        </section>
+    </main>
+
+    <!-- Подвал -->
+    <footer>
+        <p>&copy; 2025 WebBlocks |
+            <a href="https://github.com/WebDevCompany/Privacy_Policy" target="_blank">
+                <i class="fas fa-shield-alt"></i> Политика конфиденциальности
+            </a> |
+            Благодарим за поддержку! <i class="fas fa-star"></i>
+        </p>
+    </footer>
+
+    <!-- Скрипты -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            loadNavbar();
+            loadNews();
+        });
+
+        // Загрузка навигационной панели
+        function loadNavbar() {
+            fetch('navbar.html')
+                .then(response => response.ok ? response.text() : Promise.reject(response.status))
+                .then(html => document.getElementById('navbar').innerHTML = html)
+                .catch(error => console.error('Ошибка загрузки меню:', error));
+        }
+
+        // Загрузка и отображение новостей
+        function loadNews() {
+            fetch('news-minecraft.json')
+                .then(response => response.ok ? response.json() : Promise.reject(response.status))
+                .then(newsData => renderNews(newsData))
+                .catch(error => console.error('Ошибка загрузки новостей:', error));
+        }
+
+        // Функция отображения новостей
+        function renderNews(newsData) {
+            const newsList = document.getElementById('news-list');
+            newsData.forEach(news => {
+                const newsCard = document.createElement('div');
+                newsCard.className = 'news-card minecraft-style';
+
+                newsCard.innerHTML = `
+                    <h2><i class="fas fa-bullhorn"></i> ${news.title}</h2>
+                    <p>${news.content}</p>
+                    <small><i class="fas fa-calendar-alt"></i> Дата: ${news.date}</small>
+                `;
+                newsList.appendChild(newsCard);
+            });
+        }
+    </script>
+</body>
+</html>
