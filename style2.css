@@ -1,0 +1,139 @@
+/* Общие стили */
+body {
+  font-family: 'Press Start 2P', sans-serif;
+  background-color: #282828;
+  color: #e2e2e2;
+  margin: 0;
+  padding: 0;
+}
+/* Стили для навигационного меню */
+.nav-list {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 9px 10px;
+  margin: 0;
+  background: rgba(65, 65, 65, 0.9); /* Более строгий темный фон */
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.nav-list li {
+  position: relative;
+  margin: 0 15px;
+}
+
+.nav-list a {
+  color: #ecf0f1; /* Светлый текст */
+  text-decoration: none;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.nav-list a:hover {
+  background: rgba(236, 240, 241, 0.15); /* Легкий светлый акцент */
+  transform: scale(1.05);
+}
+
+/* Иконки в меню */
+.nav-list a span.material-symbols-outlined {
+  font-size: 16px;
+  margin-right: 8px;
+}
+/* Стили для выпадающих меню */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #2b2b2c; /* Холодный темный фон */
+  padding: 10px;
+  border-radius: 5px;
+  list-style: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li {
+  margin: 5px 0;
+}
+
+.dropdown-menu a {
+  color: #ecf0f1;
+  text-decoration: none;
+  padding: 8px 10px;
+  display: block;
+  border-radius: 3px;
+  transition: background 0.3s;
+}
+
+.dropdown-menu a:hover {
+  background: rgba(236, 240, 241, 0.2);
+}
+/* Секция героя */
+.hero {
+  text-align: center;
+  background: url('https://i.ytimg.com/vi/J-oqH61PygQ/maxresdefault.jpg') center/cover no-repeat;
+  padding: 50px 20px;
+  color: #fff;
+  text-shadow: 1px 1px 2px #000;
+}
+
+/* Список особенностей */
+.features {
+  padding: 20px;
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  margin: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.features ul {
+  list-style: none;
+  padding: 0;
+}
+
+.features li {
+  margin: 10px 0;
+  font-size: 18px;
+}
+
+/* Стили для футера */
+footer {
+  background: rgba(40, 40, 40, 0.85); /* Темный фон с прозрачностью */
+  color: #ecf0f1; /* Светлый текст */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.4);
+  padding: 5px 20px;
+  font-size: 14px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  z-index: 999;
+}
+
+/* Стиль ссылок в футере */
+footer a {
+  color: #3498db; /* Голубой акцент */
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+footer a:hover {
+  color: #2980b9; /* Более темный голубой при наведении */
+}
