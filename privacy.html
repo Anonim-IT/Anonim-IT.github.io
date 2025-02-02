@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - WebBlocks</title>
+  <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+  <!-- Подключение навигационной панели -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Главный контент -->
+  <main>
+    <section class="hero">
+      <h1>Privacy Policy</h1>
+      <p>Protecting your privacy is important to us. This policy outlines how we handle your personal data.</p>
+    </section>
+
+    <section>
+      <h2>1. Information We Collect</h2>
+      <p>We collect information in the following ways:</p>
+      <ul>
+        <li>Personal information that you provide us directly (e.g., name, email address).</li>
+        <li>Automatically collected information (e.g., IP address, browser type, and usage data).</li>
+        <li>Cookies and other tracking technologies to enhance your experience.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>2. How We Use Your Information</h2>
+      <p>Your information is used to:</p>
+      <ul>
+        <li>Provide and improve our services.</li>
+        <li>Communicate with you, including updates, support, and marketing.</li>
+        <li>Monitor and analyze usage patterns for improving the website.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>3. Sharing Your Information</h2>
+      <p>We do not sell or share your personal information with third parties, except in the following cases:</p>
+      <ul>
+        <li>With trusted service providers who help us operate our website.</li>
+        <li>When required by law or legal processes.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4. Your Data Protection Rights</h2>
+      <p>You have the right to:</p>
+      <ul>
+        <li>Access and update your personal data.</li>
+        <li>Request the deletion of your personal data, where applicable.</li>
+        <li>Opt out of marketing communications.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>5. Data Security</h2>
+      <p>We take reasonable measures to protect your personal information from unauthorized access, alteration, or disclosure.</p>
+    </section>
+
+    <section>
+      <h2>6. Changes to This Privacy Policy</h2>
+      <p>We may update this privacy policy from time to time. All updates will be posted on this page, and the updated date will be reflected at the top of the policy.</p>
+    </section>
+
+    <section>
+      <h2>7. Contact Us</h2>
+      <p>If you have any questions or concerns about this privacy policy, feel free to contact us at:</p>
+      <p><a href="mailto:support@webblocks.com">support@webblocks.com</a></p>
+    </section>
+  </main>
+
+  <!-- Футер -->
+  <footer>
+    <p>&copy; 2025 WebBlocks. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Загружаем navbar из файла
+    fetch('navbar.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('navbar-placeholder').innerHTML = data;
+      });
+  </script>
+</body>
+</html>
