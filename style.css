@@ -8,6 +8,11 @@ html {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Более строгий шрифт */
 }
 
+main {
+  flex: 1;
+  padding-bottom: 20px; /* Отступ, чтобы контент не перекрывался футером */
+}
+
 /* Стили для навигационного меню */
 .nav-list {
   display: flex;
