@@ -13,50 +13,66 @@
 
     <main>
         <section class="content-section">
-            <h1>Добро пожаловать в Web Mirror 🪞</h1>
+            <h1>Добро пожаловать в Web Mirror 🪞 / Welcome to Web Mirror 🪞</h1>
             <p>
                 Web Mirror — это ваш надежный источник для загрузки полезных файлов и ресурсов, которые мы предоставляем. 
                 Здесь вы можете найти все необходимые инструменты для вашего удобства. 
-                Здесь вы найдете все нужные моды для игры на нашем сервере WebBlocks.
+                Здесь вы найдете все нужные моды для игры на нашем сервере WebBlocks.<br>
+                Web Mirror is your reliable source for downloading useful files and resources we provide. 
+                Here you can find all the necessary tools for your convenience. 
+                Here you will find all the necessary mods for playing on our WebBlocks server.
             </p>
-            <p><a href="#mods-section">Перейти к модам</a></p>
+            <p><a href="#mods-section">Перейти к модам / Go to mods</a></p>
         </section>
 
         <section class="content-section">
-            <h2>📂 Доступные файлы</h2>
-            <p>Вы можете скачать следующие файлы:</p>
+            <h2>📂 Доступные файлы / Available Files</h2>
+            <p>Вы можете скачать следующие файлы: / You can download the following files:</p>
             <ul>
-                <li><a href="fail/-" target="_blank">Файл 2 (file2.tar.gz)</a> — описание файла 2</li>
-                <li><a href="fail/-" target="_blank">Файл 3 (file3.iso)</a> — описание файла 3</li>
-                <li><a href="fail/-" target="_blank">Файл 4 (file4.tar.bz2)</a> — описание файла 4</li>
+                <li>
+                    <a href="fail/WebBlocks.zip" target="_blank"> WebBlocks minecraft (WebBlocks.zip)</a> — Сборка для Prism Launcher / Pack for Prism Launcher
+                    <details>
+                        <summary>Как установить? / How to install?</summary>
+                        <ol>
+                            <li>Скачайте <strong>WebBlocks.zip</strong> по ссылке выше. / Download <strong>WebBlocks.zip</strong> from the link above.</li>
+                            <li>Откройте <strong>Prism Launcher</strong>. / Open <strong>Prism Launcher</strong>.</li>
+                            <li>Перейдите в раздел <em>Instances</em> (Сборки). / Go to <em>Instances</em>.</li>
+                            <li>Нажмите <strong>"Добавить сборку"</strong> (Add Instance). / Click <strong>"Add Instance"</strong>.</li>
+                            <li>Выберите <strong>"Импортировать из архива"</strong> (Import from zip). / Select <strong>"Import from zip"</strong>.</li>
+                            <li>Выберите скачанный файл <strong>WebBlocks.zip</strong> и дождитесь завершения импорта. / Select the downloaded <strong>WebBlocks.zip</strong> file and wait for the import to complete.</li>
+                            <li>Готово! Запускайте сборку и наслаждайтесь игрой. / Done! Launch the instance and enjoy the game.</li>
+                        </ol>
+                    </details>
+                </li>
+                <li><a href="fail/-" target="_blank">Файл 3 (file3.iso)</a> — описание файла 3 / description of file 3</li>
+                <li><a href="fail/-" target="_blank">Файл 4 (file4.tar.bz2)</a> — описание файла 4 / description of file 4</li>
             </ul>
-            <p>Мы регулярно обновляем список доступных файлов, чтобы обеспечить актуальность и полезность ресурсов.</p>
+            <p>Мы регулярно обновляем список доступных файлов, чтобы обеспечить актуальность и полезность ресурсов. / We regularly update the list of available files to ensure relevance and usefulness.</p>
         </section>
     
-        <!-- Добавлен якорь для раздела с модами -->
         <section id="mods-section" class="content-section">
-            <h2>🌐 Дополнительные ресурсы[Mods]</h2>
-            <p>Полезные ссылки, которые могут вам пригодиться:</p>
+            <h2>🌐 Дополнительные ресурсы [Mods] / Additional Resources [Mods]</h2>
+            <p>Полезные ссылки, которые могут вам пригодиться: / Useful links you may find helpful:</p>
             <ul>
-                <li><a href="https://modrinth.com/plugin/simple-voice-chat" target="_blank">Simple Voice Chat</a> — инструмент для общения в играх. Скачайте на Modrinth.</li>
-                <li><a href="https://modrinth.com/plugin/custom-player-models" target="_blank">Custom Player Models</a> — инструмент для использования кастомных 3D моделек скинов. Скачайте на Modrinth.</li>
+                <li><a href="https://modrinth.com/plugin/simple-voice-chat" target="_blank">Simple Voice Chat</a> — инструмент для общения в играх. Скачайте на Modrinth. / A tool for in-game communication. Download on Modrinth.</li>
+                <li><a href="https://modrinth.com/plugin/custom-player-models" target="_blank">Custom Player Models</a> — инструмент для использования кастомных 3D моделек скинов. Скачайте на Modrinth. / A tool for using custom 3D skin models. Download on Modrinth.</li>
             </ul>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 Web Dev | <a href="https://github.com/AnonimCompani/Privacy_Policy" target="_blank">Политика конфиденциальности</a> | Спасибо, что вы с нами! 🪞</p>
+        <p>&copy; 2025 Web Dev | <a href="https://github.com/AnonimCompani/Privacy_Policy" target="_blank">Политика конфиденциальности / Privacy Policy</a> | Спасибо, что вы с нами! 🪞 / Thank you for being with us! 🪞</p>
     </footer>
 
     <script>
-        // Загрузка навигационного меню
+        // Загрузка навигационного меню / Loading navigation menu
         fetch('navbar.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('navbar-container').innerHTML = data;
             })
             .catch(error => {
-                console.error('Ошибка при загрузке навигационной панели:', error);
+                console.error('Ошибка при загрузке навигационной панели: / Error loading navigation panel:', error);
             });
     </script>
 </body>
