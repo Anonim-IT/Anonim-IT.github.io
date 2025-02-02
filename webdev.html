@@ -3,61 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Журнал обновлений - Web Dev</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Онлайн-редактор кода - Web Dev</title>
+    <link rel="stylesheet" href="stiles.css">
     <link rel="icon" href="image/favicon.ico" type="image/x-icon">
 </head>
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/679eedbc3a8427326078a60b/1ij2d1acn';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
-    </script>
-    <!--End of Tawk.to Script-->
 <body>
 
-    <!-- Подключаем навигационную панель -->
-    <div id="navbar-container"></div>
+    <!-- Навигационная панель -->
+    <header>
+        <div id="navbar-container"></div>
+    </header>
 
-    <main class="content">
-        <section class="updates-log">
-            <article class="update-entry">
-                <h1>Журнал обновлений проекта</h1>
-                <p>Здесь вы можете ознакомиться с последними изменениями и улучшениями сайта Web Dev.</p>
-            </article>
-            
-            <article class="update-entry">
-                <h2>Версия 1.2.0 (05 января 2025 года) 🛠️</h2>
-                <ul>
-                    <li>Добавлена новая страница "Журнал обновлений" 📑.</li>
-                    <li>Оптимизированы стили для мобильных устройств 📱.</li>
-                    <li>Улучшена работа меню навигации 🧭.</li>
-                </ul>
-            </article>
+    <!-- Основной контент страницы -->
+    <div class="editor-container">
+        <h1>Онлайн-редактор кода Web Dev</h1>
+        <p>Практикуйтесь с кодом, изменяйте HTML, CSS и JavaScript и сразу получайте результат.</p>
 
-            <article class="update-entry">
-                <h2>Версия 1.1.0 (01 января 2025 года) 🚀</h2>
-                <ul>
-                    <li>Реализована анимация для визуальных элементов на главной странице 🌐.</li>
-                    <li>Добавлены иконки ко всем пунктам меню 🔳.</li>
-                    <li>Обновлены ссылки на социальные сети 📲.</li>
-                </ul>
-            </article>
-        </section>
-    </main>
+        <!-- Редактор для кода -->
+        <textarea id="code-input" class="editor-box" placeholder="Напишите свой HTML, CSS или JavaScript сюда..."></textarea>
+        
+        <!-- Кнопка для запуска кода -->
+        <button onclick="runCode()">Запустить код</button>
 
-    <footer>
-        <p>&copy; 2025 Web Dev | <a href="https://github.com/WebDevCompany/Privacy_Policy" target="_blank">Политика конфиденциальности</a> | Спасибо за участие в нашем проекте! 🤝</p>
-    </footer>
+        <!-- Область для отображения результатов -->
+        <iframe id="output" class="editor-box"></iframe>
+    </div>
 
+    <!-- Подключаем скрипты -->
     <script>
-        // Загрузка навигационного меню
+        function runCode() {
+            const code = document.getElementById('code-input').value;
+            const output = document.getElementById('output');
+            
+            // Запускаем код в iframe
+            output.srcdoc = code;
+        }
+    </script>
+
+    <!-- Загрузка навигационной панели -->
+    <script>
         fetch('navbar.html')
             .then(response => response.text())
             .then(data => {
@@ -67,18 +51,20 @@
                 console.error('Ошибка при загрузке навигационной панели:', error);
             });
 
-        // Отслеживаем прокрутку страницы
-        window.addEventListener('scroll', function() {
-            const lastUpdate = document.querySelector('.last-update'); // Последний <article> с классом last-update
-            const scrollPosition = window.scrollY + window.innerHeight; // Текущая позиция прокрутки + высота окна
-            const lastUpdatePosition = lastUpdate.offsetTop + lastUpdate.offsetHeight; // Позиция последнего элемента
-
-            if (scrollPosition >= lastUpdatePosition) {
-                lastUpdate.classList.add('hidden'); // Добавляем класс, чтобы скрыть элемент
-            } else {
-                lastUpdate.classList.remove('hidden'); // Убираем класс, чтобы показать элемент
-            }
+        // Получаем элементы меню
+        const menuToggle = document.querySelector('.menu-toggle');
+        const menuList = document.querySelector('.menu-list');
+  
+        // Обработчик клика для открытия и закрытия меню
+        menuToggle.addEventListener('click', () => {
+            menuList.classList.toggle('open'); // Переключаем класс 'open' для отображения/скрытия меню
         });
     </script>
+
+    <!-- Футер -->
+    <footer>
+        <p>&copy; 2025 Web Dev | <a href="https://github.com/WebDevCompany/Privacy_Policy" target="_blank">Политика конфиденциальности</a> | Благодарим вас за участие в нашем проекте! 🌟</p>
+    </footer>
+
 </body>
 </html>

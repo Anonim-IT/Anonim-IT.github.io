@@ -7,19 +7,21 @@
     <title>Новости Бусти - Web Dev</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<!--Start of Tawk.to Script-->
+
+<!-- Start of Tawk.to Script -->
 <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/679eedbc3a8427326078a60b/1ij2d1acn';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function() {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/679eedbc3a8427326078a60b/1ij2d1acn';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
     })();
-    </script>
-    <!--End of Tawk.to Script-->
+</script>
+<!-- End of Tawk.to Script -->
+
 <body>
 
     <!-- Навигационная панель -->
@@ -46,6 +48,12 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        // Функция для обработки ошибок
+        const handleError = (error, message) => {
+            console.error(message, error);
+            alert('Что-то пошло не так, попробуйте снова позже!');
+        };
+
         // Динамическая загрузка навигационной панели
         document.addEventListener('DOMContentLoaded', () => {
             fetch('navbar.html') // Замените на путь к вашему файлу с навигационным меню
@@ -58,7 +66,7 @@
                 .then(data => {
                     document.getElementById('navbar').innerHTML = data;
                 })
-                .catch(error => console.error('Ошибка загрузки навигационного меню:', error));
+                .catch(error => handleError(error, 'Ошибка загрузки навигационного меню'));
 
             // Загрузка новостей из JSON-файла
             fetch('news.json')
@@ -71,22 +79,26 @@
                 .then(newsData => {
                     displayNews(newsData);
                 })
-                .catch(error => console.error('Ошибка загрузки новостей:', error));
+                .catch(error => handleError(error, 'Ошибка загрузки новостей'));
         });
 
         // Функция для отображения новостей
         function displayNews(newsData) {
             const newsListContainer = document.getElementById('news-list');
-            newsData.forEach(news => {
-                const newsItem = `
-                    <div class="news-card">
-                        <h2>${news.title}</h2>
-                        <p>${news.content}</p>
-                        <small>Дата: ${news.date}</small>
-                    </div>
-                `;
-                newsListContainer.innerHTML += newsItem;
-            });
+            if (newsData && Array.isArray(newsData) && newsData.length > 0) {
+                newsData.forEach(news => {
+                    const newsItem = `
+                        <div class="news-card">
+                            <h2>${news.title}</h2>
+                            <p>${news.content}</p>
+                            <small>Дата: ${news.date}</small>
+                        </div>
+                    `;
+                    newsListContainer.innerHTML += newsItem;
+                });
+            } else {
+                newsListContainer.innerHTML = '<p>Нет новостей для отображения.</p>';
+            }
         }
     </script>
 

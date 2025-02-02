@@ -6,26 +6,25 @@
     <link rel="icon" href="image/favicon.ico" type="image/x-icon">
     <title>WebBlocks - Новости</title>
     <link rel="stylesheet" href="style.css">
-</head>
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/679eedbc3a8427326078a60b/1ij2d1acn';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
-</script>
-<!--End of Tawk.to Script-->
-<body>
-    <!-- Подключаем навигационную панель -->
-    <div id="navbar-container"></div>
 
+    <!-- Add custom meta tags for SEO -->
+    <meta name="description" content="Новости и обновления WebBlocks. Узнайте о новых функциях и улучшениях проекта.">
+    <meta name="keywords" content="WebBlocks, новости, обновления, веб-разработка, проект, разработчики">
+    <meta name="author" content="Anonim">
+</head>
+<body>
+    <!-- Header and navigation -->
+
+        <!-- Навигационная панель -->
+        <header>
+            <nav id="navbar">
+                <!-- Контент загрузится динамически -->
+            </nav>
+        </header>
+
+    <!-- Main content -->
     <main>
-        <!-- Раздел с новостями проекта -->
+        <!-- News section -->
         <section class="content-section">
             <h1>Новости проекта WebDev</h1>
             <p>Привет, друзья! Мы рады сообщить вам, что наш проект WebDev продолжает активно развиваться. В этом году нас ждёт множество новых возможностей и улучшений!</p>
@@ -39,36 +38,48 @@
             <p>Для получения свежих новостей и обсуждений, <a href="news.html" class="button">заходите на нашу страницу новостей</a>!</p>
         </section>
 
-        <!-- Раздел о новых возможностях -->
+        <!-- New opportunities section -->
         <section class="content-section">
             <h1>Новые возможности для разработчиков</h1>
             <p>Мы продолжаем активно работать над улучшением проекта WebBlocks, создавая новые возможности для разработчиков и пользователей. Особое внимание уделяем повышению удобства и функциональности всех наших внутренних платформ.</p>
         </section>
     </main>
 
+    <!-- Footer -->
     <footer>
         <p>&copy; 2024 WebBlocks | <a href="https://github.com/AnonimCompani/Privacy_Policy" target="_blank">Политика конфиденциальности</a> | Благодарим вас за участие в нашем проекте!</p>
     </footer>
 
-    <script>
-      // Загрузка навигационного меню
-      fetch('navbar.html')
-          .then(response => response.text())
-          .then(data => {
-              document.getElementById('navbar-container').innerHTML = data;
-          })
-          .catch(error => {
-              console.error('Ошибка при загрузке навигационной панели:', error);
-          });
-
-      // Получаем элементы меню
-      const menuToggle = document.querySelector('.menu-toggle');
-      const menuList = document.querySelector('.menu-list');
-
-      // Обработчик клика для открытия и закрытия меню
-      menuToggle.addEventListener('click', () => {
-        menuList.classList.toggle('open'); // Переключаем класс 'open' для отображения/скрытия меню
-      });
+    <!-- Tawk.to Script -->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/679eedbc3a8427326078a60b/1ij2d1acn';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
     </script>
+
+<script>
+    // Загрузка навигационного меню
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('navbar.html') // Убедитесь, что файл navbar.html существует и доступен по указанному пути
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Ошибка при загрузке навигационной панели');
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('navbar').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Ошибка при загрузке навигационной панели:', error);
+            });
+    });
+</script>
 </body>
 </html>
