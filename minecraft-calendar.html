@@ -20,12 +20,11 @@
     s1.setAttribute('crossorigin','*');
     s0.parentNode.insertBefore(s1,s0);
     })();
-    </script>
-    <!--End of Tawk.to Script-->
+</script>
+<!--End of Tawk.to Script-->
 <body>
 
-        <nav id="navbar"> </nav>
-
+    <nav id="navbar"> </nav>
 
     <!-- Основной контент -->
     <main>
@@ -41,6 +40,12 @@
             <p>Следите за датами вайпов и другими важными событиями на нашем сервере!</p>
             <div id="calendar"></div>
         </section>
+
+        <!-- Предстоящие события -->
+        <section class="upcoming-events">
+            <h2>Предстоящие события</h2>
+            <ul id="upcoming-list"></ul>
+        </section>
     </main>
 
     <!-- Подвал -->
@@ -53,36 +58,56 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.0.1/dist/fullcalendar.min.js"></script>
 
     <script>
-        // Инициализация календаря
+        // Инициализация календаря и предстоящих событий
         $(document).ready(function() {
-            // Загружаем события из JSON-файла
             $.getJSON('calendar.json', function(events) {
+                // Инициализация календаря
                 $('#calendar').fullCalendar({
                     events: events,
                     eventClick: function(event) {
                         alert(event.title + "\nДата: " + event.start.format('YYYY-MM-DD') + "\nОписание: " + event.description);
-                    }
+                    },
+                    height: 'auto',  // Установка автоматической высоты
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,agendaWeek,agendaDay'
+                    },
+                    locale: 'ru',  // Локализация календаря на русский
+                });
+
+                // Отображение предстоящих событий
+                const upcomingEvents = events.filter(event => moment(event.start).isAfter(moment()));
+                const upcomingList = $('#upcoming-list');
+
+                upcomingEvents.forEach(function(event) {
+                    upcomingList.append(`
+                        <li>
+                            <span class="event-title">${event.title}</span><br>
+                            <span class="event-date">${moment(event.start).format('DD MMMM YYYY')}</span>
+                        </li>
+                    `);
                 });
             });
         });
     </script>
-        <script>
-            // Загрузка навигационного меню
-            document.addEventListener('DOMContentLoaded', function() {
-                fetch('navbar.html') // Убедитесь, что файл navbar.html существует и доступен по указанному пути
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Ошибка при загрузке навигационной панели');
-                        }
-                        return response.text();
-                    })
-                    .then(data => {
-                        document.getElementById('navbar').innerHTML = data;
-                    })
-                    .catch(error => {
-                        console.error('Ошибка при загрузке навигационной панели:', error);
-                    });
-            });
-        </script>
+    <script>
+        // Загрузка навигационного меню
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('navbar.html') // Убедитесь, что файл navbar.html существует и доступен по указанному пути
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Ошибка при загрузке навигационной панели');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('navbar').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Ошибка при загрузке навигационной панели:', error);
+                });
+        });
+    </script>
 </body>
 </html>

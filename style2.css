@@ -214,3 +214,31 @@ footer a {
 footer a:hover {
   color: #2980b9;
 }
+        /* Компактный стиль для календаря */
+        #calendar {
+          max-width: 50%;
+          margin: 0 auto;
+          font-size: 14px;
+      }
+
+      /* Стиль для списка предстоящих событий */
+      .upcoming-events {
+          margin-top: 20px;
+      }
+
+      .upcoming-events ul {
+          list-style-type: none;
+          padding: 0;
+      }
+
+      .upcoming-events li {
+          margin-bottom: 10px;
+      }
+
+      .event-title {
+          font-weight: bold;
+      }
+
+      .event-date {
+          color: #555;
+      }
