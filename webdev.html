@@ -6,21 +6,14 @@
     <title>Онлайн-редактор кода - Web Dev</title>
     <link rel="stylesheet" href="stiles.css">
     <link rel="icon" href="image/favicon.ico" type="image/x-icon">
-</head>
+    
+    <!-- Подключаем стили для CodeMirror -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/theme/dracula.min.css">
 
-<!-- Start of Tawk.to Script -->
-<script type="text/javascript">
-    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-    (function() {
-        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-        s1.async = true;
-        s1.src = 'https://embed.tawk.to/679eedbc3a8427326078a60b/1ij2d1acn';
-        s1.charset = 'UTF-8';
-        s1.setAttribute('crossorigin', '*');
-        s0.parentNode.insertBefore(s1, s0);
-    })();
-</script>
-<!-- End of Tawk.to Script -->
+    <!-- Подключаем Pyodide для выполнения Python-кода в браузере -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.22.1/full/pyodide.js"></script>
+</head>
 
 <body>
 
@@ -32,10 +25,10 @@
     <!-- Основной контент страницы -->
     <div class="editor-container">
         <h1>Онлайн-редактор кода Web Dev</h1>
-        <p>Практикуйтесь с кодом, изменяйте HTML, CSS и JavaScript и сразу получайте результат.</p>
+        <p>Практикуйтесь с кодом, изменяйте HTML, CSS, JavaScript или Python и сразу получайте результат.</p>
 
         <!-- Редактор для кода -->
-        <textarea id="code-input" class="editor-box" placeholder="Напишите свой HTML, CSS или JavaScript сюда..."></textarea>
+        <div id="code-editor" class="editor-box"></div>
         
         <!-- Кнопка для запуска кода -->
         <button onclick="runCode()">Запустить код</button>
@@ -44,14 +37,56 @@
         <iframe id="output" class="editor-box"></iframe>
     </div>
 
-    <!-- Подключаем скрипты -->
+    <!-- Подключаем скрипты для CodeMirror -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/css/css.min.js"></script>
+
+    <!-- Инициализация CodeMirror -->
     <script>
-        function runCode() {
-            const code = document.getElementById('code-input').value;
-            const output = document.getElementById('output');
-            
-            // Запускаем код в iframe
-            output.srcdoc = code;
+        var editor = CodeMirror(document.getElementById('code-editor'), {
+            mode: "htmlmixed",  // Для HTML, CSS и JavaScript
+            theme: "dracula",   // Тема редактора
+            lineNumbers: true,  // Номера строк
+            tabSize: 2,         // Размер табуляции
+            indentWithTabs: true, // Используем табуляцию для отступов
+            lineWrapping: true, // Автоперенос строк
+            height: "400px",    // Высота редактора
+            value: "<!-- Напишите ваш код здесь -->\n" // Начальный код
+        });
+
+        // Функция для запуска кода
+        async function runCode() {
+            const code = editor.getValue();  // Получаем код из редактора
+            const language = 'python';  // Устанавливаем язык Python (для этого примера)
+
+            if (language === 'python') {
+                // Загружаем Pyodide (если не загружен)
+                if (typeof pyodide === 'undefined') {
+                    await loadPyodide();  // Загружаем Pyodide
+                }
+
+                try {
+                    // Выполняем Python-код с помощью Pyodide
+                    const output = await pyodide.runPythonAsync(code);
+                    displayOutput(output);  // Отображаем результат в iframe
+                } catch (error) {
+                    displayOutput(error);  // Если ошибка, отображаем сообщение об ошибке
+                }
+            }
+        }
+
+        // Функция для отображения результата
+        function displayOutput(output) {
+            const outputFrame = document.getElementById('output');
+            outputFrame.srcdoc = `<pre>${output}</pre>`;  // Показываем вывод в iframe
+        }
+
+        // Загружаем Pyodide
+        async function loadPyodide() {
+            pyodide = await loadPyodide({indexURL: "https://cdn.jsdelivr.net/pyodide/v0.22.1/full/"});
         }
     </script>
 
