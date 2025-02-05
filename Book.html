@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="image/favicon.ico" type="image/x-icon">
+    <title>Учебник по созданию сайтов</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Подключаем навигационную панель -->
+    <div id="navbar-container"></div>
+
+    <main>
+        <!-- Встраиваем PDF файл -->
+        <section class="content-section">
+            <h2>Учебник по HTML и веб-разработке<h2>
+            <iframe src="fail/uchebnik_html.pdf" width="100%" height="600px"></iframe>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Web Dev | Учебник по созданию сайтов</p>
+    </footer>
+    <script>
+        // Загрузка навигационного меню
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-container').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Ошибка при загрузке навигационной панели:', error);
+            });
+  
+        // Получаем элементы меню
+        const menuToggle = document.querySelector('.menu-toggle');
+        const menuList = document.querySelector('.menu-list');
+  
+        // Обработчик клика для открытия и закрытия меню
+        menuToggle.addEventListener('click', () => {
+          menuList.classList.toggle('open'); // Переключаем класс 'open' для отображения/скрытия меню
+        });
+    </script>
+</body>
+</html>
