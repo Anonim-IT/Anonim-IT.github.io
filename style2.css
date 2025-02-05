@@ -289,3 +289,39 @@ header h1 {
   letter-spacing: 2px;
   font-weight: bold;
 }
+.custom-download-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  background: linear-gradient(45deg, #4CAF50, #81C784); /* Зеленый градиент */
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 30px;
+  text-decoration: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.custom-download-button:hover {
+  background: linear-gradient(45deg, #66BB6A, #388E3C); /* Темно-зеленый при наведении */
+  transform: translateY(-2px); /* Легкий подъем кнопки */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Более сильная тень при наведении */
+}
+
+.button-icon {
+  margin-right: 10px;
+  font-size: 24px; /* Иконка будет чуть больше текста */
+}
+
+.button-text {
+  font-size: 16px;
+}
+
+.custom-download-button:focus {
+  outline: none;
+}
+
+.custom-download-button:active {
+  transform: translateY(2px); /* Эффект при нажатии */
+}
