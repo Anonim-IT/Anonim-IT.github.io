@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="image/favicon.ico" type="image/x-icon">
+    <title>Who's There? - Хранилище модов</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+    <div id="navbar-container"></div>
+    <main>
+        <section class="content-section">
+            <h1 id="welcome">Who's There? - Хранилище модов</h1>
+            <p id="intro">Добро пожаловать в хранилище модов и сборок сервера <strong>Who's There?</strong>. Здесь вы сможете скачать все необходимые файлы, чтобы без проблем подключиться к серверу.</p>
+        </section>
+
+        <!-- Сборка сервера -->
+        <section class="content-section">
+            <h2 id="server-pack">🎮 Клиентская сборка</h2>
+            <ul>
+                <li>
+                    <a href="Fileminecraft/#" target="_blank" id="modpack-download">Who's There? (Modpack.zip)</a> — Готовая сборка для Prism Launcher
+                    <details>
+                        <summary id="how-to-install">Как установить?</summary>
+                        <ol>
+                            <li id="step-1">Скачайте <strong>WhosThere_Modpack.zip</strong>.</li>
+                            <li id="step-2">Откройте <strong>Prism Launcher</strong> и импортируйте архив.</li>
+                            <li id="step-3">Запускайте сборку и заходите на сервер!</li>
+                        </ol>
+                    </details>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Отдельные моды -->
+        <section id="mods-section" class="content-section">
+            <h2 id="mods">🛠️ Отдельные моды</h2>
+            <ul>
+                <li><a href="Fileminecraft/#" target="_blank" id="optifine">OptiFine</a> — Улучшенная графика и производительность.</li>
+                <li><a href="Fileminecraft/#" target="_blank" id="voice-chat">Simple Voice Chat</a> — Голосовой чат.</li>
+                <li><a href="Fileminecraft/#" target="_blank" id="custom-models">Custom Player Models</a> — Кастомные 3D-модели игроков.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Who's There? | <a href="privacy.html" target="_blank" id="privacy-policy">Политика конфиденциальности</a></p>
+    </footer>
+
+    <script>
+        // Загрузка навигационного меню
+        fetch('navbarminecraft.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('navbar-container').innerHTML = data)
+            .catch(error => console.error('Ошибка загрузки навигации:', error));
+    </script>
+</body>
+</html>

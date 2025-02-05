@@ -32,7 +32,7 @@
     <main>
         <!-- Герой-секция -->
         <section class="hero">
-            <h1><i class="fas fa-cube"></i> Новости WebBlocks</h1>
+            <h1><i class="fas fa-cube"></i> Новости "Who's There?"</h1>
             <p><i class="fas fa-info-circle"></i> Следите за последними обновлениями и новостями нашего проекта! Здесь вы найдете все актуальные изменения.</p>
         </section>
 
@@ -59,7 +59,7 @@
 
         // Загрузка навигационной панели
         function loadNavbar() {
-            fetch('navbar.html')
+            fetch('navbarminecraft.html')
                 .then(response => response.ok ? response.text() : Promise.reject(response.status))
                 .then(html => document.getElementById('navbar').innerHTML = html)
                 .catch(error => console.error('Ошибка загрузки меню:', error));
