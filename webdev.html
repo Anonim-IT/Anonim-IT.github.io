@@ -3,118 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Онлайн-редактор кода - Web Dev</title>
-    <link rel="stylesheet" href="stiles.css">
+    <title>🚀 Онлайн-редактор кода - Web Dev</title>
+    <link rel="stylesheet" href="style/stiles.css">
     <link rel="icon" href="image/favicon.ico" type="image/x-icon">
     
-    <!-- Подключаем стили для CodeMirror -->
+    <!-- CodeMirror -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/theme/dracula.min.css">
 
-    <!-- Подключаем Pyodide для выполнения Python-кода в браузере -->
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.22.1/full/pyodide.js"></script>
+    <!-- Pyodide -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+
+    <style>
+        /* Основной стиль */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: white;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        /* Контейнер редактора */
+        .editor-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px auto;
+            max-width: 800px;
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        /* Выбор языка */
+        select {
+            padding: 8px;
+            font-size: 14px;
+            background: #444;
+            color: white;
+            border: 1px solid #666;
+            margin-bottom: 10px;
+        }
+        /* Окно кода (фиксированное) */
+        .CodeMirror {
+            width: 100%;
+            height: 350px;
+            background: #1e1e1e;
+            border: 1px solid #555;
+            border-radius: 5px;
+        }
+        /* Кнопка запуска */
+        .run-btn {
+            background: #0078ff;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+            border: none;
+        }
+        .run-btn:hover {
+            background: #005fcc;
+        }
+        /* Окно вывода */
+        iframe {
+            width: 100%;
+            height: 250px;
+            background: white;
+            border: none;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- Навигационная панель -->
-    <header>
-        <div id="navbar-container"></div>
-    </header>
+    <!-- Навигация -->
+    <div id="navbar-container"></div>
 
-    <!-- Основной контент страницы -->
+    <!-- Редактор -->
     <div class="editor-container">
-        <h1>Онлайн-редактор кода Web Dev</h1>
-        <p>Практикуйтесь с кодом, изменяйте HTML, CSS, JavaScript или Python и сразу получайте результат.</p>
+        <h1>🖥 Онлайн-редактор кода</h1>
+        <p>Выберите язык и попробуйте запустить код! 🚀</p>
 
-        <!-- Редактор для кода -->
-        <div id="code-editor" class="editor-box"></div>
-        
-        <!-- Кнопка для запуска кода -->
-        <button onclick="runCode()">Запустить код</button>
+        <!-- Выбор языка -->
+        <label for="language">Язык:</label>
+        <select id="language" onchange="changeLanguage()">
+            <option value="htmlmixed">HTML + CSS + JavaScript</option>
+            <option value="javascript">JavaScript</option>
+            <option value="python">Python</option>
+        </select>
 
-        <!-- Область для отображения результатов -->
-        <iframe id="output" class="editor-box"></iframe>
+        <!-- Окно редактора -->
+        <textarea id="code-editor"></textarea>
+
+        <!-- Кнопка запуска -->
+        <button class="run-btn" onclick="runCode()">▶ Запустить</button>
+
+        <!-- Окно вывода -->
+        <iframe id="output"></iframe>
     </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Web Dev | 🚀 Учись, твори, создавай!</p>
+            <nav class="footer-nav">
+                <a href="webdevprivacy.html">🔒 Политика конфиденциальности</a>
+                <a href="Book.html">📖 Учебник</a>
+                <a href="contact.html">📩 Контакты</a>
+            </nav>
+        </div>
+    </footer>
 
-    <!-- Подключаем скрипты для CodeMirror -->
+    <!-- CodeMirror -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/htmlmixed/htmlmixed.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/javascript/javascript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/python/python.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/css/css.min.js"></script>
 
     <!-- Инициализация CodeMirror -->
     <script>
-        var editor = CodeMirror(document.getElementById('code-editor'), {
-            mode: "htmlmixed",  // Для HTML, CSS и JavaScript
-            theme: "dracula",   // Тема редактора
-            lineNumbers: true,  // Номера строк
-            tabSize: 2,         // Размер табуляции
-            indentWithTabs: true, // Используем табуляцию для отступов
-            lineWrapping: true, // Автоперенос строк
-            height: "400px",    // Высота редактора
-            value: "<!-- Напишите ваш код здесь -->\n" // Начальный код
+        var editor = CodeMirror.fromTextArea(document.getElementById('code-editor'), {
+            mode: "htmlmixed",
+            theme: "dracula",
+            lineNumbers: true,
+            lineWrapping: true, /* Перенос строк */
+            indentWithTabs: true, /* Используем табы */
+            tabSize: 4, /* Размер таба */
+            viewportMargin: Infinity, /* Отключает динамическое изменение высоты */
+            fixedGutter: true, /* Фиксирует отступы */
         });
 
-        // Функция для запуска кода
+        function changeLanguage() {
+            const selectedLanguage = document.getElementById('language').value;
+            editor.setOption("mode", selectedLanguage);
+        }
+
+        let pyodideReady = false;
+        let pyodideInstance = null;
+
+        async function loadPyodideOnce() {
+            if (!pyodideReady) {
+                pyodideInstance = await loadPyodide({
+                    indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/"
+                });
+                pyodideReady = true;
+            }
+        }
+
         async function runCode() {
-            const code = editor.getValue();  // Получаем код из редактора
-            const language = 'python';  // Устанавливаем язык Python (для этого примера)
+            const code = editor.getValue();
+            const language = document.getElementById('language').value;
+            const outputFrame = document.getElementById('output');
 
-            if (language === 'python') {
-                // Загружаем Pyodide (если не загружен)
-                if (typeof pyodide === 'undefined') {
-                    await loadPyodide();  // Загружаем Pyodide
-                }
-
+            if (language === "htmlmixed" || language === "javascript") {
+                outputFrame.srcdoc = `<script>${code}<\/script>`;
+            } else if (language === "python") {
                 try {
-                    // Выполняем Python-код с помощью Pyodide
-                    const output = await pyodide.runPythonAsync(code);
-                    displayOutput(output);  // Отображаем результат в iframe
+                    await loadPyodideOnce();
+                    let output = await pyodideInstance.runPythonAsync(code);
+                    outputFrame.srcdoc = `<pre>${output}</pre>`;
                 } catch (error) {
-                    displayOutput(error);  // Если ошибка, отображаем сообщение об ошибке
+                    outputFrame.srcdoc = `<pre style="color: red;">Ошибка: ${error}</pre>`;
                 }
             }
         }
 
-        // Функция для отображения результата
-        function displayOutput(output) {
-            const outputFrame = document.getElementById('output');
-            outputFrame.srcdoc = `<pre>${output}</pre>`;  // Показываем вывод в iframe
-        }
-
-        // Загружаем Pyodide
-        async function loadPyodide() {
-            pyodide = await loadPyodide({indexURL: "https://cdn.jsdelivr.net/pyodide/v0.22.1/full/"});
-        }
-    </script>
-
-    <!-- Загрузка навигационной панели -->
-    <script>
         fetch('navbar.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('navbar-container').innerHTML = data;
             })
-            .catch(error => {
-                console.error('Ошибка при загрузке навигационной панели:', error);
-            });
-
-        // Получаем элементы меню
-        const menuToggle = document.querySelector('.menu-toggle');
-        const menuList = document.querySelector('.menu-list');
-  
-        // Обработчик клика для открытия и закрытия меню
-        menuToggle.addEventListener('click', () => {
-            menuList.classList.toggle('open'); // Переключаем класс 'open' для отображения/скрытия меню
-        });
+            .catch(error => console.error('Ошибка загрузки navbar:', error));
     </script>
-
-    <!-- Футер -->
-    <footer>
-        <p>&copy; 2025 Web Dev | <a href="webdevprivacy.html" target="_blank">Политика конфиденциальности</a> | Благодарим вас за участие в нашем проекте! 🌟</p>
-    </footer>
 
 </body>
 </html>

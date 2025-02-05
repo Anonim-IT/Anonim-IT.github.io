@@ -1,0 +1,225 @@
+/* --- Общие стили --- */
+body, html {
+  font-family: 'Minecraft', sans-serif;
+  background-color: #0d1117;
+  color: #c9d1d9;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  font-size: 16px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Основной контейнер (фикс для футера) --- */
+.wrapper {
+  flex: 1; /* Контент займет всю доступную высоту, толкая footer вниз */
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Шапка сайта (header) --- */
+header {
+  background: linear-gradient(180deg, #005b96, #002f4b); /* Градиент с синим акцентом */
+  padding: 15px 20px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Основной контент (блоки секций) --- */
+.section {
+  background: rgba(21, 34, 56, 0.9);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Навигационное меню --- */
+.nav-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  padding: 10px;
+  background: rgba(10, 25, 47, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.nav-list li {
+  margin: 0 20px;
+}
+
+.nav-list a {
+  color: #a8c7fa; /* Холодный голубой текст */
+  text-decoration: none;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.nav-list a:hover {
+  background: rgba(0, 150, 255, 0.2);
+  transform: scale(1.05);
+}
+
+/* --- Значок внимания (желтый) слева --- */
+.nav-warning {
+  margin-right: auto; /* Отодвигаем влево */
+}
+
+.nav-warning a {
+  color: #f1c40f;
+  font-size: 20px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.nav-warning a:hover {
+  transform: scale(1.2);
+}
+
+/* --- Выпадающие меню --- */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #003366;
+  padding: 10px;
+  border-radius: 5px;
+  list-style: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu a {
+  color: #fff;
+  padding: 8px 12px;
+  display: block;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.dropdown-menu a:hover {
+  background: rgba(70, 130, 180, 0.3);
+}
+
+/* --- Основной контент --- */
+main {
+  padding: 30px 20px;
+  background-color: #152238;
+  border-radius: 15px;
+  margin: 20px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Блок объявления (важные сообщения) --- */
+.announcement {
+  background: linear-gradient(90deg, #0077be, #003f7f); /* Холодный синий градиент */
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  font-size: 1.4em;
+  font-weight: bold;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  margin: 20px 0;
+  animation: pulse 1.5s infinite alternate;
+}
+
+/* --- Эффект пульсации для привлечения внимания 
+@keyframes pulse {
+  from {
+      transform: scale(1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  }
+  to {
+      transform: scale(1.02);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
+  }
+}--- */
+
+/* --- Заголовки --- */
+h2 {
+  font-size: 2.3em;
+  border-bottom: 3px solid #00aaff;
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+  font-weight: bold;
+  color: #00aaff;
+}
+
+/* --- Секция героя (Hero) --- */
+.hero {
+  text-align: center;
+  background: url('https://example.com/minecraft-background.jpg') center/cover no-repeat;
+  padding: 80px 20px;
+  color: #fff;
+  text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.7);
+}
+
+.hero h1 {
+  font-size: 3.5em;
+  margin-bottom: 20px;
+}
+
+/* --- Кнопка скачивания --- */
+.custom-download-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 25px;
+  background: linear-gradient(45deg, #005b96, #0099ff);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 30px;
+  text-decoration: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.custom-download-button:hover {
+  background: linear-gradient(45deg, #0077cc, #005b96);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Основной контейнер (фикс для футера) --- */
+.wrapper {
+  flex: 1; /* Контент займет всю доступную высоту, толкая footer вниз */
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Основной контент --- */
+main {
+  flex: 1; /* Контент будет растягиваться */
+  padding: 30px 20px;
+  background-color: #152238;
+  border-radius: 15px;
+  margin: 20px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Футер (исправлен) --- */
+footer {
+  background: rgba(10, 25, 47, 0.9);
+  color: #a8c7fa;
+  text-align: center;
+  padding: 12px 20px;
+  font-size: 14px;
+  width: 100%;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.6);
+}

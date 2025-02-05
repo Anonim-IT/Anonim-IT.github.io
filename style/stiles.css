@@ -1,0 +1,253 @@
+/* Навигационное меню */
+.nav-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 15px;
+    background: linear-gradient(90deg, #3a3a55, #2a2a40);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease;
+}
+
+.nav-list li {
+    position: relative;
+    margin: 0 15px;
+}
+
+.nav-list a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+.nav-list a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 5px;
+}
+
+/* Dropdown */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #2a2a40;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    list-style: none;
+    padding: 10px 0;
+    border-radius: 5px;
+    width: 200px;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.dropdown-menu li {
+    width: 100%;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px;
+    width: 100%;
+    font-size: 14px;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Плавное появление */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .nav-list {
+        display: none; /* Скрываем меню на мобильных */
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav-list.open {
+        display: flex; /* Показываем меню, когда класс 'open' активирован */
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+}
+
+.footer {
+    background: #222; /* Тёмный фон */
+    color: #bbb;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 14px;
+    border-top: 2px solid #444;
+}
+
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.footer-nav {
+    margin-top: 5px;
+}
+
+.footer-nav a {
+    color: #bbb;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.footer-nav a:hover {
+    color: #fff;
+}
+
+        /* Основной стиль */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: white;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        /* Контейнер редактора */
+        .editor-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px auto;
+            max-width: 800px;
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        /* Выбор языка */
+        select {
+            padding: 8px;
+            font-size: 14px;
+            background: #444;
+            color: white;
+            border: 1px solid #666;
+            margin-bottom: 10px;
+        }
+        /* Окно кода (фиксированное) */
+        .CodeMirror {
+            width: 100%;
+            height: 350px;
+            background: #1e1e1e;
+            border: 1px solid #555;
+            border-radius: 5px;
+        }
+        /* Кнопка запуска */
+        .run-btn {
+            background: #0078ff;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+            border: none;
+        }
+        .run-btn:hover {
+            background: #005fcc;
+        }
+        /* Окно вывода */
+        iframe {
+            width: 100%;
+            height: 250px;
+            background: white;
+            border: none;
+            margin-top: 10px;
+        }
+        /* Контейнер страницы контактов */
+.contact-page {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.contact-page h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.contact-info {
+    margin-bottom: 30px;
+}
+
+.contact-info h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.contact-info ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.contact-info li {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.contact-info a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+/* Стиль формы */
+.contact-form {
+    margin-top: 30px;
+}
+
+.contact-form h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.contact-form label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+.contact-form input, .contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+}
+
+.contact-form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.contact-form button:hover {
+    background-color: #0056b3;
+}

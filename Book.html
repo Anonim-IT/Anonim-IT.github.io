@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="image/favicon.ico" type="image/x-icon">
-    <title>Учебник по созданию сайтов</title>
-    <link rel="stylesheet" href="style.css">
+    <title>📖 Учебник по созданию сайтов</title>
+    <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
 
@@ -15,15 +15,24 @@
     <main>
         <!-- Встраиваем PDF файл -->
         <section class="content-section">
-            <h2>Учебник по HTML и веб-разработке<h2>
-                <p class="content">Книга на разработке<br>Скоро будет первая часть</p>
+            <h2>📚 Учебник по HTML и веб-разработке</h2>
+            <div class="book-icon">📖</div>
+            <p class="content">🔧 Книга в разработке...<br>📅 Первая часть выйдет совсем скоро!</p>
+            <p class="coming-soon">⏳ Ожидайте, будет интересно! 🚀</p>
             <!--<iframe src="fail/uchebnik_html.pdf" width="100%" height="600px"></iframe>-->
+        </section>
+
+        <section class="content-section editor-link">
+            <h2>✍️ Пробуй код прямо на сайте!</h2>
+            <p class="content">Теперь ты можешь писать и тестировать код в нашем онлайн-редакторе! 🔥</p>
+            <a href="webdev.html">🚀 Перейти в редактор кода</a>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 Web Dev | Учебник по созданию сайтов</p>
+        <p>&copy; 2025 Web Dev | 📖 Учебник по созданию сайтов | 🔥 Учись, твори, создавай!</p>
     </footer>
+
     <script>
         // Загрузка навигационного меню
         fetch('navbar.html')
@@ -34,15 +43,18 @@
             .catch(error => {
                 console.error('Ошибка при загрузке навигационной панели:', error);
             });
-  
+
         // Получаем элементы меню
         const menuToggle = document.querySelector('.menu-toggle');
         const menuList = document.querySelector('.menu-list');
-  
+
         // Обработчик клика для открытия и закрытия меню
-        menuToggle.addEventListener('click', () => {
-          menuList.classList.toggle('open'); // Переключаем класс 'open' для отображения/скрытия меню
-        });
+        if (menuToggle && menuList) {
+            menuToggle.addEventListener('click', () => {
+                menuList.classList.toggle('open'); // Переключаем класс 'open' для отображения/скрытия меню
+            });
+        }
     </script>
+    
 </body>
 </html>

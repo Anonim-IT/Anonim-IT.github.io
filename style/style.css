@@ -379,3 +379,35 @@ h2 {
 .add-news button:hover {
   background-color: #218838;
 }
+.content {
+  text-align: center;
+  font-size: 18px;
+}
+.coming-soon {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ff5722;
+  margin-top: 10px;
+}
+.book-icon {
+  text-align: center;
+  font-size: 50px;
+}
+.editor-link {
+  text-align: center;
+  margin-top: 20px;
+}
+.editor-link a {
+  display: inline-block;
+  background: #0078ff;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.editor-link a:hover {
+  background: #0056cc;
+}

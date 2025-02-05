@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты - Web Dev</title>
+    <link rel="stylesheet" href="style/stiles.css">
+    <link rel="icon" href="image/favicon.ico" type="image/x-icon">
+</head>
+<body>
+
+    <!-- Навигационная панель -->
+    <header>
+        <div id="navbar-container"></div>
+    </header>
+
+    <!-- Контент страницы -->
+    <main class="contact-page">
+        <h1>Контакты</h1>
+        <p>Мы всегда рады помочь! Свяжитесь с нами через одну из предложенных форм связи.</p>
+
+        <!-- Информация о нас -->
+        <section class="contact-info">
+            <h2>Наши контактные данные:</h2>
+            <ul>
+                <li>📧 Email: <a href="mailto:support@webdev.com">support@webdev.com</a></li>
+                <li>📞 Телефон: +1 (123) 456-7890</li>
+                <li>📍 Адрес: ул. Примерная, 123, Москва, Россия</li>
+            </ul>
+        </section>
+
+        <!-- Форма для связи -->
+        <!--<section class="contact-form">
+            <h2>Оставьте сообщение:</h2>
+            <form action="submit_form.php" method="post">
+                <label for="name">Ваше имя:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Ваш email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Сообщение:</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+
+                <button type="submit">Отправить</button>
+            </form>
+        </section>-->
+    </main>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <p>&copy; 2025 Web Dev | 🚀 Учись, твори, создавай!</p>
+        <nav class="footer-nav">
+            <a href="webdevprivacy.html">🔒 Политика конфиденциальности</a>
+            <a href="webdev-tutorial.html">📖 Учебник</a>
+        </nav>
+    </footer>
+
+    <!-- Загрузка навигационной панели -->
+    <script>
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-container').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Ошибка при загрузке навигационной панели:', error);
+            });
+    </script>
+
+</body>
+</html>
