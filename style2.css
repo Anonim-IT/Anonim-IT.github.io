@@ -1,12 +1,12 @@
 /* Общие стили */
 body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #1c1c1c;
-  color: #e5e5e5;
+  font-family: 'Minecraft', sans-serif; /* Шрифт, ассоциирующийся с Minecraft */
+  background-color: #121212; /* Темный фон, чтобы создать атмосферу */
+  color: #f2f2f2; /* Светлый текст */
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
-  font-size: 14px; /* Поднял общий размер шрифта для лучшей читаемости */
+  font-size: 14px; /* Комфортный размер шрифта */
 }
 
 /* Навигационное меню */
@@ -29,38 +29,31 @@ header h1 {
   display: flex;
   justify-content: center;
   list-style: none;
-  padding: 10px 15px;
-  margin: 0;
-  background: rgba(40, 40, 40, 0.85);
+  padding: 10px 20px;
+  background: rgba(30, 30, 30, 0.8);
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
 .nav-list li {
-  margin: 0 18px;
+  margin: 0 20px;
 }
 
 .nav-list a {
   color: #fff;
   text-decoration: none;
-  padding: 10px 18px;
+  padding: 12px 20px;
   display: flex;
   align-items: center;
   border-radius: 8px;
-  font-size: 15px;
+  font-size: 16px;
   transition: background 0.3s, transform 0.2s;
 }
 
 .nav-list a:hover {
-  background: rgba(70, 130, 180, 0.15); /* Цвет акцента изменен на синий */
+  background: rgba(255, 165, 0, 0.2); /* Оранжевый акцент, как в Minecraft */
   transform: scale(1.05);
 }
-
-.nav-list a span.material-symbols-outlined {
-  font-size: 18px;
-  margin-right: 10px;
-}
-
 /* Стили для выпадающих меню */
 .dropdown {
   position: relative;
@@ -103,14 +96,14 @@ header h1 {
 /* Секция героя */
 .hero {
   text-align: center;
-  background: url('https://example.com/hero-image.jpg') center/cover no-repeat; /* Замените на свою картинку */
-  padding: 60px 20px;
+  background: url('https://example.com/hero-minecraft.jpg') center/cover no-repeat;
+  padding: 80px 20px;
   color: #fff;
-  text-shadow: 2px 2px 4px #000;
+  text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.7);
 }
 
 .hero h1 {
-  font-size: 3em;
+  font-size: 3.5em;
   margin-bottom: 20px;
 }
 
@@ -152,14 +145,15 @@ section ul li {
   margin: 15px 0;
   padding-left: 25px;
   position: relative;
-  font-size: 17px;
+  font-size: 18px;
+  color: #e5e5e5;
 }
 
 section ul li::before {
-  content: "✔️";
+  content: "🌍"; /* Символ, связанный с Minecraft, например, Земля */
   position: absolute;
   left: 0;
-  color: #4caf50;
+  color: #4CAF50; /* Зеленый, как растительность Minecraft */
 }
 
 /* Список особенностей */
@@ -214,31 +208,84 @@ footer a {
 footer a:hover {
   color: #2980b9;
 }
-        /* Компактный стиль для календаря */
-        #calendar {
-          max-width: 50%;
-          margin: 0 auto;
-          font-size: 14px;
-      }
 
-      /* Стиль для списка предстоящих событий */
-      .upcoming-events {
-          margin-top: 20px;
-      }
+/* Стиль для списка объявлений */
+.announcement {
+  background-color: #f39c12; /* Оранжевый, как светлый песок или лава */
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  font-size: 1.2em;
+  text-align: center;
+  margin: 20px 0;
+}
 
-      .upcoming-events ul {
-          list-style-type: none;
-          padding: 0;
-      }
+/* Стиль для календаря */
+#calendar {
+  max-width: 50%;
+  margin: 0 auto;
+  font-size: 14px;
+}
 
-      .upcoming-events li {
-          margin-bottom: 10px;
-      }
+/* Стиль для списка предстоящих событий */
+.upcoming-events {
+  margin-top: 20px;
+}
 
-      .event-title {
-          font-weight: bold;
-      }
+.upcoming-events ul {
+  list-style-type: none;
+  padding: 0;
+}
 
-      .event-date {
-          color: #555;
-      }
+.upcoming-events li {
+  margin-bottom: 10px;
+}
+
+.event-title {
+  font-weight: bold;
+}
+
+.event-date {
+  color: #555;
+}
+
+    ul.download-list {
+      list-style-type: none;
+      padding: 0;
+  }
+  
+  ul.download-list li {
+      margin-bottom: 15px;
+  }
+  
+  .download-link {
+      color: #fff;
+      text-decoration: none;
+      font-size: 16px;
+      transition: color 0.3s;
+  }
+  
+  .download-link:hover {
+      color: #4caf50;
+  }
+  
+  .details summary {
+      font-weight: bold;
+      cursor: pointer;
+  }
+  /* Навигационное меню */
+header {
+  background-color: #242424; /* Темный фон для шапки */
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+header h1 {
+  font-size: 2.5em;
+  margin: 0;
+  color: #f1c40f; /* Желтый, как свет в Minecraft */
+  letter-spacing: 2px;
+  font-weight: bold;
+}
