@@ -1,0 +1,76 @@
+<?php include 'navbar_hack.html'; ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackweb - About the Project</title>
+    
+    <!-- Link to styles -->
+    <link rel="stylesheet" href="style/hack_style.css">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navigation bar -->
+    <div id="navbar-container"></div>
+
+    <main class="container">
+        <h1>About Hackweb</h1>
+        <p>Hackweb is a platform dedicated to teaching cybersecurity, ethical hacking, and data protection. We provide resources and information to help you become an expert in digital security and anonymity.</p>
+
+        <h2>🚀 Our Mission:</h2>
+        <p>We aim to educate people on safe online behavior, provide tools for protecting personal data, and teach the basics of ethical hacking to improve overall online security.</p>
+
+        <h2>👨‍💻 Our Team:</h2>
+        <p>Hackweb was created by a group of cybersecurity enthusiasts who want to share their knowledge and experience. We believe that security is the foundation of the digital world, and our goal is to help people protect themselves and their data.</p>
+
+        <h2>⚡ Why Hackweb?</h2>
+        <ul>
+            <li>We provide up-to-date and practical resources.</li>
+            <li>We teach how to defend against online threats, not just identify them.</li>
+            <li>We actively monitor new trends in cybersecurity and update our platform's content.</li>
+            <li>We have a community of professionals ready to share their experiences and advice.</li>
+        </ul>
+
+        <h2>🔧 What Do We Do?</h2>
+        <ul>
+            <li>We create and publish educational materials on cybersecurity.</li>
+            <li>We explore penetration testing methods and vulnerabilities.</li>
+            <li>We develop and test our own tools to ensure online safety.</li>
+            <li>We regularly host events and meetings for knowledge exchange and learning.</li>
+        </ul>
+
+        <p>Join us to be part of the future of digital security!</p>
+
+        <a href="hackweb_resources.html" class="button">Go to Resources</a>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Hackweb. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Load navigation menu
+        fetch('navbar_hack.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-container').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Error loading the navbar:', error);
+            });
+  
+        // Get menu elements
+        const menuToggle = document.querySelector('.menu-toggle');
+        const menuList = document.querySelector('.menu-list');
+  
+        // Handler for click to open and close the menu
+        menuToggle.addEventListener('click', () => {
+          menuList.classList.toggle('open'); // Toggle the 'open' class to show/hide the menu
+        });
+    </script>
+</body>
+</html>

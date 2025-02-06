@@ -1,0 +1,75 @@
+<?php include 'navbar_hack.html'; ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackweb - What is Hackweb?</title>
+    
+    <!-- Link to styles -->
+    <link rel="stylesheet" href="style/hack_style.css">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Loading navigation panel -->
+    <div id="navbar-container"></div>
+
+    <main class="container">
+        <h1>What is Hackweb?</h1>
+        <p>Hackweb is an online platform created with the aim of teaching the basics of cybersecurity, ethical hacking, and data protection on the internet. We offer all the necessary resources for you to learn how to ensure security and anonymity online, as well as explore the tools and methods for protecting information.</p>
+
+        <h2>🔐 Core Principles of Hackweb:</h2>
+        <ul>
+            <li><strong>Ethical Hacking:</strong> We teach how to use hacking techniques to enhance security, not to break the law.</li>
+            <li><strong>Security Education:</strong> The platform has many educational materials that help you understand how to deal with security threats and prevent them.</li>
+            <li><strong>Protection Tools:</strong> Hackweb provides access to tools and methods for data protection, anonymity, and defense against hacking.</li>
+        </ul>
+
+        <h2>🚀 Why Hackweb?</h2>
+        <p>We believe that everyone should be able to protect themselves in the digital world. Hackweb provides access to high-quality educational materials, tools, and a community of experts who will help you understand complex aspects of security. We strive to provide up-to-date information and resources that will help you not only study theory but also apply knowledge in practice.</p>
+
+        <h2>🔧 What Does Hackweb Include?</h2>
+        <ul>
+            <li><strong>Articles and Guides:</strong> In our resources section, you’ll find articles about the basics of security and cyber defense, as well as detailed guides on penetration testing.</li>
+            <li><strong>Testing Tools:</strong> We provide links to useful tools for assessing the vulnerability of your systems and protecting data.</li>
+            <li><strong>News and Updates:</strong> Hackweb actively tracks the latest cybersecurity news and regularly publishes updates so that you are always aware of current threats and solutions.</li>
+        </ul>
+
+        <h2>👨‍💻 Who is Behind Hackweb?</h2>
+        <p>Hackweb was created by one individual who loves to explore computers and is passionate about cybersecurity. This project was born out of his interest in studying online security and his desire to share knowledge with others. However, he has a team ready to assist and support the project’s growth.</p>
+        
+        <p>We aim to create resources and materials that will be helpful for anyone who wants to learn how to use the internet safely and protect their data. Join our community, and together we can better understand the world of cybersecurity!</p>
+
+        <a href="hackweb_resources.html" class="button">Go to Resources</a>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Hackweb. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Loading navigation menu
+        fetch('navbar_hack.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-container').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Error loading the navigation panel:', error);
+            });
+  
+        // Menu toggle elements
+        const menuToggle = document.querySelector('.menu-toggle');
+        const menuList = document.querySelector('.menu-list');
+  
+        // Click handler for opening and closing the menu
+        menuToggle.addEventListener('click', () => {
+          menuList.classList.toggle('open'); // Toggle 'open' class to show/hide menu
+        });
+    </script>
+
+</body>
+</html>

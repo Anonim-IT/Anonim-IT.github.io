@@ -16,31 +16,64 @@
     <!-- Подключаем навигационную панель -->
     <div id="navbar-container"></div>
 
+    <!-- Переключатели языков -->
+    <div class="language-switcher">
+        <button id="ru-btn" class="language-btn">RU</button>
+        <button id="en-btn" class="language-btn">EN</button>
+    </div>
+
     <main class="container">
-        <h1>Добро пожаловать в HackWeb</h1>
-        <p>Hackweb — это платформа, посвященная кибербезопасности, этичному хакингу и защите информации.</p>
+        <!-- Русский контент -->
+        <div id="ru-content">
+            <h1>Добро пожаловать в HackWeb</h1>
+            <p>Hackweb — это платформа, посвященная кибербезопасности, этичному хакингу и защите информации.</p>
 
-        <h2>🚀 Наши цели:</h2>
-        <ul>
-            <li>Обучение основам кибербезопасности</li>
-            <li>Разбор техник этичного хакинга</li>
-            <li>Защита данных и анонимность в сети</li>
-        </ul>
+            <h2>🚀 Наши цели:</h2>
+            <ul>
+                <li>Обучение основам кибербезопасности</li>
+                <li>Разбор техник этичного хакинга</li>
+                <li>Защита данных и анонимность в сети</li>
+            </ul>
 
-        <h2>📌 Что вы найдете на сайте?</h2>
-        <ul>
-            <li>Статьи о безопасности и хакерских техниках</li>
-            <li>Инструменты для тестирования защиты</li>
-            <li>Новости и обновления в мире кибербезопасности</li>
-        </ul>
+            <h2>📌 Что вы найдете на сайте?</h2>
+            <ul>
+                <li>Статьи о безопасности и хакерских техниках</li>
+                <li>Инструменты для тестирования защиты</li>
+                <li>Новости и обновления в мире кибербезопасности</li>
+            </ul>
 
-        <p>Присоединяйтесь к нашему сообществу и учитесь защищать себя в цифровом мире!</p>
+            <p>Присоединяйтесь к нашему сообществу и учитесь защищать себя в цифровом мире!</p>
 
-        <a href="hackweb_resources.html" class="button">Перейти к ресурсам</a>
+            <a href="hackweb_resources.html" class="button">Перейти к ресурсам</a>
+        </div>
+
+        <!-- Английский контент -->
+        <div id="en-content" style="display:none;">
+            <h1>Welcome to HackWeb</h1>
+            <p>Hackweb is a platform dedicated to cybersecurity, ethical hacking, and information protection.</p>
+
+            <h2>🚀 Our Goals:</h2>
+            <ul>
+                <li>Learning the basics of cybersecurity</li>
+                <li>Exploring ethical hacking techniques</li>
+                <li>Data protection and online anonymity</li>
+            </ul>
+
+            <h2>📌 What will you find on the website?</h2>
+            <ul>
+                <li>Articles about security and hacking techniques</li>
+                <li>Tools for testing protection</li>
+                <li>News and updates in the world of cybersecurity</li>
+            </ul>
+
+            <p>Join our community and learn to protect yourself in the digital world!</p>
+
+            <a href="hackweb_resources.html" class="button">Go to Resources</a>
+        </div>
     </main>
 
     <footer class="footer">
-        <p>&copy; 2025 Hackweb. Все права защищены.</p>
+        <p>&copy; 2025 Hackweb. All rights reserved.</p>
     </footer>
 
     <script>
@@ -53,14 +86,21 @@
             .catch(error => {
                 console.error('Ошибка при загрузке навигационной панели:', error);
             });
-  
-        // Получаем элементы меню
-        const menuToggle = document.querySelector('.menu-toggle');
-        const menuList = document.querySelector('.menu-list');
-  
-        // Обработчик клика для открытия и закрытия меню
-        menuToggle.addEventListener('click', () => {
-          menuList.classList.toggle('open'); // Переключаем класс 'open' для отображения/скрытия меню
+
+        // Переключение между языками
+        const ruBtn = document.getElementById('ru-btn');
+        const enBtn = document.getElementById('en-btn');
+        const ruContent = document.getElementById('ru-content');
+        const enContent = document.getElementById('en-content');
+
+        ruBtn.addEventListener('click', () => {
+            ruContent.style.display = 'block';
+            enContent.style.display = 'none';
+        });
+
+        enBtn.addEventListener('click', () => {
+            ruContent.style.display = 'none';
+            enContent.style.display = 'block';
         });
     </script>
 
