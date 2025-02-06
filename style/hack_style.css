@@ -138,6 +138,39 @@ h1 {
         background-color: #f1f1f1;
     }
 
+/* Контейнер для переключателей */
+.language-switcher {
+    display: flex;
+    justify-content: center; /* Выравнивание кнопок по центру */
+    gap: 20px; /* Расстояние между кнопками */
+    margin: 20px 0; /* Отступы сверху и снизу */
+}
+
+/* Стиль кнопок переключения языков */
+.language-btn {
+    background-color: #007bff; /* Синий фон */
+    color: white; /* Белый текст */
+    font-size: 24px; /* Увеличиваем размер флагов */
+    padding: 12px 20px; /* Увеличенные отступы */
+    border-radius: 50%; /* Круглая форма */
+    border: none; /* Убираем рамку */
+    cursor: pointer; /* Курсор в виде указателя */
+    transition: background-color 0.3s, transform 0.2s; /* Плавные переходы */
+}
+
+/* Эффект при наведении */
+.language-btn:hover {
+    background-color: #0056b3; /* Темный синий при наведении */
+    transform: scale(1.1); /* Легкое увеличение кнопки */
+}
+
+/* Эффект при нажатии */
+.language-btn:active {
+    background-color: #004085; /* Еще темнее при нажатии */
+    transform: scale(0.95); /* Немного сжимаем кнопку */
+}
+
+  
 /* Футер */
 footer {
     text-align: center;
