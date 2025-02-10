@@ -14,6 +14,10 @@
 </head>
 <body>
 
+    <header>
+        <h1>HackWeb</h1>
+    </header>
+
     <!-- Подключаем навигационную панель -->
     <div id="navbar-container"></div>
 
@@ -49,7 +53,7 @@
 
     <script>
         // Загрузка навигационного меню
-        fetch('navbar_hack.html')
+        fetch('nav/navbar_hack.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('navbar-container').innerHTML = data;
@@ -57,22 +61,6 @@
             .catch(error => {
                 console.error('Ошибка при загрузке навигационной панели:', error);
             });
-
-        // Переключение между языками
-        const ruBtn = document.getElementById('ru-btn');
-        const enBtn = document.getElementById('en-btn');
-        const ruContent = document.getElementById('ru-content');
-        const enContent = document.getElementById('en-content');
-
-        ruBtn.addEventListener('click', () => {
-            ruContent.style.display = 'block';
-            enContent.style.display = 'none';
-        });
-
-        enBtn.addEventListener('click', () => {
-            ruContent.style.display = 'none';
-            enContent.style.display = 'block';
-        });
     </script>
 
 </body>

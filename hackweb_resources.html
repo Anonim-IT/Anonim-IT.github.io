@@ -15,6 +15,10 @@
 </head>
 <body>
 
+    <header>
+        <h1>HackWeb Resources</h1>
+    </header>
+
     <!-- Подключаем навигационную панель -->
     <div id="navbar-container"></div>
 
@@ -60,7 +64,7 @@
 
     <script>
         // Загрузка навигационного меню
-        fetch('navbar_hack.html')
+        fetch('nav/navbar_hack.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('navbar-container').innerHTML = data;

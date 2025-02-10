@@ -62,7 +62,7 @@
 
     <!-- Загрузка навигационного меню -->
     <script>
-        fetch('navbar.html')
+        fetch('nav/navbar.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('navbar-container').innerHTML = data;
