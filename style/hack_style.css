@@ -260,3 +260,47 @@ footer {
         box-shadow: 0 0 20px rgba(0, 255, 0, 0.9);
     }
 }
+/* Стили для выпадающего списка */
+.contact-form select {
+    width: 100%;
+    padding: 10px;
+    background: #111;
+    border: 1px solid #00ff00;
+    color: #0f0;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    border-radius: 4px;
+    outline: none;
+}
+
+.contact-form select:focus {
+    border-color: #00ff99;
+    box-shadow: 0 0 10px #00ff99;
+}
+
+/* Стили для поля загрузки файлов */
+.contact-form input[type="file"] {
+    color: #0f0;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.contact-form input[type="file"]::-webkit-file-upload-button {
+    background: #00ff00;
+    border: none;
+    color: black;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.contact-form input[type="file"]::-webkit-file-upload-button:hover {
+    background: #00cc00;
+}
+.contact-form label input[type="checkbox"] {
+    accent-color: #00ff00; /* Зелёный цвет для чекбокса */
+    transform: scale(1.2); /* Увеличение размера чекбокса */
+    margin-right: 5px;
+}

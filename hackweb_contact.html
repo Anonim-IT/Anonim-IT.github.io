@@ -35,19 +35,36 @@
         <!-- Форма для связи -->
         <section class="contact-form">
             <h2>🛠 Оставьте заявку</h2>
-            <p>Ваше сообщение будет отправлено напрямую в Telegram-бота.</p>
+            <p>Ваше сообщение будет отправлено напрямую в Telegram-бота.<br>(Форму просьба заполнять не используя бета-тест!!!)</p>
             <form id="tg-form">
                 <label for="name">🕵️‍♂️ Ваш ник:</label>
                 <input type="text" id="name" name="name" required placeholder="Анонимус">
-        
+            
                 <label for="email">📩 Email:</label>
                 <input type="email" id="email" name="email" required placeholder="example@protonmail.com">
-        
+            
+                <label for="telegram">📲 Telegram (необязательно):</label>
+                <input type="text" id="telegram" name="telegram" placeholder="@username">
+            
+                <label for="topic">📌 Тема обращения:</label>
+                <select id="topic" name="topic">
+                    <option value="Вопрос">Вопрос</option>
+                    <option value="Сотрудничество">Сотрудничество</option>
+                    <option value="Сообщить о баге">Сообщить о баге</option>
+                </select>
+            
                 <label for="message">💬 Сообщение:</label>
                 <textarea id="message" name="message" rows="5" required placeholder="Опишите ваш вопрос"></textarea>
-        
+            
+                <label for="file">📎 Прикрепить файл (до 5MB):</label>
+                <input type="file" id="file" name="file" accept=".png, .jpg, .jpeg, .pdf, .txt, .log">
+            
+                <label for="beta-test">
+                    <input type="checkbox" id="beta-test" name="beta-test"> 🔬 Отправить как бета-тест
+                </label>
+            
                 <button type="submit">🔗 Отправить</button>
-            </form>
+            </form>            
         </section>
         
     </main>
@@ -68,45 +85,59 @@
             });
 
         // Отправка данных формы в Telegram
-        document.getElementById("tg-form").addEventListener("submit", function(event) {
-            event.preventDefault();
-        
-            // Данные бота
-            const botToken = "7745335635:AAGbPdzXplwqbMky-xgJ9KOhsWln5z6toYo";  // Токен бота
-            const chatId = "250356592";  // Твой chat_id
-        
-            // Получаем данные формы
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const message = document.getElementById("message").value;
-        
-            // Формируем текст сообщения
-            const text = `🔰 *HackWeb Запрос:*\n\n` +
-                         `🕵️ *Имя:* ${name}\n` +
-                         `📧 *Email:* ${email}\n` +
-                         `💬 *Сообщение:* ${message}`;
-        
-            // Отправка в Telegram через API
-            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: text,
-                    parse_mode: "Markdown"
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.ok) {
-                    alert("✅ Сообщение отправлено в Telegram!");
-                    document.getElementById("tg-form").reset();
-                } else {
-                    alert("❌ Ошибка отправки: " + data.description);
-                }
-            })
-            .catch(error => alert("Ошибка: " + error));
+        document.getElementById("tg-form").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const botToken = "7745335635:AAGbPdzXplwqbMky-xgJ9KOhsWln5z6toYo";
+    const chatId = "250356592";
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const telegram = document.getElementById("telegram").value || "Не указан";
+    const topic = document.getElementById("topic").value;
+    const message = document.getElementById("message").value;
+    const file = document.getElementById("file").files[0];
+    const isBetaTest = document.getElementById("beta-test").checked; // Проверяем, включен ли чекбокс
+
+    // Формируем текст сообщения
+    let text = `🔰 *HackWeb Запрос:*\n\n` +
+               `🕵️ *Имя:* ${name}\n` +
+               `📧 *Email:* ${email}\n` +
+               `📲 *Telegram:* ${telegram}\n` +
+               `📌 *Тема:* ${topic}\n` +
+               `💬 *Сообщение:* ${message}`;
+
+    // Если это бета-тест, добавляем пометку
+    if (isBetaTest) {
+        text = `🔬 [Бета-тест] 🔬\n\n` + text;
+    }
+
+    // Отправка сообщения в Telegram
+    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            chat_id: chatId,
+            text: text,
+            parse_mode: "Markdown"
+        })
+    });
+
+    // Если прикреплен файл, отправляем его
+    if (file) {
+        const formData = new FormData();
+        formData.append("chat_id", chatId);
+        formData.append("document", file);
+
+        await fetch(`https://api.telegram.org/bot${botToken}/sendDocument`, {
+            method: "POST",
+            body: formData
         });
+    }
+
+    alert("✅ Сообщение отправлено в Telegram!");
+    document.getElementById("tg-form").reset();
+});
     </script>
 
 </body>

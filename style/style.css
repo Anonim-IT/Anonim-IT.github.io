@@ -414,13 +414,13 @@ h2 {
 .container {
   max-width: 800px;
   margin: auto;
-  background: white;
+  background: #34495e;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 .warning {
-  background: #ffcccc;
+  background: #ff9292;
   border-left: 5px solid #ff4d4d;
 }
 .important {
