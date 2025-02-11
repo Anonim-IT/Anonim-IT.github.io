@@ -3,46 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Свяжитесь с WebNews. Заполните форму обратной связи, чтобы отправить ваши вопросы, предложения или новости.">
+    <meta name="keywords" content="WebNews, контакт, обратная связь, бета-тестирование">
+    <meta property="og:title" content="WebNews - Контакты">
+    <meta property="og:description" content="Оставьте сообщение или подайте заявку на бета-тестирование.">
+    <meta property="og:image" content="webnews/assets/preview.jpg">
+    <meta property="og:type" content="website">
+
     <title>WebNews - Контакты</title>
     <link rel="stylesheet" href="webnews/css/style.css">
 </head>
 <body>
 
-    <!-- Подключаем навигационную панель -->
-    <div id="navbar-container"></div>
+    <!-- Навигационная панель -->
+    <nav id="navbar-container"></nav>
 
     <main class="contact-container">
-        <h2>📩 Связь с WebNews</h2>
-        <p>Если у вас есть новости, предложения или вопросы, заполните форму ниже.</p>
+        <section>
+            <h2>📩 Связь с WebNews</h2>
+            <p>Если у вас есть новости, предложения или вопросы, заполните форму ниже.</p>
+        </section>
 
         <!-- Форма обратной связи -->
-        <form id="contact-form">
-            <label for="fullname">📝 Ваше ФИО:</label>
-            <input type="text" id="fullname" name="fullname" required placeholder="Иванов Иван Иванович">
+        <section>
+            <form id="contact-form" aria-label="Форма обратной связи">
+                <label for="fullname">📝 Ваше ФИО:</label>
+                <input type="text" id="fullname" name="fullname" required placeholder="Иванов Иван Иванович">
 
-            <label for="name">👤 Ваш никнейм:</label>
-            <input type="text" id="name" name="name" required placeholder="Ваш псевдоним">
+                <label for="nickname">👤 Ваш никнейм (Как к вам обращатся):</label>
+                <input type="text" id="nickname" name="nickname" required placeholder="Ваш псевдоним">
 
-            <!-- Поле Email (по умолчанию видно, но скрывается при выборе бета-теста) -->
-            <div id="email-container">
-                <label for="email">📧 Email:</label>
-                <input type="email" id="email" name="email" required placeholder="example@mail.com">
-            </div>
+                <!-- Поле Email -->
+                <div id="email-container">
+                    <label for="email">📧 Email:</label>
+                    <input type="email" id="email" name="email" required placeholder="example@mail.com">
+                </div>
 
-            <label for="message">💬 Ваше сообщение:</label>
-            <textarea id="message" name="message" rows="5" required placeholder="Напишите ваш вопрос или предложение..."></textarea>
+                <label for="message">💬 Ваше сообщение:</label>
+                <textarea id="message" name="message" rows="5" required placeholder="Напишите ваш вопрос или предложение..."></textarea>
 
-            <!-- Чекбокс для бета-тестирования -->
-            <label for="beta-test">
-                <input type="checkbox" id="beta-test" name="beta-test">
-                🚀 Хочу участвовать в бета-тестировании
-                <span class="warning">⚠️ Ставьте галочку только при реальном желании участвовать!</span>
-            </label>
+                <!-- Чекбокс для бета-тестирования -->
+                <div class="checkbox-container">
+                    <input type="checkbox" id="beta-test" name="beta-test">
+                    <label for="beta-test">
+                        🚀 Хочу участвовать в бета-тестировании
+                        <span class="warning">⚠️ Ставьте галочку только при реальном желании участвовать!</span>
+                    </label>
+                </div>
 
-            <button type="submit">📨 Отправить</button>
-        </form>
+                <button type="submit">📨 Отправить</button>
+            </form>
 
-        <p class="status-message" id="status"></p>
+            <p class="status-message" id="status" role="alert"></p>
+        </section>
     </main>
 
     <footer>
