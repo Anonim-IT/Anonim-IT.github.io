@@ -24,27 +24,28 @@
             <h2>Наши контактные данные:</h2>
             <ul>
                 <li>📧 Email: <a href="mailto:support@webdev.com">support@webdev.com</a></li>
-                <li>📞 Телефон: +1 (123) 456-7890</li>
+                <li>📞 Телефон: {нету}</li>
                 <li>📍 Адрес: ул. Примерная, 123, Москва, Россия</li>
             </ul>
         </section>
 
         <!-- Форма для связи -->
-        <!--<section class="contact-form">
+        <section class="contact-form">
             <h2>Оставьте сообщение:</h2>
-            <form action="submit_form.php" method="post">
+            <form id="tg-form">
                 <label for="name">Ваше имя:</label>
                 <input type="text" id="name" name="name" required>
-
+        
                 <label for="email">Ваш email:</label>
                 <input type="email" id="email" name="email" required>
-
+        
                 <label for="message">Сообщение:</label>
                 <textarea id="message" name="message" rows="5" required></textarea>
-
+        
                 <button type="submit">Отправить</button>
             </form>
-        </section>-->
+        </section>
+        
     </main>
 
     <!-- Футер -->
@@ -66,6 +67,48 @@
             .catch(error => {
                 console.error('Ошибка при загрузке навигационной панели:', error);
             });
+    </script>
+
+    <script>
+    document.getElementById("tg-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+    
+        // Данные бота
+        const botToken = "7745335635:AAGbPdzXplwqbMky-xgJ9KOhsWln5z6toYo";  // Токен бота
+        const chatId = "250356592";      // Твой chat_id
+    
+        // Получаем данные формы
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const message = document.getElementById("message").value;
+    
+        // Формируем текст сообщения
+        const text = `📩 *Новое сообщение с сайта:*\n\n` +
+                     `👤 *Имя:* ${name}\n` +
+                     `📧 *Email:* ${email}\n` +
+                     `💬 *Сообщение:* ${message}`;
+    
+        // Отправка в Telegram через API
+        fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                chat_id: chatId,  // Отправляем в личку
+                text: text,
+                parse_mode: "Markdown"
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.ok) {
+                alert("Сообщение отправлено в Telegram!");
+                document.getElementById("tg-form").reset();
+            } else {
+                alert("Ошибка отправки: " + data.description);
+            }
+        })
+        .catch(error => alert("Ошибка: " + error));
+    });
     </script>
 
 </body>
