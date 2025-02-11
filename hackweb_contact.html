@@ -24,12 +24,32 @@
 
     <main class="container">
         <h1>Контакты Hackweb</h1>
-        <p>Если у вас есть вопросы, предложения или вы хотите обсудить какие-либо аспекты кибербезопасности, не стесняйтесь связаться с нами. Мы всегда рады помочь!</p>
+        <p>Если у вас есть вопросы, предложения или вы хотите обсудить кибербезопасность, свяжитесь с нами.</p>
 
         <h2>📧 Электронная почта:</h2>
-        <p>Для общих вопросов и запросов отправьте письмо на наш адрес: <a href="mailto:hackweb2024@proton.me">hackweb2024@proton.me</a></p>
+        <p>Для общих вопросов: <a href="mailto:hackweb2024@proton.me">hackweb2024@proton.me</a></p>
 
-        <p>Мы стараемся отвечать на все запросы в течение 24 часов. Спасибо за ваше терпение!</p>
+        <h2>💬 Telegram-группа:</h2>
+        <p>Общайтесь с нами: <a href="https://t.me/HackWeb1g" target="_blank">Перейти в Telegram</a></p>
+
+        <!-- Форма для связи -->
+        <section class="contact-form">
+            <h2>🛠 Оставьте заявку</h2>
+            <p>Ваше сообщение будет отправлено напрямую в Telegram-бота.</p>
+            <form id="tg-form">
+                <label for="name">🕵️‍♂️ Ваш ник:</label>
+                <input type="text" id="name" name="name" required placeholder="Анонимус">
+        
+                <label for="email">📩 Email:</label>
+                <input type="email" id="email" name="email" required placeholder="example@protonmail.com">
+        
+                <label for="message">💬 Сообщение:</label>
+                <textarea id="message" name="message" rows="5" required placeholder="Опишите ваш вопрос"></textarea>
+        
+                <button type="submit">🔗 Отправить</button>
+            </form>
+        </section>
+        
     </main>
 
     <footer>
@@ -46,14 +66,46 @@
             .catch(error => {
                 console.error('Ошибка при загрузке навигационной панели:', error);
             });
-  
-        // Получаем элементы меню
-        const menuToggle = document.querySelector('.menu-toggle');
-        const menuList = document.querySelector('.menu-list');
-  
-        // Обработчик клика для открытия и закрытия меню
-        menuToggle.addEventListener('click', () => {
-          menuList.classList.toggle('open'); // Переключаем класс 'open' для отображения/скрытия меню
+
+        // Отправка данных формы в Telegram
+        document.getElementById("tg-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+        
+            // Данные бота
+            const botToken = "7745335635:AAGbPdzXplwqbMky-xgJ9KOhsWln5z6toYo";  // Токен бота
+            const chatId = "250356592";  // Твой chat_id
+        
+            // Получаем данные формы
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const message = document.getElementById("message").value;
+        
+            // Формируем текст сообщения
+            const text = `🔰 *HackWeb Запрос:*\n\n` +
+                         `🕵️ *Имя:* ${name}\n` +
+                         `📧 *Email:* ${email}\n` +
+                         `💬 *Сообщение:* ${message}`;
+        
+            // Отправка в Telegram через API
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: text,
+                    parse_mode: "Markdown"
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    alert("✅ Сообщение отправлено в Telegram!");
+                    document.getElementById("tg-form").reset();
+                } else {
+                    alert("❌ Ошибка отправки: " + data.description);
+                }
+            })
+            .catch(error => alert("Ошибка: " + error));
         });
     </script>
 

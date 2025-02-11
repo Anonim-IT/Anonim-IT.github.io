@@ -181,3 +181,82 @@ footer {
     width: 100%;
 }
 }
+/* Стили для формы */
+.contact-form {
+    background: rgba(0, 0, 0, 0.85); /* Темный фон с прозрачностью */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5); /* Зеленое свечение */
+    text-align: center;
+    max-width: 500px;
+    margin: 30px auto;
+    border: 1px solid #00ff00; /* Неоновая зеленая рамка */
+}
+
+.contact-form h2 {
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 0 10px #00ff00;
+    font-size: 22px;
+}
+
+.contact-form p {
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+/* Стили для полей ввода */
+.contact-form input,
+.contact-form textarea {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #111;
+    border: 1px solid #00ff00;
+    color: #0f0;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    border-radius: 4px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #00ff99;
+    box-shadow: 0 0 10px #00ff99;
+}
+
+/* Стили для кнопки */
+.contact-form button {
+    background: linear-gradient(90deg, #00ff00, #009900);
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.3s;
+    text-transform: uppercase;
+}
+
+.contact-form button:hover {
+    background: linear-gradient(90deg, #00ff99, #00cc00);
+    box-shadow: 0 0 10px #00ff00;
+}
+
+/* Анимация для формы при загрузке */
+.contact-form {
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    }
+    to {
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.9);
+    }
+}
