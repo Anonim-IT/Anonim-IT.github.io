@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebNews - Контакты</title>
+    <link rel="stylesheet" href="webnews/css/style.css">
+</head>
+<body>
+
+    <!-- Подключаем навигационную панель -->
+    <div id="navbar-container"></div>
+
+    <main class="contact-container">
+        <h2>📩 Связь с WebNews</h2>
+        <p>Если у вас есть новости, предложения или вопросы, заполните форму ниже.</p>
+
+        <!-- Форма обратной связи -->
+        <form id="contact-form">
+            <label for="fullname">📝 Ваше ФИО:</label>
+            <input type="text" id="fullname" name="fullname" required placeholder="Иванов Иван Иванович">
+
+            <label for="name">👤 Ваш никнейм:</label>
+            <input type="text" id="name" name="name" required placeholder="Ваш псевдоним">
+
+            <!-- Поле Email (по умолчанию видно, но скрывается при выборе бета-теста) -->
+            <div id="email-container">
+                <label for="email">📧 Email:</label>
+                <input type="email" id="email" name="email" required placeholder="example@mail.com">
+            </div>
+
+            <label for="message">💬 Ваше сообщение:</label>
+            <textarea id="message" name="message" rows="5" required placeholder="Напишите ваш вопрос или предложение..."></textarea>
+
+            <!-- Чекбокс для бета-тестирования -->
+            <label for="beta-test">
+                <input type="checkbox" id="beta-test" name="beta-test">
+                🚀 Хочу участвовать в бета-тестировании
+                <span class="warning">⚠️ Ставьте галочку только при реальном желании участвовать!</span>
+            </label>
+
+            <button type="submit">📨 Отправить</button>
+        </form>
+
+        <p class="status-message" id="status"></p>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 WebNews. Все права защищены.</p>
+    </footer>
+
+    <script src="webnews/js/main.js"></script>
+</body>
+</html>

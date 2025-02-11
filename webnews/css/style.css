@@ -1,0 +1,232 @@
+/* ==========================
+   ГЛОБАЛЬНЫЕ СТИЛИ
+   ========================== */
+   body {
+    font-family: Arial, sans-serif;
+    background: #f8f9fa;
+    color: #212529;
+    margin: 0;
+    padding: 0;
+}
+
+/* Контейнер */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ==========================
+   НАВИГАЦИОННОЕ МЕНЮ
+   ========================== */
+.nav-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 15px;
+    background: #343a40;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.nav-list li {
+    position: relative;
+    margin: 0 15px;
+}
+
+.nav-list a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+.nav-list a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 5px;
+}
+
+/* Dropdown */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #495057;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    list-style: none;
+    padding: 10px 0;
+    border-radius: 5px;
+    width: 200px;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.dropdown-menu li {
+    width: 100%;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px;
+    width: 100%;
+    font-size: 14px;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Анимация */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .nav-list {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dropdown-menu {
+        position: relative;
+        width: 100%;
+    }
+}
+
+/* ==========================
+   НОВОСТИ
+   ========================== */
+   #category-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.category-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.category-btn:hover {
+    background-color: #0056b3;
+}
+
+.category-btn.active {
+    background-color: #004099;
+}
+
+.news-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    background: #f9f9f9;
+}
+
+.news-meta {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.read-more-btn {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.read-more-btn:hover {
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none;
+}
+
+/* ==========================
+   ФОРМА ОБРАТНОЙ СВЯЗИ
+   ========================== */
+.contact-container {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #ffffff;
+    color: #212529;
+    border-radius: 10px;
+    border: 1px solid #dee2e6;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Поля формы */
+.contact-container input, 
+.contact-container textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    background: #ffffff;
+    color: #212529;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.contact-container label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+
+/* Кнопка отправки */
+.contact-container button {
+    background: #007bff;
+    color: #ffffff;
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 100%;
+    transition: background 0.3s ease-in-out;
+}
+
+.contact-container button:hover {
+    background: #0056b3;
+}
+
+/* Скрытый email-контейнер */
+#email-container {
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Предупреждение */
+.warning {
+    color: #dc3545;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* ==========================
+   ФУТЕР
+   ========================== */
+footer {
+    text-align: center;
+    padding: 15px;
+    background: #343a40;
+    color: #ffffff;
+    font-size: 14px;
+    border-radius: 0 0 10px 10px;
+    margin-top: 30px;
+}
