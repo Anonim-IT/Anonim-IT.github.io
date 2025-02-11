@@ -1,57 +1,77 @@
 <header>
-    <nav>
+    <nav aria-label="Главная навигация">
         <ul class="nav-list">
-            <li class="nav-title"><a href="#"><i class="fas fa-project-diagram"></i> WebDevCompany</a></li>
+            <li class="nav-title"><a href="index.html"><i class="fas fa-project-diagram"></i> WebDevCompany</a></li>
             <li><a href="index.html"><i class="fas fa-home"></i> Главная</a></li>
 
             <!-- Ресурсы -->
             <li class="dropdown">
-                <a href="#"><i class="fas fa-folder-open"></i> Ресурсы <i class="fas fa-caret-down"></i></a>
+                <a href="#" aria-haspopup="true" aria-expanded="false"><i class="fas fa-folder-open"></i> Ресурсы <i class="fas fa-caret-down"></i></a>
                 <ul class="dropdown-menu">
                     <li><a href="mirror.html"><i class="fas fa-server"></i> Web Mirror</a></li>
                     <li><a href="webdevprivacy.html"><i class="fas fa-shield-alt"></i> Политика</a></li>
                     <li><a href="webdev.html"><i class="fas fa-code"></i> Онлайн редактор</a></li>
-                    <li><a href="Book.html"><i class="fas fa-book"></i> Учебник</a></li> <!-- Новая страница Book.html -->
+                    <li><a href="Book.html"><i class="fas fa-book"></i> Учебник</a></li>
                 </ul>
             </li>
 
             <!-- Информация -->
             <li class="dropdown">
-                <a href="#"><i class="fas fa-info-circle"></i> Информация <i class="fas fa-caret-down"></i></a>
+                <a href="#" aria-haspopup="true" aria-expanded="false"><i class="fas fa-info-circle"></i> Информация <i class="fas fa-caret-down"></i></a>
                 <ul class="dropdown-menu">
                     <li><a href="newsboosty.html"><i class="fas fa-bolt"></i> Новости с Бусти</a></li>
                     <li><a href="information.html"><i class="fas fa-info"></i> Общая информация</a></li>
                     <li><a href="news.html"><i class="fas fa-newspaper"></i> Новости</a></li>
                     <li><a href="about.html"><i class="fas fa-project-diagram"></i> О проекте</a></li>
                     <li><a href="rules_project.html"><i class="fas fa-book"></i> Правила Проекта</a></li>
+                    <li><a href="ISO.html"><i class="fas fa-globe"></i> Международные стандарты</a></li> <!-- Новая страница ISO.html -->
                 </ul>
             </li>
 
-            <!-- Разветление от проекта -->
+            <!-- Проект: Who's There? -->
             <li class="dropdown">
-                <a href="#"><i class="fas fa-cogs"></i> Проект: Who's There? <i class="fas fa-caret-down"></i></a>
+                <a href="#" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cogs"></i> Проект: Who's There? <i class="fas fa-caret-down"></i></a>
                 <ul class="dropdown-menu">
                     <li><a href="minecraft.html"><i class="fas fa-cubes"></i> Who's There? - Главная</a></li>
                 </ul>
             </li>
-            <!-- Разветление от проекта -->
+
+            <!-- Проект: HackWeb -->
             <li class="dropdown">
-                <a href="#"><i class="fas fa-cogs"></i> Проект: HackWeb <i class="fas fa-caret-down"></i></a>
+                <a href="#" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-secret"></i> Проект: HackWeb <i class="fas fa-caret-down"></i></a>
                 <ul class="dropdown-menu">
                     <li><a href="hackweb.html"><i class="fas fa-shield-alt"></i> HackWeb</a></li>
                 </ul>
             </li>
+
+            <!-- Проект: WebNews -->
             <li class="dropdown">
-                <a href="#"><i class="fas fa-bolt"></i> Проект: WebNews <i class="fas fa-caret-down"></i></a>
+                <a href="#" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bolt"></i> Проект: WebNews <i class="fas fa-caret-down"></i></a>
                 <ul class="dropdown-menu">
                     <li><a href="webnews.html"><i class="fas fa-newspaper"></i> WebNews</a></li>
                 </ul>
             </li>
-            <!-- Страница контактов -->
+
+            <!-- Контакты -->
             <li><a href="contact.html"><i class="fas fa-envelope"></i> Контакты</a></li>
         </ul>
     </nav>
 </header>
 
 <!-- Подключение Font Awesome -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<!-- Улучшение доступности через JS -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll('.dropdown > a').forEach(menu => {
+            menu.addEventListener("click", function (e) {
+                e.preventDefault();
+                let dropdownMenu = this.nextElementSibling;
+                dropdownMenu.classList.toggle("open");
+                let isOpen = dropdownMenu.classList.contains("open");
+                this.setAttribute("aria-expanded", isOpen);
+            });
+        });
+    });
+</script>
