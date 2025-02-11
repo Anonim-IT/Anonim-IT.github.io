@@ -1,0 +1,159 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1e1e1e;
+    color: white;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.editor-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px auto;
+    max-width: 800px;
+    background: #2a2a2a;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+select {
+    padding: 8px;
+    font-size: 14px;
+    background: #444;
+    color: white;
+    border: 1px solid #666;
+    margin-bottom: 10px;
+}
+
+.CodeMirror {
+    width: 100%;
+    height: 350px;
+    background: #1e1e1e;
+    border: 1px solid #555;
+    border-radius: 5px;
+}
+
+.run-btn {
+    background: #0078ff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+    border: none;
+}
+
+.run-btn:hover {
+    background: #005fcc;
+}
+/* Навигационное меню */
+.nav-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 15px;
+    background: linear-gradient(90deg, #3a3a55, #2a2a40);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease;
+}
+
+.nav-list li {
+    position: relative;
+    margin: 0 15px;
+}
+
+.nav-list a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+.nav-list a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 5px;
+}
+
+/* Dropdown */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #2a2a40;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    list-style: none;
+    padding: 10px 0;
+    border-radius: 5px;
+    width: 200px;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.dropdown-menu li {
+    width: 100%;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px;
+    width: 100%;
+    font-size: 14px;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Плавное появление */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .nav-list {
+        display: none; /* Скрываем меню на мобильных */
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav-list.open {
+        display: flex; /* Показываем меню, когда класс 'open' активирован */
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+}
+iframe {
+    width: 100%;
+    height: 250px;
+    background: white;
+    border: none;
+    margin-top: 10px;
+}
+
+.footer {
+    background: #121212;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+.footer-nav a {
+    color: #0078ff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer-nav a:hover {
+    text-decoration: underline;
+}

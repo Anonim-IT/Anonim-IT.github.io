@@ -3,29 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Следите за календарем событий Minecraft-сервера 'Who's There?' - вайпы, обновления и мероприятия.">
+    <meta name="keywords" content="Minecraft, сервер, события, вайпы, календарь">
+    <meta name="author" content="Who's There?">
+    
     <link rel="icon" href="image/generated_image.ico" type="image/x-icon">
-    <title>Who's There? - Календарь</title>
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.0.1/dist/fullcalendar.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <title>Who's There? - Календарь событий</title>
+
+    <!-- Стили -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=stylesheet"></noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@3.0.1/dist/fullcalendar.min.css">
     <link rel="stylesheet" href="style/style2.css">
 </head>
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/679eedbc3a8427326078a60b/1ij2d1acn';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
-</script>
-<!--End of Tawk.to Script-->
+
 <body>
-
+    <!-- Навигационная панель -->
     <nav id="navbar"></nav>
-
     <!-- Основной контент -->
     <main>
         <section class="hero">
@@ -36,7 +30,7 @@
             <p>Следите за важными событиями сервера, такими как вайпы, обновления и мероприятия, чтобы не пропустить ничего важного!</p>
         </section>        
 
-        <!-- Календарь для вайпов и событий -->
+        <!-- Календарь событий -->
         <section class="calendar">
             <h2>📅 Календарь событий</h2>
             <p>Следите за датами вайпов и другими важными событиями на нашем сервере!</p>
@@ -55,34 +49,34 @@
         <p>&copy; 2025 Who's There? | <a href="privacy.html">Политика конфиденциальности</a> | Ваш Minecraft-сервер мечты! 🚀</p>
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.0.1/dist/fullcalendar.min.js"></script>
-
+    <!-- Скрипты -->
+    <script defer src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/fullcalendar@3.0.1/dist/fullcalendar.min.js"></script>
+    
     <script>
-        // Инициализация календаря и предстоящих событий
         $(document).ready(function() {
+            // Загрузка календаря
             $.getJSON('calendar.json', function(events) {
-                // Инициализация календаря
                 $('#calendar').fullCalendar({
                     events: events,
                     eventClick: function(event) {
-                        alert(event.title + "\nДата: " + event.start.format('YYYY-MM-DD') + "\nОписание: " + event.description);
+                        alert(`${event.title}\nДата: ${moment(event.start).format('YYYY-MM-DD')}\nОписание: ${event.description}`);
                     },
-                    height: 'auto',  // Установка автоматической высоты
+                    height: 'auto',
                     header: {
                         left: 'prev,next today',
                         center: 'title',
                         right: 'month,agendaWeek,agendaDay'
                     },
-                    locale: 'ru',  // Локализация календаря на русский
+                    locale: 'ru'
                 });
 
                 // Отображение предстоящих событий
                 const upcomingEvents = events.filter(event => moment(event.start).isAfter(moment()));
                 const upcomingList = $('#upcoming-list');
 
-                upcomingEvents.forEach(function(event) {
+                upcomingEvents.forEach(event => {
                     upcomingList.append(`
                         <li>
                             <span class="event-title">${event.title}</span><br>
@@ -93,23 +87,9 @@
             });
         });
     </script>
-    <script>
-        // Загрузка навигационного меню
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('nav/navbarminecraft.html') // Убедитесь, что файл navbar.html существует и доступен по указанному пути
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Ошибка при загрузке навигационной панели');
-                    }
-                    return response.text();
-                })
-                .then(data => {
-                    document.getElementById('navbar').innerHTML = data;
-                })
-                .catch(error => {
-                    console.error('Ошибка при загрузке навигационной панели:', error);
-                });
-        });
-    </script>
+
+    <!-- Tawk.to Live Chat -->
+    <script async src="https://embed.tawk.to/679eedbc3a8427326078a60b/1ij2d1acn" charset="UTF-8" crossorigin="*"></script>
+    <script src="js/navbar.js"></script>
 </body>
 </html>

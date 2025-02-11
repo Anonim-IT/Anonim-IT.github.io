@@ -1,105 +1,88 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="image/favicon.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="Web Mirror — загрузка файлов и модов для WebBlocks.">
+    <meta name="robots" content="index, follow">
+    
     <title>Web Dev - Web Mirror 🪞</title>
+    
+    <link rel="icon" href="image/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style/style.css">
-</head>
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/679eedbc3a8427326078a60b/1ij2d1acn';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
-    </script>
-    <!--End of Tawk.to Script-->
-<body>
-    <div id="navbar-container"></div>
-    <main>
-        <section class="content-section">
-            <h1 id="welcome">Добро пожаловать в Web Mirror 🪞 / Welcome to Web Mirror 🪞</h1>
-            <p id="intro">Web Mirror — ваш надежный источник загрузки полезных файлов и ресурсов. Здесь вы найдете все нужные моды для игры на сервере WebBlocks.</p>
-        </section>
-        <section class="content-section">
-            <h2 id="available-files">👌 Доступные файлы / Available Files</h2>
-            <!--<ul>
-                <li>
-                    <a href="fail/WebBlocks.zip" target="_blank" id="webblocks-download">WebBlocks minecraft (.zip)</a> — Сборка для Prism Launcher
-                    <details>
-                        <summary id="how-to-install">Как установить? / How to install?</summary>
-                        <ol>
-                            <li id="step-1">Скачайте <strong>WebBlocks.zip</strong>.</li>
-                            <li id="step-2">Откройте <strong>Prism Launcher</strong> и импортируйте архив.</li>
-                            <li id="step-3">Готово! Запускайте сборку и наслаждайтесь игрой.</li>
-                        </ol>
-                    </details>
-                </li>
-            </ul>-->
-        </section>
-        <section id="mods-section" class="content-section">
-            <h2 id="additional-resources">🌐 Дополнительные ресурсы / Additional Resources</h2>
-        <!--<ul>
-                <li><a href="https://modrinth.com/plugin/simple-voice-chat" target="_blank" id="voice-chat">Simple Voice Chat</a> — голосовой чат.</li>
-                <li><a href="https://modrinth.com/plugin/custom-player-models" target="_blank" id="custom-models">Custom Player Models</a> — кастомные 3D-модели.</li>
-            </ul>-->
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2025 Web Dev | <a href="webdevprivacy.html" target="_blank" id="privacy-policy">Политика конфиденциальности</a></p>
-    </footer>
-    <script>
-        // Загрузка навигационного меню
-        fetch('nav/navbar.html')
-            .then(response => response.text())
-            .then(data => document.getElementById('navbar-container').innerHTML = data)
-            .catch(error => console.error('Ошибка загрузки навигации:', error));
-        
-        // Функция смены языка
+
+    <script defer>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch('nav/navbar.html')
+                .then(response => response.text())
+                .then(data => document.getElementById('navbar-container').innerHTML = data)
+                .catch(error => console.error('Ошибка загрузки навигации:', error));
+        });
+
         function switchLanguage(lang) {
             const translations = {
                 'ru': {
                     'welcome': 'Добро пожаловать в Web Mirror 🪞',
                     'intro': 'Web Mirror — ваш надежный источник загрузки полезных файлов и ресурсов. Здесь вы найдете все нужные моды для игры на сервере WebBlocks.',
-                    'go-to-mods': 'Перейти к модам',
                     'available-files': '👌 Доступные файлы',
-                    'webblocks-download': 'WebBlocks minecraft (WebBlocks.zip)',
-                    'how-to-install': 'Как установить?',
-                    'step-1': 'Скачайте WebBlocks.zip.',
-                    'step-2': 'Откройте Prism Launcher и импортируйте архив.',
-                    'step-3': 'Готово! Запускайте сборку и наслаждайтесь игрой.',
                     'additional-resources': '🌐 Дополнительные ресурсы',
-                    'voice-chat': 'Simple Voice Chat — голосовой чат.',
-                    'custom-models': 'Custom Player Models — кастомные 3D-модели.',
                     'privacy-policy': 'Политика конфиденциальности'
                 },
                 'en': {
                     'welcome': 'Welcome to Web Mirror 🪞',
                     'intro': 'Web Mirror is your reliable source for downloading useful files and resources. Here you will find all the necessary mods for playing on the WebBlocks server.',
-                    'go-to-mods': 'Go to mods',
                     'available-files': '👌 Available Files',
-                    'webblocks-download': 'WebBlocks minecraft (WebBlocks.zip)',
-                    'how-to-install': 'How to install?',
-                    'step-1': 'Download WebBlocks.zip.',
-                    'step-2': 'Open Prism Launcher and import the archive.',
-                    'step-3': 'Done! Launch the instance and enjoy the game.',
                     'additional-resources': '🌐 Additional Resources',
-                    'voice-chat': 'Simple Voice Chat — a voice chat tool.',
-                    'custom-models': 'Custom Player Models — tool for custom 3D skins.',
                     'privacy-policy': 'Privacy Policy'
                 }
             };
-            
             for (const [key, value] of Object.entries(translations[lang])) {
                 document.getElementById(key).innerText = value;
             }
         }
+    </script>
+</head>
+<body>
+    <noscript>
+        <p>Для работы этого сайта требуется JavaScript. Включите его в настройках браузера.</p>
+    </noscript>
+
+    <header>
+        <div id="navbar-container"></div>
+    </header>
+
+    <main role="main" aria-label="Основное содержимое">
+        <section class="content-section">
+            <h1 id="welcome">Добро пожаловать в Web Mirror 🪞 / Welcome to Web Mirror 🪞</h1>
+            <p id="intro">Web Mirror — ваш надежный источник загрузки полезных файлов и ресурсов. Здесь вы найдете все нужные моды для игры на сервере WebBlocks.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 id="available-files">👌 Доступные файлы / Available Files</h2>
+            <!-- Файлы пока не загружены -->
+        </section>
+
+        <section id="mods-section" class="content-section">
+            <h2 id="additional-resources">🌐 Дополнительные ресурсы / Additional Resources</h2>
+            <!-- Список ресурсов -->
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <p>&copy; 2025 Web Dev | <a href="webdevprivacy.html" target="_blank" id="privacy-policy">Политика конфиденциальности</a></p>
+    </footer>
+
+    <!-- Tawk.to Live Chat -->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/679eedbc3a8427326078a60b/1ij2d1acn';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
     </script>
 </body>
 </html>

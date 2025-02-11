@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🚀 Онлайн-редактор кода - Web Dev</title>
-    <link rel="stylesheet" href="style/stiles.css">
+    
+    <link rel="stylesheet" href="style/Style.css">
     <link rel="icon" href="image/favicon.ico" type="image/x-icon">
     
     <!-- CodeMirror -->
@@ -12,69 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/theme/dracula.min.css">
 
     <!-- Pyodide -->
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
-
-    <style>
-        /* Основной стиль */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #1e1e1e;
-            color: white;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
-        /* Контейнер редактора */
-        .editor-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 20px auto;
-            max-width: 800px;
-            background: #2a2a2a;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        /* Выбор языка */
-        select {
-            padding: 8px;
-            font-size: 14px;
-            background: #444;
-            color: white;
-            border: 1px solid #666;
-            margin-bottom: 10px;
-        }
-        /* Окно кода (фиксированное) */
-        .CodeMirror {
-            width: 100%;
-            height: 350px;
-            background: #1e1e1e;
-            border: 1px solid #555;
-            border-radius: 5px;
-        }
-        /* Кнопка запуска */
-        .run-btn {
-            background: #0078ff;
-            color: white;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-top: 10px;
-            border: none;
-        }
-        .run-btn:hover {
-            background: #005fcc;
-        }
-        /* Окно вывода */
-        iframe {
-            width: 100%;
-            height: 250px;
-            background: white;
-            border: none;
-            margin-top: 10px;
-        }
-    </style>
+    <script defer src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
 </head>
 
 <body>
@@ -82,12 +21,11 @@
     <!-- Навигация -->
     <div id="navbar-container"></div>
 
-    <!-- Редактор -->
-    <div class="editor-container">
+    <!-- Редактор кода -->
+    <main class="editor-container">
         <h1>🖥 Онлайн-редактор кода</h1>
         <p>Выберите язык и попробуйте запустить код! 🚀</p>
 
-        <!-- Выбор языка -->
         <label for="language">Язык:</label>
         <select id="language" onchange="changeLanguage()">
             <option value="htmlmixed">HTML + CSS + JavaScript</option>
@@ -95,15 +33,14 @@
             <option value="python">Python</option>
         </select>
 
-        <!-- Окно редактора -->
         <textarea id="code-editor"></textarea>
 
-        <!-- Кнопка запуска -->
         <button class="run-btn" onclick="runCode()">▶ Запустить</button>
 
-        <!-- Окно вывода -->
         <iframe id="output"></iframe>
-    </div>
+    </main>
+
+    <!-- Подвал -->
     <footer class="footer">
         <div class="footer-content">
             <p>&copy; 2025 Web Dev | 🚀 Учись, твори, создавай!</p>
@@ -116,66 +53,13 @@
     </footer>
 
     <!-- CodeMirror -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/htmlmixed/htmlmixed.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/javascript/javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/python/python.min.js"></script>
-
-    <!-- Инициализация CodeMirror -->
-    <script>
-        var editor = CodeMirror.fromTextArea(document.getElementById('code-editor'), {
-            mode: "htmlmixed",
-            theme: "dracula",
-            lineNumbers: true,
-            lineWrapping: true, /* Перенос строк */
-            indentWithTabs: true, /* Используем табы */
-            tabSize: 4, /* Размер таба */
-            viewportMargin: Infinity, /* Отключает динамическое изменение высоты */
-            fixedGutter: true, /* Фиксирует отступы */
-        });
-
-        function changeLanguage() {
-            const selectedLanguage = document.getElementById('language').value;
-            editor.setOption("mode", selectedLanguage);
-        }
-
-        let pyodideReady = false;
-        let pyodideInstance = null;
-
-        async function loadPyodideOnce() {
-            if (!pyodideReady) {
-                pyodideInstance = await loadPyodide({
-                    indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/"
-                });
-                pyodideReady = true;
-            }
-        }
-
-        async function runCode() {
-            const code = editor.getValue();
-            const language = document.getElementById('language').value;
-            const outputFrame = document.getElementById('output');
-
-            if (language === "htmlmixed" || language === "javascript") {
-                outputFrame.srcdoc = `<script>${code}<\/script>`;
-            } else if (language === "python") {
-                try {
-                    await loadPyodideOnce();
-                    let output = await pyodideInstance.runPythonAsync(code);
-                    outputFrame.srcdoc = `<pre>${output}</pre>`;
-                } catch (error) {
-                    outputFrame.srcdoc = `<pre style="color: red;">Ошибка: ${error}</pre>`;
-                }
-            }
-        }
-
-        fetch('nav/navbar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('navbar-container').innerHTML = data;
-            })
-            .catch(error => console.error('Ошибка загрузки navbar:', error));
-    </script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/javascript/javascript.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/python/python.min.js"></script>
+    
+    <!-- Основной JavaScript -->
+    <script defer src="scripts/editor.js"></script>
 
 </body>
 </html>

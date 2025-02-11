@@ -5,29 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="image/generated_image.ico" type="image/x-icon">
     <title>WebBlocks - Новости</title>
-    <!-- Подключение Google Fonts -->
+
+    <!-- Подключение шрифтов -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <!-- Подключение Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Подключение стилей -->
     <link rel="stylesheet" href="style/style2.css">
 </head>
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/679eedbc3a8427326078a60b/1ij2d1acn';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
-    </script>
-    <!--End of Tawk.to Script-->
-        <!-- Навигационная панель -->
-        <nav id="navbar"></nav>
 <body>
-
+    <!-- Навигационная панель -->
+        <nav id="navbar"></nav>
 
     <!-- Основной контент -->
     <main>
@@ -49,38 +37,53 @@
         <p>&copy; 2025 WebBlocks | <a href="privacy.html">Политика конфиденциальности</a> | Ваш Minecraft-сервер мечты! 🚀</p>
     </footer>
 
-    <!-- Скрипты -->
+    <!-- Загрузка jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Tawk.to -->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function() {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/679eedbc3a8427326078a60b/1ij2d1acn';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+
+    <!-- Основные скрипты -->
     <script>
-        // Инициализация
         document.addEventListener('DOMContentLoaded', () => {
             loadNavbar();
             loadNews();
         });
 
-        // Загрузка навигационной панели
-        function loadNavbar() {
-            fetch('nav/navbarminecraft.html')
-                .then(response => response.ok ? response.text() : Promise.reject(response.status))
-                .then(html => document.getElementById('navbar').innerHTML = html)
-                .catch(error => console.error('Ошибка загрузки меню:', error));
-        }
-
-        // Загрузка и отображение новостей
+        // Загрузка новостей
         function loadNews() {
             fetch('news-minecraft.json')
-                .then(response => response.ok ? response.json() : Promise.reject(response.status))
-                .then(newsData => renderNews(newsData))
+                .then(response => {
+                    if (!response.ok) throw new Error(`Ошибка загрузки новостей: ${response.status}`);
+                    return response.json();
+                })
+                .then(renderNews)
                 .catch(error => console.error('Ошибка загрузки новостей:', error));
         }
 
-        // Функция отображения новостей
+        // Отображение новостей
         function renderNews(newsData) {
             const newsList = document.getElementById('news-list');
-            newsData.forEach(news => {
-                const newsCard = document.createElement('div');
-                newsCard.className = 'news-card minecraft-style';
+            newsList.innerHTML = ''; // Очищаем контейнер перед загрузкой новостей
 
+            if (!Array.isArray(newsData) || newsData.length === 0) {
+                newsList.innerHTML = '<p><i class="fas fa-exclamation-circle"></i> Пока нет новостей.</p>';
+                return;
+            }
+
+            newsData.forEach(news => {
+                const newsCard = document.createElement('article');
+                newsCard.className = 'news-card minecraft-style';
                 newsCard.innerHTML = `
                     <h2><i class="fas fa-bullhorn"></i> ${news.title}</h2>
                     <p>${news.content}</p>
@@ -90,5 +93,6 @@
             });
         }
     </script>
+    <script src="js/navbar_minecraft.js"></script>
 </body>
 </html>
