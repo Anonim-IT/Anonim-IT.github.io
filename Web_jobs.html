@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Оставьте заявку на работу в WebNews. Заполните форму и прикрепите свое резюме.">
+    <meta name="keywords" content="WebNews, вакансия, работа, резюме">
+    <meta property="og:title" content="WebNews - Вакансии">
+    <meta property="og:description" content="Заполните форму, чтобы подать заявку на работу в WebNews.">
+    <meta property="og:image" content="webnews/assets/job.jpg">
+    <meta property="og:type" content="website">
+    
+    <title>WebNews - Вакансии</title>
+    <link rel="stylesheet" href="webnews/css/style.css">
+</head>
+<body>
+
+    <nav id="navbar-container"></nav>
+
+    <main class="job-application-container">
+        <h2>📄 Оставить заявку на работу</h2>
+        <p>Заполните форму ниже, чтобы подать заявку на вакансию.</p>
+
+        <form id="job-form">
+            <!-- Личные данные -->
+            <label for="fullname">📝 ФИО:</label>
+            <input type="text" id="fullname" name="fullname" required placeholder="Иванов Иван Иванович">
+
+            <label for="birthdate">📅 Дата рождения:</label>
+            <input type="date" id="birthdate" name="birthdate" required>
+
+            <label for="email">📧 Email:</label>
+            <input type="email" id="email" name="email" required placeholder="example@mail.com">
+
+            <label for="phone">📞 Телефон:</label>
+            <input type="tel" id="phone" name="phone" required placeholder="+7 (999) 999-99-99">
+
+            <!-- Образование и опыт работы -->
+            <label for="education">🎓 Образование:</label>
+            <input type="text" id="education" name="education" required placeholder="Название учебного заведения">
+
+            <label for="experience">💼 Опыт работы:</label>
+            <textarea id="experience" name="experience" rows="3" required placeholder="Опишите ваш опыт работы..."></textarea>
+
+            <!-- Должность -->
+            <label for="position">👔 Желаемая должность:</label>
+            <select id="position" name="position" required>
+                <option value="">Выберите должность...</option>
+                <option value="developer">Веб-разработчик</option>
+                <option value="designer">UI/UX дизайнер</option>
+                <option value="manager">Менеджер проекта</option>
+            </select>
+
+            <!-- Дополнительные вопросы -->
+            <label for="message">💬 Дополнительная информация:</label>
+            <textarea id="message" name="message" rows="4" placeholder="Расскажите, почему хотите работать у нас..."></textarea>
+
+            <label>
+                <input type="checkbox" id="consent" name="consent" required>
+                ✅ Я согласен(а) на обработку персональных данных.
+            </label>
+
+            <button type="submit">📨 Отправить заявку</button>
+        </form>
+
+        <p id="status-message" class="status-message"></p>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 WebNews. Все права защищены.</p>
+    </footer>
+
+    <script src="webnews/js/job-form.js"></script>
+    <script src="webnews/js/main.js"></script>
+</body>
+</html>
