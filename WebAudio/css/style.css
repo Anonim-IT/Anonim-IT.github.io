@@ -10,20 +10,27 @@ body {
 /* Навигация */
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;  /* Центрируем элементы навигации */
     align-items: center;
-    padding: 15px 20px;
+    padding: 15px 30px;
     background: rgba(0, 0, 0, 0.7);
     position: fixed;
     width: 100%;
     top: 0;
     left: 0;
     z-index: 10;
+    transition: background 0.3s ease-in-out;
+}
+
+header:hover {
+    background: rgba(0, 0, 0, 0.9); /* Увеличивает контраст при наведении */
 }
 
 .logo {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
+    color: #ff0033; /* Яркий акцент для логотипа */
+    margin-right: 30px;  /* Отступ между логотипом и навигацией */
 }
 
 nav ul {
@@ -31,20 +38,41 @@ nav ul {
     padding: 0;
     margin: 0;
     display: flex;
+    justify-content: center;  /* Центрируем ссылки */
 }
 
 nav ul li {
-    margin: 0 15px;
+    margin: 0 20px;
 }
 
 nav ul li a {
     text-decoration: none;
     color: white;
     font-size: 18px;
+    font-weight: 600; /* Увеличение веса шрифта */
+    position: relative;
+    padding: 5px 0;
 }
 
 nav ul li a:hover {
-    text-decoration: underline;
+    color: #ff0033; /* Цвет текста при наведении */
+}
+
+nav ul li a::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #ff0033;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+nav ul li a:hover::after {
+    transform: scaleX(1);
 }
 
 /* Главный блок */
@@ -92,36 +120,121 @@ nav ul li a:hover {
 .product {
     background: rgba(255, 255, 255, 0.1);
     padding: 20px;
-    border-radius: 10px;
-    width: 200px;
+    border-radius: 20px; /* Углы более округлые */
+    width: 250px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Тень для объема */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    overflow: hidden; /* Чтобы текст не выходил за пределы */
 }
+
+.product:hover {
+    transform: translateY(-10px); /* Подъем плашки при наведении */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* Увеличенная тень при наведении */
+}
+
+.product img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover; /* Чтобы изображение не искажалось */
+    border-radius: 10px;
+}
+
+.product h3 {
+    font-size: 20px;
+    margin-top: 10px;
+    color: #fff;
+}
+
+.product p {
+    font-size: 14px;
+    color: #ccc;
+}
+
+.product .price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff0033;
+    margin-top: 10px;
+}
+
+/* Кнопка */
+.product .btn {
+    display: inline-block;
+    background: #ff0033;
+    color: white;
+    padding: 12px 25px;
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: 30px; /* Круглая кнопка */
+    margin-top: 15px;
+    position: relative;
+    overflow: hidden;
+    transition: 0.4s;
+}
+
+.product .btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: 0.4s ease;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.product .btn:hover::before {
+    width: 0;
+    height: 0;
+}
+
+.product .btn:hover {
+    background: #cc0022;
+    transform: scale(1.05); /* Немного увеличиваем размер кнопки */
+}
+
+.product .btn:active {
+    transform: scale(0.98); /* Сжимается при нажатии */
+}
+
+/* Стили для текста на кнопке */
+.product .btn span {
+    position: relative;
+    z-index: 1;
+}
+
 
 /* О проекте */
 .about-page {
     padding: 100px 20px;
 }
-        /* Стили для прогресс-бара */
-        .progress-container {
-            width: 100%;
-            height: 30px;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            margin-top: 20px;
-            position: relative;
-        }
-        .progress-bar {
-            height: 100%;
-            background-color: #2f017a;
-            border-radius: 5px;
-            text-align: center;
-            color: white;
-            line-height: 30px; /* Выравнивание текста по вертикали */
-            font-weight: bold;
-        }
-        .progress-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 14px;
-        }
+
+/* Стили для прогресс-бара */
+.progress-container {
+    width: 100%;
+    height: 30px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin-top: 20px;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #2f017a;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    line-height: 30px; /* Выравнивание текста по вертикали */
+    font-weight: bold;
+}
+
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+}
