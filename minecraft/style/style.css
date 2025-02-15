@@ -1,8 +1,8 @@
 /* --- Общие стили --- */
 body, html {
   font-family: 'Minecraft', sans-serif;
-  background-color: #0d1117;
-  color: #c9d1d9;
+  background: linear-gradient(180deg, #02010a, #0b001a); /* Глубокий космический фон */
+  color: #c7c7c7;
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
@@ -10,29 +10,40 @@ body, html {
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* --- Аномальные разрывы реальности --- */
+@keyframes glitch {
+  0% { text-shadow: -2px -2px 10px rgba(255, 0, 0, 0.8), 2px 2px 10px rgba(0, 0, 255, 0.8); }
+  50% { text-shadow: -5px 0px 12px rgba(255, 0, 0, 0.6), 5px 0px 12px rgba(0, 0, 255, 0.6); }
+  100% { text-shadow: -2px -2px 10px rgba(255, 0, 0, 0.8), 2px 2px 10px rgba(0, 0, 255, 0.8); }
 }
 
 /* --- Основной контейнер (фикс для футера) --- */
 .wrapper {
-  flex: 1; /* Контент займет всю доступную высоту, толкая footer вниз */
+  flex: 1;
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 2;
+}
+
+/* --- Заголовки с эффектом свечения --- */
+h2 {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #ff0033;
+  text-shadow: 0 0 12px rgba(255, 0, 51, 0.9);
+  animation: glitch 1.2s infinite alternate;
 }
 
 /* --- Шапка сайта (header) --- */
 header {
-  background: linear-gradient(180deg, #005b96, #002f4b); /* Градиент с синим акцентом */
+  background: linear-gradient(90deg, #330000, #110011); /* Кроваво-темный градиент */
   padding: 15px 20px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-}
-
-/* --- Основной контент (блоки секций) --- */
-.section {
-  background: rgba(21, 34, 56, 0.9);
-  padding: 25px;
-  border-radius: 15px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
 }
 
 /* --- Навигационное меню --- */
@@ -42,17 +53,13 @@ header {
   justify-content: center;
   list-style: none;
   padding: 10px;
-  background: rgba(10, 25, 47, 0.8);
+  background: rgba(20, 0, 0, 0.9);
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-}
-
-.nav-list li {
-  margin: 0 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
 }
 
 .nav-list a {
-  color: #a8c7fa; /* Холодный голубой текст */
+  color: #ff0033;
   text-decoration: none;
   padding: 12px 20px;
   display: flex;
@@ -63,116 +70,94 @@ header {
 }
 
 .nav-list a:hover {
-  background: rgba(0, 150, 255, 0.2);
+  background: rgba(255, 0, 0, 0.2);
   transform: scale(1.05);
+  text-shadow: 0 0 8px #ff0033;
 }
 
-/* --- Значок внимания (желтый) слева --- */
-.nav-warning {
-  margin-right: auto; /* Отодвигаем влево */
-}
-
-.nav-warning a {
-  color: #f1c40f;
-  font-size: 20px;
-  transition: transform 0.3s ease-in-out;
-}
-
-.nav-warning a:hover {
-  transform: scale(1.2);
-}
-
-/* --- Выпадающие меню --- */
+/* --- Выпадающие меню (исправлено) --- */
 .dropdown {
-  position: relative;
+  position: relative; /* Фикс для позиционирования меню */
+  display: inline-block; /* Чтобы меню работало в строке */
 }
 
 .dropdown-menu {
-  display: none;
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: #003366;
-  padding: 10px;
-  border-radius: 5px;
+  background: rgba(10, 10, 15, 0.95); /* Темный полупрозрачный фон */
+  padding: 10px 0;
+  border-radius: 8px;
   list-style: none;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-15px);
+  transition: opacity 0.4s ease, visibility 0.3s ease, transform 0.3s ease;
+  z-index: 999; /* Обеспечивает, что меню будет поверх других элементов */
 }
 
 .dropdown:hover .dropdown-menu {
-  display: block;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
 .dropdown-menu a {
-  color: #fff;
-  padding: 8px 12px;
+  color: #d8bfff; /* Мистический фиолетовый */
+  padding: 12px 20px;
   display: block;
   border-radius: 5px;
-  font-size: 14px;
-  transition: background 0.3s;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .dropdown-menu a:hover {
-  background: rgba(70, 130, 180, 0.3);
+  background: rgba(120, 50, 200, 0.3); /* Фиолетовый оттенок при наведении */
+  color: #fff; /* Яркий цвет текста при наведении */
 }
 
-/* --- Основной контент --- */
-main {
-  padding: 30px 20px;
-  background-color: #152238;
+.dropdown-menu a:active {
+  background: rgba(120, 50, 200, 0.5); /* Углубленный оттенок при активном нажатии */
+  transform: scale(0.98); /* Легкое уменьшение при нажатии */
+}
+
+/* Дополнительные стили для улучшения контекста */
+.dropdown-menu a:first-child {
+  margin-top: 8px; /* Немного отступа сверху для первого элемента */
+}
+
+/* --- Основной контент (блоки секций) --- */
+.section {
+  background: rgba(10, 0, 15, 0.9); /* Темно-бордовый фон */
+  padding: 25px;
   border-radius: 15px;
-  margin: 20px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 0, 0, 0.2);
+}
+
+/* --- Основной контент (Hero) --- */
+.hero {
+  text-align: center;
+  background: url('https://example.com/dark-portal.jpg') center/cover no-repeat;
+  padding: 80px 20px;
+  color: #fff;
+  text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8);
 }
 
 /* --- Блок объявления (важные сообщения) --- */
 .announcement {
-  background: linear-gradient(90deg, #0077be, #003f7f); /* Холодный синий градиент */
+  background: linear-gradient(90deg, #550000, #330000);
   color: #fff;
   padding: 20px;
   text-align: center;
   font-size: 1.4em;
   font-weight: bold;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
   margin: 20px 0;
   animation: pulse 1.5s infinite alternate;
-}
-
-/* --- Эффект пульсации для привлечения внимания 
-@keyframes pulse {
-  from {
-      transform: scale(1);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  }
-  to {
-      transform: scale(1.02);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
-  }
-}--- */
-
-/* --- Заголовки --- */
-h2 {
-  font-size: 2.3em;
-  border-bottom: 3px solid #00aaff;
-  padding-bottom: 10px;
-  margin-bottom: 25px;
-  font-weight: bold;
-  color: #00aaff;
-}
-
-/* --- Секция героя (Hero) --- */
-.hero {
-  text-align: center;
-  background: url('https://example.com/minecraft-background.jpg') center/cover no-repeat;
-  padding: 80px 20px;
-  color: #fff;
-  text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.7);
-}
-
-.hero h1 {
-  font-size: 3.5em;
-  margin-bottom: 20px;
 }
 
 /* --- Кнопка скачивания --- */
@@ -180,91 +165,116 @@ h2 {
   display: inline-flex;
   align-items: center;
   padding: 12px 25px;
-  background: linear-gradient(45deg, #005b96, #0099ff);
+  background: linear-gradient(45deg, #660000, #330000);
   color: white;
   font-size: 18px;
   font-weight: bold;
   border-radius: 30px;
   text-decoration: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease;
 }
 
 .custom-download-button:hover {
-  background: linear-gradient(45deg, #0077cc, #005b96);
+  background: linear-gradient(45deg, #880000, #550000);
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 0 10px #ff0000;
 }
 
-/* --- Основной контейнер (фикс для футера) --- */
-.wrapper {
-  flex: 1; /* Контент займет всю доступную высоту, толкая footer вниз */
-  display: flex;
-  flex-direction: column;
+/* --- Эффект пульсации для заголовков --- */
+@keyframes pulse {
+  from {
+      text-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
+  }
+  to {
+      text-shadow: 0 0 12px rgba(255, 0, 0, 0.8);
+  }
 }
 
-/* --- Основной контент --- */
-main {
-  flex: 1; /* Контент будет растягиваться */
-  padding: 30px 20px;
-  background-color: #152238;
-  border-radius: 15px;
-  margin: 20px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-}
-
-/* --- Футер (исправлен) --- */
+/* --- Футер --- */
 footer {
-  background: rgba(10, 25, 47, 0.9);
-  color: #a8c7fa;
+  background: rgba(10, 0, 0, 0.9);
+  color: #ff0033;
   text-align: center;
   padding: 12px 20px;
   font-size: 14px;
   width: 100%;
-  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.7);
 }
 
+
+/* Контейнер формы */
 .container {
   max-width: 500px;
   margin: auto;
-  background: #2e2e3e;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(135deg, #1a1a1a, #220000);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
   text-align: left;
+  backdrop-filter: blur(10px);
+  position: relative; /* Убедитесь, что форма не блокирует другие элементы */
+  z-index: 1; /* Можно указать z-index для контроля */
 }
 
-h2, p {
-  text-align: center;
-}
-
-label {
-  font-weight: bold;
-  display: block;
-  margin-top: 10px;
-}
-
-input, textarea, button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
+/* --- Инпуты и текстовые поля --- */
 input, textarea {
-  background: #444;
+  width: 100%;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.7);
   color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  font-size: 16px;
+  margin-top: 10px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
 }
 
+input:focus, textarea:focus {
+  border-color: #ff0066;
+  outline: none;
+  box-shadow: 0 0 8px rgba(255, 0, 102, 0.6);
+}
+
+/* --- Кнопки --- */
 button {
-  background: #007acc;
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #ff0066, #880000);
   color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
   cursor: pointer;
-  margin-top: 15px;
+  margin-top: 20px;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
-  background: #005f99;
+  background: linear-gradient(135deg, #ff1a66, #550000);
+  text-shadow: 0 0 10px #ff0066;
+  transform: translateY(-2px);
 }
+
+button:active {
+  transform: translateY(1px);
+}
+
+/* --- Мелкие улучшения --- */
+label {
+  font-size: 16px;
+  color: #ccc;
+  margin-bottom: 6px;
+  display: block;
+}
+
+input, textarea {
+  font-size: 16px;
+}
+
+textarea {
+  min-height: 120px;
+}
+
