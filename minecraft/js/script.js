@@ -18,29 +18,33 @@ document.getElementById("whitelistForm").addEventListener("submit", function(eve
 
     document.getElementById("status").innerText = "Отправка запроса...";
 
-    // Токен бота и ID чата храним в безопасном месте!
+    // Токен бота и ID чатов
     const botToken = "7745335635:AAGbPdzXplwqbMky-xgJ9KOhsWln5z6toYo"; // Замени на свой токен
-    const chatId = "250356592"; // Замени на свой ID
+    const chatIds = ["250356592", "5206122340"]; // Добавь новый ID чата
 
     const message = `🔥 Новая заявка в Whitelist!\n\n👤 Ник: ${nickname}\n🔗 Как нашел: ${source}\n💬 Отношение к серверам: ${opinion}\n🎯 Планы на сервере: ${plans}`;
 
-    fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chat_id: chatId, text: message })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.ok) {
-            document.getElementById("status").innerText = "Заявка отправлена!";
-        } else {
-            document.getElementById("status").innerText = "Ошибка отправки!";
-        }
-    })
-    .catch(error => {
-        document.getElementById("status").innerText = "Ошибка соединения!";
+    // Отправка сообщения в оба чата
+    chatIds.forEach(chatId => {
+        fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ chat_id: chatId, text: message })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.ok) {
+                document.getElementById("status").innerText = "Заявка отправлена!";
+            } else {
+                document.getElementById("status").innerText = "Ошибка отправки!";
+            }
+        })
+        .catch(error => {
+            document.getElementById("status").innerText = "Ошибка соединения!";
+        });
     });
 });
+
 // Загрузка навигационной панели
 function loadNavbar() {
     fetch('minecraft/navbar/navbarminecraft.html')

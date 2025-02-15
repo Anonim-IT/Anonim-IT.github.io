@@ -3,93 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Следите за календарем событий Minecraft-сервера 'Who's There?' - вайпы, обновления и мероприятия.">
-    <meta name="keywords" content="Minecraft, сервер, события, вайпы, календарь">
-    <meta name="author" content="Who's There?">
-    
     <link rel="icon" href="image/generated_image.ico" type="image/x-icon">
-    <title>Who's There? - Календарь событий</title>
+    <title>Graveyard of Souls - Новости</title>
 
-    <!-- Стили -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=stylesheet"></noscript>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@3.0.1/dist/fullcalendar.min.css">
+    <!-- Подключение шрифтов -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Подключение стилей -->
     <link rel="stylesheet" href="minecraft/style/style.css">
 </head>
-
 <body>
     <!-- Навигационная панель -->
-    <nav id="navbar"></nav>
+        <nav id="navbar"></nav>
+
     <!-- Основной контент -->
     <main>
+        <!-- Герой-секция -->
         <section class="hero">
-            <h1>Добро пожаловать на сервер Who's There?</h1>
-            <p>Погрузитесь в уникальный мир Minecraft, созданный на базе <strong>собственной сборки</strong>, разрабатываемой специально для этого проекта.</p>
-            <p><strong>Сервер Who's There? — это не просто обычный сервер, а полностью переработанная игровая вселенная с новыми механиками, атмосферой и необычными игровыми возможностями.</strong></p>
-            <p>Наши моды и сборка являются частью авторского контента, и их копирование или распространение запрещено. За нарушение данного правила предусмотрены санкции вплоть до блокировки по IP и лишения доступа к проекту.</p>
-            <p>Следите за важными событиями сервера, такими как вайпы, обновления и мероприятия, чтобы не пропустить ничего важного!</p>
-        </section>        
-
-        <!-- Календарь событий -->
-        <section class="calendar">
-            <h2>📅 Календарь событий</h2>
-            <p>Следите за датами вайпов и другими важными событиями на нашем сервере!</p>
-            <div id="calendar"></div>
+            <h1><i class="fas fa-cube"></i> Новости "Graveyard of Souls"</h1>
+            <p><i class="fas fa-info-circle"></i> Следите за последними обновлениями и новостями нашего проекта! Здесь вы найдете все актуальные изменения.</p>
         </section>
 
-        <!-- Предстоящие события -->
-        <section class="upcoming-events">
-            <h2>Предстоящие события</h2>
-            <ul id="upcoming-list"></ul>
+        <!-- Секция новостей -->
+        <section class="news-section">
+            <h2><i class="fas fa-newspaper"></i> Последние новости</h2>
+            <div id="news-list" class="news-container"></div>
         </section>
     </main>
 
     <!-- Подвал -->
     <footer>
-        <p>&copy; 2025 Who's There? | <a href="privacy.html">Политика конфиденциальности</a> | Ваш Minecraft-сервер мечты! 🚀</p>
+        <p>&copy; 2025 Graveyard of Souls | <a href="privacy.html">Политика конфиденциальности</a> | Ваш Minecraft-сервер мечты! 🚀</p>
     </footer>
 
-    <!-- Скрипты -->
-    <script defer src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/fullcalendar@3.0.1/dist/fullcalendar.min.js"></script>
-    
+    <!-- Загрузка jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Tawk.to 
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function() {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/679eedbc3a8427326078a60b/1ij2d1acn';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>-->
+
+    <!-- Основные скрипты -->
     <script>
-        $(document).ready(function() {
-            // Загрузка календаря
-            $.getJSON('calendar.json', function(events) {
-                $('#calendar').fullCalendar({
-                    events: events,
-                    eventClick: function(event) {
-                        alert(`${event.title}\nДата: ${moment(event.start).format('YYYY-MM-DD')}\nОписание: ${event.description}`);
-                    },
-                    height: 'auto',
-                    header: {
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'month,agendaWeek,agendaDay'
-                    },
-                    locale: 'ru'
-                });
-
-                // Отображение предстоящих событий
-                const upcomingEvents = events.filter(event => moment(event.start).isAfter(moment()));
-                const upcomingList = $('#upcoming-list');
-
-                upcomingEvents.forEach(event => {
-                    upcomingList.append(`
-                        <li>
-                            <span class="event-title">${event.title}</span><br>
-                            <span class="event-date">${moment(event.start).format('DD MMMM YYYY')}</span>
-                        </li>
-                    `);
-                });
-            });
+        document.addEventListener('DOMContentLoaded', () => {
+            loadNavbar();
+            loadNews();
         });
-    </script>
 
-    <!-- Tawk.to Live Chat -->
-    <script async src="https://embed.tawk.to/679eedbc3a8427326078a60b/1ij2d1acn" charset="UTF-8" crossorigin="*"></script>
+        // Загрузка новостей
+        function loadNews() {
+            fetch('news-minecraft.json')
+                .then(response => {
+                    if (!response.ok) throw new Error(`Ошибка загрузки новостей: ${response.status}`);
+                    return response.json();
+                })
+                .then(renderNews)
+                .catch(error => console.error('Ошибка загрузки новостей:', error));
+        }
+
+        // Отображение новостей
+        function renderNews(newsData) {
+            const newsList = document.getElementById('news-list');
+            newsList.innerHTML = ''; // Очищаем контейнер перед загрузкой новостей
+
+            if (!Array.isArray(newsData) || newsData.length === 0) {
+                newsList.innerHTML = '<p><i class="fas fa-exclamation-circle"></i> Пока нет новостей.</p>';
+                return;
+            }
+
+            newsData.forEach(news => {
+                const newsCard = document.createElement('article');
+                newsCard.className = 'news-card minecraft-style';
+                newsCard.innerHTML = `
+                    <h2><i class="fas fa-bullhorn"></i> ${news.title}</h2>
+                    <p>${news.content}</p>
+                    <small><i class="fas fa-calendar-alt"></i> Дата: ${news.date}</small>
+                `;
+                newsList.appendChild(newsCard);
+            });
+        }
+    </script>
     <script src="minecraft/js/script.js"></script>
 </body>
 </html>
