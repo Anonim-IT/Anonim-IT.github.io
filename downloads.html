@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="image/generated_image.ico" type="image/x-icon">
     <title>Who's There? - Загрузка лаунчера</title>
-    <link rel="stylesheet" href="style/style2.css">
+    <link rel="stylesheet" href="minecraft/style/style.css">
 </head>
 <body>
-    <div id="navbar-container"></div>
+        <!-- Навигационная панель -->
+        <nav id="navbar"></nav>
 
     <!-- Главная секция -->
     <main>
@@ -68,12 +69,6 @@
         <p>&copy; 2025 Who's There? | <a href="privacy.html" target="_blank" id="privacy-policy">Политика конфиденциальности</a></p>
     </footer>
 
-    <script>
-        // Загрузка навигационного меню
-        fetch('nav/navbarminecraft.html')
-            .then(response => response.text())
-            .then(data => document.getElementById('navbar-container').innerHTML = data)
-            .catch(error => console.error('Ошибка загрузки навигации:', error));
-    </script>
+    <script src="minecraft/js/script.js"></script>
 </body>
 </html>

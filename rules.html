@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="image/generated_image.ico" type="image/x-icon">
     <title>Who's There? - Правила</title>
-    <link rel="stylesheet" href="style/style2.css">
+    <link rel="stylesheet" href="minecraft/style/style.css">
 </head>
 
 <body>
     <!-- Подключаем навигационную панель -->
-    <div id="navbar-container"></div>
+    <!-- Навигационная панель -->
+    <nav id="navbar"></nav>
 
     <main class="content-section">
         <h1>Правила сервера Who's There?</h1>
@@ -62,22 +63,6 @@
         <p>&copy; 2025 Who's There? | <a href="privacy.html">Политика конфиденциальности</a> | Играй честно!</p>
     </footer>
 
-    <script>
-        // Загрузка навигационного меню
-        fetch('nav/navbarminecraft.html')
-            .then(response => response.text())
-            .then(data => document.getElementById('navbar-container').innerHTML = data)
-            .catch(error => console.error('Ошибка при загрузке навигации:', error));
-
-        // Tawk.to Chat
-        (function() {
-            var tawk = document.createElement("script");
-            tawk.async = true;
-            tawk.src = 'https://embed.tawk.to/679eedbc3a8427326078a60b/1ij2d1acn';
-            tawk.charset = 'UTF-8';
-            tawk.setAttribute('crossorigin', '*');
-            document.head.appendChild(tawk);
-        })();
-    </script>
+    <script src="minecraft/js/script.js"></script>
 </body>
 </html>

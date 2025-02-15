@@ -223,3 +223,48 @@ footer {
   width: 100%;
   box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.6);
 }
+
+.container {
+  max-width: 500px;
+  margin: auto;
+  background: #2e2e3e;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  text-align: left;
+}
+
+h2, p {
+  text-align: center;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+}
+
+input, textarea, button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+input, textarea {
+  background: #444;
+  color: #fff;
+}
+
+button {
+  background: #007acc;
+  color: white;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+button:hover {
+  background: #005f99;
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whitelist — Who's There?</title>
+    <link rel="stylesheet" href="minecraft/style/style.css">
+    <link rel="icon" href="image/generated_image.ico" type="image/x-icon">
+</head>
+<body>
+
+    <!-- Навигационная панель -->
+    <div id="navbar"></div>
+
+    <div class="container">
+        <h2>Заявка на Whitelist</h2>
+        <p>Заполните форму, чтобы подать заявку на сервер.</p>
+        <form id="whitelistForm">
+            <label for="nickname">Ваш ник:</label>
+            <input type="text" id="nickname" placeholder="Введите ник" required>
+
+            <label for="source">Как вы нас нашли?</label>
+            <input type="text" id="source" placeholder="Ник друга или ссылка" required>
+
+            <label for="opinion">Ваше отношение к таким серверам:</label>
+            <textarea id="opinion" placeholder="Опишите ваше мнение" required></textarea>
+
+            <label for="plans">Что вы собираетесь делать на сервере?</label>
+            <textarea id="plans" placeholder="Опишите ваши планы" required></textarea>
+
+            <button type="submit">Отправить заявку</button>
+        </form>
+        <p id="status"></p>
+    </div>
+
+    <script src="minecraft/js/script.js"></script>
+</body>
+</html>
