@@ -277,4 +277,54 @@ input, textarea {
 textarea {
   min-height: 120px;
 }
+.rule-list {
+  list-style: none;
+  padding-left: 0;
+  font-size: 18px;
+}
 
+.rule-list li {
+  padding: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  transition: background 0.3s ease;
+}
+
+.rule-list li:hover {
+  background: rgba(120, 50, 200, 0.3);
+  cursor: pointer;
+}
+
+.rule-list li:last-child {
+  border-bottom: none;
+}
+
+.rule-list li span {
+  font-weight: bold;
+  color: #ff0066; /* Акцентный цвет */
+}
+.footer {
+  text-align: center;
+  margin-top: 40px;
+  color: #ccc;
+}
+
+.footer a {
+  color: #ff0066;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+.error-message {
+  color: #ff0000;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.info-message {
+  color: #d8bfff;
+  font-size: 14px;
+  margin-top: 10px;
+}

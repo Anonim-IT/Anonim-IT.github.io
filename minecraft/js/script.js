@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loadNavbar();
 });
 
+// Обработчик для отправки формы whitelistForm
 document.getElementById("whitelistForm").addEventListener("submit", function(event) {
     event.preventDefault();
 
@@ -38,6 +39,56 @@ document.getElementById("whitelistForm").addEventListener("submit", function(eve
     })
     .catch(error => {
         document.getElementById("status").innerText = "Ошибка соединения!";
+    });
+});
+
+// Обработчик для отправки формы appeal-form
+document.getElementById('appeal-form')?.addEventListener('submit', function(event) {
+    event.preventDefault();  // Предотвращаем стандартное поведение формы
+
+    // Получаем данные формы
+    const formData = new FormData(this);
+
+    // Преобразуем данные формы в формат JSON
+    const formObject = {};
+    formData.forEach((value, key) => {
+        formObject[key] = value;
+    });
+
+    // Создаем сообщение для отправки в Telegram
+    const message = `
+        New Appeal Submission:
+        Username: ${formObject.username}
+        Telegram Nick: ${formObject['telegram-nick']}
+        Reason for Appeal: ${formObject['appeal-reason']}
+        Evidence: ${formObject.evidence ? 'Provided' : 'Not provided'}
+    `;
+
+    // URL для отправки запроса в Telegram API
+    const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+    // Отправляем данные в Telegram
+    fetch(telegramUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            chat_id: chatId,
+            text: message
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.ok) {
+            alert('Your appeal has been submitted successfully!');
+        } else {
+            alert('There was an error submitting your appeal.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error submitting appeal.');
     });
 });
 

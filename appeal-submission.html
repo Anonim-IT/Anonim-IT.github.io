@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Appeal Submission - Who's There?</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="minecraft/style/style.css">
+</head>
+<body>
+
+    <!-- Навигационная панель -->
+    <div id="navbar"></div>
+    
+    <div class="container">
+        <h1>Appeal Submission</h1>
+
+        <p class="info-message">If you believe that you were unjustly punished or banned, you can submit an appeal here. Please provide as much detail as possible.</p>
+
+        <form id="appeal-form">
+            <label for="username" class="form-label">Your Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="telegram-nick" class="form-label">Your Telegram Nick:</label>
+            <input type="text" id="telegram-nick" name="telegram-nick" required>
+
+            <label for="appeal-reason" class="form-label">Reason for Appeal:</label>
+            <textarea id="appeal-reason" name="appeal-reason" rows="5" required></textarea>
+
+            <label for="evidence" class="form-label">Additional Evidence (Optional):</label>
+            <input type="file" id="evidence" name="evidence">
+
+            <p class="error-message" id="status">Please make sure to fill out all fields correctly.</p>
+
+            <button type="submit">Submit Appeal</button>
+        </form>
+    </div>
+
+    <!-- Подключаем скрипт -->
+    <script src="minecraft/js/script.js"></script>
+    <script src="minecraft/js/appeal-form-handler.js"></script>
+
+</body>
+</html>
