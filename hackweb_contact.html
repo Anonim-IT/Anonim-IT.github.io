@@ -36,41 +36,53 @@
             <p>Общайтесь с нами: <a href="https://t.me/HackWeb1g" target="_blank">Перейти в Telegram</a></p>
         </section>
 
-        <!-- Форма для связи -->
-        <section class="contact-form">
-            <h2>🛠 Оставьте заявку</h2>
-            <p>Ваше сообщение будет отправлено напрямую в Telegram-бота.<br>(Форму просьба заполнять не используя бета-тест!!!)</p>
-            <form id="tg-form">
-                <label for="name">🕵️‍♂️ Ваш ник:</label>
-                <input type="text" id="name" name="name" required placeholder="Анонимус">
-            
-                <label for="email">📩 Email:</label>
-                <input type="email" id="email" name="email" required placeholder="example@protonmail.com">
-            
-                <label for="telegram">📲 Telegram (необязательно):</label>
-                <input type="text" id="telegram" name="telegram" placeholder="@username">
-            
-                <label for="topic">📌 Тема обращения:</label>
-                <select id="topic" name="topic">
-                    <option value="Вопрос">Вопрос</option>
-                    <option value="Сотрудничество">Сотрудничество</option>
-                    <option value="Сообщить о баге">Сообщить о баге</option>
-                    <option value="Тестирование">Тестирование</option>
-                </select>
-            
-                <label for="message">💬 Сообщение:</label>
-                <textarea id="message" name="message" rows="5" required placeholder="Опишите ваш вопрос"></textarea>
-            
-                <label for="file">📎 Прикрепить файл (до 5MB):</label>
-                <input type="file" id="file" name="file" accept=".png, .jpg, .jpeg, .pdf, .txt, .log">
-            
-                <label for="beta-test">
-                    <input type="checkbox" id="beta-test" name="beta-test"> 🔬 Отправить как бета-тест
-                </label>
-            
-                <button type="submit" class="submit-button">🔗 Отправить</button>
-            </form>            
-        </section>
+<!-- Форма для связи -->
+<section class="contact-form">
+    <h2>🛠 Оставьте заявку</h2>
+    <p>Ваше сообщение будет отправлено напрямую в Telegram-бота.<br>(Форму просьба заполнять не используя бета-тест!!!)</p>
+    <form id="tg-form">
+        <label for="name">🕵️‍♂️ Ваш ник:</label>
+        <input type="text" id="name" name="name" required placeholder="Анонимус" class="input-field">
+    
+        <label for="email">📩 Email:</label>
+        <input type="email" id="email" name="email" required placeholder="example@protonmail.com" class="input-field">
+    
+        <label for="telegram">📲 Telegram (необязательно):</label>
+        <input type="text" id="telegram" name="telegram" placeholder="@username" class="input-field">
+    
+        <label for="topic">📌 Тема обращения:</label>
+        <select id="topic" name="topic" class="input-field">
+            <option value="Вопрос">Вопрос</option>
+            <option value="Сотрудничество">Сотрудничество</option>
+            <option value="Сообщить о баге">Сообщить о баге</option>
+            <option value="Предложка проекта WebHack">Предложка проекта WebHack</option>
+            <option value="Тестирование">Тестирование формы</option>
+        </select>
+
+        <div id="improvement-details" style="display: none;">
+            <label for="improvement-topic">💡 Какое улучшение вы предлагаете?</label>
+            <select id="improvement-topic" name="improvement-topic" class="input-field">
+                <option value="Улучшение дизайна">Улучшение дизайна</option>
+                <option value="Добавить новые функции">Добавить новые функции</option>
+                <option value="Исправление ошибок">Исправление ошибок</option>
+                <option value="Оптимизация производительности">Оптимизация производительности</option>
+                <option value="Другое">Другое</option>
+            </select>
+        </div>
+    
+        <label for="message">💬 Сообщение:</label>
+        <textarea id="message" name="message" rows="6" required placeholder="Опишите ваше предложение или вопрос" class="input-field"></textarea>
+    
+        <label for="file">📎 Прикрепить файл (до 5MB):</label>
+        <input type="file" id="file" name="file" accept=".png, .jpg, .jpeg, .pdf, .txt, .log" class="input-field">
+    
+        <label for="beta-test">
+            <input type="checkbox" id="beta-test" name="beta-test"> 🔬 Отправить как бета-тест
+        </label>
+    
+        <button type="submit" class="submit-button">🔗 Отправить</button>
+    </form>            
+</section>
         
     </main>
 
