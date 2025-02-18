@@ -51,7 +51,7 @@ h1, h2, h3 {
 /* Контейнер */
 .container {
     max-width: 800px;
-    margin: 90px 90px 90px;
+    margin: 90px auto;
     padding: 20px;
     background-color: rgba(0, 0, 0, 0.8);
     box-shadow: 0 0 10px #00ff99;
