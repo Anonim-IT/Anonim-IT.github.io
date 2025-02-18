@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="HackWeb/img/rack-server-shield_icon-icons.com_52823.ico" type="image/x-icon">
-    <title>Hackweb - Контакты</title>
+    <title>HackWeb - Контакты</title>
     
     <!-- Подключение стилей -->
     <link rel="stylesheet" href="HackWeb/css/hack_style.css">
@@ -16,21 +16,25 @@
 <body>
 
     <header>
-        <h1><i class="fas fa-envelope"></i> HackWeb Contacts</h1>
+        <div class="header-content">
+            <h1><i class="fas fa-envelope"></i> HackWeb Contacts</h1>
+        </div>
     </header>
 
     <!-- Подключаем навигационную панель -->
     <div id="navbar-container"></div>
 
     <main class="container">
-        <h1>Контакты Hackweb</h1>
+        <h1 class="section-header">Контакты HackWeb</h1>
         <p>Если у вас есть вопросы, предложения или вы хотите обсудить кибербезопасность, свяжитесь с нами.</p>
 
-        <h2>📧 Электронная почта:</h2>
-        <p>Для общих вопросов: <a href="mailto:hackweb2024@proton.me">hackweb2024@proton.me</a></p>
+        <section class="contact-info">
+            <h2>📧 Электронная почта:</h2>
+            <p>Для общих вопросов: <a href="mailto:hackweb2024@proton.me">hackweb2024@proton.me</a></p>
 
-        <h2>💬 Telegram-группа:</h2>
-        <p>Общайтесь с нами: <a href="https://t.me/HackWeb1g" target="_blank">Перейти в Telegram</a></p>
+            <h2>💬 Telegram-группа:</h2>
+            <p>Общайтесь с нами: <a href="https://t.me/HackWeb1g" target="_blank">Перейти в Telegram</a></p>
+        </section>
 
         <!-- Форма для связи -->
         <section class="contact-form">
@@ -51,6 +55,7 @@
                     <option value="Вопрос">Вопрос</option>
                     <option value="Сотрудничество">Сотрудничество</option>
                     <option value="Сообщить о баге">Сообщить о баге</option>
+                    <option value="Тестирование">Тестирование</option>
                 </select>
             
                 <label for="message">💬 Сообщение:</label>
@@ -63,73 +68,16 @@
                     <input type="checkbox" id="beta-test" name="beta-test"> 🔬 Отправить как бета-тест
                 </label>
             
-                <button type="submit">🔗 Отправить</button>
+                <button type="submit" class="submit-button">🔗 Отправить</button>
             </form>            
         </section>
         
     </main>
 
-    <footer>
-        <p>&copy; 2025 Hackweb. Все права защищены.</p>
+    <footer class="footer">
+        <p>&copy; 2025 HackWeb. Все права защищены.</p>
     </footer>
     <script src="HackWeb/js/main.js"></script>
-    <script>
-
-        // Отправка данных формы в Telegram
-        document.getElementById("tg-form").addEventListener("submit", async function(event) {
-    event.preventDefault();
-
-    const botToken = "7615760216:AAH5EWMMF-_QMGWNTUfGLCCHwrZsd0AJTM0";
-    const chatId = "250356592";
-
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const telegram = document.getElementById("telegram").value || "Не указан";
-    const topic = document.getElementById("topic").value;
-    const message = document.getElementById("message").value;
-    const file = document.getElementById("file").files[0];
-    const isBetaTest = document.getElementById("beta-test").checked; // Проверяем, включен ли чекбокс
-
-    // Формируем текст сообщения
-    let text = `🔰 *HackWeb Запрос:*\n\n` +
-               `🕵️ *Имя:* ${name}\n` +
-               `📧 *Email:* ${email}\n` +
-               `📲 *Telegram:* ${telegram}\n` +
-               `📌 *Тема:* ${topic}\n` +
-               `💬 *Сообщение:* ${message}`;
-
-    // Если это бета-тест, добавляем пометку
-    if (isBetaTest) {
-        text = `🔬 [Бета-тест] 🔬\n\n` + text;
-    }
-
-    // Отправка сообщения в Telegram
-    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            chat_id: chatId,
-            text: text,
-            parse_mode: "Markdown"
-        })
-    });
-
-    // Если прикреплен файл, отправляем его
-    if (file) {
-        const formData = new FormData();
-        formData.append("chat_id", chatId);
-        formData.append("document", file);
-
-        await fetch(`https://api.telegram.org/bot${botToken}/sendDocument`, {
-            method: "POST",
-            body: formData
-        });
-    }
-
-    alert("✅ Сообщение отправлено в Telegram!");
-    document.getElementById("tg-form").reset();
-});
-    </script>
-
+    <script src="HackWeb/js/telegramform.js"></script>
 </body>
 </html>
