@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Консоль</title>
+  <link rel="icon" href="HackWeb/img/rack-server-shield_icon-icons.com_52823.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@4.15.0/css/xterm.css">
+  <link rel="stylesheet" href="HackWeb/css/hack_style.css"> <!-- Общий стиль -->
+</head>
+<body>
+
+  <header>
+    <div class="header-content">
+      <h1><i class="fas fa-terminal"></i> HackWeb Console</h1>
+    </div>
+  </header>
+
+  <!-- Навигация (если нужна) -->
+  <div id="navbar-container"></div>
+
+  <main class="container">
+    <h2 class="header-console">Добро пожаловать в виртуальный терминал</h2>
+    <p>Терминал для взаимодействия с платформой</p>
+    <div id="terminal"></div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 HackWeb. Все права защищены.</p>
+  </footer>
+
+  <!-- Подключаем библиотеки -->
+  <script src="https://cdn.jsdelivr.net/npm/xterm@4.15.0/lib/xterm.js"></script>
+  <script src="HackWeb/js/terminal.js"></script> <!-- Скрипт для терминала -->
+  <script src="HackWeb/js/main.js"></script>
+
+</body>
+</html>
