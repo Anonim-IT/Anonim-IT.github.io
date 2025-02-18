@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Политика конфиденциальности - HackWeb</title>
-    <link rel="stylesheet" href="style/hack_style.css">
+    <link rel="stylesheet" href="HackWeb/css/hack_style.css">
     <link rel="icon" href="image/rack-server-shield_icon-icons.com_52823.ico" type="image/x-icon">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -105,7 +105,7 @@
             <p>Если у вас есть вопросы или комментарии относительно нашей Политики конфиденциальности, или если вы хотите воспользоваться вашими правами по защите персональных данных, пожалуйста, свяжитесь с нами:</p>
             <ul>
                 <li><i class="fas fa-envelope"></i> Email: support@hackweb.com</li>
-                <li><i class="fab fa-telegram"></i> Telegram: @HackwebSupport</li>
+                <li><i class="fab fa-telegram"></i> Telegram Bot: @hackweb2025bot</li>
             </ul>
         </section>
     </main>
@@ -114,17 +114,7 @@
         <p>&copy; 2025 Hackweb. Все права защищены.</p>
     </footer>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // Загрузка навигационного меню
-            fetch("nav/navbar_hack.html")
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById("navbar-container").innerHTML = data;
-                })
-                .catch(error => console.error("Ошибка загрузки навигации:", error));
-        });
-    </script>
+    <script src="HackWeb/js/main.js"></script>
     
 </body>
 </html>
