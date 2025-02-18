@@ -4,19 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="image/rack-server-shield_icon-icons.com_52823.ico" type="image/x-icon">
-    <title>Hackweb - О проекте</title>
-    
-    <!-- Подключение стилей -->
-    <link rel="stylesheet" href="style/hack_style.css">
-    
-    <!-- Подключение Font Awesome -->
+    <link rel="icon" href="HackWeb/img/rack-server-shield_icon-icons.com_52823.ico" type="image/x-icon">
+    <link rel="stylesheet" href="HackWeb/css/hack_style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>Hackweb - О проекте</title>
 </head>
 <body>
 
     <header>
-        <h1>HackWeb About Us</h1>
+        <h1><i class="fas fa-info-circle"></i> HackWeb About Us</h1>
     </header>
 
     <!-- Подключаем навигационную панель -->
@@ -56,25 +52,6 @@
     <footer>
         <p>&copy; 2025 Hackweb. Все права защищены.</p>
     </footer>
-    <script>
-        // Загрузка навигационного меню
-        fetch('nav/navbar_hack.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('navbar-container').innerHTML = data;
-            })
-            .catch(error => {
-                console.error('Ошибка при загрузке навигационной панели:', error);
-            });
-  
-        // Получаем элементы меню
-        const menuToggle = document.querySelector('.menu-toggle');
-        const menuList = document.querySelector('.menu-list');
-  
-        // Обработчик клика для открытия и закрытия меню
-        menuToggle.addEventListener('click', () => {
-          menuList.classList.toggle('open'); // Переключаем класс 'open' для отображения/скрытия меню
-        });
-    </script>
+    <script src="HackWeb/js/main.js"></script>
 </body>
 </html>
