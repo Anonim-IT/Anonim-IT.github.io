@@ -1,9 +1,9 @@
-<?php include 'navbar_hack.html'; ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="icon" href="HackWeb/img/rack-server-shield_icon-icons.com_52823.ico" type="image/x-icon">
     <title>HackWeb - Контакты</title>
     
@@ -44,13 +44,13 @@
         <label for="name">🕵️‍♂️ Ваш ник:</label>
         <input type="text" id="name" name="name" required placeholder="Анонимус" class="input-field">
     
-        <label for="email">📩 Email:</label>
+        <label for="email" id="email-label">📩 Email:</label>
         <input type="email" id="email" name="email" required placeholder="example@protonmail.com" class="input-field">
     
         <label for="telegram">📲 Telegram (необязательно):</label>
         <input type="text" id="telegram" name="telegram" placeholder="@username" class="input-field">
     
-        <label for="topic">📌 Тема обращения:</label>
+        <label for="topic" id="topic-label">📌 Тема обращения:</label>
         <select id="topic" name="topic" class="input-field">
             <option value="Вопрос">Вопрос</option>
             <option value="Сотрудничество">Сотрудничество</option>
@@ -69,7 +69,10 @@
                 <option value="Другое">Другое</option>
             </select>
         </div>
-    
+
+        <label for="website">🌍 Ваш сайт или портфолио (если есть)</label>
+        <input type="url" id="website" placeholder="Введите ссылку (необязательно)">
+
         <label for="message">💬 Сообщение:</label>
         <textarea id="message" name="message" rows="6" required placeholder="Опишите ваше предложение или вопрос" class="input-field"></textarea>
     
@@ -77,10 +80,12 @@
         <input type="file" id="file" name="file" accept=".png, .jpg, .jpeg, .pdf, .txt, .log" class="input-field">
     
         <label for="beta-test">
-            <input type="checkbox" id="beta-test" name="beta-test"> 🔬 Отправить как бета-тест
-        </label>
+            <input type="checkbox" id="beta-test" name="beta-test" onclick="toggleBetaTestFields()"> 🔬 Отправить как бета-тест
+        </label>        
     
-        <button type="submit" class="submit-button">🔗 Отправить</button>
+        <button id="submit-btn" type="submit">Отправить</button>
+        <span id="loading" style="display:none;">⏳ Отправка...</span>
+    
     </form>            
 </section>
         

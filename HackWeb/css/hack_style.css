@@ -184,30 +184,39 @@ footer {
     font-size: 14px;
 }
 
-/* Стили для формы */
-.contact-form {
-    background: rgba(0, 0, 0, 0.8); 
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px #00ff00;
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Расстояние между элементами */
+    padding-bottom: 20px; /* Добавляем отступ снизу */
+}
+
+.contact-form #submit-btn {
+    align-self: center; /* Центрируем кнопку */
+    width: 100%; /* Делаем кнопку широкой */
+    max-width: 300px; /* Ограничиваем максимальную ширину */
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0084ff;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.contact-form #submit-btn:hover {
+    background-color: #005bb5;
+}
+
+#loading {
+    display: block;
     text-align: center;
-    max-width: 500px;
-    margin: 30px auto;
-    border: 1px solid #00ff00;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #555;
 }
 
-.contact-form h2 {
-    color: #00ff00;
-    font-family: 'Courier New', monospace;
-    font-size: 24px;
-    text-shadow: 0 0 10px #00ff00;
-}
-
-.contact-form p {
-    color: #fff;
-    font-size: 16px;
-    margin-bottom: 15px;
-}
 
 /* Стили для полей ввода */
 .contact-form input,
