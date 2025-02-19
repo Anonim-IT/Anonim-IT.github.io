@@ -1,0 +1,496 @@
+/* Основные стили */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #0a0a0a;
+    color: #f1f1f1;
+}
+
+/* Навигация */
+.nav-list {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background: linear-gradient(to right, #0d0d0d, #1a1a1a);
+    box-shadow: 0px 0px 15px rgba(0, 188, 212, 0.5);
+}
+
+.nav-list li {
+    margin: 0 15px;
+}
+
+.nav-list a {
+    text-decoration: none;
+    color: #00bcd4;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
+}
+
+.nav-list a:hover {
+    color: #008ba3;
+    text-shadow: 0px 0px 10px rgba(0, 188, 212, 0.8);
+}
+
+/* Логотип */
+.logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #00bcd4;
+    text-shadow: 0px 0px 15px rgba(0, 188, 212, 0.7);
+}
+
+/* Главный экран */
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(to bottom, #1a1a1a, #101010);
+    box-shadow: inset 0px 0px 20px rgba(0, 188, 212, 0.4);
+}
+
+.hero h1 {
+    font-size: 3em;
+    margin: 0;
+    color: #00bcd4;
+    text-shadow: 0px 0px 20px rgba(0, 188, 212, 0.9);
+}
+
+.highlight {
+    color: #00bcd4;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 25px;
+    background-color: #00bcd4;
+    color: #121212;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.btn:hover {
+    background-color: #008ba3;
+    box-shadow: 0px 0px 25px rgba(0, 188, 212, 0.7);
+}
+
+/* Блок возможностей */
+.features {
+    text-align: center;
+    padding: 60px 20px;
+    background: #121212;
+}
+
+.feature-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.feature-item {
+    width: 30%;
+    padding: 25px;
+    background: linear-gradient(to bottom, #1a1a1a, #101010);
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 0px 20px rgba(0, 188, 212, 0.3);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 0px 30px rgba(0, 188, 212, 0.6);
+}
+
+.feature-item i {
+    font-size: 2.5em;
+    color: #00bcd4;
+    text-shadow: 0px 0px 10px rgba(0, 188, 212, 0.8);
+}
+
+/* CTA (призыв к действию) */
+.cta {
+    text-align: center;
+    padding: 60px;
+    background: linear-gradient(to bottom, #1a1a1a, #101010);
+    box-shadow: inset 0px 0px 20px rgba(0, 188, 212, 0.4);
+}
+
+.cta h2 {
+    font-size: 2.2em;
+    color: #00bcd4;
+    text-shadow: 0px 0px 15px rgba(0, 188, 212, 0.9);
+}
+/* Основное описание */
+.about {
+    text-align: center;
+    padding: 50px;
+    background: #121212;
+}
+
+.about .container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.about h2 {
+    font-size: 2em;
+    color: #00bcd4;
+    text-shadow: 0px 0px 10px rgba(0, 188, 212, 0.9);
+}
+
+.about p {
+    font-size: 1.2em;
+    color: #ccc;
+}
+
+.about ul {
+    list-style: none;
+    padding: 0;
+}
+
+.about ul li {
+    margin: 10px 0;
+    font-size: 1.1em;
+    color: #bbb;
+}
+
+.about ul li i {
+    color: #00bcd4;
+    margin-right: 10px;
+}
+/* Секции сервисов */
+.services {
+    text-align: center;
+    padding: 50px;
+    background: #121212;
+}
+
+.services .container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.services h2 {
+    font-size: 2em;
+    color: #00bcd4;
+    text-shadow: 0px 0px 10px rgba(0, 188, 212, 0.9);
+}
+
+.service-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.service-item {
+    width: 30%;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 188, 212, 0.3);
+    text-align: center;
+}
+
+.service-item i {
+    font-size: 2.5em;
+    color: #00bcd4;
+}
+
+.service-item h3 {
+    margin-top: 10px;
+    color: #f1f1f1;
+}
+
+.service-item p {
+    font-size: 1.1em;
+    color: #ccc;
+}
+/* Секция ресурсов */
+.resources {
+    text-align: center;
+    padding: 50px;
+    background: #121212;
+}
+
+.resources .container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.resources h2 {
+    font-size: 2em;
+    color: #00bcd4;
+    text-shadow: 0px 0px 10px rgba(0, 188, 212, 0.9);
+}
+
+.resource-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.resource-item {
+    width: 30%;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 188, 212, 0.3);
+    text-align: center;
+}
+
+.resource-item i {
+    font-size: 2.5em;
+    color: #00bcd4;
+}
+
+.resource-item h3 {
+    margin-top: 10px;
+    color: #f1f1f1;
+}
+
+.resource-item p {
+    font-size: 1.1em;
+    color: #ccc;
+}
+
+.resource-item a {
+    text-decoration: none;
+    color: #00bcd4;
+    font-weight: bold;
+}
+
+.resource-item a:hover {
+    color: #008ba3;
+}
+/* Секция контактной формы */
+.contact-form {
+    padding: 50px;
+    background-color: #121212;
+}
+
+.contact-form .container {
+    max-width: 600px;
+    margin: auto;
+    color: #f1f1f1;
+}
+
+.contact-form h2 {
+    font-size: 2em;
+    color: #00bcd4;
+}
+
+.contact-form .form-group {
+    margin-bottom: 20px;
+}
+
+.contact-form label {
+    font-size: 1.1em;
+    color: #f1f1f1;
+}
+
+.contact-form input, .contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #00bcd4;
+    border-radius: 5px;
+    background-color: #1e1e1e;
+    color: #f1f1f1;
+}
+
+.contact-form textarea {
+    resize: vertical;
+}
+
+.contact-form button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #00bcd4;
+    color: #121212;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.contact-form button:hover {
+    background-color: #008ba3;
+}
+
+/* Призыв к действию */
+.cta {
+    text-align: center;
+    padding: 50px;
+    background-color: #1e1e1e;
+}
+
+.cta h2 {
+    font-size: 2em;
+    color: #00bcd4;
+}
+
+.cta p {
+    font-size: 1.2em;
+    color: #f1f1f1;
+}
+.icon {
+    font-size: 1.5em;
+    color: #2c3e50;
+    margin-right: 10px;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.social-icons a {
+    margin: 0 10px;
+    font-size: 24px;
+    color: #2c3e50;
+}
+
+.social-icons a:hover {
+    color: #3498db;
+}
+/* Основной стиль для dropdown-menu */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Стиль для кнопки, которая открывает меню */
+.dropdown-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-button:hover {
+    background-color: #0056b3;
+}
+
+/* Скрытое меню */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #ffffff;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px;
+    padding: 10px 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+/* Плавный эффект появления меню */
+.dropdown:hover .dropdown-menu {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Стили для элементов в меню */
+.dropdown-menu a {
+    color: #333;
+    padding: 8px 16px;
+    display: block;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f1f1f1;
+    color: #007bff;
+}
+
+/* Стили для элементов с подменю */
+.dropdown-item.has-submenu {
+    position: relative;
+}
+
+.dropdown-item.has-submenu > .submenu {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background-color: #ffffff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    min-width: 160px;
+    z-index: 2;
+    border-radius: 5px;
+    padding: 10px 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown-item.has-submenu:hover > .submenu {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.submenu a {
+    color: #333;
+    padding: 8px 16px;
+    display: block;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.submenu a:hover {
+    background-color: #f1f1f1;
+    color: #007bff;
+}
+
+/* Адаптивность для мобильных устройств */
+@media screen and (max-width: 768px) {
+    .dropdown-button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .dropdown-menu {
+        min-width: 120px;
+    }
+
+    .dropdown-item.has-submenu > .submenu {
+        min-width: 140px;
+    }
+}
+
+/* Футер */
+footer {
+    text-align: center;
+    padding: 15px;
+    background: linear-gradient(to right, #0a0a0a, #1a1a1a);
+    box-shadow: 0px 0px 15px rgba(0, 188, 212, 0.5);
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #bbbbbb;
+}

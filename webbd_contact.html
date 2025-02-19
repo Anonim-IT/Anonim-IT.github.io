@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты WebBD</title>
+    <link rel="stylesheet" href="WebBD/css/style.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <!-- Подключаем навбар -->
+    <div id="navbar-container"></div>
+
+    <!-- Заголовок -->
+    <section class="hero">
+        <h1>Связаться с нами</h1>
+        <p>У вас есть вопросы? Мы всегда рады помочь!</p>
+    </section>
+
+    <!-- Контактная форма -->
+    <section class="contact-form">
+        <div class="container">
+            <h2><i class="fas fa-envelope"></i> Форма обратной связи</h2>
+            <form id="contact-form">
+                <div class="form-group">
+                    <label for="name"><i class="fas fa-user"></i> Ваше имя:</label>
+                    <input type="text" id="name" name="name" required placeholder="Введите ваше имя">
+                </div>
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> Ваш email:</label>
+                    <input type="email" id="email" name="email" required placeholder="Введите ваш email">
+                </div>
+                <div class="form-group">
+                    <label for="message"><i class="fas fa-comment"></i> Сообщение:</label>
+                    <textarea id="message" name="message" rows="4" required placeholder="Введите ваше сообщение"></textarea>
+                </div>
+                <button type="submit" class="btn">Отправить</button>
+            </form>
+            
+        </div>
+    </section>
+
+    <!-- Призыв к действию -->
+    <section class="cta">
+        <h2>Нужна помощь? Мы всегда рядом!</h2>
+        <p>Если у вас возникли проблемы с использованием WebBD, не стесняйтесь связаться с нами.</p>
+        <a href="index.html" class="btn">На главную</a>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <p>&copy; 2025 WebBD. Все права защищены. <a href="privacy_webbd.html">Политика конфиденциальности</a></p>
+    </footer>
+
+    <!-- Подключение navbar -->
+    <script src="WebBD/js/main.js"></script>
+    <script src="WebBD/js/telegrambdforms.js"></script>
+
+</body>
+</html>
