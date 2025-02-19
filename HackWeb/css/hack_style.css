@@ -358,6 +358,7 @@ footer {
     padding: 20px;
     background-color: #111; /* Темный фон */
     color: #00ff00; /* Зеленый текст */
+    width: 100%;
     text-align: center;
     box-shadow: 0 0 10px #00ff00; /* Неоновый эффект */
     border-radius: 10px;
