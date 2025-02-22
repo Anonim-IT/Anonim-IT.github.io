@@ -1,112 +1,89 @@
 // appeal-form-handler.js
 
-// Обработчик для отправки формы appeal-form
-document.getElementById('appeal-form')?.addEventListener('submit', function(event) {
-    event.preventDefault();  // Предотвращаем стандартное поведение формы
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('appeal-form');
+    const statusMessage = document.getElementById('status');
 
-    // Получаем данные формы
-    const formData = new FormData(this);
+    if (!form) return;
 
-    // Преобразуем данные формы в формат JSON
-    const formObject = {};
-    formData.forEach((value, key) => {
-        formObject[key] = value;
-    });
+    form.addEventListener('submit', async function (event) {
+        event.preventDefault();
 
-    // Создаем сообщение для отправки в Telegram с использованием Markdown
-    const message = `
+        // Очищаем статусное сообщение
+        statusMessage.textContent = '';
+        statusMessage.style.color = '';
+
+        // Добавляем анимацию загрузки
+        statusMessage.textContent = 'Submitting your appeal...';
+        statusMessage.style.color = 'blue';
+
+        // Получаем данные формы
+        const formData = new FormData(form);
+
+        // Проверяем обязательные поля
+        const username = formData.get('username')?.trim();
+        const telegramNick = formData.get('telegram-nick')?.trim();
+        const appealReason = formData.get('appeal-reason')?.trim();
+        const evidenceFile = formData.get('evidence');
+
+        if (!username || !telegramNick || !appealReason) {
+            statusMessage.textContent = 'Please fill out all required fields!';
+            statusMessage.style.color = 'red';
+            return;
+        }
+
+        // Формируем сообщение в Telegram с Markdown-разметкой
+        const message = `
 *New Appeal Submission:*
-  
-👤 *Username:* ${formObject.username}
-  
-💬 *Telegram Nick:* ${formObject['telegram-nick']}
-  
-❓ *Reason for Appeal:* ${formObject['appeal-reason']}
-  
-📸 *Evidence:* ${formObject.evidence ? 'Provided' : 'Not provided'}
-    `;
+👤 *Username:* ${username}
+💬 *Telegram Nick:* ${telegramNick}
+❓ *Reason for Appeal:* ${appealReason}
+📸 *Evidence:* ${evidenceFile && evidenceFile.size > 0 ? 'Provided' : 'Not provided'}
+        `;
 
+        // Данные для отправки в Telegram
     // Токен бота и ID чата храним в безопасном месте!
     const botToken = "7745335635:AAGbPdzXplwqbMky-xgJ9KOhsWln5z6toYo"; // Замени на свой токен
     const chatId = "250356592"; // Замени на свой ID
 
-    // Если файл был загружен, отправляем его в Telegram
-    const fileInput = formData.get('evidence');
-    if (fileInput && fileInput.size > 0) {
-        // Создаем URL для отправки файла
-        const fileUrl = URL.createObjectURL(fileInput);
+        try {
+            // Отправляем текстовое сообщение
+            const textResponse = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                    parse_mode: 'Markdown'
+                })
+            });
 
-        // URL для отправки запроса в Telegram API для медиа
-        const telegramFileUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
+            const textData = await textResponse.json();
+            if (!textData.ok) throw new Error('Failed to send text message.');
 
-        // Отправляем текстовое сообщение
-        fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                chat_id: chatId,
-                text: message,
-                parse_mode: 'Markdown'  // Указываем, что текст будет отформатирован в Markdown
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.ok) {
-                // Если текстовое сообщение отправлено, отправляем фотографию
-                const formDataForFile = new FormData();
-                formDataForFile.append('chat_id', chatId);
-                formDataForFile.append('photo', fileInput);
+            // Если загружен файл, отправляем его
+            if (evidenceFile && evidenceFile.size > 0) {
+                const fileFormData = new FormData();
+                fileFormData.append('chat_id', chatId);
+                fileFormData.append('photo', evidenceFile);
 
-                fetch(telegramFileUrl, {
+                const fileResponse = await fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, {
                     method: 'POST',
-                    body: formDataForFile
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.ok) {
-                        alert('Your appeal has been submitted successfully!');
-                    } else {
-                        alert('There was an error submitting your appeal file.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Error submitting appeal file.');
+                    body: fileFormData
                 });
-            } else {
-                alert('There was an error submitting your appeal.');
+
+                const fileData = await fileResponse.json();
+                if (!fileData.ok) throw new Error('Failed to send evidence file.');
             }
-        })
-        .catch(error => {
+
+            // Успешное завершение
+            statusMessage.textContent = 'Your appeal has been submitted successfully!';
+            statusMessage.style.color = 'green';
+            form.reset();
+        } catch (error) {
             console.error('Error:', error);
-            alert('Error submitting appeal.');
-        });
-    } else {
-        // Если файла нет, отправляем только текстовое сообщение
-        fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                chat_id: chatId,
-                text: message,
-                parse_mode: 'Markdown'  // Указываем, что текст будет отформатирован в Markdown
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.ok) {
-                alert('Your appeal has been submitted successfully!');
-            } else {
-                alert('There was an error submitting your appeal.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error submitting appeal.');
-        });
-    }
+            statusMessage.textContent = 'Error submitting appeal. Please try again later.';
+            statusMessage.style.color = 'red';
+        }
+    });
 });

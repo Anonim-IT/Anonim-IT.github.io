@@ -5,40 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Appeal Submission - Graveyard of Souls</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+
+    <!-- Подключаем стили -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="minecraft/style/style.css">
     <link rel="icon" href="image/generated_image.ico" type="image/x-icon">
 </head>
 <body>
 
     <!-- Навигационная панель -->
-    <div id="navbar"></div>
-    
-    <div class="container">
-        <h1>Appeal Submission</h1>
+    <header>
+        <nav id="navbar">
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="appeals.html" class="active"><i class="fas fa-gavel"></i> Appeals</a></li>
+                <li><a href="rules.html"><i class="fas fa-book"></i> Rules</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <p class="info-message">If you believe that you were unjustly punished or banned, you can submit an appeal here. Please provide as much detail as possible.</p>
+    <main class="container">
+        <h1><i class="fas fa-gavel"></i> Appeal Submission</h1>
+
+        <p class="info-message">
+            If you believe that you were unjustly punished or banned, you can submit an appeal here.  
+            Please provide as much detail as possible. Incomplete appeals may be ignored.
+        </p>
 
         <form id="appeal-form">
-            <label for="username" class="form-label">Your Username:</label>
-            <input type="text" id="username" name="username" required>
+            <div class="form-group">
+                <label for="username"><i class="fas fa-user"></i> Your Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
 
-            <label for="telegram-nick" class="form-label">Your Telegram Nick:</label>
-            <input type="text" id="telegram-nick" name="telegram-nick" required>
+            <div class="form-group">
+                <label for="email"><i class="fas fa-envelope"></i> Your Email (for response):</label>
+                <input type="email" id="email" name="email" placeholder="example@mail.com" required>
+            </div>
 
-            <label for="appeal-reason" class="form-label">Reason for Appeal:</label>
-            <textarea id="appeal-reason" name="appeal-reason" rows="5" required></textarea>
+            <div class="form-group">
+                <label for="telegram-nick"><i class="fab fa-telegram"></i> Your Telegram Nick:</label>
+                <input type="text" id="telegram-nick" name="telegram-nick" required>
+            </div>
 
-            <label for="evidence" class="form-label">Additional Evidence (Optional):</label>
-            <input type="file" id="evidence" name="evidence">
+            <div class="form-group">
+                <label for="appeal-reason"><i class="fas fa-comment-alt"></i> Reason for Appeal:</label>
+                <textarea id="appeal-reason" name="appeal-reason" rows="5" required></textarea>
+            </div>
 
-            <p class="error-message" id="status">Please make sure to fill out all fields correctly.</p>
+            <!-- Drag & Drop загрузка файлов -->
+            <div class="form-group">
+                <label for="evidence"><i class="fas fa-paperclip"></i> Additional Evidence (Optional):</label>
+                <div id="drop-area">
+                    <p>Drag & drop files here or click to select</p>
+                    <input type="file" id="evidence" name="evidence" hidden>
+                </div>
+            </div>
 
-            <button type="submit">Submit Appeal</button>
+            <!-- Информационное сообщение -->
+            <p id="status" class="error-message">Please make sure to fill out all fields correctly.</p>
+
+            <button type="submit" id="submit-button">
+                <i class="fas fa-paper-plane"></i> Submit Appeal
+            </button>
+
+            <!-- Индикатор загрузки -->
+            <div id="loading" class="hidden">
+                <i class="fas fa-spinner fa-spin"></i> Submitting your appeal...
+            </div>
         </form>
-    </div>
+    </main>
 
-    <!-- Подключаем скрипт -->
+    <!-- Подвал -->
+    <footer>
+        <p>&copy; 2025 Graveyard of Souls. All rights reserved.</p>
+    </footer>
+
+    <!-- Подключаем скрипты -->
     <script src="minecraft/js/script.js"></script>
     <script src="minecraft/js/appeal-form-handler.js"></script>
 

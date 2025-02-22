@@ -1,0 +1,170 @@
+/* --- Общие стили --- */
+body, html {
+    font-family: 'Minecraft', sans-serif;
+    background: linear-gradient(180deg, #02010a, #0b001a); /* Глубокий космический фон */
+    color: #c7c7c7;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    font-size: 16px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+  
+  /* --- Аномальные разрывы реальности --- */
+  @keyframes glitch {
+    0% { text-shadow: -2px -2px 10px rgba(255, 0, 0, 0.8), 2px 2px 10px rgba(0, 0, 255, 0.8); }
+    50% { text-shadow: -5px 0px 12px rgba(255, 0, 0, 0.6), 5px 0px 12px rgba(0, 0, 255, 0.6); }
+    100% { text-shadow: -2px -2px 10px rgba(255, 0, 0, 0.8), 2px 2px 10px rgba(0, 0, 255, 0.8); }
+  }
+  
+  /* --- Основной контейнер (фикс для футера) --- */
+  .wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 2;
+  }
+  
+  /* --- Заголовки с эффектом свечения --- */
+  h2 {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #ff0033;
+    text-shadow: 0 0 12px rgba(255, 0, 51, 0.9);
+    animation: glitch 1.2s infinite alternate;
+  }
+/* --- Шапка сайта (header) --- */
+header {
+    background: linear-gradient(90deg, #330000, #110011); /* Кроваво-темный градиент */
+    padding: 15px 20px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+  }
+  
+  /* --- Навигационное меню --- */
+  .nav-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    padding: 10px;
+    background: rgba(20, 0, 0, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  }
+  
+  .nav-list a {
+    color: #ff0033;
+    text-decoration: none;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: background 0.3s, transform 0.2s;
+  }
+  
+  .nav-list a:hover {
+    background: rgba(255, 0, 0, 0.2);
+    transform: scale(1.05);
+    text-shadow: 0 0 8px #ff0033;
+  }
+  
+  /* --- Выпадающие меню (исправлено) --- */
+  .dropdown {
+    position: relative; /* Фикс для позиционирования меню */
+    display: inline-block; /* Чтобы меню работало в строке */
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(10, 10, 15, 0.95); /* Темный полупрозрачный фон */
+    padding: 10px 0;
+    border-radius: 8px;
+    list-style: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-15px);
+    transition: opacity 0.4s ease, visibility 0.3s ease, transform 0.3s ease;
+    z-index: 999; /* Обеспечивает, что меню будет поверх других элементов */
+  }
+  
+  .dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  .dropdown-menu a {
+    color: #d8bfff; /* Мистический фиолетовый */
+    padding: 12px 20px;
+    display: block;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  
+  .dropdown-menu a:hover {
+    background: rgba(120, 50, 200, 0.3); /* Фиолетовый оттенок при наведении */
+    color: #fff; /* Яркий цвет текста при наведении */
+  }
+  
+  .dropdown-menu a:active {
+    background: rgba(120, 50, 200, 0.5); /* Углубленный оттенок при активном нажатии */
+    transform: scale(0.98); /* Легкое уменьшение при нажатии */
+  }
+  
+  /* Дополнительные стили для улучшения контекста */
+  .dropdown-menu a:first-child {
+    margin-top: 8px; /* Немного отступа сверху для первого элемента */
+  }
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8); /* Затемнённый фон */
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+}
+/* --- Эффект пульсации для заголовков --- */
+@keyframes pulse {
+    from {
+        text-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
+    }
+    to {
+        text-shadow: 0 0 12px rgba(255, 0, 0, 0.8);
+    }
+  }
+/* --- Футер --- */
+footer {
+    background: rgba(10, 0, 0, 0.9);
+    color: #ff0033;
+    text-align: center;
+    padding: 12px 20px;
+    font-size: 14px;
+    width: 100%;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.7);
+  }
+.footer {
+    text-align: center;
+    margin-top: 40px;
+    color: #ccc;
+  }
+  
+  .footer a {
+    color: #ff0066;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .footer a:hover {
+    text-decoration: underline;
+  }
