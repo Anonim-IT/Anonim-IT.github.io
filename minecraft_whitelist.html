@@ -14,10 +14,22 @@
 
     <div class="container">
         <h2>Заявка на Whitelist</h2>
-        <p>Заполните форму, чтобы подать заявку на сервер.</p>
+        <p>Заполните форму, чтобы подать заявку на сервер. <strong>Возрастное ограничение: 18+</strong></p>
+
+        <div class="warning-box">
+            ⚠️ <strong>Внимание!</strong>  
+            Сервер содержит **психологические хорроры** и пугающие элементы.  
+            **Если у вас есть проблемы с психикой, слабая нервная система или другие противопоказания,  
+            настоятельно не рекомендуем играть!**  
+            **Проект не несёт ответственности за ваше состояние.**
+        </div>
+
         <form id="whitelistForm">
             <label for="nickname">Ваш ник:</label>
             <input type="text" id="nickname" placeholder="Введите ник" required>
+
+            <label for="age">Ваш возраст (от 18 лет):</label>
+            <input type="number" id="age" min="18" placeholder="Введите ваш возраст" required>
 
             <label for="source">Как вы нас нашли?</label>
             <input type="text" id="source" placeholder="Ник друга или ссылка" required>
@@ -28,13 +40,30 @@
             <label for="plans">Что вы собираетесь делать на сервере?</label>
             <textarea id="plans" placeholder="Опишите ваши планы" required></textarea>
 
+            <label for="time">Сколько времени в неделю вы готовы уделять проекту?</label>
+            <input type="text" id="time" placeholder="Например: 5-10 часов" required>
+
+            <label for="horror">Как вы относитесь к хоррору?</label>
+            <textarea id="horror" placeholder="Опишите, нравится ли вам хоррор и как вы реагируете на страшные вещи" required></textarea>
+
+            <label for="health">Есть ли у вас заболевания, которые могут помешать вам играть на нашем сервере?</label>
+            <textarea id="health" placeholder="Например: эпилепсия, панические атаки, проблемы с психикой" required></textarea>
+
+            <label for="responsibility">
+                <input type="checkbox" id="responsibility" required>
+                Я понимаю, что проект не несёт ответственности за моё состояние,  
+                и я полностью осознаю риски участия в игре.
+            </label>
+
             <button type="submit">Отправить заявку</button>
         </form>
         <p id="status"></p>
     </div>
+
     <footer>
         <p>&copy; 2025 Graveyard of Souls | <a href="privacy.html">Политика конфиденциальности</a></p>
     </footer>
+
     <script src="minecraft/js/script.js"></script>
 </body>
 </html>
