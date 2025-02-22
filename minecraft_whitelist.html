@@ -9,8 +9,8 @@
 </head>
 <body>
 
-    <!-- Навигационная панель -->
-    <div id="navbar"></div>
+        <!-- Навигационная панель -->
+        <nav id="navbar"></nav>
 
     <div class="container">
         <h2>Заявка на Whitelist</h2>
@@ -20,40 +20,78 @@
             ⚠️ <strong>Внимание!</strong>  
             Сервер содержит <strong>психологические хорроры и пугающие элементы.  
             Если у вас есть проблемы с психикой, слабая нервная система или другие противопоказания,  
-            настоятельно не рекомендуем играть!  
-            Проект не несёт ответственности за ваше состояние.</strong>
+            настоятельно не рекомендуем играть!</strong>
         </div>
 
         <form id="whitelistForm">
-            <label for="nickname">Ваш ник:</label>
-            <input type="text" id="nickname" placeholder="Введите ник" required>
+            <fieldset>
+                <legend>Основная информация</legend>
+                <label for="nickname">Ваш ник:</label>
+                <input type="text" id="nickname" placeholder="Введите ник" required>
 
-            <label for="age">Ваш возраст (от 18 лет):</label>
-            <input type="number" id="age" min="18" placeholder="Введите ваш возраст" required>
+                <div class="row">
+                    <input type="number" id="age" min="18" placeholder="Возраст (от 18)" required>
+                    <input type="text" id="contact" placeholder="Discord/Telegram">
+                </div>
+            </fieldset>
 
-            <label for="source">Как вы нас нашли?</label>
-            <input type="text" id="source" placeholder="Ник друга или ссылка" required>
+            <fieldset>
+                <legend>Игровой опыт</legend>
+                <label for="experience">Опыт в хоррор/хардкор-играх:</label>
+                <textarea id="experience" placeholder="Например: Minecraft Hardcore, Phasmophobia" required></textarea>
 
-            <label for="opinion">Ваше отношение к таким серверам:</label>
-            <textarea id="opinion" placeholder="Опишите ваше мнение" required></textarea>
+                <label for="rp">Готовность к RP:</label>
+                <select id="rp" required>
+                    <option value="yes">Да, мне нравится такая атмосфера</option>
+                    <option value="no">Нет, я предпочитаю одиночную игру</option>
+                </select>
+            </fieldset>
 
-            <label for="plans">Что вы собираетесь делать на сервере?</label>
-            <textarea id="plans" placeholder="Опишите ваши планы" required></textarea>
+            <fieldset>
+                <legend>О сервере</legend>
+                <label for="source">Как вы нас нашли?</label>
+                <input type="text" id="source" placeholder="Ник друга или ссылка" required>
 
-            <label for="time">Сколько времени в неделю вы готовы уделять проекту?</label>
-            <input type="text" id="time" placeholder="Например: 5-10 часов" required>
+                <label for="plans">Что будете делать на сервере?</label>
+                <textarea id="plans" placeholder="Ваши планы" required></textarea>
 
-            <label for="horror">Как вы относитесь к хоррору?</label>
-            <textarea id="horror" placeholder="Опишите, нравится ли вам хоррор и как вы реагируете на страшные вещи" required></textarea>
+                <label for="time">Время в неделю:</label>
+                <input type="text" id="time" placeholder="Например: 5-10 часов" required>
+            </fieldset>
 
-            <label for="health">Есть ли у вас заболевания, которые могут помешать вам играть на нашем сервере?</label>
-            <textarea id="health" placeholder="Например: эпилепсия, панические атаки, проблемы с психикой" required></textarea>
+            <fieldset>
+                <legend>Хоррор и психика</legend>
+                <label for="horror">Как относитесь к хоррору?</label>
+                <textarea id="horror" placeholder="Любите ли хоррор и как реагируете на страшное?" required></textarea>
 
-            <label for="responsibility">
-                <input type="checkbox" id="responsibility" required>
-                Я понимаю, что проект не несёт ответственности за моё состояние,  
-                и я полностью осознаю риски участия в игре.
-            </label>
+                <label for="fears">Есть ли у вас страхи?</label>
+                <textarea id="fears" placeholder="Боязнь темноты, резких звуков и т. д." required></textarea>
+
+                <label for="health">Есть ли заболевания, мешающие играть?</label>
+                <textarea id="health" placeholder="Например: эпилепсия, панические атаки" required></textarea>
+            </fieldset>
+
+            <fieldset>
+                <legend>Дополнительное</legend>
+                <label for="playstyle">Ваш стиль игры:</label>
+                <select id="playstyle" required>
+                    <option value="explorer">Исследователь</option>
+                    <option value="builder">Строитель</option>
+                    <option value="survivor">Выживальщик</option>
+                    <option value="hunter">Охотник</option>
+                    <option value="lore">Люблю сюжет и атмосферу</option>
+                </select>
+
+                <label for="cheats">
+                    <input type="checkbox" id="cheats" required>
+                    Я подтверждаю, что не буду использовать читы и запрещенные моды.
+                </label>
+
+                <label for="responsibility">
+                    <input type="checkbox" id="responsibility" required>
+                    Я осознаю риски и понимаю, что проект не несёт ответственности за моё состояние.
+                </label>
+            </fieldset>
 
             <button type="submit">Отправить заявку</button>
         </form>

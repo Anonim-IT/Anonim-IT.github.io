@@ -328,3 +328,64 @@ textarea {
   font-size: 14px;
   margin-top: 10px;
 }
+.container {
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+    background: #222;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+input, textarea, select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    background: #333;
+    border: 1px solid #444;
+    color: white;
+    border-radius: 5px;
+    resize: vertical;
+}
+textarea {
+    height: 50px;
+}
+fieldset {
+    border: 1px solid #555;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+legend {
+    padding: 0 10px;
+    font-weight: bold;
+    color: #bbb;
+}
+.row {
+    display: flex;
+    gap: 10px;
+}
+.row input {
+    flex: 1;
+}
+button {
+    width: 100%;
+    padding: 10px;
+    background: #444;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+button:hover {
+    background: #666;
+}
+.warning-box {
+    background: #550000;
+    color: #ffaaaa;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}

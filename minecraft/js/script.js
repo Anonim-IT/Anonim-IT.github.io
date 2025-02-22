@@ -2,57 +2,92 @@ document.addEventListener("DOMContentLoaded", function () {
     loadNavbar();
 });
 
-// Обработчик для отправки формы whitelistForm
+// Обработчик отправки формы
 document.getElementById("whitelistForm").addEventListener("submit", function(event) {
     event.preventDefault();
 
-    const nickname = document.getElementById("nickname").value.trim();
-    const age = document.getElementById("age").value.trim();
-    const source = document.getElementById("source").value.trim();
-    const opinion = document.getElementById("opinion").value.trim();
-    const plans = document.getElementById("plans").value.trim();
-    const time = document.getElementById("time").value.trim();
-    const horror = document.getElementById("horror").value.trim();
-    const health = document.getElementById("health").value.trim();
+    // Функция для очистки ввода от XSS
+    function sanitize(input) {
+        return input.replace(/[<>]/g, "");
+    }
+
+    // Получаем данные из формы
+    const nickname = sanitize(document.getElementById("nickname").value.trim());
+    const age = sanitize(document.getElementById("age").value.trim());
+    const contact = sanitize(document.getElementById("contact").value.trim());
+    const source = sanitize(document.getElementById("source").value.trim());
+    const experience = sanitize(document.getElementById("experience").value.trim());
+    const rp = sanitize(document.getElementById("rp").value);
+    const plans = sanitize(document.getElementById("plans").value.trim());
+    const time = sanitize(document.getElementById("time").value.trim());
+    const horror = sanitize(document.getElementById("horror").value.trim());
+    const fears = sanitize(document.getElementById("fears").value.trim());
+    const health = sanitize(document.getElementById("health").value.trim());
+    const playstyle = sanitize(document.getElementById("playstyle").value);
+    const cheatsChecked = document.getElementById("cheats").checked;
     const responsibilityChecked = document.getElementById("responsibility").checked;
 
     // Проверка заполненности всех полей
-    if (!nickname || !age || !source || !opinion || !plans || !time || !horror || !health || !responsibilityChecked) {
-        document.getElementById("status").innerText = "Пожалуйста, заполните все поля и подтвердите ответственность!";
+    if (!nickname || !age || !source || !experience || !plans || !time || !horror || !fears || !health || !responsibilityChecked) {
+        document.getElementById("status").innerText = "⚠️ Заполните все обязательные поля!";
         return;
     }
 
     // Проверка возраста
     if (age < 18) {
-        document.getElementById("status").innerText = "Вы должны быть старше 18 лет для подачи заявки.";
+        document.getElementById("status").innerText = "⛔ Вам должно быть 18 лет или больше!";
         return;
     }
 
-    document.getElementById("status").innerText = "Отправка заявки...";
+    // Проверка честности игрока
+    if (!cheatsChecked) {
+        document.getElementById("status").innerText = "⚠️ Вы должны подтвердить, что не будете использовать читы!";
+        return;
+    }
 
-    // Токен бота и ID чатов
-    const botToken = "7745335635:AAGbPdzXplwqbMky-xgJ9KOhsWln5z6toYo"; // Замени на свой токен
-    const chatIds = ["250356592", "5206122340"]; // Добавь новый ID чата
+    document.getElementById("status").innerText = "⏳ Отправка заявки...";
 
-    const message = `🔥 Новая заявка на Whitelist!\n\n👤 Ник: ${nickname}\n🎂 Возраст: ${age}\n🔗 Как нашел: ${source}\n💬 Отношение к серверам: ${opinion}\n🎯 Планы на сервере: ${plans}\n🕒 Время в неделю: ${time}\n👻 Отношение к хоррору: ${horror}\n⚠️ Проблемы со здоровьем: ${health}`;
+    // Telegram-бот
+    const botToken = "7745335635:AAGbPdzXplwqbMky-xgJ9KOhsWln5z6toYo"; // Твой токен
+    const chatIds = ["250356592", "5206122340"]; // ID чатов
 
-    // Отправка сообщения в оба чата
+    const message = `🔥 *Новая заявка на Whitelist!*\n\n` +
+        `👤 *Ник:* ${nickname}\n` +
+        `🎂 *Возраст:* ${age}\n` +
+        `📞 *Контакты:* ${contact || "Не указано"}\n` +
+        `🔗 *Как нашёл сервер:* ${source}\n` +
+        `🎮 *Опыт в хоррор/хардкор-играх:* ${experience}\n` +
+        `🎭 *RP:* ${rp}\n` +
+        `🎯 *Планы на сервере:* ${plans}\n` +
+        `🕒 *Время в неделю:* ${time}\n` +
+        `👻 *Отношение к хоррору:* ${horror}\n` +
+        `⚠️ *Страхи:* ${fears}\n` +
+        `🏥 *Здоровье:* ${health}\n` +
+        `🎮 *Стиль игры:* ${playstyle}\n` +
+        `✅ *Честная игра:* Подтверждено\n` +
+        `⚠️ *Ответственность:* Принята`;
+
+    // Отправка в Telegram
     chatIds.forEach(chatId => {
         fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ chat_id: chatId, text: message })
+            body: JSON.stringify({
+                chat_id: chatId,
+                text: message,
+                parse_mode: "Markdown"
+            })
         })
         .then(response => response.json())
         .then(data => {
             if (data.ok) {
-                document.getElementById("status").innerText = "Заявка успешно отправлена!";
+                document.getElementById("status").innerText = "✅ Заявка успешно отправлена!";
             } else {
-                document.getElementById("status").innerText = "Ошибка отправки заявки!";
+                document.getElementById("status").innerText = "❌ Ошибка отправки!";
             }
         })
-        .catch(error => {
-            document.getElementById("status").innerText = "Ошибка соединения с сервером!";
+        .catch(() => {
+            document.getElementById("status").innerText = "🚫 Ошибка соединения с Telegram!";
         });
     });
 });
