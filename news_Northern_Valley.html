@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новости | Северная Долина</title>
+    <link rel="stylesheet" href="Selo/css/styles.css"> <!-- Подключаем стили -->
+    <script src="Selo/js/news.js" defer></script>  <!-- Подключаем JS -->
+    <script src="Selo/js/scripts.js" defer></script>  <!-- Подключаем скрипты -->
+</head>
+<body>
+    <header>
+        <div id="navbar-container"></div> <!-- Загружается навбар -->
+    </header>
+
+    <main>
+        <section class="news">
+            <h1>Новости села</h1>
+
+            <!-- Форма для добавления новости -->
+            <div class="news-form">
+                <input type="text" id="news-title" placeholder="Заголовок новости">
+                <textarea id="news-content" placeholder="Текст новости"></textarea>
+                <button id="add-news-btn">➕ Добавить новость</button>
+            </div>
+
+            <!-- Список новостей -->
+            <div id="news-container">
+                <!-- Новости будут добавляться сюда -->
+            </div>
+        </section>
+    </main>
+</body>
+</html>

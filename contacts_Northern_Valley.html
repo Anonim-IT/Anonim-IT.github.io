@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты Северной Долины</title>
+    <link rel="stylesheet" href="Selo/css/styles.css"> <!-- Подключаем стили -->
+    <script src="Selo/js/contacts.js" defer></script>  <!-- Подключаем скрипт -->
+    <script src="Selo/js/scripts.js" defer></script>  <!-- Подключаем скрипты -->
+</head>
+<body>
+    <header>
+        <div id="navbar-container"></div> <!-- Навбар загружается автоматически -->
+    </header>
+
+    <main>
+        <section class="contacts">
+            <h1>📜 Администрация Северной Долины</h1>
+            <ul class="admin-list">
+                <li>🏛 <strong>Мэр:</strong> AnonimAudio</li>
+                <li>🏛 <strong>Представитель госдумы:</strong> Darkni4k</li>
+            </ul>
+
+            <h2>🏠 Координаты домов игроков</h2>
+            <p>Добавьте координаты вашего дома, чтобы другие могли вас найти!</p>
+
+            <table id="housesTable">
+                <thead>
+                    <tr>
+                        <th>👤 Ник</th>
+                        <th>📍 X</th>
+                        <th>📍 Y</th>
+                        <th>📍 Z</th>
+                        <th>🗑 Удалить</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Динамически заполняемые строки -->
+                </tbody>
+            </table>
+
+            <div class="form-container">
+                <input type="text" id="playerName" placeholder="Введите ваш ник">
+                <input type="number" id="coordX" placeholder="X">
+                <input type="number" id="coordY" placeholder="Y">
+                <input type="number" id="coordZ" placeholder="Z">
+                <button id="addHouse">Добавить</button>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

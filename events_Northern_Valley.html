@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мероприятия | Северная Долина</title>
+    <link rel="stylesheet" href="Selo/css/styles.css"> <!-- Подключаем стили -->
+    <script src="Selo/js/events.js" defer></script>  <!-- Подключаем скрипт -->
+    <script src="Selo/js/scripts.js" defer></script>
+</head>
+<body>
+    <header>
+        <div id="navbar-container"></div> <!-- Навбар загружается автоматически -->
+    </header>
+
+    <main>
+        <section class="events">
+            <h1>Мероприятия Северной Долины</h1>
+
+            <!-- Форма для добавления мероприятий -->
+            <div class="event-form">
+                <input type="text" id="event-title" placeholder="Название мероприятия">
+                <input type="date" id="event-date">
+                <textarea id="event-description" placeholder="Описание мероприятия"></textarea>
+                <button id="add-event-btn">📅 Добавить мероприятие</button>
+            </div>
+
+            <!-- Список мероприятий -->
+            <div id="events-container">
+                <!-- Сюда будут добавляться события -->
+            </div>
+        </section>
+    </main>
+</body>
+</html>

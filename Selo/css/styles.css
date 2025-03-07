@@ -140,3 +140,449 @@ section h2 {
         padding: 20px;
     }
 }
+.about, .history, .culture, .gallery {
+    margin: 20px;
+    padding: 15px;
+    background: #f8f8f8;
+    border-radius: 8px;
+}
+
+[contenteditable="true"] {
+    cursor: text;
+    outline: none;
+    border-bottom: 2px dashed transparent;
+    transition: border-bottom 0.3s;
+}
+
+[contenteditable="true"]:focus {
+    border-bottom: 2px dashed #007bff;
+}
+
+.image-upload {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.image-upload label {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.image-upload input {
+    display: none;
+}
+
+#gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.gallery-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+#save-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#save-btn:hover {
+    background: #218838;
+}
+.news {
+    margin: 20px;
+    padding: 15px;
+    background: #f8f8f8;
+    border-radius: 8px;
+}
+
+.news h1 {
+    text-align: center;
+}
+
+.news-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.news-form input,
+.news-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.news-form textarea {
+    height: 100px;
+    resize: none;
+}
+
+.news-form button {
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.news-form button:hover {
+    background: #0056b3;
+}
+
+#news-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.news-item {
+    background: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.news-item h2, .news-item p {
+    margin: 0;
+    cursor: text;
+}
+
+.news-item .delete-news {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.news-item .delete-news:hover {
+    background: #c82333;
+}
+.gallery {
+    margin: 20px;
+    padding: 15px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.gallery h1 {
+    text-align: center;
+}
+
+.gallery-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.gallery-upload input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.gallery-upload button {
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.gallery-upload button:hover {
+    background: #0056b3;
+}
+
+#gallery-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.gallery-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gallery-item img {
+    max-width: 200px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-item .delete-image {
+    margin-top: 5px;
+    padding: 5px 10px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.gallery-item .delete-image:hover {
+    background: #c82333;
+}
+.events {
+    margin: 20px;
+    padding: 15px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.events h1 {
+    text-align: center;
+}
+
+.event-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.event-form input,
+.event-form textarea {
+    width: 90%;
+    max-width: 500px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.event-form button {
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.event-form button:hover {
+    background: #0056b3;
+}
+
+#events-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.event-item {
+    background: white;
+    padding: 15px;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.event-item h3 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.event-item p {
+    margin: 5px 0;
+}
+
+.event-item .delete-event {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.event-item .delete-event:hover {
+    background: #c82333;
+}
+.resources {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.resources h1 {
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background: #e3f2fd;
+}
+
+.form-container {
+    margin-top: 20px;
+}
+
+input {
+    padding: 8px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 8px 15px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #45a049;
+}
+
+.delete-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background: #c0392b;
+}
+.contacts {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.contacts h1, .contacts h2 {
+    color: #333;
+}
+
+.admin-list {
+    list-style: none;
+    padding: 0;
+}
+
+.admin-list li {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background: #e3f2fd;
+}
+
+.form-container {
+    margin-top: 20px;
+}
+
+input {
+    padding: 8px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 8px 15px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #45a049;
+}
+
+.delete-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background: #c0392b;
+}

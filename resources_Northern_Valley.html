@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ресурсы для Северной Долины</title>
+    <link rel="stylesheet" href="Selo/css/styles.css"> <!-- Подключаем стили -->
+    <script src="Selo/js/resources.js" defer></script>  <!-- Подключаем скрипт -->
+    <script src="Selo/js/scripts.js" defer></script>  <!-- Подключаем скрипты -->
+</head>
+<body>
+    <header>
+        <div id="navbar-container"></div> <!-- Навбар загружается автоматически -->
+    </header>
+
+    <main>
+        <section class="resources">
+            <h1>📦 Список необходимых ресурсов</h1>
+            <p>Добавляйте ресурсы, которые необходимо добыть для развития села.</p>
+
+            <table id="resourcesTable">
+                <thead>
+                    <tr>
+                        <th>🔹 Ресурс</th>
+                        <th>📦 Количество</th>
+                        <th>✏️ Кто добудет</th>
+                        <th>🗑 Удалить</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Динамически заполняемые строки -->
+                </tbody>
+            </table>
+
+            <div class="form-container">
+                <input type="text" id="resourceName" placeholder="Введите название ресурса">
+                <input type="number" id="resourceAmount" placeholder="Введите количество">
+                <input type="text" id="resourcePlayer" placeholder="Ваш ник">
+                <button id="addResource">Добавить</button>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

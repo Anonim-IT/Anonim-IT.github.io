@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Галерея | Северная Долина</title>
+    <link rel="stylesheet" href="Selo/css/styles.css"> <!-- Подключаем стили -->
+    <script src="Selo/js/gallery.js" defer></script>  <!-- Подключаем скрипт -->
+    <script src="Selo/js/scripts.js" defer></script>
+</head>
+<body>
+    <header>
+        <div id="navbar-container"></div> <!-- Загружается навбар -->
+    </header>
+
+    <main>
+        <section class="gallery">
+            <h1>Галерея Северной Долины</h1>
+
+            <!-- Форма для загрузки изображений -->
+            <div class="gallery-upload">
+                <input type="file" id="image-input" accept="image/*">
+                <button id="upload-btn">📸 Загрузить изображение</button>
+            </div>
+
+            <!-- Контейнер для галереи -->
+            <div id="gallery-container">
+                <!-- Загруженные изображения будут здесь -->
+            </div>
+        </section>
+    </main>
+</body>
+</html>
