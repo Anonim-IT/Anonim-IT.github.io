@@ -2,8 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const tableBody = document.querySelector("#resourcesTable tbody");
     const resourceName = document.querySelector("#resourceName");
     const resourceAmount = document.querySelector("#resourceAmount");
-    const resourcePlayer = document.querySelector("#resourcePlayer");
     const resourcePurpose = document.querySelector("#resourcePurpose"); // Новое поле
+    const resourcePlayer = document.querySelector("#resourcePlayer");
     const addButton = document.querySelector("#addResource");
 
     // Загружаем сохранённые ресурсы из localStorage
@@ -23,8 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
         row.innerHTML = `
             <td>${name}</td>
             <td>${amount}</td>
-            <td>${player}</td>
             <td>${purpose}</td> <!-- Новое поле в таблице -->
+            <td>${player}</td>
             <td><button class="delete-btn" data-index="${index}">Удалить</button></td>
         `;
 
@@ -32,9 +32,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Сохранение ресурса
-    function saveResource(name, amount, player, purpose) {
+    function saveResource(name, amount, purpose, player) {
         const resources = JSON.parse(localStorage.getItem("resources")) || [];
-        resources.push({ name, amount, player, purpose }); // Добавлено поле purpose
+        resources.push({ name, amount, purpose, player }); // Добавлено поле purpose
         localStorage.setItem("resources", JSON.stringify(resources));
         loadResources();
     }
@@ -45,8 +45,8 @@ document.addEventListener("DOMContentLoaded", function () {
             saveResource(resourceName.value, resourceAmount.value, resourcePlayer.value, resourcePurpose.value);
             resourceName.value = "";
             resourceAmount.value = "";
-            resourcePlayer.value = "";
             resourcePurpose.value = ""; // Очищаем поле после добавления
+            resourcePlayer.value = "";
         }
     });
 
