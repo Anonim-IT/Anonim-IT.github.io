@@ -586,3 +586,112 @@ button:hover {
 .delete-btn:hover {
     background: #c0392b;
 }
+/* Секция с выпусками */
+.issues {
+    margin-top: 30px;
+}
+
+.issue-list {
+    margin-top: 20px;
+}
+
+.issue-item {
+    background-color: #ffffff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.issue-item h3 {
+    font-size: 1.5em;
+    color: #333333;
+}
+
+.issue-item p {
+    font-size: 1.1em;
+    color: #666666;
+}
+
+/* Форма для добавления выпуска */
+.add-issue {
+    background-color: #ffffff;
+    padding: 20px;
+    margin-top: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-issue h2 {
+    font-size: 1.8em;
+    color: #003366;
+    margin-bottom: 20px;
+}
+
+.add-issue form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.add-issue label {
+    font-size: 1.1em;
+    color: #333333;
+}
+
+.add-issue input[type="text"],
+.add-issue textarea {
+    padding: 10px;
+    font-size: 1.1em;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.add-issue button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.add-issue button:hover {
+    background-color: #45a049;
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2em;
+    }
+
+    .hero p {
+        font-size: 1em;
+    }
+
+    .issue-item h3 {
+        font-size: 1.3em;
+    }
+
+    .issue-item p {
+        font-size: 1em;
+    }
+
+    .add-issue h2 {
+        font-size: 1.5em;
+    }
+
+    .add-issue label,
+    .add-issue input[type="text"],
+    .add-issue textarea {
+        font-size: 1em;
+    }
+
+    .add-issue button {
+        font-size: 1em;
+    }
+}

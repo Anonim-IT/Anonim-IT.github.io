@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Газета Спутник - Северная Долина</title>
+    <link rel="stylesheet" href="Selo/css/styles.css"> <!-- Подключаем стили -->
+    <script src="Selo/js/scripts.js" defer></script>  <!-- Подключаем скрипты -->
+    <script src="Selo/js/Satellite.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav id="navbar">
+            <!-- Навигация будет загружена с помощью JS -->
+        </nav>
+    </header>
+
+    <!-- Основное содержимое -->
+    <main>
+        <section class="hero">
+            <h1>Газета "Спутник"</h1>
+            <p>Читайте наши прошлые выпуски и будьте в курсе событий Северной Долины.</p>
+        </section>
+
+        <section class="issues">
+            <h2>Последние Выпуски:</h2>
+
+            <!-- Список с прошлым номером газеты, здесь будет динамическое содержимое -->
+            <div class="issue-list" id="issue-list">
+                <!-- Выпуски будут добавляться сюда через JavaScript -->
+            </div>
+
+            <section class="add-issue">
+                <h2>Добавить новый выпуск</h2>
+                <form id="add-issue-form">
+                    <label for="issue-title">Название выпуска:</label>
+                    <input type="text" id="issue-title" name="title" required><br>
+
+                    <label for="issue-text">Текст выпуска:</label>
+                    <textarea id="issue-text" name="text" rows="10" required></textarea><br>
+
+                    <button type="submit">Добавить Выпуск</button>
+                </form>
+            </section>
+        </section>
+    </main>
+
+    <!-- Подключение Font Awesome для иконок -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</body>
+</html>
