@@ -41,8 +41,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Обработчик добавления ресурса
     addButton.addEventListener("click", function () {
-        if (resourceName.value && resourceAmount.value && resourcePlayer.value && resourcePurpose.value) {
-            saveResource(resourceName.value, resourceAmount.value, resourcePlayer.value, resourcePurpose.value);
+        if (resourceName.value && resourceAmount.value && resourcePurpose.value && resourcePlayer.value) {
+            saveResource(resourceName.value, resourceAmount.value, resourcePurpose.value, resourcePlayer.value);
             resourceName.value = "";
             resourceAmount.value = "";
             resourcePurpose.value = ""; // Очищаем поле после добавления
