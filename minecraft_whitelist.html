@@ -10,7 +10,7 @@
 <body class="dark-theme">
 
     <!-- Навигационная панель -->
-    <nav id="navbar"></nav>
+    <div id="navbar"></div>
 
     <div class="container">
         <h2><i class="fas fa-shield-alt"></i> Заявка на вступление в SCP-ARC: Закрытый сектор</h2>
@@ -40,41 +40,46 @@
                 <label for="experience">Какой опыт у вас в исследованиях аномальных явлений?</label>
                 <textarea id="experience" placeholder="Например: Работа с SCP объектами, исследования паранормальных явлений" required></textarea>
 
-                <label for="preparedness">Готовность работать с опасными объектами:</label>
-                <select id="preparedness" required>
-                    <option value="yes">Да, я готов к экстренным ситуациям</option>
-                    <option value="no">Нет, я предпочитаю избегать аномальных объектов</option>
+                <label for="rp">RP-стандарт:</label>
+                <select id="rp" required>
+                    <option value="low">Низкий</option>
+                    <option value="medium">Средний</option>
+                    <option value="high">Высокий</option>
                 </select>
-            </fieldset>
 
-            <fieldset>
-                <legend>О проекте SCP-ARC</legend>
-                <label for="source">Как вы узнали о проекте SCP-ARC?</label>
-                <input type="text" id="source" placeholder="Источник информации" required>
+                <label for="plans">Какие у вас планы на участие в проекте?</label>
+                <textarea id="plans" placeholder="Опишите свою мотивацию и задачи" required></textarea>
 
-                <label for="role">Какую роль вы хотите взять на себя в проекте?</label>
-                <textarea id="role" placeholder="Ваши предпочтения по участию в проекте" required></textarea>
-
-                <label for="commitment">Ваше обязательство по времени для исследований (в неделе):</label>
-                <input type="text" id="commitment" placeholder="Пример: 5-10 часов" required>
+                <label for="time">Сколько времени в неделю вы готовы уделять?</label>
+                <input type="text" id="time" placeholder="Пример: 5-10 часов" required>
             </fieldset>
 
             <fieldset>
                 <legend>Психологическое состояние</legend>
-                <label for="mentalState">Как вы оцениваете свое психологическое состояние в условиях высоко напряженной работы с аномальными явлениями?</label>
-                <textarea id="mentalState" placeholder="Ваши ощущения при взаимодействии с аномальными объектами?" required></textarea>
+                <label for="horror">Как вы реагируете на аномалии и элементы ужаса?</label>
+                <textarea id="horror" placeholder="Опишите ваши ощущения" required></textarea>
 
-                <label for="fears">Существуют ли у вас фобии или психологические проблемы, которые могут повлиять на вашу работу?</label>
+                <label for="fears">Есть ли у вас фобии или психологические проблемы?</label>
                 <textarea id="fears" placeholder="Например: боязнь темноты, замкнутых пространств" required></textarea>
 
-                <label for="health">Есть ли у вас физические или психические ограничения для работы в аномальных зонах?</label>
-                <textarea id="health" placeholder="Например: эпилепсия, панические атаки, сильные реакции на стресс" required></textarea>
+                <label for="health">Есть ли у вас медицинские противопоказания?</label>
+                <textarea id="health" placeholder="Например: эпилепсия, панические атаки" required></textarea>
             </fieldset>
 
             <fieldset>
-                <legend>Технические навыки</legend>
-                <label for="skills">Какие у вас технические навыки, которые могут быть полезны для работы с аномальными объектами?</label>
-                <textarea id="skills" placeholder="Ваши знания в области научных исследований, технологий, защиты или другие навыки" required></textarea>
+                <legend>Оперативное поведение</legend>
+                <label for="playstyle">Какой стиль взаимодействия с командой вам ближе?</label>
+                <select id="playstyle" required>
+                    <option value="strategic">Стратег</option>
+                    <option value="tactical">Тактик</option>
+                    <option value="aggressive">Агрессивный</option>
+                    <option value="support">Поддержка</option>
+                </select>
+
+                <label for="cheats">
+                    <input type="checkbox" id="cheats" required>
+                    Я подтверждаю, что не использую запрещённые программы.
+                </label>
 
                 <label for="responsibility">
                     <input type="checkbox" id="responsibility" required>

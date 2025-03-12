@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Данные для отправки в Telegram
     // Токен бота и ID чата храним в безопасном месте!
     const botToken = "7745335635:AAGbPdzXplwqbMky-xgJ9KOhsWln5z6toYo"; // Замени на свой токен
-    const chatId = "250356592"; // Замени на свой ID
+    const chatIds = ["250356592", "5206122340"]; // Замени на свой ID
 
         try {
             // Отправляем текстовое сообщение

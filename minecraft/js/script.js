@@ -1,98 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-    loadNavbar();
+    loadSecurityProtocol();
+    loadNavbar(); // Загружаем навигационную панель
 });
 
-// Обработчик отправки формы
-document.getElementById("whitelistForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    // Функция для очистки ввода от XSS
-    function sanitize(input) {
-        return input.replace(/[<>]/g, "");
-    }
-
-    // Получаем данные из формы
-    const nickname = sanitize(document.getElementById("nickname").value.trim());
-    const age = sanitize(document.getElementById("age").value.trim());
-    const contact = sanitize(document.getElementById("contact").value.trim());
-    const source = sanitize(document.getElementById("source").value.trim());
-    const experience = sanitize(document.getElementById("experience").value.trim());
-    const rp = sanitize(document.getElementById("rp").value);
-    const plans = sanitize(document.getElementById("plans").value.trim());
-    const time = sanitize(document.getElementById("time").value.trim());
-    const horror = sanitize(document.getElementById("horror").value.trim());
-    const fears = sanitize(document.getElementById("fears").value.trim());
-    const health = sanitize(document.getElementById("health").value.trim());
-    const playstyle = sanitize(document.getElementById("playstyle").value);
-    const cheatsChecked = document.getElementById("cheats").checked;
-    const responsibilityChecked = document.getElementById("responsibility").checked;
-
-    // Проверка заполненности всех полей
-    if (!nickname || !age || !source || !experience || !plans || !time || !horror || !fears || !health || !responsibilityChecked) {
-        document.getElementById("status").innerText = "⚠️ Заполните все обязательные поля!";
-        return;
-    }
-
-    // Проверка возраста
-    if (age < 18) {
-        document.getElementById("status").innerText = "⛔ Вам должно быть 18 лет или больше!";
-        return;
-    }
-
-    // Проверка честности игрока
-    if (!cheatsChecked) {
-        document.getElementById("status").innerText = "⚠️ Вы должны подтвердить, что не будете использовать читы!";
-        return;
-    }
-
-    document.getElementById("status").innerText = "⏳ Отправка заявки...";
-
-    // Telegram-бот
-    const botToken = "7745335635:AAGbPdzXplwqbMky-xgJ9KOhsWln5z6toYo"; // Твой токен
-    const chatIds = ["250356592", "5206122340"]; // ID чатов
-
-    const message = `🔥 *Новая заявка на Whitelist!*\n\n` +
-        `👤 *Ник:* ${nickname}\n` +
-        `🎂 *Возраст:* ${age}\n` +
-        `📞 *Контакты:* ${contact || "Не указано"}\n` +
-        `🔗 *Как нашёл сервер:* ${source}\n` +
-        `🎮 *Опыт в хоррор/хардкор-играх:* ${experience}\n` +
-        `🎭 *RP:* ${rp}\n` +
-        `🎯 *Планы на сервере:* ${plans}\n` +
-        `🕒 *Время в неделю:* ${time}\n` +
-        `👻 *Отношение к хоррору:* ${horror}\n` +
-        `⚠️ *Страхи:* ${fears}\n` +
-        `🏥 *Здоровье:* ${health}\n` +
-        `🎮 *Стиль игры:* ${playstyle}\n` +
-        `✅ *Честная игра:* Подтверждено\n` +
-        `⚠️ *Ответственность:* Принята`;
-
-    // Отправка в Telegram
-    chatIds.forEach(chatId => {
-        fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                chat_id: chatId,
-                text: message,
-                parse_mode: "Markdown"
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.ok) {
-                document.getElementById("status").innerText = "✅ Заявка успешно отправлена!";
-            } else {
-                document.getElementById("status").innerText = "❌ Ошибка отправки!";
-            }
-        })
-        .catch(() => {
-            document.getElementById("status").innerText = "🚫 Ошибка соединения с Telegram!";
-        });
-    });
-});
-
-// Загрузка навигационной панели
+// Функция загрузки навигационной панели
 function loadNavbar() {
     fetch('minecraft/navbar/navbarminecraft.html')
         .then(response => {
@@ -109,3 +20,89 @@ function loadNavbar() {
         })
         .catch(error => console.error('Ошибка загрузки меню:', error));
 }
+
+// Обработчик формы допуска в закрытый сектор
+document.getElementById("whitelistForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    // Функция для защиты от XSS
+    function sanitize(input) {
+        return input.replace(/[<>]/g, "");
+    }
+
+    // Сбор данных
+    const subjectID = sanitize(document.getElementById("nickname").value.trim());
+    const clearanceLevel = sanitize(document.getElementById("age").value.trim());
+    const contactInfo = sanitize(document.getElementById("contact").value.trim());
+    const experience = sanitize(document.getElementById("experience").value.trim());
+    const rpLevel = sanitize(document.getElementById("rp").value);
+    const missionPlans = sanitize(document.getElementById("plans").value.trim());
+    const weeklyTime = sanitize(document.getElementById("time").value.trim());
+    const anomalyTolerance = sanitize(document.getElementById("horror").value.trim());
+    const psychologicalRisks = sanitize(document.getElementById("fears").value.trim());
+    const medicalStatus = sanitize(document.getElementById("health").value.trim());
+    const operationalBehavior = sanitize(document.getElementById("playstyle").value);
+    const noCheatDeclaration = document.getElementById("cheats").checked;
+    const responsibilityAgreement = document.getElementById("responsibility").checked;
+
+    // Верификация данных
+    if (!subjectID || !clearanceLevel || !experience || !missionPlans || !weeklyTime || !anomalyTolerance || !psychologicalRisks || !medicalStatus || !responsibilityAgreement) {
+        document.getElementById("status").innerText = "⚠️ [SECURITY ALERT] Введены неполные данные! Допуск запрещён.";
+        return;
+    }
+
+    if (clearanceLevel < 18) {
+        document.getElementById("status").innerText = "⛔ [ACCESS DENIED] Недостаточный уровень допуска (Возраст < 18)";
+        return;
+    }
+
+    if (!noCheatDeclaration) {
+        document.getElementById("status").innerText = "⚠️ [SECURITY WARNING] Подозрение на несоблюдение Протокола честности!";
+        return;
+    }
+
+    document.getElementById("status").innerText = "⏳ [PROCESSING] Запрос на авторизацию отправлен в Командный Центр...";
+
+    // Telegram-бот
+    const botToken = "7745335635:AAGbPdzXplwqbMky-xgJ9KOhsWln5z6toYo";
+    const chatIds = ["250356592", "5206122340"];
+
+    const message = `🔴 **[SCP-ARC CLASSIFIED SECTOR] - ЗАПРОС НА ДОПУСК** 🔴\n\n` +
+        `🔹 **Идентификатор субъекта:** ${subjectID}\n` +
+        `🔹 **Уровень допуска:** ${clearanceLevel}\n` +
+        `🔹 **Контактные данные:** ${contactInfo || "Не указаны"}\n` +
+        `🔹 **Опыт работы с аномалиями:** ${experience}\n` +
+        `🔹 **RP-стандарт:** ${rpLevel}\n` +
+        `🔹 **Планы на сектор:** ${missionPlans}\n` +
+        `🔹 **Ожидаемое время активности:** ${weeklyTime}\n` +
+        `🔹 **Толерантность к аномалиям:** ${anomalyTolerance}\n` +
+        `🔹 **Психологические риски:** ${psychologicalRisks}\n` +
+        `🔹 **Медицинский статус:** ${medicalStatus}\n` +
+        `🔹 **Оперативное поведение:** ${operationalBehavior}\n` +
+        `✅ **Протокол Честности:** Принят\n` +
+        `⚠️ **Ответственность за миссию:** Подтверждена`;
+
+    // Отправка данных в Telegram
+    chatIds.forEach(chatId => {
+        fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                chat_id: chatId,
+                text: message,
+                parse_mode: "Markdown"
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.ok) {
+                document.getElementById("status").innerText = "✅ [AUTHORIZED] Доступ разрешён. Ждите инструкций.";
+            } else {
+                document.getElementById("status").innerText = "❌ [ERROR] Ошибка обработки запроса!";
+            }
+        })
+        .catch(() => {
+            document.getElementById("status").innerText = "🚫 [CONNECTION ERROR] Ошибка связи с Контрольным Центром!";
+        });
+    });
+});
