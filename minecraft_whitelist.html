@@ -3,93 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whitelist — Graveyard of Souls</title>
+    <title>SCP-ARC: Classified Sector</title>
     <link rel="stylesheet" href="minecraft/style/style.css">
     <link rel="icon" href="minecraft/img/generated_image.ico" type="image/x-icon">
 </head>
-<body>
+<body class="dark-theme">
 
-        <!-- Навигационная панель -->
-        <nav id="navbar"></nav>
+    <!-- Навигационная панель -->
+    <nav id="navbar"></nav>
 
     <div class="container">
-        <h2>Заявка на Whitelist</h2>
-        <p>Заполните форму, чтобы подать заявку на сервер. <strong>Возрастное ограничение: 18+</strong></p>
+        <h2><i class="fas fa-shield-alt"></i> Заявка на вступление в SCP-ARC: Закрытый сектор</h2>
+        <p>Заполните форму, чтобы пройти проверку и быть включенным в исследовательский сектор. <strong>Возрастное ограничение: 18+</strong></p>
 
         <div class="warning-box">
             ⚠️ <strong>Внимание!</strong>  
-            Сервер содержит <strong>психологические хорроры и пугающие элементы.  
-            Если у вас есть проблемы с психикой, слабая нервная система или другие противопоказания,  
-            настоятельно не рекомендуем играть!</strong>
+            Данная зона содержит <strong>психологические исследования с элементами ужаса, аномальных явлений и опасных объектов.</strong>  
+            Если у вас есть психические заболевания, слабая нервная система или противопоказания,  
+            настоятельно не рекомендуется продолжать.
         </div>
 
         <form id="whitelistForm">
             <fieldset>
                 <legend>Основная информация</legend>
-                <label for="nickname">Ваш ник:</label>
-                <input type="text" id="nickname" placeholder="Введите ник" required>
+                <label for="nickname">Псевдоним:</label>
+                <input type="text" id="nickname" placeholder="Введите ваш псевдоним" required>
 
                 <div class="row">
                     <input type="number" id="age" min="18" placeholder="Возраст (от 18)" required>
-                    <input type="text" id="contact" placeholder="Discord/Telegram">
+                    <input type="text" id="contact" placeholder="Контактные данные (Discord/Telegram)">
                 </div>
             </fieldset>
 
             <fieldset>
-                <legend>Игровой опыт</legend>
-                <label for="experience">Опыт в хоррор/хардкор-играх:</label>
-                <textarea id="experience" placeholder="Например: Minecraft Hardcore, Phasmophobia" required></textarea>
+                <legend>Квалификация</legend>
+                <label for="experience">Какой опыт у вас в исследованиях аномальных явлений?</label>
+                <textarea id="experience" placeholder="Например: Работа с SCP объектами, исследования паранормальных явлений" required></textarea>
 
-                <label for="rp">Готовность к RP:</label>
-                <select id="rp" required>
-                    <option value="yes">Да, мне нравится такая атмосфера</option>
-                    <option value="no">Нет, я предпочитаю одиночную игру</option>
+                <label for="preparedness">Готовность работать с опасными объектами:</label>
+                <select id="preparedness" required>
+                    <option value="yes">Да, я готов к экстренным ситуациям</option>
+                    <option value="no">Нет, я предпочитаю избегать аномальных объектов</option>
                 </select>
             </fieldset>
 
             <fieldset>
-                <legend>О сервере</legend>
-                <label for="source">Как вы нас нашли?</label>
-                <input type="text" id="source" placeholder="Ник друга или ссылка" required>
+                <legend>О проекте SCP-ARC</legend>
+                <label for="source">Как вы узнали о проекте SCP-ARC?</label>
+                <input type="text" id="source" placeholder="Источник информации" required>
 
-                <label for="plans">Что будете делать на сервере?</label>
-                <textarea id="plans" placeholder="Ваши планы" required></textarea>
+                <label for="role">Какую роль вы хотите взять на себя в проекте?</label>
+                <textarea id="role" placeholder="Ваши предпочтения по участию в проекте" required></textarea>
 
-                <label for="time">Время в неделю:</label>
-                <input type="text" id="time" placeholder="Например: 5-10 часов" required>
+                <label for="commitment">Ваше обязательство по времени для исследований (в неделе):</label>
+                <input type="text" id="commitment" placeholder="Пример: 5-10 часов" required>
             </fieldset>
 
             <fieldset>
-                <legend>Хоррор и психика</legend>
-                <label for="horror">Как относитесь к хоррору?</label>
-                <textarea id="horror" placeholder="Любите ли хоррор и как реагируете на страшное?" required></textarea>
+                <legend>Психологическое состояние</legend>
+                <label for="mentalState">Как вы оцениваете свое психологическое состояние в условиях высоко напряженной работы с аномальными явлениями?</label>
+                <textarea id="mentalState" placeholder="Ваши ощущения при взаимодействии с аномальными объектами?" required></textarea>
 
-                <label for="fears">Есть ли у вас страхи?</label>
-                <textarea id="fears" placeholder="Боязнь темноты, резких звуков и т. д." required></textarea>
+                <label for="fears">Существуют ли у вас фобии или психологические проблемы, которые могут повлиять на вашу работу?</label>
+                <textarea id="fears" placeholder="Например: боязнь темноты, замкнутых пространств" required></textarea>
 
-                <label for="health">Есть ли заболевания, мешающие играть?</label>
-                <textarea id="health" placeholder="Например: эпилепсия, панические атаки" required></textarea>
+                <label for="health">Есть ли у вас физические или психические ограничения для работы в аномальных зонах?</label>
+                <textarea id="health" placeholder="Например: эпилепсия, панические атаки, сильные реакции на стресс" required></textarea>
             </fieldset>
 
             <fieldset>
-                <legend>Дополнительное</legend>
-                <label for="playstyle">Ваш стиль игры:</label>
-                <select id="playstyle" required>
-                    <option value="explorer">Исследователь</option>
-                    <option value="builder">Строитель</option>
-                    <option value="survivor">Выживальщик</option>
-                    <option value="hunter">Охотник</option>
-                    <option value="lore">Люблю сюжет и атмосферу</option>
-                </select>
-
-                <label for="cheats">
-                    <input type="checkbox" id="cheats" required>
-                    Я подтверждаю, что не буду использовать читы и запрещенные моды.
-                </label>
+                <legend>Технические навыки</legend>
+                <label for="skills">Какие у вас технические навыки, которые могут быть полезны для работы с аномальными объектами?</label>
+                <textarea id="skills" placeholder="Ваши знания в области научных исследований, технологий, защиты или другие навыки" required></textarea>
 
                 <label for="responsibility">
                     <input type="checkbox" id="responsibility" required>
-                    Я осознаю риски и понимаю, что проект не несёт ответственности за моё состояние.
+                    Я понимаю риски и осознаю, что проект SCP-ARC не несет ответственности за мое состояние здоровья и безопасность.
                 </label>
             </fieldset>
 
@@ -99,7 +88,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2025 Graveyard of Souls | <a href="privacy.html">Политика конфиденциальности</a></p>
+        <p>&copy; 2025 SCP-ARC: Classified Sector | <a href="privacy.html">Политика конфиденциальности</a></p>
     </footer>
 
     <script src="minecraft/js/script.js"></script>
