@@ -11,7 +11,7 @@ function loadNavbar() {
             return response.text();
         })
         .then(html => {
-            const navbarElement = document.getElementById('navbar');
+            const navbarElement = document.getElementById("navbar");
             if (navbarElement) {
                 navbarElement.innerHTML = html;
             } else {
