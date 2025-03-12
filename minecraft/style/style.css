@@ -225,123 +225,25 @@ input, textarea {
 }
 
 input:focus, textarea:focus {
-  background-color: #3d3d3d;
+  background-color: #3c3c3c;
   transform: scale(1.02);
-  border-color: #ff3366;
 }
-        /* Добавим стиль, чтобы страницы выглядели как контент SCP */
-        body {
-          background-color: #121212;
-          color: #e0e0e0;
-          font-family: 'Arial', sans-serif;
-          margin: 0;
-      }
 
-      header {
-          background-color: #2e2e2e;
-          padding: 20px;
-          font-size: 18px;
-      }
+button[type="submit"] {
+  background: linear-gradient(45deg, #8b0000, #660000);
+  border: none;
+  color: white;
+  padding: 12px 25px;
+  font-size: 18px;
+  border-radius: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
 
-      #navbar ul {
-          display: flex;
-          justify-content: space-around;
-          list-style-type: none;
-          padding: 0;
-      }
+button[type="submit"]:hover {
+  background: linear-gradient(45deg, #b20000, #880000);
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.8);
+}
 
-      #navbar li {
-          margin: 0 15px;
-      }
-
-      #navbar a {
-          color: #f5f5f5;
-          text-decoration: none;
-      }
-
-      #navbar a:hover {
-          color: #8e8e8e;
-      }
-
-      .container {
-          padding: 20px;
-      }
-
-      h1 {
-          font-size: 36px;
-          color: #f0f0f0;
-      }
-
-      .info-message {
-          font-size: 18px;
-          margin-top: 20px;
-          color: #d3d3d3;
-      }
-
-      .form-group {
-          margin-bottom: 20px;
-      }
-
-      label {
-          color: #f5f5f5;
-          font-size: 16px;
-      }
-
-      input, textarea {
-          width: 100%;
-          padding: 10px;
-          font-size: 14px;
-          background-color: #333;
-          border: 1px solid #555;
-          color: #f5f5f5;
-      }
-
-      input[type="file"] {
-          display: none;
-      }
-
-      #drop-area {
-          background-color: #444;
-          border: 2px dashed #666;
-          padding: 20px;
-          text-align: center;
-          cursor: pointer;
-      }
-
-      #drop-area p {
-          font-size: 16px;
-          color: #ddd;
-      }
-
-      #submit-button {
-          background-color: #444;
-          color: #f5f5f5;
-          font-size: 16px;
-          border: none;
-          padding: 15px;
-          cursor: pointer;
-      }
-
-      #submit-button:hover {
-          background-color: #666;
-      }
-
-      .hidden {
-          display: none;
-      }
-
-      #status.error-message {
-          color: #ff4d4d;
-      }
-
-      #loading {
-          font-size: 18px;
-          color: #ffdb00;
-      }
-
-      footer {
-          background-color: #2e2e2e;
-          padding: 15px;
-          text-align: center;
-          color: #f5f5f5;
-      }
