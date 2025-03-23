@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Hack | Заявка на вступление</title>
+    <link rel="stylesheet" href="minecraft_hack/style/style.css">
+    <link rel="icon" href="img/mc_hack_icon.ico" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body class="dark-theme">
+
+    <!-- БЛОК: Навигация -->
+    <div class="block navbar">
+        <header>
+            <nav>
+                <ul class="nav-list">
+                    <li class="nav-title">
+                        <a href="minecraft_hack.html">
+                            <i class="fas fa-cubes"></i> Minecraft Hack
+                        </a>
+                    </li>
+                    <li><a href="minecraft_hack.html"><i class="fas fa-home"></i> Главная</a></li>
+                    <li><a href="server.html"><i class="fas fa-server"></i> Сервер</a></li>
+                    <li><a href="hacks.html"><i class="fas fa-cogs"></i> Хаки</a></li>
+                    <li><a href="mods.html"><i class="fas fa-cube"></i> Моды</a></li>
+                    <li><a href="minecraft_hack_whitelist.html"><i class="fas fa-check-circle"></i> Вайтлист</a></li>
+                    <li><a href="contact_hack.html"><i class="fas fa-envelope"></i> Контакты</a></li>
+                </ul>
+            </nav>
+        </header>
+    </div>
+
+    <!-- БЛОК: Основной контент -->
+    <div class="block container">
+        <h2><i class="fas fa-user-secret"></i> Заявка на вступление</h2>
+        <p>Заполните форму, чтобы пройти проверку и получить доступ к эксклюзивным инструментам. <strong>Возрастное ограничение: 18+</strong></p>
+
+        <div class="block warning-box">
+            <i class="fas fa-exclamation-triangle"></i> <strong>Внимание!</strong>  
+            Данный проект ориентирован на <strong>изучение механик Minecraft, тестирование защиты серверов и создание нестандартных решений.</strong>  
+            Мы не поддерживаем гриферство, разрушение серверов или незаконную деятельность.
+        </div>
+
+        <!-- БЛОК: Форма заявки -->
+        <div class="block form-block">
+            <form id="hackWhitelistForm">
+                <fieldset>
+                    <legend>Основная информация</legend>
+                    <label for="nickname">Ваш ник в Minecraft:</label>
+                    <input type="text" id="nickname" placeholder="Введите ваш игровой никнейм" required>
+
+                    <label for="contact">Как с вами можно связаться?</label>
+                    <input type="text" id="contact" placeholder="Например: Discord, Telegram" required>
+
+                    <label for="license">У вас есть лицензия Minecraft?</label>
+                    <select id="license" required>
+                        <option value="yes">Да, у меня есть лицензия</option>
+                        <option value="no">Нет, играю на пиратке</option>
+                    </select>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Согласие с правилами</legend>
+                    <label>
+                        <input type="checkbox" id="rules" required>
+                        Я подтверждаю, что ознакомился с <a href="rules.html" target="_blank">правилами сервера</a> и согласен с ними.
+                    </label>
+
+                    <label>
+                        <input type="checkbox" id="notGriefer" required>
+                        Я понимаю, что этот проект не связан с гриферством, взломами серверов или вредоносной активностью.
+                    </label>
+                </fieldset>
+
+                <button type="submit" class="btn">Отправить заявку</button>
+            </form>
+        </div>
+        
+        <p id="status"></p>
+    </div>
+
+    <!-- БЛОК: Подвал -->
+    <div class="block footer">
+        <footer>
+            <p>&copy; 2025 Minecraft Hack Community | <a href="privacy.html">Политика конфиденциальности</a></p>
+        </footer>
+    </div>
+
+    <!-- Подключаем кастомный скрипт -->
+    <script src="minecraft_hack/js/script.js"></script>
+</body>
+</html>

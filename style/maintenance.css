@@ -9,22 +9,61 @@ body {
 .maintenance-container {
     max-width: 600px;
     margin: auto;
-    background: #2e2e4e;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, #2e2e4e, #3e3e6e);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
+    animation: fadeIn 0.8s ease-in-out;
 }
 
 h1 {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-img {
-    width: 80px;
-    margin-top: 20px;
+    font-size: 26px;
+    margin-bottom: 15px;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
 p {
     font-size: 18px;
+    margin-bottom: 10px;
+    opacity: 0.9;
+}
+
+img {
+    width: 100px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+/* Стили для кнопки */
+.exit-button {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 14px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(135deg, #d9534f, #b52b27);
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(255, 87, 87, 0.3);
+}
+
+.exit-button:hover {
+    background: linear-gradient(135deg, #c9302c, #921f1b);
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(255, 87, 87, 0.4);
+}
+
+/* Анимация появления */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
