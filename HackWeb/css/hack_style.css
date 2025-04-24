@@ -373,3 +373,39 @@ footer {
     width: 80%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+.navbar {
+    background-color: #333; /* Цвет фона */
+    padding: 10px 20px; /* Отступы */
+}
+
+.navbar ul {
+    list-style-type: none; /* Убираем маркеры списка */
+    margin: 0; /* Убираем отступы */
+    padding: 0; /* Убираем отступы */
+    display: flex; /* Выравнивание элементов в строку */
+    justify-content: space-around; /* Равномерное распределение элементов */
+}
+
+.navbar li {
+    flex: 1; /* Каждый элемент занимает равное пространство */
+}
+
+.navbar a {
+    color: white; /* Цвет текста */
+    text-decoration: none; /* Убираем подчеркивание */
+    font-size: 16px; /* Размер шрифта */
+    display: flex; /* Для выравнивания текста и иконки по центру */
+    align-items: center; /* Вертикальное выравнивание по центру */
+    justify-content: center; /* Горизонтальное выравнивание по центру */
+    padding: 10px; /* Отступы вокруг ссылки для увеличения кликабельной области */
+}
+
+.navbar a:hover {
+    background-color: #ffcc00; /* Цвет фона при наведении */
+    color: #333; /* Цвет текста при наведении */
+}
+
+.navbar i {
+    margin-right: 8px; /* Отступ между иконкой и текстом */
+}
