@@ -1,411 +1,204 @@
-/* hackweb_styles.css */
-
-/* Общие стили */
-body {
-    background-color: #0a0a0a; /* Темный фон */
-    color: #00ff00; /* Яркий зеленый текст */
-    font-family: 'Courier New', monospace; /* Моноширинный шрифт */
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-/* Навигация */
-nav {
-    background-color: #000;
-    padding: 10px 0;
-    box-shadow: 0 0 10px #00ff00;
-    width: 100%;  /* Растягиваем на всю ширину страницы */
-    position: fixed; /* Фиксируем навбар вверху страницы */
-    top: 0;
-    left: 0;
-    z-index: 1000; /* Чтобы он всегда был поверх контента */
-}
-
-/* Навигационное меню */
-.nav-list {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
-    width: 100%;  /* Обеспечиваем, чтобы навигация не выходила за пределы экрана */
-}
-
-/* Убираем отступы у списка */
-.nav-list li {
-    margin: 0;
-}
-
-/* Внешний вид ссылок */
-.nav-list a {
-    text-decoration: none;
-    color: #00ff00;
-    font-weight: bold;
-    transition: 0.3s;
-    font-size: 18px;
-    padding: 10px 20px;
-    display: block;
-}
-
-
-/* Поведение при наведении */
-.nav-list a:hover {
-    color: #ff3333;
-    text-shadow: 0 0 10px #ff3333;
-}
-
-/* Заголовки */
-h1, h2, h3 {
-    text-align: center;
-    text-shadow: 0 0 15px #00ff00, 0 0 30px #ff0000;
-    font-size: 2.5rem; /* Увеличенный размер заголовков */
-}
-
-/* Контейнер */
-.container {
-    max-width: 900px;
-    margin: 90px auto;
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 0.85); /* Прозрачный фон */
-    box-shadow: 0 0 15px #00ff00;
-    border-radius: 10px;
-    flex: 1;
-}
-
-/* Кнопки */
-.button {
-    display: inline-block;
-    padding: 12px 24px;
-    background-color: #00ff00;
-    color: #0a0a0a;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 5px;
-    transition: 0.3s;
-}
-
-.button:hover {
-    background-color: #ff0000;
-    color: #fff;
-    box-shadow: 0 0 10px #ff0000;
-}
-
-/* Анимация текста */
-@keyframes neon {
-    0% { text-shadow: 0 0 5px #00ff00; }
-    50% { text-shadow: 0 0 20px #00ff00, 0 0 30px #ff0000; }
-    100% { text-shadow: 0 0 5px #00ff00; }
-}
-
-h1 {
-    animation: neon 1.5s infinite alternate;
-}
-
-/* Адаптивность */
-@media (max-width: 768px) {
-    
-    /* Стили для подменю */
-    .nav-list {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    .nav-list li {
-        display: inline-block;
-        position: relative;
-    }
-
-    .nav-list li a {
-        text-decoration: none;
-        padding: 10px 15px;
-        display: block;
-        color: #333;
-    }
-
-    .nav-list li:hover .submenu {
-        display: block;
-    }
-
-    .submenu {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background-color: #333;
-        border: 1px solid #666;
-        min-width: 150px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    }
-
-    .submenu li {
-        display: block;
-    }
-
-    .submenu li a {
-        padding: 10px;
-        color: #fff;
-        text-decoration: none;
-    }
-
-    .submenu li a:hover {
-        background-color: #444;
-    }
-
-    /* Контейнер для переключателей */
-    .language-switcher {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        margin: 20px 0;
-    }
-
-    /* Стиль кнопок переключения языков */
-    .language-btn {
-        background-color: #333; 
-        color: #00ff00; 
-        font-size: 24px; 
-        padding: 12px 20px; 
-        border-radius: 50%; 
-        border: none; 
-        cursor: pointer; 
-        transition: background-color 0.3s, transform 0.2s; 
-    }
-
-    .language-btn:hover {
-        background-color: #444;
-        transform: scale(1.1);
-    }
-
-    .language-btn:active {
-        background-color: #222;
-        transform: scale(0.95);
-    }
-  
-}
-
-/* Статический футер */
-footer {
-    text-align: center;
-    padding: 20px;
-    background-color: #000;
-    width: 100%;
-    color: #00ff00;
-    font-size: 14px;
-    position: static; /* Убираем fixed */
-    bottom: 0;
-}
-
-.contact-form form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px; /* Расстояние между элементами */
-    padding-bottom: 20px; /* Добавляем отступ снизу */
-}
-
-.contact-form #submit-btn {
-    align-self: center; /* Центрируем кнопку */
-    width: 100%; /* Делаем кнопку широкой */
-    max-width: 300px; /* Ограничиваем максимальную ширину */
-    padding: 12px;
-    font-size: 18px;
-    border: none;
-    border-radius: 5px;
-    background-color: #0084ff;
-    color: white;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.contact-form #submit-btn:hover {
-    background-color: #005bb5;
-}
-
-#loading {
-    display: block;
-    text-align: center;
-    margin-top: 10px;
-    font-weight: bold;
-    color: #555;
-}
-
-
-/* Стили для полей ввода */
-.contact-form input,
-.contact-form textarea {
-    width: 90%;
-    padding: 10px;
-    margin-bottom: 10px;
-    background: #111;
-    border: 1px solid #00ff00;
-    color: #00ff00;
-    font-family: 'Courier New', monospace;
-    font-size: 16px;
-    border-radius: 4px;
-    outline: none;
-    transition: 0.3s;
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus {
-    border-color: #ff3333;
-    box-shadow: 0 0 10px #ff3333;
-}
-
-/* Стили для кнопки */
-.contact-form button {
-    background: linear-gradient(90deg, #00ff00, #ff0000);
-    color: black;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: 0.3s;
-    text-transform: uppercase;
-}
-
-.contact-form button:hover {
-    background: linear-gradient(90deg, #ff3333, #00ff00);
-    box-shadow: 0 0 10px #00ff00;
-}
-
-/* Анимация для формы при загрузке */
-.contact-form {
-    animation: glow 1.5s infinite alternate;
-}
-
-@keyframes glow {
-    from {
-        box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-    }
-    to {
-        box-shadow: 0 0 20px rgba(0, 255, 0, 0.9);
-    }
-}
-
-/* Стили для выпадающего списка */
-.contact-form select {
-    width: 100%;
-    padding: 10px;
-    background: #111;
-    border: 1px solid #00ff00;
-    color: #00ff00;
-    font-family: 'Courier New', monospace;
-    font-size: 16px;
-    border-radius: 4px;
-    outline: none;
-}
-
-.contact-form select:focus {
-    border-color: #ff3333;
-    box-shadow: 0 0 10px #ff3333;
-}
-
-/* Стили для поля загрузки файлов */
-.contact-form input[type="file"] {
-    color: #00ff00;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.contact-form input[type="file"]::-webkit-file-upload-button {
-    background: #00ff00;
-    border: none;
-    color: black;
-    font-weight: bold;
-    padding: 8px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.contact-form input[type="file"]::-webkit-file-upload-button:hover {
-    background: #00cc00;
-}
-
-.contact-form label input[type="checkbox"] {
-    accent-color: #00ff00;
-    transform: scale(1.3);
-    margin-right: 5px;
-}
-#terminal {
-    width: 100%;
-    height: 500px;
-    background-color: #1e1e1e; /* Темный фон для консоли */
-    border: 1px solid #444; /* Легкий бордер */
-    border-radius: 5px; /* Закругленные углы */
-    color: #00ff00; /* Зеленый текст */
-    font-family: 'Courier New', Courier, monospace; /* Моноширинный шрифт */
-    padding: 10px;
-  }
-
-  .container {
-    padding: 20px;
-    text-align: center;
-  }
-
-  .header-console {
-    font-size: 2em;
-    margin-bottom: 20px;
-    color: #00ff00;
-  }
-  /* Стили для header-content */
-.header-content {
-    padding: 20px;
-    background-color: #111; /* Темный фон */
-    color: #00ff00; /* Зеленый текст */
-    width: 100%;
-    text-align: center;
-    box-shadow: 0 0 10px #00ff00; /* Неоновый эффект */
-    border-radius: 10px;
-    margin-top: 50px; /* Отступ сверху, чтобы не прилипал к навигации */
-}
-/* Основной контейнер */
-#policy, #usage, #protection, #third-parties, #cookies, #rights, #external-links, #changes, #contact-info {
-    background-color: #141414;
-    border-radius: 8px;
-    padding: 20px;
-    margin: 20px auto;
-    width: 80%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.navbar {
-    background-color: #333; /* Цвет фона */
-    padding: 10px 20px; /* Отступы */
-}
-
-.navbar ul {
-    list-style-type: none; /* Убираем маркеры списка */
-    margin: 0; /* Убираем отступы */
-    padding: 0; /* Убираем отступы */
-    display: flex; /* Выравнивание элементов в строку */
-    justify-content: space-around; /* Равномерное распределение элементов */
-}
-
-.navbar li {
-    flex: 1; /* Каждый элемент занимает равное пространство */
-}
-
-.navbar a {
-    color: white; /* Цвет текста */
-    text-decoration: none; /* Убираем подчеркивание */
-    font-size: 16px; /* Размер шрифта */
-    display: flex; /* Для выравнивания текста и иконки по центру */
-    align-items: center; /* Вертикальное выравнивание по центру */
-    justify-content: center; /* Горизонтальное выравнивание по центру */
-    padding: 10px; /* Отступы вокруг ссылки для увеличения кликабельной области */
-}
-
-.navbar a:hover {
-    background-color: #ffcc00; /* Цвет фона при наведении */
-    color: #333; /* Цвет текста при наведении */
-}
-
-.navbar i {
-    margin-right: 8px; /* Отступ между иконкой и текстом */
-}
+        :root {
+            --primary: #00ff00;
+            --secondary: #009900;
+            --background: #000000;
+            --text: #00ff00;
+            --error: #ff0033;
+            --warning: #ffcc00;
+            --info: #0066ff;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        
+        #navbar-container {
+            background-color: #111111;
+            padding: 10px;
+            border-bottom: 1px solid var(--secondary);
+        }
+        
+        header {
+            padding: 20px;
+            border-bottom: 1px dashed var(--secondary);
+        }
+        
+        .header-content h1 {
+            color: var(--primary);
+            margin: 0;
+            font-size: 1.8em;
+            text-shadow: 0 0 5px var(--primary);
+        }
+        
+        .header-content p {
+            color: var(--secondary);
+            margin: 5px 0 0 0;
+            font-style: italic;
+        }
+        
+        .container {
+            padding: 20px;
+        }
+        
+        section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border-left: 3px solid var(--secondary);
+        }
+        
+        h1, h2, h3 {
+            color: var(--primary);
+        }
+        
+        h1 {
+            font-size: 1.5em;
+        }
+        
+        h2 {
+            font-size: 1.3em;
+            border-bottom: 1px dotted var(--secondary);
+            padding-bottom: 5px;
+        }
+        
+        h3 {
+            font-size: 1.1em;
+        }
+        
+        a {
+            color: var(--info);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        
+        ul li:before {
+            content: ">> ";
+            color: var(--primary);
+        }
+        
+        .button {
+            display: inline-block;
+            padding: 8px 15px;
+            margin: 5px;
+            background-color: #111111;
+            color: var(--primary);
+            text-decoration: none;
+            border: 1px solid var(--primary);
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s;
+        }
+        
+        .button:hover {
+            background-color: var(--primary);
+            color: #000000;
+            text-decoration: none;
+        }
+        
+        .button-school {
+            border-color: var(--warning);
+            color: var(--warning);
+        }
+        
+        .button-school:hover {
+            background-color: var(--warning);
+            color: #000000;
+        }
+        
+        .hacker-school-section {
+            background-color: #111111;
+            border-left: 3px solid var(--warning);
+            padding: 15px;
+            margin: 25px 0;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .benefit-card {
+            background: #0a0a0a;
+            padding: 12px;
+            border: 1px solid #222222;
+        }
+        
+        .highlight-text {
+            color: var(--warning);
+            font-weight: bold;
+        }
+        
+        .hashtags {
+            margin-top: 15px;
+            color: var(--secondary);
+            font-style: italic;
+        }
+        
+        .footer {
+            background-color: #111111;
+            padding: 15px;
+            text-align: center;
+            border-top: 1px dashed var(--secondary);
+            font-size: 0.9em;
+        }
+        
+        .prompt {
+            color: var(--primary);
+        }
+        
+        .command {
+            color: var(--text);
+        }
+        
+        .blinking-cursor {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        /* Терминальные эффекты */
+        .terminal-header {
+            background-color: #111111;
+            padding: 5px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333333;
+        }
+        
+        .terminal-controls span {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+        
+        .close { background-color: #ff5f56; }
+        .minimize { background-color: #ffbd2e; }
+        .maximize { background-color: #27c93f; }
+        
+        /* Анимация ввода текста */
+        .typing-effect {
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 0;
+            letter-spacing: 1px;
+        }
