@@ -1,0 +1,138 @@
+        :root {
+            --mc-bg: #00007F;
+            --mc-panel: #0000AA;
+            --mc-text: #FFFFFF;
+            --mc-highlight: #FFAA00;
+            --mc-selected: #AA5500;
+            --mc-border: #5555FF;
+            --mc-error: #FF5555;
+            --mc-success: #55FF55;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+
+        body {
+            background-color: var(--mc-bg);
+            color: var(--mc-text);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* MC Header */
+        .mc-header {
+            background-color: var(--mc-panel);
+            color: var(--mc-highlight);
+            padding: 2px 5px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--mc-border);
+        }
+
+        /* MC Main Layout */
+        .mc-container {
+            display: flex;
+            height: calc(100vh - 40px);
+        }
+
+        /* Left Panel */
+        .mc-left-panel {
+            width: 50%;
+            background-color: var(--mc-panel);
+            border-right: 1px solid var(--mc-border);
+            padding: 5px;
+            overflow-y: auto;
+        }
+
+        /* Right Panel */
+        .mc-right-panel {
+            width: 50%;
+            background-color: var(--mc-panel);
+            padding: 5px;
+            overflow-y: auto;
+        }
+
+        /* File List */
+        .mc-file-list {
+            list-style-type: none;
+        }
+
+        .mc-file-item {
+            padding: 1px 3px;
+            cursor: pointer;
+            display: flex;
+        }
+
+        .mc-file-item.selected {
+            background-color: var(--mc-selected);
+            color: var(--mc-highlight);
+        }
+
+        .mc-file-item .icon {
+            width: 20px;
+            text-align: center;
+            margin-right: 5px;
+        }
+
+        .mc-file-item .name {
+            flex-grow: 1;
+        }
+
+        .mc-file-item .size {
+            width: 80px;
+            text-align: right;
+        }
+
+        /* Command Line */
+        .mc-command-line {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background-color: var(--mc-panel);
+            border-top: 1px solid var(--mc-border);
+            padding: 0 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .mc-prompt {
+            color: var(--mc-highlight);
+            margin-right: 5px;
+        }
+
+        /* Rules Content */
+        .mc-rules-content {
+            padding: 5px;
+            white-space: pre-wrap;
+        }
+
+        .rule-critical {
+            color: var(--mc-error);
+            font-weight: bold;
+        }
+
+        .rule-important {
+            color: var(--mc-highlight);
+        }
+
+        .rule-note {
+            color: var(--mc-success);
+        }
+
+        /* Key Help */
+        .mc-keys {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 0.8em;
+        }
+
+        .mc-key {
+            color: var(--mc-highlight);
+        }

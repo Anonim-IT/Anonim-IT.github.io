@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker School Rules | MC Style</title>
+    <link rel="stylesheet" href="HackWeb/css/hackerrules.css">
+</head>
+<body>
+    <!-- MC Header -->
+    <div class="mc-header">
+        <div>Hacker 2.0</div>
+        <div>Hacker </div>
+    </div>
+
+    <!-- MC Main Interface -->
+    <div class="mc-container">
+        <!-- Left Panel (Navigation) -->
+        <div class="mc-left-panel">
+            <div class="mc-file-list">
+                <div class="mc-file-item" data-file="rules-Hacker">
+                    <div class="icon">-</div>
+                    <div class="name">Основные правила</div>
+                    <div class="size">1.2K</div>
+                </div>
+                <div class="mc-file-item" data-file="rules-privacy">
+                    <div class="icon">-</div>
+                    <div class="name">Политика конфиденциальности</div>
+                    <div class="size">0.8K</div>
+                </div>
+                <div class="mc-file-item" data-file="rules-prohibited">
+                    <div class="icon">-</div>
+                    <div class="name">Запрещенные действия</div>
+                    <div class="size">1.5K</div>
+                </div>
+                <div class="mc-file-item" data-file="rules-disclosure">
+                    <div class="icon">-</div>
+                    <div class="name">Ответственное разглашение</div>
+                    <div class="size">1.0K</div>
+                </div>
+                <div class="mc-file-item" data-file="rules-osint">
+                    <div class="icon">-</div>
+                    <div class="name">Работа с OSINT</div>
+                    <div class="size">4.0K</div>
+                </div>
+                    <div class="mc-file-item" data-file="rules-penalties">
+                    <div class="icon">-</div>
+                    <div class="name">Наказания за нарушения</div>
+                    <div class="size">8.6K</div>
+                </div>
+                    <div class="mc-file-item" data-file="rules-exceptions">
+                    <div class="icon">-</div>
+                    <div class="name">Исключения</div>
+                    <div class="size">2.6K</div>
+                </div>
+                    <div class="mc-file-item" data-file="rules-recommendations">
+                    <div class="icon">-</div>
+                    <div class="name">Рекомендации</div>
+                    <div class="size">5.0K</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel (Content) -->
+        <div class="mc-right-panel">
+            <div id="rules-content" class="mc-rules-content">
+                █ Основные правила проекта Hacker 2.0:
+
+                1. Все участники обязаны соблюдать законодательство РФ
+                2. Запрещена любая противоправная деятельность
+                3. Проект поддерживает только <span class="rule-important">этичный хакинг</span>
+                4. Запрещено использование навыков в корыстных целях
+                5. Обязательное соблюдение конфиденциальности данных
+                
+                <span class="rule-critical">Нарушение правил ведет к немедленному изгнанию из проекта и онулирование ваших данных и резюме!</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Command Line -->
+    <div class="mc-command-line">
+        <span class="mc-prompt">F1-Help F3-View F4-Edit F5-Copy F6-Move F7-MkDir F8-Delete F9-Menu F10-Exit</span>
+    </div>
+
+    <!-- Key Help -->
+    <div class="mc-keys">
+        <div><span class="mc-key">F3</span> Просмотр</div>
+        <div><span class="mc-key">F4</span> Редактировать</div>
+        <div><span class="mc-key">F5</span> Копировать</div>
+        <div><span class="mc-key">F6</span> Переместить</div>
+        <div><span class="mc-key">F7</span> Создать каталог</div>
+        <div><span class="mc-key">F8</span> Удалить</div>
+        <div><span class="mc-key">F9</span> Меню</div>
+        <div><span class="mc-key">F10</span> Выход</div>
+    </div>
+
+    <script>
+        // Rules data
+        const rules = {
+    "rules-Hacker": `
+        █ Основные принципы Hacker 2.0:
+
+        1. Все участники обязаны использовать только уникальные никнеймы
+        2. Строгое соблюдение <span class="rule-critical">УК РФ, ФЗ № 152, ФЗ № 149</span>
+        3. Запрещено распространять любую личную или корпоративную информацию
+        4. Уважение приватности и данных — абсолютный приоритет
+        
+        <span class="rule-critical">Нарушение = немедленное исключение!</span>
+    `,
+    "rules-privacy": `
+        █ Политика конфиденциальности:
+
+        1. Все действия только под псевдонимами
+        2. Данные хранятся исключительно на локальном сервере
+        3. Логи активности удаляются через 30 дней
+        4. Невозможно установить личность участника при утечке
+        
+        <span class="rule-note">Мы не ведем логи приватных переписок</span>
+    `,
+    "rules-prohibited": `
+        █ Запрещенные действия:
+
+        1. Передача любых данных третьим лицам
+        2. Попытки деанонимизации участников
+        3. Публикация информации без согласия владельца
+        4. Использование данных для шантажа
+        
+        <span class="rule-critical">Нарушение может повлечь уголовную ответственность!</span>
+    `,
+    "rules-disclosure": `
+        █ Ответственное разглашение:
+
+        1. Не скачивайте и не копируйте найденные данные
+        2. Сообщайте только владельцу или уполномоченным органам
+        3. Запрещено прикреплять файлы с уязвимостями
+        
+        <span class="rule-important">Пример: найденную базу паролей нельзя сохранять!</span>
+    `,
+    "rules-osint": `
+        █ Работа с OSINT:
+
+        <span class="rule-important">Разрешено:</span>
+        - Анализ публичных данных для исследований
+        
+        <span class="rule-critical">Запрещено:</span>
+        - Сохранять и распространять найденное
+        - Использовать без разрешения владельца
+    `,
+    "rules-penalties": `
+        █ Наказания за нарушения:
+
+        1. Первое нарушение: предупреждение + удаление данных
+        2. Повторное: блокировка + оповещение сторон
+        3. Возможна <span class="rule-critical">ст. 137, 272 УК РФ</span>
+        
+        <span class="rule-note">Устав Hacker 2.0 строже законодательства</span>
+    `,
+    "rules-exceptions": `
+        █ Исключения:
+
+        Передача данных возможна только при:
+        1. Письменном согласии владельца
+        2. Официальном запросе правоохранительных органов
+        
+        <span class="rule-important">Во всех остальных случаях - запрещено!</span>
+    `,
+    "rules-recommendations": `
+        █ Рекомендации:
+
+        1. Используйте VPN/Tor для анонимности
+        2. Не доверяйте данные даже администрации
+        3. Консультируйтесь с юристами
+        
+        <span class="rule-note">Последнее обновление: 01.06.2025</span>
+    `
+};
+
+        // File selection
+        const fileItems = document.querySelectorAll('.mc-file-item');
+        const rulesContent = document.getElementById('rules-content');
+        
+        fileItems.forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove selected class from all items
+                fileItems.forEach(i => i.classList.remove('selected'));
+                
+                // Add selected class to clicked item
+                this.classList.add('selected');
+                
+                // Load corresponding content
+                const file = this.getAttribute('data-file');
+                rulesContent.innerHTML = rules[file];
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            const selected = document.querySelector('.mc-file-item.selected');
+            let index = Array.from(fileItems).indexOf(selected);
+            
+            // Down arrow
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (index < fileItems.length - 1) {
+                    fileItems[index].classList.remove('selected');
+                    fileItems[index + 1].classList.add('selected');
+                    fileItems[index + 1].click();
+                }
+            }
+            
+            // Up arrow
+            if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (index > 0) {
+                    fileItems[index].classList.remove('selected');
+                    fileItems[index - 1].classList.add('selected');
+                    fileItems[index - 1].click();
+                }
+            }
+            
+            // F10 - Exit
+            if (e.key === 'F10') {
+                e.preventDefault();
+                window.close();
+                // Fallback for browsers that block window.close()
+                alert('В реальном приложении окно бы закрылось');
+            }
+            
+            // F1 - Help
+            if (e.key === 'F1') {
+                e.preventDefault();
+                rulesContent.innerHTML = `
+                    █ Hacker School Help:
+
+                    <span class="rule-important">Навигация:</span>
+                    ↑/↓ - Выбор файла
+                    Enter - Открыть файл
+                    F10 - Выход
+
+                    <span class="rule-important">Правила:</span>
+                    Все участники обязаны соблюдать:
+                    1. Законодательство РФ
+                    2. Этические нормы
+                    3. Правила проекта
+
+                    <span class="rule-note">Нажмите F3 для возврата к просмотру</span>
+                `;
+            }
+            
+            // F3 - View
+            if (e.key === 'F3') {
+                e.preventDefault();
+                const selectedFile = document.querySelector('.mc-file-item.selected').getAttribute('data-file');
+                rulesContent.innerHTML = rules[selectedFile];
+            }
+        });
+
+        // Focus the first item on load
+        fileItems[0].focus();
+    </script>
+</body>
+</html>
