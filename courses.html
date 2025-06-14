@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Курсы HW School - профессиональное обучение веб-разработке, кибербезопасности и современным IT-технологиям">
+    <title>Курсы | HW School</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+        .courses-hero {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .courses-filter {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            background: var(--color-bg-secondary);
+            border: none;
+            color: var(--color-text);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--color-primary);
+            color: white;
+        }
+        
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .course-card {
+            background: var(--color-bg-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            border: 1px solid var(--color-border);
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .course-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .course-content {
+            padding: 1.5rem;
+        }
+        
+        .course-level {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .beginner { background: rgba(74, 222, 128, 0.2); color: #4ADE80; }
+        .intermediate { background: rgba(96, 165, 250, 0.2); color: #60A5FA; }
+        .advanced { background: rgba(244, 114, 182, 0.2); color: #F472B6; }
+        
+        .course-duration {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+        
+        .course-features {
+            margin: 1rem 0;
+            padding-left: 1rem;
+        }
+        
+        .course-features li {
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+        
+        .course-features li::before {
+            content: "•";
+            color: var(--color-primary);
+            position: absolute;
+            left: -1rem;
+        }
+        
+        .testimonials {
+            background: var(--color-bg);
+            padding: 4rem 0;
+            margin: 4rem 0;
+        }
+        
+        .testimonial-card {
+            background: var(--color-bg-secondary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem;
+            border-left: 4px solid var(--color-primary);
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 1rem;
+            background: var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="/" class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 0C8.96 0 0 8.96 0 20C0 31.04 8.96 40 20 40C31.04 40 40 31.04 40 20C40 8.96 31.04 0 20 0ZM16 30H12V16H16V30ZM28 30H24V16H28V30Z" fill="currentColor"/>
+                </svg>
+                <span>HW School</span>
+            </a>
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/courses.html" class="active">Курсы</a></li>
+                    <li><a href="/ISO.html">Стандарты</a></li>
+                    <li><a href="/community.html">Сообщество</a></li>
+                    <li><a href="/contacts.html">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="courses-hero">
+            <div class="container">
+                <h1>Профессиональные курсы HW School</h1>
+                <p class="lead">От основ до продвинутых технологий — стань востребованным специалистом</p>
+            </div>
+        </section>
+
+        <div class="container">
+<div class="courses-filter">
+    <button class="filter-btn active" data-filter="all">Все курсы</button>
+    <button class="filter-btn" data-filter="web">Веб-разработка</button>
+    <button class="filter-btn" data-filter="security">Кибербезопасность</button>
+    <button class="filter-btn" data-filter="programming">Программирование</button>
+    <button class="filter-btn" data-filter="mobile">Мобильная разработка</button>
+    <button class="filter-btn" data-filter="ai">AI/ML</button>
+</div>
+
+            <div class="courses-grid">
+                <!-- Курс 1 -->
+                <article class="course-card" data-category="web">
+                    <div class="course-image" style="background-image: url('../assets/courses/web-basic.jpg');"></div>
+                    <div class="course-content">
+                        <span class="course-level beginner">Для начинающих</span>
+                        <h3>Основы веб-разработки</h3>
+                        <div class="course-duration">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor"/>
+                                <path d="M12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" fill="currentColor"/>
+                            </svg>
+                            <span>8 недель • 72 часа</span>
+                        </div>
+                        <p>Полный курс для старта в веб-разработке: HTML, CSS, JavaScript и основы backend.</p>
+                        <ul class="course-features">
+                            <li>Создание первых проектов</li>
+                            <li>Основы адаптивного дизайна</li>
+                            <li>Работа с Git и GitHub</li>
+                            <li>Подготовка портфолио</li>
+                        </ul>
+                        <a href="/course/web-basic.html" class="btn btn-primary">Подробнее о курсе</a>
+                    </div>
+                </article>
+
+                <!-- Курс 2 -->
+                <article class="course-card" data-category="web">
+                    <div class="course-image" style="background-image: url('../assets/courses/react-advanced.jpg');"></div>
+                    <div class="course-content">
+                        <span class="course-level intermediate">Средний уровень</span>
+                        <h3>React: продвинутый уровень</h3>
+                        <div class="course-duration">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor"/>
+                                <path d="M12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" fill="currentColor"/>
+                            </svg>
+                            <span>6 недель • 60 часов</span>
+                        </div>
+                        <p>Глубокое погружение в современный React: хуки, контекст, производительность.</p>
+                        <ul class="course-features">
+                            <li>Оптимизация производительности</li>
+                            <li>Кастомные хуки</li>
+                            <li>Тестирование компонентов</li>
+                            <li>Интеграция с Redux</li>
+                        </ul>
+                        <a href="/course/react-advanced.html" class="btn btn-primary">Подробнее о курсе</a>
+                    </div>
+                </article>
+
+                <!-- Курс 3 -->
+                <article class="course-card" data-category="security">
+                    <div class="course-image" style="background-image: url('../assets/courses/cyber-security.jpg');"></div>
+                    <div class="course-content">
+                        <span class="course-level intermediate">Средний уровень</span>
+                        <h3>Основы кибербезопасности</h3>
+                        <div class="course-duration">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor"/>
+                                <path d="M12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" fill="currentColor"/>
+                            </svg>
+                            <span>10 недель • 90 часов</span>
+                        </div>
+                        <p>Защита веб-приложений от современных угроз и атак.</p>
+                        <ul class="course-features">
+                            <li>OWASP Top 10</li>
+                            <li>Тестирование на проникновение</li>
+                            <li>Криптография</li>
+                            <li>Защита данных</li>
+                        </ul>
+                        <a href="/course/cyber-security.html" class="btn btn-primary">Подробнее о курсе</a>
+                    </div>
+                </article>
+
+                <!-- Курс 4 -->
+                <article class="course-card" data-category="mobile">
+                    <div class="course-image" style="background-image: url('../assets/courses/flutter.jpg');"></div>
+                    <div class="course-content">
+                        <span class="course-level beginner">Для начинающих</span>
+                        <h3>Мобильная разработка на Flutter</h3>
+                        <div class="course-duration">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor"/>
+                                <path d="M12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" fill="currentColor"/>
+                            </svg>
+                            <span>8 недель • 80 часов</span>
+                        </div>
+                        <p>Создание кроссплатформенных мобильных приложений с нуля.</p>
+                        <ul class="course-features">
+                            <li>Основы Dart</li>
+                            <li>Widget-архитектура</li>
+                            <li>Работа с API</li>
+                            <li>Публикация в магазины</li>
+                        </ul>
+                        <a href="/course/flutter.html" class="btn btn-primary">Подробнее о курсе</a>
+                    </div>
+                </article>
+
+                <!-- Курс 5 -->
+                <article class="course-card" data-category="ai">
+                    <div class="course-image" style="background-image: url('../assets/courses/ml-basic.jpg');"></div>
+                    <div class="course-content">
+                        <span class="course-level advanced">Продвинутый</span>
+                        <h3>Машинное обучение на Python</h3>
+                        <div class="course-duration">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor"/>
+                                <path d="M12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" fill="currentColor"/>
+                            </svg>
+                            <span>12 недель • 120 часов</span>
+                        </div>
+                        <p>Практическое введение в машинное обучение и нейронные сети.</p>
+                        <ul class="course-features">
+                            <li>Основы NumPy/Pandas</li>
+                            <li>Классические алгоритмы ML</li>
+                            <li>Нейронные сети на TensorFlow</li>
+                            <li>Реальные кейсы</li>
+                        </ul>
+                        <a href="/course/ml-basic.html" class="btn btn-primary">Подробнее о курсе</a>
+                    </div>
+                </article>
+
+                <!-- Курс 6 -->
+                <article class="course-card" data-category="web">
+                    <div class="course-image" style="background-image: url('../assets/courses/nodejs.jpg');"></div>
+                    <div class="course-content">
+                        <span class="course-level intermediate">Средний уровень</span>
+                        <h3>Backend на Node.js</h3>
+                        <div class="course-duration">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor"/>
+                                <path d="M12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" fill="currentColor"/>
+                            </svg>
+                            <span>7 недель • 65 часов</span>
+                        </div>
+                        <p>Создание серверных приложений на Express.js и MongoDB.</p>
+                        <ul class="course-features">
+                            <li>REST API</li>
+                            <li>Аутентификация JWT</li>
+                            <li>Работа с базами данных</li>
+                            <li>Оптимизация производительности</li>
+                        </ul>
+                        <a href="/course/nodejs.html" class="btn btn-primary">Подробнее о курсе</a>
+                    </div>
+                </article>
+
+<!-- В разделе courses-grid, после существующих курсов добавляем: -->
+
+<!-- Курс 7 - Основы кибербезопасности -->
+<article class="course-card" data-category="security">
+    <div class="course-image" style="background-image: url('../assets/courses/cyber-basic.jpg'); background-color: #1a365d;"></div>
+    <div class="course-content">
+        <span class="course-level advanced">Продвинутый</span>
+        <h3>Основы кибербезопасности</h3>
+        <div class="course-duration">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor"/>
+                <path d="M12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" fill="currentColor"/>
+            </svg>
+            <span>2 месяца • 60 часов</span>
+        </div>
+        <p>Фундаментальные принципы защиты информации и инфраструктуры.</p>
+        <ul class="course-features">
+            <li>Базовые принципы защиты информации</li>
+            <li>Основные угрозы и уязвимости</li>
+            <li>Криптографические основы</li>
+            <li>Политики безопасности</li>
+        </ul>
+        <a href="/course/cyber-basic.html" class="btn btn-primary">Подробнее о курсе</a>
+    </div>
+</article>
+
+<!-- Курс 8 - Этичный хакинг -->
+<article class="course-card" data-category="security">
+    <div class="course-image" style="background-image: url('../assets/courses/ethical-hacking.jpg'); background-color: #2d3748;"></div>
+    <div class="course-content">
+        <span class="course-level advanced">Продвинутый</span>
+        <h3>Этичный хакинг</h3>
+        <div class="course-duration">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor"/>
+                <path d="M12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" fill="currentColor"/>
+            </svg>
+            <span>4 месяца • 120 часов</span>
+        </div>
+        <p>Профессиональное тестирование на проникновение и аудит безопасности.</p>
+        <ul class="course-features">
+            <li>Тестирование на проникновение</li>
+            <li>Поиск и эксплуатация уязвимостей</li>
+            <li>Методы социальной инженерии</li>
+            <li>Отчеты об уязвимостях</li>
+        </ul>
+        <a href="/course/ethical-hacking.html" class="btn btn-primary">Подробнее о курсе</a>
+    </div>
+</article>
+
+<!-- Курс 9 - Киберкриминалистика -->
+<article class="course-card" data-category="security">
+    <div class="course-image" style="background-image: url('../assets/courses/cyber-forensics.jpg'); background-color: #4a5568;"></div>
+    <div class="course-content">
+        <span class="course-level intermediate">Средний уровень</span>
+        <h3>Киберкриминалистика</h3>
+        <div class="course-duration">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor"/>
+                <path d="M12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" fill="currentColor"/>
+            </svg>
+            <span>3 месяца • 90 часов</span>
+        </div>
+        <p>Современные методы расследования киберпреступлений и анализа цифровых улик.</p>
+        <ul class="course-features">
+            <li>Методы расследования киберпреступлений</li>
+            <li>Анализ цифровых улик</li>
+            <li>Форензика дисков и памяти</li>
+            <li>Юридические аспекты</li>
+        </ul>
+        <a href="/course/cyber-forensics.html" class="btn btn-primary">Подробнее о курсе</a>
+    </div>
+</article>
+
+<!-- Курс 10 - Программирование -->
+<article class="course-card" data-category="programming">
+    <div class="course-image" style="background-image: url('../assets/courses/programming-advanced.jpg'); background-color: #2c5282;"></div>
+    <div class="course-content">
+        <span class="course-level advanced">Продвинутый</span>
+        <h3>Профессиональное программирование</h3>
+        <div class="course-duration">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor"/>
+                <path d="M12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" fill="currentColor"/>
+            </svg>
+            <span>5 месяцев • 150 часов</span>
+        </div>
+        <p>Продвинутое программирование на современных языках.</p>
+        <ul class="course-features">
+            <li>Python для сложных задач</li>
+            <li>Системное программирование на C++</li>
+            <li>Низкоуровневое программирование (Ассемблер)</li>
+            <li>C# для enterprise-решений</li>
+            <li>Современные методологии разработки</li>
+        </ul>
+        <a href="/course/pro-programming.html" class="btn btn-primary">Подробнее о курсе</a>
+    </div>
+</article>
+            </div>
+            <section class="cta-section">
+                <div class="container">
+                    <h2>Готовы начать обучение?</h2>
+                    <p>Выберите курс и станьте востребованным специалистом уже через несколько месяцев</p>
+                    <div class="cta-actions">
+                        <a href="/HWschool.html" class="btn btn-large btn-primary">Зарегистрироваться</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 HW School. Все права защищены.</p>
+                <nav class="footer-nav">
+                    <a href="/privacy.html">Политика конфиденциальности</a>
+                    <a href="/terms.html">Условия использования</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Фильтрация курсов
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Удаляем активный класс у всех кнопок
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                
+                // Добавляем активный класс текущей кнопке
+                btn.classList.add('active');
+                
+                const filter = btn.dataset.filter;
+                const courses = document.querySelectorAll('.course-card');
+                
+                courses.forEach(course => {
+                    if (filter === 'all' || course.dataset.category === filter) {
+                        course.style.display = 'block';
+                    } else {
+                        course.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
