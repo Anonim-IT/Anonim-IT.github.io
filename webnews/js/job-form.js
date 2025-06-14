@@ -1,7 +1,7 @@
 document.getElementById("job-form").addEventListener("submit", async function(event) {
     event.preventDefault(); // Останавливаем стандартную отправку формы
 
-    const botToken = "7745335635:AAGbPdzXplwqbMky-xgJ9KOhsWln5z6toYo"; // Укажи токен своего бота
+    const botToken = "8031269669:AAHXHvXLk9JR-Jzenb9F1ZNHFQFyzWVqN-k"; // Укажи токен своего бота
     const chatId = "250356592"; // Укажи свой Telegram ID или ID группы
 
     // Получаем данные из формы

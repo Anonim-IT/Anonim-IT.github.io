@@ -1,83 +1,183 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Контакты - Web Dev</title>
-    <link rel="stylesheet" href="style/stiles.css">
-    <link rel="icon" href="image/favicon.ico" type="image/x-icon">
+    <meta name="description" content="Контактная информация HW Project - свяжитесь с нашей командой через Telegram-бота">
+    <title>Контакты | HW Project</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+        .contacts-hero {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .contact-form-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            background: var(--color-bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 6px;
+            border: 1px solid var(--color-border);
+            background: var(--color-bg);
+            color: var(--color-text);
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s ease;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            background: var(--color-primary-dark);
+        }
+        
+        .alert {
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        
+        .alert-success {
+            background: var(--color-success-bg);
+            color: var(--color-success);
+            border: 1px solid var(--color-success);
+        }
+        
+        .alert-error {
+            background: var(--color-error-bg);
+            color: var(--color-error);
+            border: 1px solid var(--color-error);
+        }
+    </style>
 </head>
-<body>
 
-    <!-- Навигационная панель -->
-    <header>
-        <div id="navbar-container"></div>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="/" class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 0C8.96 0 0 8.96 0 20C0 31.04 8.96 40 20 40C31.04 40 40 31.04 40 20C40 8.96 31.04 0 20 0ZM16 30H12V16H16V30ZM28 30H24V16H28V30Z" fill="currentColor"/>
+                </svg>
+                <span>HW Project</span>
+            </a>
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/HWschool.html">Курсы</a></li>
+                    <li><a href="/ISO.html">Стандарты</a></li>
+                    <li><a href="/docs.html">Документация</a></li>
+                    <li><a href="/contacts.html" class="active">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <!-- Контент страницы -->
-    <main class="contact-page">
-        <h1>Свяжитесь с нами</h1>
-        <p>Если у вас есть вопросы или предложения — мы всегда на связи! Выберите удобный способ связи:</p>
-
-        <!-- Информация о нас -->
-        <section class="contact-info">
-            <h2>Наши контактные данные</h2>
-            <ul>
-                <li>📧 Email: <a href="mailto:i6i2ht8m1agf@mail.ru">support@webdev.com</a></li>
-                <li>📞 Телефон: <em>Отсутствует</em></li>
-                <li>💬 Telegram-группа: <a href="https://t.me/WebDev1g" target="_blank">Перейти в группу</a></li>
-            </ul>
+    <main>
+        <section class="contacts-hero">
+            <div class="container">
+                <h1>Свяжитесь с командой HW Project</h1>
+                <p class="lead">Отправьте сообщение через нашего Telegram-бота и получите быстрый ответ</p>
+            </div>
         </section>
 
-        <!-- Форма для связи через Telegram -->
-        <section class="contact-form">
-            <h2>Напишите нам напрямую</h2>
-            <p>Ваше сообщение будет отправлено в личку администратору через Telegram-бота.</p>
-            <form id="tg-form">
-                <label for="name">Ваше имя:</label>
-                <input type="text" id="name" name="name" required>
-        
-                <label for="email">Ваш email:</label>
-                <input type="email" id="email" name="email" required>
-        
-                <label for="message">Сообщение:</label>
-                <textarea id="message" name="message" rows="5" required></textarea>
-        
-                <button type="submit">Отправить</button>
-            </form>
-        </section>
-        
+        <div class="container">
+            <section class="contact-form-container">
+                <div id="alert-success" class="alert alert-success" style="display: none;">
+                    ✅ Сообщение успешно отправлено! Мы ответим вам в ближайшее время.
+                </div>
+                <div id="alert-error" class="alert alert-error" style="display: none;">
+                    ❌ Ошибка при отправке сообщения. Пожалуйста, попробуйте позже.
+                </div>
+                
+                <h2>Форма обратной связи</h2>
+                <p>Ваше сообщение будет отправлено администратору через Telegram-бота</p>
+                
+                <form id="tg-contact-form">
+                    <div class="form-group">
+                        <label for="name">Ваше имя:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="email">Ваш email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="message">Сообщение:</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+            
+                    <button type="submit" class="submit-btn">Отправить через Telegram</button>
+                </form>
+                
+                <div style="margin-top: 2rem; text-align: center;">
+                    <p>Или напишите нам напрямую:</p>
+                    <a href="https://t.me/hwproject_support" class="btn btn-outline" style="margin-top: 0.5rem;">
+                        @hwproject_support
+                    </a>
+                </div>
+            </section>
+        </div>
     </main>
 
-    <!-- Футер -->
-    <footer class="footer">
-        <p>&copy; 2025 Web Dev | 🚀 Учись, твори, создавай!</p>
-        <nav class="footer-nav">
-            <a href="webdevprivacy.html">🔒 Политика конфиденциальности</a>
-            <a href="webdev-tutorial.html">📖 Учебник</a>
-        </nav>
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2023 HW Project. Все права защищены.</p>
+                <nav class="footer-nav">
+                    <a href="/privacy">Политика конфиденциальности</a>
+                    <a href="/terms">Условия использования</a>
+                </nav>
+            </div>
+        </div>
     </footer>
 
-    <!-- Загрузка навигационной панели -->
+    <script src="../js/main.js"></script>
     <script>
-        fetch('nav/navbar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('navbar-container').innerHTML = data;
-            })
-            .catch(error => {
-                console.error('Ошибка при загрузке навигационной панели:', error);
-            });
-    </script>
-
-    <!-- Отправка сообщений в Telegram -->
-    <script>
-    document.getElementById("tg-form").addEventListener("submit", function(event) {
+    document.getElementById("tg-contact-form").addEventListener("submit", function(event) {
         event.preventDefault();
     
-        // Данные бота
-        const botToken = "7745335635:AAGbPdzXplwqbMky-xgJ9KOhsWln5z6toYo";  // Токен бота
-        const chatId = "250356592";      // Твой chat_id
+        // Скрываем предыдущие уведомления
+        document.getElementById('alert-success').style.display = 'none';
+        document.getElementById('alert-error').style.display = 'none';
+        
+        // Данные бота (замените на свои)
+        const botToken = "8031269669:AAHXHvXLk9JR-Jzenb9F1ZNHFQFyzWVqN-k";
+        const chatId = "250356592";
     
         // Получаем данные формы
         const name = document.getElementById("name").value;
@@ -85,17 +185,17 @@
         const message = document.getElementById("message").value;
     
         // Формируем текст сообщения
-        const text = `📩 *Новое сообщение с сайта:*\n\n` +
+        const text = `📩 *Новое сообщение с сайта HW Project:*\n\n` +
                      `👤 *Имя:* ${name}\n` +
                      `📧 *Email:* ${email}\n` +
-                     `💬 *Сообщение:* ${message}`;
+                     `✉️ *Сообщение:* ${message}`;
     
         // Отправка в Telegram через API
         fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                chat_id: chatId,  // Отправляем в личку
+                chat_id: chatId,
                 text: text,
                 parse_mode: "Markdown"
             })
@@ -103,15 +203,25 @@
         .then(response => response.json())
         .then(data => {
             if (data.ok) {
-                alert("✅ Сообщение отправлено в Telegram!");
-                document.getElementById("tg-form").reset();
+                // Показываем успешное уведомление
+                document.getElementById('alert-success').style.display = 'block';
+                document.getElementById("tg-contact-form").reset();
+                
+                // Прокручиваем к уведомлению
+                document.getElementById('alert-success').scrollIntoView({
+                    behavior: 'smooth'
+                });
             } else {
-                alert("❌ Ошибка отправки: " + data.description);
+                // Показываем ошибку
+                document.getElementById('alert-error').style.display = 'block';
+                console.error("Ошибка отправки:", data.description);
             }
         })
-        .catch(error => alert("Ошибка: " + error));
+        .catch(error => {
+            document.getElementById('alert-error').style.display = 'block';
+            console.error("Ошибка:", error);
+        });
     });
     </script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </body>
 </html>

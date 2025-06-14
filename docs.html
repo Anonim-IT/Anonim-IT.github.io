@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Полная документация по HW Project - API, руководства разработчика, технические спецификации и справочные материалы">
+    <title>Документация | HW Project</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+        .docs-hero {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .docs-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            margin: 3rem auto;
+            max-width: 1200px;
+        }
+        
+        .docs-sidebar {
+            position: sticky;
+            top: 1rem;
+            align-self: start;
+            background: var(--color-bg-secondary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            height: fit-content;
+        }
+        
+        .docs-content {
+            background: var(--color-bg-secondary);
+            border-radius: 8px;
+            padding: 2rem;
+        }
+        
+        .docs-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .docs-nav li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .docs-nav a {
+            display: block;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            color: var(--color-text);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        
+        .docs-nav a:hover, .docs-nav a.active {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--color-primary);
+        }
+        
+        .docs-section {
+            margin-bottom: 3rem;
+        }
+        
+        .api-endpoint {
+            background: var(--color-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--color-primary);
+        }
+        
+        .endpoint-method {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+            margin-right: 1rem;
+        }
+        
+        .get { background: #2F855A; color: white; }
+        .post { background: #2C5282; color: white; }
+        .put { background: #B7791F; color: white; }
+        .delete { background: #C53030; color: white; }
+        
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--color-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            background: var(--color-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .docs-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .docs-sidebar {
+                position: static;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="/" class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 0C8.96 0 0 8.96 0 20C0 31.04 8.96 40 20 40C31.04 40 40 31.04 40 20C40 8.96 31.04 0 20 0ZM16 30H12V16H16V30ZM28 30H24V16H28V30Z" fill="currentColor"/>
+                </svg>
+                <span>HW Project</span>
+            </a>
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/HWschool.html">Курсы</a></li>
+                    <li><a href="/ISO.html">Стандарты</a></li>
+                    <li><a href="/docs.html" class="active">Документация</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="docs-hero">
+            <div class="container">
+                <h1>Техническая документация HW Project</h1>
+                <p class="lead">Полное руководство по API, интеграциям и разработке на платформе</p>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="docs-container">
+                <aside class="docs-sidebar">
+                    <nav class="docs-nav">
+                        <h3>Разделы</h3>
+                        <ul>
+                            <li><a href="#getting-started" class="active">Начало работы</a></li>
+                            <li><a href="#api-reference">Справочник API</a></li>
+                            <li><a href="#authentication">Аутентификация</a></li>
+                            <li><a href="#sdk">SDK и клиенты</a></li>
+                            <li><a href="#webhooks">Webhooks</a></li>
+                            <li><a href="#best-practices">Лучшие практики</a></li>
+                            <li><a href="#examples">Примеры кода</a></li>
+                            <li><a href="#faq">Частые вопросы</a></li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <article class="docs-content">
+                    <section id="getting-started" class="docs-section">
+                        <h2>Начало работы</h2>
+                        <p>Добро пожаловать в документацию HW Project. Это руководство поможет вам начать работу с нашей платформой.</p>
+                        
+                        <h3>Быстрый старт</h3>
+                        <ol>
+                            <li>Зарегистрируйте приложение в <a href="/developer">панели разработчика</a></li>
+                            <li>Получите свои API ключи</li>
+                            <li>Установите один из наших клиентских SDK</li>
+                            <li>Начните интегрировать HW API в свой проект</li>
+                        </ol>
+                        
+                        <h3>Требования</h3>
+                        <ul>
+                            <li>Node.js 16+ или Python 3.8+ для серверной разработки</li>
+                            <li>Modern browser для клиентских приложений</li>
+                            <li>HTTPS для всех продакшен-запросов</li>
+                        </ul>
+                    </section>
+
+                    <section id="api-reference" class="docs-section">
+                        <h2>Справочник API</h2>
+                        <p>HW Project предоставляет RESTful API с JSON-форматом данных.</p>
+                        
+                        <div class="api-endpoint">
+                            <div class="endpoint-header">
+                                <span class="endpoint-method get">GET</span>
+                                <code>/api/v1/courses</code>
+                            </div>
+                            <p>Получить список доступных курсов</p>
+                            
+                            <h4>Параметры запроса</h4>
+                            <ul>
+                                <li><code>category</code> - Фильтр по категории</li>
+                                <li><code>limit</code> - Лимит результатов (по умолчанию 20)</li>
+                                <li><code>offset</code> - Смещение для пагинации</li>
+                            </ul>
+                            
+                            <h4>Пример ответа</h4>
+                            <pre><code>{
+  "data": [
+    {
+      "id": "course_123",
+      "title": "Веб-разработка",
+      "description": "Современные технологии веба",
+      "duration": "8 недель",
+      "level": "beginner"
+    }
+  ],
+  "meta": {
+    "total": 42,
+    "limit": 20,
+    "offset": 0
+  }
+}</code></pre>
+                        </div>
+                        
+                        <div class="api-endpoint">
+                            <div class="endpoint-header">
+                                <span class="endpoint-method post">POST</span>
+                                <code>/api/v1/enrollments</code>
+                            </div>
+                            <p>Записаться на курс</p>
+                            
+                            <h4>Тело запроса</h4>
+                            <pre><code>{
+  "course_id": "course_123",
+  "user_id": "user_456",
+  "payment_method": "card"
+}</code></pre>
+                            
+                            <h4>Пример ответа</h4>
+                            <pre><code>{
+  "success": true,
+  "enrollment_id": "enroll_789",
+  "access_granted": true,
+  "expires_at": "2025-12-31T23:59:59Z"
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="authentication" class="docs-section">
+                        <h2>Аутентификация</h2>
+                        <p>HW API использует JWT-токены для аутентификации запросов.</p>
+                        
+                        <h3>Получение токена</h3>
+                        <pre><code>POST /api/v1/auth/token
+Content-Type: application/json
+
+{
+  "api_key": "your_api_key",
+  "api_secret": "your_api_secret"
+}</code></pre>
+                        
+                        <h3>Использование токена</h3>
+                        <p>Добавляйте полученный токен в заголовок Authorization:</p>
+                        <pre><code>Authorization: Bearer your.jwt.token.here</code></pre>
+                        
+                        <h3>Обновление токена</h3>
+                        <p>Токены действительны 24 часа. Для обновления:</p>
+                        <pre><code>POST /api/v1/auth/refresh
+Authorization: Bearer your.jwt.token.here</code></pre>
+                    </section>
+
+                    <section id="sdk" class="docs-section">
+                        <h2>SDK и клиенты</h2>
+                        <p>Для удобства разработки мы предоставляем клиентские библиотеки:</p>
+                        
+                        <h3>JavaScript SDK</h3>
+                        <pre><code class="language-bash">npm install @hwproject/sdk</code></pre>
+                        <pre><code class="language-javascript">import HW from '@hwproject/sdk';
+
+const client = new HW({
+  apiKey: 'your_api_key',
+  env: 'production'
+});
+
+const courses = await client.courses.list();</code></pre>
+                        
+                        <h3>Python SDK</h3>
+                        <pre><code class="language-bash">pip install hwproject</code></pre>
+                        <pre><code class="language-python">from hwproject import Client
+
+client = Client(api_key='your_api_key')
+courses = client.courses.list()</code></pre>
+                    </section>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2023 HW Project. Все права защищены.</p>
+                <p>Версия документации: v2.1.0</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,81 +1,356 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="description" content="Web Mirror — загрузка файлов и модов для WebBlocks.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Web Mirror — надежный источник загрузки файлов и модов для WebBlocks с поддержкой PWA">
     <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0f172a">
     
-    <title>Web Dev - Web Mirror 🪞</title>
+    <title>Web Mirror 🪞 | Web Dev</title>
     
-    <link rel="icon" href="image/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="style/style.css">
-
-    <script defer>
-        document.addEventListener("DOMContentLoaded", function () {
-            fetch('nav/navbar.html')
-                .then(response => response.text())
-                .then(data => document.getElementById('navbar-container').innerHTML = data)
-                .catch(error => console.error('Ошибка загрузки навигации:', error));
-        });
-
-        function switchLanguage(lang) {
-            const translations = {
-                'ru': {
-                    'welcome': 'Добро пожаловать в Web Mirror 🪞',
-                    'intro': 'Web Mirror — ваш надежный источник загрузки полезных файлов и ресурсов. Здесь вы найдете все нужные моды для игры на сервере WebBlocks.',
-                    'available-files': '👌 Доступные файлы',
-                    'additional-resources': '🌐 Дополнительные ресурсы',
-                    'privacy-policy': 'Политика конфиденциальности'
-                },
-                'en': {
-                    'welcome': 'Welcome to Web Mirror 🪞',
-                    'intro': 'Web Mirror is your reliable source for downloading useful files and resources. Here you will find all the necessary mods for playing on the WebBlocks server.',
-                    'available-files': '👌 Available Files',
-                    'additional-resources': '🌐 Additional Resources',
-                    'privacy-policy': 'Privacy Policy'
-                }
-            };
-            for (const [key, value] of Object.entries(translations[lang])) {
-                document.getElementById(key).innerText = value;
-            }
-        }
-    </script>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Preload важных ресурсов -->
+    <link rel="preload" href="css/main.css" as="style">
+    <link rel="preload" href="js/main.js" as="script">
 </head>
-<body>
-    <noscript>
-        <p>Для работы этого сайта требуется JavaScript. Включите его в настройках браузера.</p>
-    </noscript>
 
-    <header>
-        <div id="navbar-container"></div>
+<body>
+    <!-- Глобное уведомление -->
+    <div class="global-notice">
+        <p>✨ Новое обновление! Добавлены новые моды и улучшена производительность.</p>
+        <button class="notice-close" aria-label="Закрыть уведомление">&times;</button>
+    </div>
+
+    <!-- Главное меню -->
+    <header class="main-header">
+        <div class="container">
+            <a href="/" class="logo" aria-label="Web Mirror">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 0C8.96 0 0 8.96 0 20C0 31.04 8.96 40 20 40C31.04 40 40 31.04 40 20C40 8.96 31.04 0 20 0ZM16 30H12V16H16V30ZM28 30H24V16H28V30Z" fill="currentColor"/>
+                </svg>
+                <span>Web Mirror</span>
+            </a>
+            
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="/" class="active" data-tooltip="Главная страница">Главная</a></li>
+                    <li><a href="/files" data-tooltip="Все доступные файлы">Файлы</a></li>
+                    <li><a href="/mods" data-tooltip="Моды для WebBlocks">Моды</a></li>
+                    <li><a href="/resources" data-tooltip="Дополнительные ресурсы">Ресурсы</a></li>
+                    <li><a href="/help" data-tooltip="Помощь и поддержка">Помощь</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <button class="theme-toggle" aria-label="Переключить тему">
+                    <span class="sun-icon"></span>
+                    <span class="moon-icon"></span>
+                </button>
+                
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="ru">RU</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                </div>
+                
+                <button class="mobile-menu-toggle" aria-label="Меню" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
     </header>
 
-    <main role="main" aria-label="Основное содержимое">
-        <section class="content-section">
-            <h1 id="welcome">Добро пожаловать в Web Mirror 🪞 / Welcome to Web Mirror 🪞</h1>
-            <p id="intro">Web Mirror — ваш надежный источник загрузки полезных файлов и ресурсов. Здесь вы найдете все нужные моды для игры на сервере WebBlocks.</p>
+    <main class="main-content">
+        <!-- Герой секция -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title" id="welcome">
+                        <span class="highlight">Web Mirror</span> — ваш источник файлов
+                    </h1>
+                    
+                    <p class="hero-subtitle" id="intro">
+                        Надежный источник загрузки полезных файлов и ресурсов. Здесь вы найдете все нужные моды для игры на сервере WebBlocks.
+                    </p>
+                    
+                    <div class="hero-actions">
+                        <a href="#files" class="btn btn-primary">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2ZM6 20V4H13V9H18V20H6Z" fill="currentColor"/>
+                            </svg>
+                            Смотреть файлы
+                        </a>
+                        
+                        <a href="#mods" class="btn btn-secondary">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 16V8C21 6.9 20.1 6 19 6H15C15 4.34 13.66 3 12 3C10.34 3 9 4.34 9 6H5C3.9 6 3 6.9 3 8V16C3 17.1 3.9 18 5 18H9C9 19.66 10.34 21 12 21C13.66 21 15 19.66 15 18H19C20.1 18 21 17.1 21 16ZM12 5C12.55 5 13 5.45 13 6H11C11 5.45 11.45 5 12 5ZM12 19C11.45 19 11 18.55 11 18H13C13 18.55 12.55 19 12 19ZM19 16H5V8H19V16Z" fill="currentColor"/>
+                            </svg>
+                            Моды для WebBlocks
+                        </a>
+                    </div>
+                    
+                    <div class="tech-badges">
+                        <span class="badge">Безопасные загрузки</span>
+                        <span class="badge">HTTPS</span>
+                        <span class="badge">Вирус-контроль</span>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <div class="download-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">1,250+</div>
+                            <div class="stat-label">Файлов доступно</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">98%</div>
+                            <div class="stat-label">Безопасных загрузок</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">24/7</div>
+                            <div class="stat-label">Доступность</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <section class="content-section">
-            <h2 id="available-files">👌 Доступные файлы / Available Files</h2>
-            <!-- Файлы пока не загружены -->
+        <!-- Секция файлов -->
+        <section id="files" class="files-section">
+            <div class="container">
+                <h2 class="section-title" id="available-files">
+                    <span class="underline">Доступные файлы</span> для загрузки
+                </h2>
+                
+                <div class="search-bar">
+                    <input type="text" placeholder="Поиск файлов..." id="file-search">
+                    <button class="search-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z" fill="currentColor"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="files-grid">
+                    <!-- Пример файла -->
+                    <article class="file-card">
+                        <div class="file-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2ZM6 20V4H13V9H18V20H6ZM8 13H16V15H8V13ZM8 17H16V19H8V17Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="file-info">
+                            <h3>WebBlocks Client v1.5.2</h3>
+                            <p class="file-description">Полный клиент для игры на сервере WebBlocks со всеми необходимыми модами</p>
+                            <div class="file-meta">
+                                <span class="file-size">125 MB</span>
+                                <span class="file-type">ZIP</span>
+                                <span class="file-verified">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" fill="#22c55e"/>
+                                    </svg>
+                                    Проверено
+                                </span>
+                            </div>
+                        </div>
+                        <a href="/download/wb-client-1.5.2.zip" class="download-btn" download>
+                            Скачать
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 9H15V3H9V9H5L12 16L19 9ZM5 18V20H19V18H5Z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                    </article>
+                    
+                    <!-- Дополнительные файлы будут загружаться через JS -->
+                </div>
+                
+                <div class="section-footer">
+                    <button id="load-more" class="btn btn-outline">
+                        Показать еще
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.41 8.59L12 13.17L16.59 8.59L18 10L12 16L6 10L7.41 8.59Z" fill="currentColor"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
         </section>
 
-        <section id="mods-section" class="content-section">
-            <h2 id="additional-resources">🌐 Дополнительные ресурсы / Additional Resources</h2>
-            <!-- Список ресурсов -->
+        <!-- Секция модов -->
+        <section id="mods" class="mods-section">
+            <div class="container">
+                <h2 class="section-title">
+                    <span class="underline">Моды</span> для WebBlocks
+                </h2>
+                
+                <div class="mod-categories">
+                    <button class="category-btn active" data-category="all">Все</button>
+                    <button class="category-btn" data-category="performance">Производительность</button>
+                    <button class="category-btn" data-category="cosmetic">Косметические</button>
+                    <button class="category-btn" data-category="utility">Утилиты</button>
+                    <button class="category-btn" data-category="gameplay">Геймплей</button>
+                </div>
+                
+                <div class="mods-grid">
+                    <!-- Пример мода -->
+                    <article class="mod-card" data-category="performance">
+                        <div class="mod-header">
+                            <h3>OptiFine HD</h3>
+                            <span class="mod-version">1.5.2</span>
+                        </div>
+                        <p class="mod-description">Улучшает производительность и добавляет поддержку HD-текстур</p>
+                        <div class="mod-footer">
+                            <span class="mod-category performance">Производительность</span>
+                            <a href="/download/optifine-1.5.2.zip" class="mod-download" download>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19 9H15V3H9V9H5L12 16L19 9ZM5 18V20H19V18H5Z" fill="currentColor"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </article>
+                    
+                    <!-- Дополнительные моды будут загружаться через JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Дополнительные ресурсы -->
+        <section id="resources" class="resources-section">
+            <div class="container">
+                <h2 class="section-title" id="additional-resources">
+                    <span class="underline">Дополнительные</span> ресурсы
+                </h2>
+                
+                <div class="resources-grid">
+                    <a href="https://webblocks.example/wiki" class="resource-card" target="_blank" rel="noopener">
+                        <div class="resource-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h3>Официальная вики</h3>
+                        <p>Полное руководство по WebBlocks и всем его функциям</p>
+                    </a>
+                    
+                    <a href="https://forum.webblocks.example" class="resource-card" target="_blank" rel="noopener">
+                        <div class="resource-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H6L4 18V4H20V16Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h3>Форум сообщества</h3>
+                        <p>Обсуждения, вопросы и помощь от других игроков</p>
+                    </a>
+                    
+                    <a href="https://status.webblocks.example" class="resource-card" target="_blank" rel="noopener">
+                        <div class="resource-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h3>Статус сервера</h3>
+                        <p>Актуальная информация о работе серверов WebBlocks</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA секция -->
+        <section class="cta-section">
+            <div class="container">
+                <h2>Нужна помощь с установкой?</h2>
+                <p>Наша команда поддержки готова помочь вам с любыми вопросами</p>
+                <div class="cta-actions">
+                    <button id="open-chat" class="btn btn-large btn-primary">Открыть чат</button>
+                    <a href="/help" class="btn btn-large btn-outline">Инструкции</a>
+                </div>
+            </div>
         </section>
     </main>
 
-    <footer role="contentinfo">
-        <p>&copy; 2025 Web Dev | <a href="webdevprivacy.html" target="_blank" id="privacy-policy">Политика конфиденциальности</a></p>
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <a href="/" class="footer-logo">Web Mirror</a>
+                    <p>Надежный источник файлов и модов для WebBlocks</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Discord">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.82 4.26C14.06 4.05 13.28 3.91 12.5 3.84C12.42 4.16 12.34 4.48 12.24 4.8C11.42 4.66 10.6 4.59 9.78 4.59C9 4.59 8.22 4.66 7.44 4.8C7.34 4.47 7.26 4.15 7.18 3.83C6.4 3.9 5.62 4.04 4.86 4.26C2.92 6.7 2.26 9.05 2.5 11.4C3.58 12.67 4.74 13.7 6 14.46C6.38 14.76 6.78 15.03 7.18 15.28C7.24 15.32 7.3 15.36 7.36 15.39C7.8 15.67 8.24 15.92 8.7 16.14C8.72 16.15 8.74 16.16 8.76 16.17C9.64 16.56 10.56 16.86 11.5 17.06C11.54 17.07 11.58 17.08 11.62 17.09C11.9 17.14 12.18 17.19 12.46 17.23C12.78 17.28 13.1 17.32 13.42 17.35C13.94 17.4 14.46 17.43 15 17.43C15.5 17.43 16 17.4 16.5 17.35C16.82 17.32 17.14 17.28 17.46 17.23C17.74 17.19 18.02 17.14 18.3 17.09C18.34 17.08 18.38 17.07 18.42 17.06C19.36 16.86 20.28 16.56 21.16 16.17C21.18 16.16 21.2 16.15 21.22 16.14C21.68 15.92 22.12 15.67 22.56 15.39C22.62 15.36 22.68 15.32 22.74 15.28C23.14 15.03 23.54 14.76 23.92 14.46C25.18 13.7 26.34 12.67 27.42 11.4C27.74 8.15 26.52 5.11 23.06 4.26C22.3 4.05 21.52 3.91 20.74 3.84C20.66 4.16 20.58 4.48 20.48 4.8C19.66 4.66 18.84 4.59 18.02 4.59C17.2 4.59 16.38 4.66 15.56 4.8C15.46 4.47 15.38 4.15 15.3 3.83C14.52 3.9 13.74 4.04 12.98 4.26H12.96ZM8.5 14C7.4 14 6.5 13.1 6.5 12C6.5 10.9 7.4 10 8.5 10C9.6 10 10.5 10.9 10.5 12C10.5 13.1 9.6 14 8.5 14ZM17.5 14C16.4 14 15.5 13.1 15.5 12C15.5 10.9 16.4 10 17.5 10C18.6 10 19.5 10.9 19.5 12C19.5 13.1 18.6 14 17.5 14Z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Telegram">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM16.64 8.8C16.49 10.38 15.84 14.22 15.51 15.99C15.37 16.74 15.09 16.99 14.83 17.02C14.25 17.07 13.81 16.63 13.25 16.25C12.37 15.69 11.87 15.33 11.02 14.8C10.03 14.18 10.67 13.85 11.24 13.25C11.39 13.1 13.95 10.7 14 10.49C14.0069 10.4582 14.006 10.4252 13.9973 10.3938C13.9886 10.3624 13.9724 10.3337 13.95 10.31C13.89 10.26 13.81 10.28 13.74 10.29C13.65 10.31 12.25 11.24 9.52 13.08C9.12 13.35 8.76 13.49 8.44 13.48C8.08 13.47 7.4 13.28 6.89 13.11C6.26 12.91 5.77 12.8 5.81 12.45C5.83 12.27 6.08 12.09 6.55 11.9C9.47 10.63 11.41 9.79 12.38 9.39C15.16 8.23 15.73 8.03 16.11 8.03C16.19 8.03 16.38 8.05 16.5 8.15C16.6 8.23 16.63 8.34 16.64 8.42C16.63 8.48 16.65 8.66 16.64 8.8Z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Web Mirror</h3>
+                    <ul>
+                        <li><a href="/about">О проекте</a></li>
+                        <li><a href="/files">Все файлы</a></li>
+                        <li><a href="/mods">Каталог модов</a></li>
+                        <li><a href="/upload">Загрузить файл</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>WebBlocks</h3>
+                    <ul>
+                        <li><a href="https://webblocks.example">Официальный сайт</a></li>
+                        <li><a href="https://webblocks.example/join">Присоединиться</a></li>
+                        <li><a href="https://webblocks.example/rules">Правила</a></li>
+                        <li><a href="https://webblocks.example/status">Статус</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Правовая информация</h3>
+                    <ul>
+                        <li><a href="/privacy" id="privacy-policy">Конфиденциальность</a></li>
+                        <li><a href="/terms">Условия использования</a></li>
+                        <li><a href="/cookies">Cookies</a></li>
+                        <li><a href="/dmca">DMCA</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Web Dev | Web Mirror. Все права защищены.</p>
+                <div class="footer-lang">
+                    <button class="lang-btn active" data-lang="ru">Рус</button>
+                    <button class="lang-btn" data-lang="en">Eng</button>
+                </div>
+            </div>
+        </div>
     </footer>
 
+    <!-- Скрипты -->
+    <script src="js/main.js" type="module"></script>
+    
     <!-- Tawk.to Live Chat -->
-    <script type="text/javascript">
-        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-        (function () {
+    <script>
+        window.Tawk_API = window.Tawk_API || {};
+        window.Tawk_API.onLoad = function() {
+            document.getElementById('open-chat').addEventListener('click', function() {
+                window.Tawk_API.maximize();
+            });
+        };
+        
+        (function() {
             var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
             s1.async = true;
             s1.src = 'https://embed.tawk.to/679eedbc3a8427326078a60b/1ij2d1acn';
@@ -84,6 +359,5 @@
             s0.parentNode.insertBefore(s1, s0);
         })();
     </script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </body>
 </html>

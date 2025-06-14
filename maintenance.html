@@ -3,24 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCP-ARC: Classified Sector | Проект временно закрыт</title>
+    <title>HW Project | Технические работы</title>
 
-    <!-- SEO-оптимизация -->
-    <meta name="description" content="Проект SCP-ARC: Classified Sector временно закрыт. Следите за новостями.">
-    <meta name="robots" content="noindex, nofollow"> <!-- Запрещаем индексацию -->
+    <!-- SEO и мета-теги -->
+    <meta name="description" content="HW Project временно недоступен из-за технических работ">
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="refresh" content="3600"> <!-- Автообновление каждый час -->
 
-    <link rel="stylesheet" href="style/maintenance.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --surface: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(37, 99, 235, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(37, 99, 235, 0.1) 0%, transparent 50%);
+        }
+
+        .maintenance-container {
+            max-width: 600px;
+            padding: 40px;
+            background-color: var(--surface);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo svg {
+            width: 40px;
+            height: 40px;
+            color: var(--primary);
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: var(--primary);
+            width: 0;
+            border-radius: 8px;
+            transition: width 1s ease;
+        }
+
+        .status {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .social-link {
+            color: var(--light);
+            background: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .countdown {
+            font-size: 1.2rem;
+            margin: 20px 0;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        @media (max-width: 600px) {
+            .maintenance-container {
+                padding: 30px 20px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
-<body class="classified">
-    <div class="maintenance-container" role="alert">
-        <h1>⚠️ SCP-ARC: Classified Sector — Проект временно закрыт ⚠️</h1>
-        <p>На данный момент проект приостановлен на неопределенное время.</p>
-        <p>🔍 Следите за новостями — когда придёт время, вы всё узнаете.</p>
-        <img src="maintenance.png" alt="Иллюстрация: закрытие проекта" class="maintenance-img">
+<body>
+    <div class="maintenance-container">
+        <div class="logo">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 0C8.96 0 0 8.96 0 20C0 31.04 8.96 40 20 40C31.04 40 40 31.04 40 20C40 8.96 31.04 0 20 0ZM16 30H12V16H16V30ZM28 30H24V16H28V30Z" fill="currentColor"/>
+            </svg>
+            <span>HW Project</span>
+        </div>
+
+        <h1>Идут технические работы</h1>
         
-        <!-- Кнопка возврата на главную -->
-        <a href="index.html" class="exit-button">Вернуться на главную</a>
+        <p>Мы улучшаем наш проект, чтобы предложить вам лучший опыт. Приносим извинения за временные неудобства.</p>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+            <div class="status">
+                <span>Обновление системы</span>
+                <span id="progress-text">0%</span>
+            </div>
+        </div>
+
+        <div class="countdown" id="countdown">
+            Ориентировочное время завершения: <span id="time-estimate">~1 час</span>
+        </div>
+
+        <p>Следите за нашими соцсетями, чтобы быть в курсе обновлений:</p>
+        
+        <div class="social-links">
+            <a href="https://t.me/HackWeb_25" class="social-link" aria-label="Telegram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM16.64 8.8C16.49 10.38 15.84 14.22 15.51 15.99C15.37 16.74 15.09 16.99 14.83 17.02C14.25 17.07 13.81 16.63 13.25 16.25C12.37 15.69 11.87 15.33 11.02 14.8C10.03 14.18 10.67 13.85 11.24 13.25C11.39 13.1 13.95 10.7 14 10.49C14.0069 10.4582 14.006 10.4252 13.9973 10.3938C13.9886 10.3624 13.9724 10.3337 13.95 10.31C13.89 10.26 13.81 10.28 13.74 10.29C13.65 10.31 12.25 11.24 9.52 13.08C9.12 13.35 8.76 13.49 8.44 13.48C8.08 13.47 7.4 13.28 6.89 13.11C6.26 12.91 5.77 12.8 5.81 12.45C5.83 12.27 6.08 12.09 6.55 11.9C9.47 10.63 11.41 9.79 12.38 9.39C15.16 8.23 15.73 8.03 16.11 8.03C16.19 8.03 16.38 8.05 16.5 8.15C16.6 8.23 16.63 8.34 16.64 8.42C16.63 8.48 16.65 8.66 16.64 8.8Z"/></svg>
+            </a>
+            <a href="#" class="social-link" aria-label="Vk">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M14.82 4.26C14.06 4.05 13.28 3.91 12.5 3.84C12.42 4.16 12.34 4.48 12.24 4.8C11.42 4.66 10.6 4.59 9.78 4.59C9 4.59 8.22 4.66 7.44 4.8C7.34 4.47 7.26 4.15 7.18 3.83C6.4 3.9 5.62 4.04 4.86 4.26C2.92 6.7 2.26 9.05 2.5 11.4C3.58 12.67 4.74 13.7 6 14.46C6.38 14.76 6.78 15.03 7.18 15.28C7.24 15.32 7.3 15.36 7.36 15.39C7.8 15.67 8.24 15.92 8.7 16.14C8.72 16.15 8.74 16.16 8.76 16.17C9.64 16.56 10.56 16.86 11.5 17.06C11.54 17.07 11.58 17.08 11.62 17.09C11.9 17.14 12.18 17.19 12.46 17.23C12.78 17.28 13.1 17.32 13.42 17.35C13.94 17.4 14.46 17.43 15 17.43C15.5 17.43 16 17.4 16.5 17.35C16.82 17.32 17.14 17.28 17.46 17.23C17.74 17.19 18.02 17.14 18.3 17.09C18.34 17.08 18.38 17.07 18.42 17.06C19.36 16.86 20.28 16.56 21.16 16.17C21.18 16.16 21.2 16.15 21.22 16.14C21.68 15.92 22.12 15.67 22.56 15.39C22.62 15.36 22.68 15.32 22.74 15.28C23.14 15.03 23.54 14.76 23.92 14.46C25.18 13.7 26.34 12.67 27.42 11.4C27.74 8.15 26.52 5.11 23.06 4.26C22.3 4.05 21.52 3.91 20.74 3.84C20.66 4.16 20.58 4.48 20.48 4.8C19.66 4.66 18.84 4.59 18.02 4.59C17.2 4.59 16.38 4.66 15.56 4.8C15.46 4.47 15.38 4.15 15.3 3.83C14.52 3.9 13.74 4.04 12.98 4.26H12.96ZM8.5 14C7.4 14 6.5 13.1 6.5 12C6.5 10.9 7.4 10 8.5 10C9.6 10 10.5 10.9 10.5 12C10.5 13.1 9.6 14 8.5 14ZM17.5 14C16.4 14 15.5 13.1 15.5 12C15.5 10.9 16.4 10 17.5 10C18.6 10 19.5 10.9 19.5 12C19.5 13.1 18.6 14 17.5 14Z"/></svg>
+            </a>
+            <a href="#" class="social-link" aria-label="Twitter">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22.162 5.656a8.384 8.384 0 01-2.402.658A4.196 4.196 0 0021.6 4c-.82.488-1.719.83-2.656 1.015a4.182 4.182 0 00-7.126 3.814 11.874 11.874 0 01-8.62-4.37 4.168 4.168 0 00-.566 2.103c0 1.45.738 2.731 1.86 3.481a4.168 4.168 0 01-1.894-.523v.052a4.185 4.185 0 003.355 4.101 4.21 4.21 0 01-1.89.072A4.185 4.185 0 007.97 16.65a8.394 8.394 0 01-6.191 1.732 11.83 11.83 0 006.41 1.88c7.693 0 11.9-6.373 11.9-11.9 0-.18-.005-.362-.013-.54a8.496 8.496 0 002.087-2.165z"/></svg>
+            </a>
+        </div>
     </div>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <script>
+        // Анимация прогресс-бара
+        let progress = 0;
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        
+        // Случайное время завершения от 30 до 90 минут
+        const randomMinutes = Math.floor(Math.random() * 90) + 30;
+        document.getElementById('time-estimate').textContent = `~${randomMinutes} мин`;
+        
+        // Обновление каждые 5 секунд
+        const progressInterval = setInterval(() => {
+            progress += Math.floor(Math.random() * 20) + 1;
+            
+            if (progress > 100) {
+                progress = 100;
+                clearInterval(progressInterval);
+            }
+            
+            progressBar.style.width = `${progress}%`;
+            progressText.textContent = `${progress}%`;
+            
+            // Если прогресс 100%, обновляем страницу
+            if (progress === 100) {
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
+            }
+        }, 5000);
+        
+        // Обновление таймера каждую минуту
+        let minutesLeft = randomMinutes;
+        const countdownElement = document.getElementById('countdown');
+        
+        const timerInterval = setInterval(() => {
+            minutesLeft--;
+            
+            if (minutesLeft <= 0) {
+                minutesLeft = 0;
+                clearInterval(timerInterval);
+                countdownElement.innerHTML = 'Работы должны быть завершены. Страница автоматически обновится.';
+            } else {
+                document.getElementById('time-estimate').textContent = `~${minutesLeft} мин`;
+            }
+        }, 60000);
+    </script>
 </body>
 </html>
