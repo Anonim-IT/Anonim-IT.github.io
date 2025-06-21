@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Комплексные IT-решения от HW Project для бизнеса и государственных структур">
+    <title>HW Project | Решения</title>
+    
+    <!-- Стили и шрифты (аналогично главной) -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Глобное уведомление -->
+    <div class="global-notice">
+        <p>🚀 Новое решение: Платформа кибербезопасности HW Secure 3.0 теперь доступна!</p>
+        <button class="notice-close" aria-label="Закрыть уведомление">&times;</button>
+    </div>
+
+    <!-- Главное меню -->
+    <header class="main-header">
+        <div class="container">
+            <a href="/" class="logo" aria-label="HW Project">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 0C8.96 0 0 8.96 0 20C0 31.04 8.96 40 20 40C31.04 40 40 31.04 40 20C40 8.96 31.04 0 20 0ZM16 30H12V16H16V30ZM28 30H24V16H28V30Z" fill="currentColor"/>
+                </svg>
+                <span>HW Project</span>
+            </a>
+            
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/solutions" class="active">Решения</a></li>
+                    <li><a href="/HWschool.html">Образование</a></li>
+                    <li><a href="/research">Исследования</a></li>
+                    <li><a href="/community">Сообщество</a></li>
+                    <li><a href="/about">О нас</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Герой секция -->
+        <section class="hero-section solutions-hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <span class="highlight">Технологические решения</span> для цифровой трансформации
+                    </h1>
+                    
+                    <p class="hero-subtitle">
+                        Комплексные IT-продукты и сервисы, ускоряющие развитие вашего бизнеса
+                    </p>
+                    
+                    <div class="hero-actions">
+                        <a href="#solutions" class="btn btn-primary">
+                            Все решения
+                        </a>
+                        <a href="#consult" class="btn btn-secondary">
+                            Заказать консультацию
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <div class="solutions-diagram">
+                        <div class="diagram-element" style="--delay: 0">
+                            <span>Cloud</span>
+                        </div>
+                        <div class="diagram-element" style="--delay: 0.2s">
+                            <span>AI</span>
+                        </div>
+                        <div class="diagram-element" style="--delay: 0.4s">
+                            <span>Security</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Основные решения -->
+        <section id="solutions" class="solutions-section">
+            <div class="container">
+                <h2 class="section-title">
+                    <span class="underline">Ключевые продукты</span> и решения
+                </h2>
+                
+                <div class="solutions-tabs">
+                    <button class="tab-btn active" data-tab="all">Все</button>
+                    <button class="tab-btn" data-tab="enterprise">Для бизнеса</button>
+                    <button class="tab-btn" data-tab="government">Для госсектора</button>
+                    <button class="tab-btn" data-tab="startups">Для стартапов</button>
+                </div>
+                
+                <div class="solutions-grid">
+                    <!-- Решение 1 -->
+                    <article class="solution-card" data-category="enterprise">
+                        <div class="card-header">
+                            <div class="solution-icon">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V5H19V19Z" fill="currentColor"/>
+                                    <path d="M11 7H13V9H11V7ZM11 11H13V17H11V11Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <h3>HW Enterprise Suite</h3>
+                            <span class="solution-tag">Корпоративные системы</span>
+                        </div>
+                        <div class="card-body">
+                            <p>Полный набор инструментов для цифровизации крупного бизнеса:</p>
+                            <ul>
+                                <li>ERP-системы нового поколения</li>
+                                <li>Управление цепочками поставок</li>
+                                <li>CRM с AI-аналитикой</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/solutions/enterprise" class="btn btn-small">Подробнее</a>
+                            <a href="/demo" class="btn btn-small btn-outline">Демо-доступ</a>
+                        </div>
+                    </article>
+                    
+                    <!-- Решение 2 -->
+                    <article class="solution-card" data-category="government">
+                        <div class="card-header">
+                            <div class="solution-icon">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor"/>
+                                    <path d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6ZM12 16C9.79 16 8 14.21 8 12C8 9.79 9.79 8 12 8C14.21 8 16 9.79 16 12C16 14.21 14.21 16 12 16Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <h3>ГосТех Платформа</h3>
+                            <span class="solution-tag">Госсектор</span>
+                        </div>
+                        <div class="card-body">
+                            <p>Сертифицированные решения для цифрового правительства:</p>
+                            <ul>
+                                <li>Системы электронного документооборота</li>
+                                <li>Платформы госуслуг</li>
+                                <li>Защищенные коммуникации</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/solutions/govtech" class="btn btn-small">Подробнее</a>
+                        </div>
+                    </article>
+                    
+                    <!-- Решение 3 -->
+                    <article class="solution-card" data-category="startups">
+                        <div class="solution-badge">Новое</div>
+                        <div class="card-header">
+                            <div class="solution-icon">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 3C7.03 3 3 7.03 3 12C3 16.97 7.03 21 12 21C16.97 21 21 16.97 21 12C21 7.03 16.97 3 12 3ZM12 19C8.14 19 5 15.86 5 12C5 8.14 8.14 5 12 5C15.86 5 19 8.14 19 12C19 15.86 15.86 19 12 19Z" fill="currentColor"/>
+                                    <path d="M12 7C11.45 7 11 7.45 11 8V12C11 12.55 11.45 13 12 13C12.55 13 13 12.55 13 12V8C13 7.45 12.55 7 12 7Z" fill="currentColor"/>
+                                    <path d="M16 1H8C7.45 1 7 1.45 7 2C7 2.55 7.45 3 8 3H16C16.55 3 17 2.55 17 2C17 1.45 16.55 1 16 1Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <h3>HW Launchpad</h3>
+                            <span class="solution-tag">Стартапы</span>
+                        </div>
+                        <div class="card-body">
+                            <p>Все необходимое для быстрого запуска IT-продукта:</p>
+                            <ul>
+                                <li>Готовые микросервисы</li>
+                                <li>API-интеграции</li>
+                                <li>Облачная инфраструктура</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/solutions/launchpad" class="btn btn-small">Подробнее</a>
+                            <a href="/start" class="btn btn-small btn-outline">Начать бесплатно</a>
+                        </div>
+                    </article>
+                    
+                    <!-- Решение 4 -->
+                    <article class="solution-card" data-category="enterprise government">
+                        <div class="card-header">
+                            <div class="solution-icon">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1ZM12 11.99H19C18.47 16.11 15.72 19.78 12 20.93V12H5V6.3L12 3.19V11.99Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <h3>HW Secure</h3>
+                            <span class="solution-tag">Кибербезопасность</span>
+                        </div>
+                        <div class="card-body">
+                            <p>Комплексная защита цифровых активов:</p>
+                            <ul>
+                                <li>Обнаружение угроз в реальном времени</li>
+                                <li>Защита данных (GDPR, 152-ФЗ)</li>
+                                <li>Аудит безопасности</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/solutions/secure" class="btn btn-small">Подробнее</a>
+                            <a href="/audit" class="btn btn-small btn-outline">Тест безопасности</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Отраслевые решения -->
+        <section class="industry-section">
+            <div class="container">
+                <h2 class="section-title">
+                    <span class="underline">Отраслевые решения</span> HW Project
+                </h2>
+                
+                <div class="industry-slider">
+                    <div class="industry-slide">
+                        <div class="slide-icon">🏦</div>
+                        <h3>Финтех</h3>
+                        <p>Платформы для банков, платежных систем и страховых компаний</p>
+                        <a href="/solutions/fintech" class="btn btn-small btn-outline">Подробнее</a>
+                    </div>
+                    
+                    <div class="industry-slide">
+                        <div class="slide-icon">🏥</div>
+                        <h3>Здравоохранение</h3>
+                        <p>Телемедицина, EHR системы и медицинская аналитика</p>
+                        <a href="/solutions/healthcare" class="btn btn-small btn-outline">Подробнее</a>
+                    </div>
+                    
+                    <div class="industry-slide">
+                        <div class="slide-icon">🏭</div>
+                        <h3>Промышленность</h3>
+                        <p>IIoT решения для умных фабрик и цифровых двойников</p>
+                        <a href="/solutions/manufacturing" class="btn btn-small btn-outline">Подробнее</a>
+                    </div>
+                    
+                    <div class="industry-slide">
+                        <div class="slide-icon">🛒</div>
+                        <h3>Ритейл</h3>
+                        <p>Персонализированный маркетинг и умные склады</p>
+                        <a href="/solutions/retail" class="btn btn-small btn-outline">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Технологии решений -->
+        <section class="tech-section">
+            <div class="container">
+                <h2 class="section-title">
+                    <span class="underline">Технологии</span> в основе наших решений
+                </h2>
+                
+                <div class="tech-features">
+                    <div class="tech-feature">
+                        <div class="feature-icon">🤖</div>
+                        <h3>Искусственный интеллект</h3>
+                        <p>ML-модели для прогнозной аналитики и автоматизации</p>
+                    </div>
+                    
+                    <div class="tech-feature">
+                        <div class="feature-icon">⛓️</div>
+                        <h3>Блокчейн</h3>
+                        <p>Децентрализованные решения для доверия и прозрачности</p>
+                    </div>
+                    
+                    <div class="tech-feature">
+                        <div class="feature-icon">🔐</div>
+                        <h3>Криптография</h3>
+                        <p>Защита данных с помощью постквантовых алгоритмов</p>
+                    </div>
+                    
+                    <div class="tech-feature">
+                        <div class="feature-icon">☁️</div>
+                        <h3>Облачные платформы</h3>
+                        <p>Гибкая и масштабируемая инфраструктура</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Кейсы -->
+        <section class="cases-section">
+            <div class="container">
+                <h2 class="section-title">
+                    <span class="underline">Реализованные проекты</span> с нашими решениями
+                </h2>
+                
+                <div class="cases-grid">
+                    <article class="case-card">
+                        <div class="case-image" style="background-image: url('/images/case1.jpg')"></div>
+                        <div class="case-content">
+                            <h3>Цифровой банк "ФинансТех"</h3>
+                            <p>Внедрение платформы онлайн-банкинга с биометрической аутентификацией</p>
+                            <div class="case-stats">
+                                <span>+40% NPS</span>
+                                <span>-60% мошенничество</span>
+                            </div>
+                            <a href="/cases/fintech" class="btn btn-small">История проекта</a>
+                        </div>
+                    </article>
+                    
+                    <article class="case-card">
+                        <div class="case-image" style="background-image: url('/images/case2.jpg')"></div>
+                        <div class="case-content">
+                            <h3>Минздрав Региона</h3>
+                            <p>Единая система электронных медицинских карт для 120+ учреждений</p>
+                            <div class="case-stats">
+                                <span>3.2M записей</span>
+                                <span>99.9% uptime</span>
+                            </div>
+                            <a href="/cases/healthcare" class="btn btn-small">История проекта</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Консультация -->
+        <section id="consult" class="consult-section">
+            <div class="container">
+                <div class="consult-content">
+                    <h2>Нужно индивидуальное решение?</h2>
+                    <p>Наши эксперты подготовят персональное предложение для вашего бизнеса</p>
+                    
+                    <form class="consult-form">
+                        <div class="form-group">
+                            <input type="text" placeholder="Ваше имя" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="E-mail" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" placeholder="Телефон">
+                        </div>
+                        <div class="form-group">
+                            <select>
+                                <option value="" disabled selected>Интересующее решение</option>
+                                <option>Корпоративные системы</option>
+                                <option>Кибербезопасность</option>
+                                <option>Госсектор</option>
+                                <option>Другое</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Отправить запрос</button>
+                    </form>
+                </div>
+                
+                <div class="consult-info">
+                    <h3>Контакты отдела решений</h3>
+                    <p><strong>Email:</strong> <a href="mailto:solutions@hwproject.com">solutions@hwproject.com</a></p>
+                    <p><strong>Телефон:</strong> <a href="tel:-">-</a></p>
+                    
+                    <div class="consult-social">
+                        <a href="#" class="social-link">Telegram</a>
+                        <a href="#" class="social-link">WhatsApp</a>
+                        <a href="#" class="social-link">Microsoft Teams</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <!-- Футер аналогичен главной странице -->
+    </footer>
+
+    <script src="js/main.js" type="module"></script>
+</body>
+</html>

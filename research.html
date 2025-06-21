@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW Project | Исследования</title>
+    <style>
+        :root {
+            --primary: #2c3e50;  /* Основной цвет (сине-серый) */
+            --accent: #e74c3c;    /* Акцентный цвет (красный) */
+            --light: #ecf0f1;     /* Светлый фон */
+            --dark: #1a1a1a;      /* Текст */
+            --highlight: #3498db; /* Выделение */
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .research-section {
+            margin: 40px 0;
+        }
+        
+        .research-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: transform 0.3s;
+        }
+        
+        .research-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .research-title {
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin-top: 0;
+        }
+        
+        .research-meta {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: var(--highlight);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background: #c0392b;
+        }
+        
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Исследования HW</h1>
+            <p class="subtitle">Аналитика, эксперименты и инновации</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="research-section">
+            <h2>Текущие проекты</h2>
+            
+            <div class="research-card">
+                <h3 class="research-title">Оптимизация алгоритмов машинного обучения</h3>
+                <div class="research-meta">
+                    <span>2024 | Команда Data Science</span>
+                    <span class="tag">AI</span>
+                    <span class="tag">Производительность</span>
+                </div>
+                <p>Исследование методов ускорения обучения нейросетей на ограниченных аппаратных ресурсах. Первые результаты показывают уменьшение времени обучения на 30%.</p>
+                <a href="#" class="btn">Читать доклад</a>
+            </div>
+            
+            <div class="research-card">
+                <h3 class="research-title">Безопасность в IoT-устройствах</h3>
+                <div class="research-meta">
+                    <span>2024 | Лаборатория кибербезопасности</span>
+                    <span class="tag">IoT</span>
+                    <span class="tag">Security</span>
+                </div>
+                <p>Анализ уязвимостей в популярных IoT-гаджетах и разработка нового протокола защиты данных. Тестирование в реальных условиях начато в Q2 2024.</p>
+                <a href="#" class="btn">Подробнее</a>
+            </div>
+        </section>
+        
+        <section class="research-section">
+            <h2>Архив исследований</h2>
+            
+            <div class="research-card">
+                <h3 class="research-title">Применение квантовых вычислений в криптографии</h3>
+                <div class="research-meta">
+                    <span>2023 | Квантовая лаборатория HW</span>
+                    <span class="tag">Квантовые технологии</span>
+                    <span class="tag">Криптография</span>
+                </div>
+                <p>Эксперименты с алгоритмами постквантовой криптографии. Результаты опубликованы в журнале "Quantum Computing Review".</p>
+                <a href="#" class="btn">Скачать PDF</a>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>© HW Project, 2025 | Все исследования защищены лицензией Creative Commons</p>
+            <p><a href="#" style="color: var(--highlight);">Связаться с исследовательской командой</a></p>
+        </div>
+    </footer>
+</body>
+</html>
