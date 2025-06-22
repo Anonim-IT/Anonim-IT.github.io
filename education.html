@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW Project | Образовательные программы</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #1a1a1a;
+            --highlight: #3498db;
+        }
+        
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Стили таблицы */
+        .courses-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .courses-table th, .courses-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .courses-table th {
+            background-color: var(--primary);
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+        
+        .courses-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .courses-table tr:hover {
+            background-color: #e6f7ff;
+        }
+        
+        /* Стили кнопок */
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--highlight);
+            color: white;
+            border: none;
+        }
+        
+        .btn-secondary {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--highlight);
+            color: var(--highlight);
+        }
+        
+        /* Админ панель */
+        .admin-panel {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: none;
+        }
+        
+        .admin-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        /* Личный кабинет */
+        .account-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .my-courses {
+            margin-top: 20px;
+        }
+        
+        /* Табы */
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .tab-btn {
+            padding: 10px 20px;
+            background-color: #ddd;
+            border: none;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        
+        .tab-btn.active {
+            background-color: var(--highlight);
+            color: white;
+        }
+        
+        /* Скрытие элементов */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Образовательные программы HW Project</h1>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="courses">Все курсы</button>
+            <button class="tab-btn" data-tab="account">Личный кабинет</button>
+            <button class="tab-btn" data-tab="admin" id="adminTabBtn" style="display:none">Админ-панель</button>
+        </div>
+        
+        <!-- Админ панель -->
+        <div id="adminPanel" class="admin-panel hidden">
+            <h2>Администрирование курсов</h2>
+            <form id="courseForm" class="admin-form">
+                <input type="hidden" id="editId">
+                
+                <div class="form-group">
+                    <label for="courseName">Название курса</label>
+                    <input type="text" id="courseName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="courseCategory">Категория</label>
+                    <select id="courseCategory" required>
+                        <option value="Программирование">Программирование</option>
+                        <option value="Кибербезопасность">Кибербезопасность</option>
+                        <option value="Аналитика данных">Аналитика данных</option>
+                        <option value="Web-разработка">Web-разработка</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="courseStart">Дата начала</label>
+                    <input type="date" id="courseStart" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="courseDuration">Длительность (недель)</label>
+                    <input type="number" id="courseDuration" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="coursePrice">Стоимость (руб)</label>
+                    <input type="number" id="coursePrice" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="courseDescription">Описание</label>
+                    <textarea id="courseDescription" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="courseSchedule">Расписание</label>
+                    <textarea id="courseSchedule" rows="2" placeholder="Пн, Ср 19:00-21:00"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="button" class="btn btn-outline" onclick="cancelEdit()">Отмена</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Личный кабинет -->
+        <div id="accountSection" class="account-section hidden">
+            <h2>Личный кабинет</h2>
+            <div id="userInfo">
+                <p>Войдите, чтобы просмотреть свои курсы</p>
+                <button onclick="showLoginForm()" class="btn btn-primary">Войти</button>
+            </div>
+            
+            <div id="loginForm" class="hidden" style="margin-top:20px;">
+                <div class="form-group">
+                    <label for="username">Email:</label>
+                    <input type="email" id="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль:</label>
+                    <input type="password" id="password">
+                </div>
+                <button onclick="login()" class="btn btn-primary">Войти</button>
+                <button onclick="register()" class="btn btn-secondary">Зарегистрироваться</button>
+            </div>
+            
+            <div id="myCourses" class="my-courses hidden">
+                <h3>Мои курсы</h3>
+                <table id="userCoursesTable" class="courses-table">
+                    <thead>
+                        <tr>
+                            <th>Название</th>
+                            <th>Дата начала</th>
+                            <th>Расписание</th>
+                            <th>Прогресс</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Таблица курсов -->
+        <div id="coursesTab">
+            <table id="coursesTable" class="courses-table">
+                <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Категория</th>
+                        <th>Дата начала</th>
+                        <th>Длительность</th>
+                        <th>Стоимость</th>
+                        <th>Расписание</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            
+            <button id="addCourseBtn" class="btn btn-primary" style="margin-top:20px; display:none;" onclick="showAddForm()">Добавить курс</button>
+        </div>
+    </div>
+
+    <script>
+        // Данные курсов (в реальном проекте загружались бы с сервера)
+        let courses = [
+            {
+                id: 1,
+                name: "Основы Python",
+                category: "Программирование",
+                start: "2023-09-01",
+                duration: 8,
+                price: 0,
+                description: "Базовый курс по программированию на Python",
+                schedule: "Пн, Ср 19:00-21:00"
+            },
+            {
+                id: 2,
+                name: "Введение в кибербезопасность",
+                category: "Кибербезопасность",
+                start: "2023-09-01",
+                duration: 6,
+                price: 0,
+                description: "Основные концепции и практики информационной безопасности",
+                schedule: "Вт, Чт 18:00-20:00"
+            }
+        ];
+
+        // Данные пользователей (в реальном проекте хранились бы на сервере)
+        let users = [
+            {
+                email: "user@example.com",
+                password: "password123",
+                courses: [1]
+            }
+        ];
+
+        // Текущий пользователь
+        let currentUser = null;
+
+        // Проверка админа (в реальном проекте была бы авторизация)
+        const isAdmin = localStorage.getItem('isAdmin') === 'true';
+
+        // Инициализация страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Загрузка данных из localStorage
+            loadFromLocalStorage();
+            
+            renderCoursesTable();
+            
+            if (isAdmin) {
+                document.getElementById('adminTabBtn').style.display = 'inline-block';
+                document.getElementById('addCourseBtn').style.display = 'inline-block';
+            }
+            
+            // Проверка авторизации пользователя
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                updateUserInfo();
+            }
+            
+            // Обработчики для табов
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    showTab(tabId);
+                });
+            });
+            
+            // Показываем вкладку "Все курсы" по умолчанию
+            showTab('courses');
+        });
+
+        // Показать/скрыть вкладки
+        function showTab(tabId) {
+            // Скрываем все вкладки
+            document.getElementById('coursesTab').classList.add('hidden');
+            document.getElementById('accountSection').classList.add('hidden');
+            document.getElementById('adminPanel').classList.add('hidden');
+            
+            // Убираем активный класс у всех кнопок
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Показываем нужную вкладку
+            document.getElementById(tabId + 'Tab').classList.remove('hidden');
+            
+            // Добавляем активный класс к текущей кнопке
+            document.querySelector(`.tab-btn[data-tab="${tabId}"]`).classList.add('active');
+        }
+
+        // Рендер таблицы курсов
+        function renderCoursesTable() {
+            const tbody = document.querySelector('#coursesTable tbody');
+            tbody.innerHTML = '';
+            
+            courses.forEach(course => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${course.name}</td>
+                    <td>${course.category}</td>
+                    <td>${formatDate(course.start)}</td>
+                    <td>${course.duration} недель</td>
+                    <td>${course.price} руб.</td>
+                    <td>${course.schedule}</td>
+                    <td>
+                        ${isAdmin ? `<button onclick="editCourse(${course.id})" class="btn btn-outline">Редактировать</button>
+                        <button onclick="deleteCourse(${course.id})" class="btn btn-secondary">Удалить</button>` : ''}
+                        ${currentUser ? `<button onclick="enrollCourse(${course.id})" class="btn btn-primary">Записаться</button>` : ''}
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // Форматирование даты
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('ru-RU', options);
+        }
+
+        // Админ-функции
+        function showAddForm() {
+            document.getElementById('courseForm').reset();
+            document.getElementById('editId').value = '';
+            showTab('admin');
+        }
+
+        function editCourse(id) {
+            const course = courses.find(c => c.id == id);
+            if (course) {
+                document.getElementById('editId').value = course.id;
+                document.getElementById('courseName').value = course.name;
+                document.getElementById('courseCategory').value = course.category;
+                document.getElementById('courseStart').value = course.start;
+                document.getElementById('courseDuration').value = course.duration;
+                document.getElementById('coursePrice').value = course.price;
+                document.getElementById('courseDescription').value = course.description || '';
+                document.getElementById('courseSchedule').value = course.schedule;
+                
+                showTab('admin');
+            }
+        }
+
+        function cancelEdit() {
+            document.getElementById('courseForm').reset();
+            showTab('courses');
+        }
+
+        function deleteCourse(id) {
+            if (confirm('Вы уверены, что хотите удалить этот курс?')) {
+                courses = courses.filter(c => c.id != id);
+                renderCoursesTable();
+                saveToLocalStorage();
+            }
+        }
+
+        document.getElementById('courseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('editId').value;
+            const courseData = {
+                name: document.getElementById('courseName').value,
+                category: document.getElementById('courseCategory').value,
+                start: document.getElementById('courseStart').value,
+                duration: parseInt(document.getElementById('courseDuration').value),
+                price: parseInt(document.getElementById('coursePrice').value),
+                description: document.getElementById('courseDescription').value,
+                schedule: document.getElementById('courseSchedule').value
+            };
+            
+            if (id) {
+                // Редактирование
+                const index = courses.findIndex(c => c.id == id);
+                if (index !== -1) {
+                    courses[index] = { ...courses[index], ...courseData };
+                }
+            } else {
+                // Добавление
+                const newId = courses.length > 0 ? Math.max(...courses.map(c => c.id)) + 1 : 1;
+                courses.push({ id: newId, ...courseData });
+            }
+            
+            renderCoursesTable();
+            saveToLocalStorage();
+            showTab('courses');
+        });
+
+        // Функции личного кабинета
+        function showLoginForm() {
+            document.getElementById('userInfo').classList.add('hidden');
+            document.getElementById('loginForm').classList.remove('hidden');
+        }
+
+        function login() {
+            const email = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            const user = users.find(u => u.email === email && u.password === password);
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                updateUserInfo();
+                renderCoursesTable();
+                showTab('account');
+            } else {
+                alert('Неверный email или пароль');
+            }
+        }
+
+        function register() {
+            const email = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (!email || !password) {
+                alert('Пожалуйста, заполните все поля');
+                return;
+            }
+            
+            if (users.some(u => u.email === email)) {
+                alert('Пользователь с таким email уже существует');
+                return;
+            }
+            
+            const newUser = {
+                email,
+                password,
+                courses: []
+            };
+            
+            users.push(newUser);
+            currentUser = newUser;
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+            saveToLocalStorage();
+            
+            updateUserInfo();
+            renderCoursesTable();
+            showTab('account');
+        }
+
+        function updateUserInfo() {
+            document.getElementById('userInfo').classList.add('hidden');
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('myCourses').classList.remove('hidden');
+            
+            const userCourses = courses.filter(c => currentUser.courses.includes(c.id));
+            const tbody = document.querySelector('#userCoursesTable tbody');
+            tbody.innerHTML = '';
+            
+            if (userCourses.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = '<td colspan="4">Вы пока не записаны ни на один курс</td>';
+                tbody.appendChild(row);
+            } else {
+                userCourses.forEach(course => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${course.name}</td>
+                        <td>${formatDate(course.start)}</td>
+                        <td>${course.schedule}</td>
+                        <td>0%</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+        }
+
+        function enrollCourse(courseId) {
+            if (!currentUser.courses.includes(courseId)) {
+                currentUser.courses.push(courseId);
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Обновляем данные пользователя в массиве users
+                const userIndex = users.findIndex(u => u.email === currentUser.email);
+                if (userIndex !== -1) {
+                    users[userIndex] = currentUser;
+                    saveToLocalStorage();
+                }
+                
+                alert('Вы успешно записаны на курс!');
+                updateUserInfo();
+            } else {
+                alert('Вы уже записаны на этот курс');
+            }
+        }
+
+        // Сохранение данных в localStorage (имитация БД)
+        function saveToLocalStorage() {
+            localStorage.setItem('courses', JSON.stringify(courses));
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+
+        // Загрузка данных из localStorage при обновлении страницы
+        function loadFromLocalStorage() {
+            const savedCourses = localStorage.getItem('courses');
+            if (savedCourses) courses = JSON.parse(savedCourses);
+            
+            const savedUsers = localStorage.getItem('users');
+            if (savedUsers) users = JSON.parse(savedUsers);
+        }
+    </script>
+</body>
+</html>
