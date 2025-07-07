@@ -26,10 +26,65 @@
 
 <body>
     <!-- Глобное уведомление -->
-    <div class="global-notice">
-        <p>🚀 HW Project 2.0 запущен! Теперь мы - мультидисциплинарная технологическая платформа</p>
-        <button class="notice-close" aria-label="Закрыть уведомление">&times;</button>
+<div class="global-notice">
+    <div class="marquee-wrapper">
+        <div class="marquee-content">
+            <span>🚀 HW Project 2.0 запущен! Теперь мы - мультидисциплинарная технологическая платформа</span>
+            <span>🚀 HW Project 2.0 запущен! Теперь мы - мультидисциплинарная технологическая платформа</span>
+            <!-- Повторяем для плавного перехода -->
+        </div>
     </div>
+    <button class="notice-close" aria-label="Закрыть уведомление">&times;</button>
+</div>
+
+<style>
+    .global-notice {
+        position: relative;
+        overflow: hidden;
+        background-color: #2c3e50;
+        color: white;
+        padding: 10px 0;
+    }
+    
+    .marquee-wrapper {
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    
+    .marquee-content {
+        display: inline-block;
+        animation: marquee 20s linear infinite;
+    }
+    
+    .marquee-content span {
+        display: inline-block;
+        padding-right: 50px; /* Расстояние между повторениями */
+    }
+    
+    @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+    
+    .notice-close {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    document.querySelector('.notice-close').addEventListener('click', function() {
+        document.querySelector('.global-notice').style.display = 'none';
+    });
+</script>
 
     <!-- Главное меню -->
     <header class="main-header">
