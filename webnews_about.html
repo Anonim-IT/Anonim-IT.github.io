@@ -1,62 +1,221 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="О WebNews — информационной платформе, публикующей новости о проектах, разработках и обновлениях.">
-    <meta name="keywords" content="WebNews, новости, обновления, технологии, веб-разработка">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="О WebNews">
-    <meta property="og:description" content="Узнайте больше о WebNews — платформе для новостей о разработках и проектах.">
-    <meta property="og:image" content="webnews/assets/preview.jpg">
-    <meta property="og:type" content="website">
+    <meta name="description" content="HW News — официальный новостной портал HW Project. Последние новости о разработках, обновлениях и технологиях платформы.">
+    <meta name="keywords" content="HW News, новости HW Project, технологии, разработка, обновления, IT новости">
     
-    <title>О WebNews</title>
-    <link rel="stylesheet" href="webnews/css/style.css">
+    <!-- Open Graph / Twitter Card -->
+    <meta property="og:title" content="HW News — Официальный новостной портал HW Project">
+    <meta property="og:description" content="Будьте в курсе последних новостей о разработках и обновлениях платформы HW Project">
+    <meta property="og:image" content="https://hwproject.com/assets/og-news.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hwproject.com/news/about">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+    <title>HW News — О нас</title>
+
+    <!-- Основные стили -->
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Глобальное уведомление -->
+    <div class="global-notice">
+        <div class="marquee-wrapper">
+            <div class="marquee-content">
+                <span>🚀 Следите за обновлениями HW Project 2.0 в нашем Telegram-канале @hwproject_news</span>
+                <span>🚀 Следите за обновлениями HW Project 2.0 в нашем Telegram-канале @hwproject_news</span>
+            </div>
+        </div>
+        <button class="notice-close" aria-label="Закрыть уведомление">&times;</button>
+    </div>
 
-    <!-- Навигационная панель -->
-    <nav id="navbar-container"></nav>
-
-    <main class="info-container">
-        <section>
-            <h1>📢 О WebNews</h1>
-            <p><strong>WebNews</strong> — это информационная платформа, публикующая новости о проектах, разработках, технологиях и важных изменениях.</p>
-        </section>
-
-        <section>
-            <h2>🔎 Основные цели WebNews</h2>
-            <ul>
-                <li>📰 Публикация актуальных новостей о разработке.</li>
-                <li>💡 Поддержка стандартов веб-разработки и технологий.</li>
-                <li>📢 Анонсы обновлений и новых релизов.</li>
-                <li>👥 Информационные материалы от разработчиков и экспертов.</li>
+    <!-- Навигация -->
+    <nav class="main-nav">
+        <div class="container">
+            <a href="/" class="logo">
+                <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 0C8.96 0 0 8.96 0 20C0 31.04 8.96 40 20 40C31.04 40 40 31.04 40 20C40 8.96 31.04 0 20 0ZM16 30H12V16H16V30ZM28 30H24V16H28V30Z" fill="currentColor"/>
+                </svg>
+                <span>HW Project</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/">Главная</a></li>
+                <li><a href="/solutions">Решения</a></li>
+                <li><a href="/education">Образование</a></li>
+                <li><a href="/research">Исследования</a></li>
+                <li><a href="/news" class="active">Новости</a></li>
+                <li><a href="/about">О нас</a></li>
             </ul>
-        </section>
+        </div>
+    </nav>
 
-        <section>
-            <h2>🌍 Международные стандарты</h2>
-            <p>WebNews разрабатывается в соответствии с международными стандартами, такими как:</p>
-            <ul>
-                <li><a href="https://www.w3.org/TR/html52/" target="_blank" rel="noopener noreferrer">HTML5 и W3C</a> — современные стандарты веб-разработки.</li>
-                <li><a href="https://www.w3.org/WAI/" target="_blank" rel="noopener noreferrer">WCAG</a> — доступность контента для всех пользователей.</li>
-                <li><a href="https://schema.org/" target="_blank" rel="noopener noreferrer">Schema.org</a> — разметка данных для SEO.</li>
-            </ul>
-        </section>
+    <!-- Основное содержимое -->
+    <main class="about-page">
+        <div class="container">
+            <!-- Хлебные крошки -->
+            <nav class="breadcrumbs">
+                <a href="/">Главная</a>
+                <span>/</span>
+                <a href="/news">Новости</a>
+                <span>/</span>
+                <span>О HW News</span>
+            </nav>
 
-        <section>
-            <h2>📬 Контакты</h2>
-            <p>Если у вас есть предложения или новости, которые стоит опубликовать, свяжитесь с нами через <a href="webnewscontacts.html" rel="noopener noreferrer">форму обратной связи</a>.</p>
-        </section>
+            <article class="about-content">
+                <header class="page-header">
+                    <h1><span class="highlight">HW News</span> — официальный новостной портал</h1>
+                    <p class="subtitle">Все самые свежие и актуальные новости о платформе HW Project</p>
+                </header>
+
+                <section class="about-section">
+                    <div class="about-card">
+                        <div class="about-icon">📢</div>
+                        <h2>Что такое HW News?</h2>
+                        <p><strong>HW News</strong> — это централизованный информационный ресурс, публикующий эксклюзивные новости о развитии платформы HW Project, технологических прорывах и важных обновлениях.</p>
+                    </div>
+                </section>
+
+                <section class="about-section">
+                    <h2 class="section-title">🔍 Основные особенности</h2>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">📰</div>
+                            <h3>Эксклюзивные новости</h3>
+                            <p>Первоисточник информации о всех изменениях в экосистеме HW Project</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">💡</div>
+                            <h3>Глубокий анализ</h3>
+                            <p>Подробные разборы новых функций и технологий с примерами использования</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">📢</div>
+                            <h3>Анонсы релизов</h3>
+                            <p>Официальная информация о предстоящих обновлениях и изменениях</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">👥</div>
+                            <h3>Интервью</h3>
+                            <p>Эксклюзивные беседы с разработчиками и лидерами сообщества</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="about-section">
+                    <div class="about-card">
+                        <div class="about-icon">🎯</div>
+                        <h2>Для кого создан HW News?</h2>
+                        <p>Наш портал будет полезен:</p>
+                        <ul class="styled-list">
+                            <li><strong>Разработчикам</strong>, использующим технологии HW Project</li>
+                            <li><strong>Техническим руководителям</strong>, следящим за развитием платформы</li>
+                            <li><strong>Студентам</strong> образовательных программ HW Academy</li>
+                            <li><strong>Всем интересующимся</strong> современными IT-технологиями</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="about-section cta-section">
+                    <div class="cta-card">
+                        <h2>Хотите быть в курсе всех новостей?</h2>
+                        <p>Подпишитесь на наши официальные каналы, чтобы не пропустить важные обновления</p>
+                        <div class="cta-buttons">
+                            <a href="https://t.me/hwproject_news" class="btn btn-primary" target="_blank">
+                                Telegram-канал
+                            </a>
+                            <a href="/news/subscribe" class="btn btn-secondary">
+                                Email-рассылка
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </article>
+        </div>
     </main>
 
-    <footer>
-        <p>&copy; 2025 WebNews. Все права защищены.</p>
-        <p>Поддерживаем <a href="https://www.w3.org/" target="_blank" rel="noopener noreferrer">международные веб-стандарты</a>.</p>
+    <!-- Футер -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="footer-logo">
+                        <svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 0C8.96 0 0 8.96 0 20C0 31.04 8.96 40 20 40C31.04 40 40 31.04 40 20C40 8.96 31.04 0 20 0ZM16 30H12V16H16V30ZM28 30H24V16H28V30Z" fill="#3b82f6"/>
+                        </svg>
+                        <span>HW Project</span>
+                    </a>
+                    <p class="footer-description">
+                        Мультидисциплинарная технологическая платформа
+                    </p>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Ресурсы</h3>
+                    <ul>
+                        <li><a href="/news">Новости</a></li>
+                        <li><a href="/blog">Блог</a></li>
+                        <li><a href="/docs">Документация</a></li>
+                        <li><a href="/roadmap">Дорожная карта</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Сообщество</h3>
+                    <ul>
+                        <li><a href="https://t.me/hwproject_chat" target="_blank">Telegram-чат</a></li>
+                        <li><a href="https://github.com/hwproject" target="_blank">GitHub</a></li>
+                        <li><a href="/events">Мероприятия</a></li>
+                        <li><a href="/contribute">Вклад в проект</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li><a href="mailto:news@hwproject.com">news@hwproject.com</a></li>
+                        <li><a href="https://t.me/hwproject_news" target="_blank">Новостной канал</a></li>
+                        <li><a href="/contacts">Обратная связь</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-legal">
+                    <a href="/privacy">Конфиденциальность</a>
+                    <a href="/terms">Условия</a>
+                    <a href="/cookies">Cookies</a>
+                </div>
+                <div class="footer-copyright">
+                    <p>&copy; 2025 HW Project. Все права защищены.</p>
+                </div>
+            </div>
+        </div>
     </footer>
 
-    <script src="webnews/js/main.js"></script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Скрипты -->
+    <script src="/js/main.js"></script>
+    <script>
+        // Инициализация бегущей строки и кнопки закрытия
+        document.querySelector('.notice-close')?.addEventListener('click', function() {
+            document.querySelector('.global-notice').style.display = 'none';
+            localStorage.setItem('noticeClosed', 'true');
+        });
+
+        // Проверяем, было ли уведомление закрыто ранее
+        if (localStorage.getItem('noticeClosed') === 'true') {
+            document.querySelector('.global-notice').style.display = 'none';
+        }
+    </script>
 </body>
 </html>

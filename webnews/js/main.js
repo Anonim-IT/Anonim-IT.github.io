@@ -1,14 +1,13 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    await loadNews();
     await loadNavbar();
+    await loadCategories();
+    await loadNews();
     setupFormHandlers();
     setupBetaTestToggle();
-    await loadCategories(); // Загружаем категории
-    await loadNews(); // Загружаем новости
 });
 
 /**
- * Загружает категории из JSON и создает навигацию по ним.
+ * Загружает категории из JSON и создает навигацию по ним
  */
 async function loadCategories() {
     try {
@@ -16,24 +15,18 @@ async function loadCategories() {
         if (!response.ok) throw new Error("Ошибка загрузки данных");
 
         const { news } = await response.json();
-        const categories = new Set(news.map(item => item.category)); // Уникальные категории
+        const categories = [...new Set(news.map(item => item.category))]; // Уникальные категории
 
         const categoryContainer = document.createElement("div");
-        categoryContainer.id = "category-container";
+        categoryContainer.className = "category-container";
 
         // Кнопка "Все новости"
-        const allButton = document.createElement("button");
-        allButton.textContent = "Все новости";
-        allButton.classList.add("category-btn", "active");
-        allButton.dataset.category = "all";
+        const allButton = createCategoryButton("Все новости", "all", true);
         categoryContainer.appendChild(allButton);
 
         // Создаем кнопки для каждой категории
         categories.forEach(category => {
-            const button = document.createElement("button");
-            button.textContent = category;
-            button.classList.add("category-btn");
-            button.dataset.category = category;
+            const button = createCategoryButton(category, category);
             categoryContainer.appendChild(button);
         });
 
@@ -44,18 +37,33 @@ async function loadCategories() {
         // Добавляем обработчики событий
         document.querySelectorAll(".category-btn").forEach(button => {
             button.addEventListener("click", function () {
-                document.querySelectorAll(".category-btn").forEach(btn => btn.classList.remove("active"));
+                document.querySelectorAll(".category-btn").forEach(btn => 
+                    btn.classList.remove("active")
+                );
                 this.classList.add("active");
                 filterNews(this.dataset.category);
             });
         });
+
     } catch (error) {
         console.error("Ошибка загрузки категорий:", error);
+        showError("Не удалось загрузить категории новостей");
     }
 }
 
 /**
- * Загружает и рендерит новости на страницу.
+ * Создает кнопку категории
+ */
+function createCategoryButton(text, category, isActive = false) {
+    const button = document.createElement("button");
+    button.textContent = text;
+    button.className = `category-btn ${isActive ? 'active' : ''}`;
+    button.dataset.category = category;
+    return button;
+}
+
+/**
+ * Загружает и рендерит новости на страницу
  */
 async function loadNews() {
     try {
@@ -66,88 +74,156 @@ async function loadNews() {
         const newsContainer = document.getElementById("news-container");
         newsContainer.innerHTML = "";
 
+        if (news.length === 0) {
+            newsContainer.innerHTML = `
+                <div class="empty-state">
+                    <img src="webnews/assets/no-news.svg" alt="Нет новостей">
+                    <h3>Новостей пока нет</h3>
+                    <p>Следите за обновлениями, скоро здесь появятся свежие материалы</p>
+                </div>
+            `;
+            return;
+        }
+
         news.forEach(item => {
-            const newsItem = document.createElement("div");
-            newsItem.classList.add("news-item");
-            newsItem.dataset.category = item.category; // Для фильтрации
+            const newsItem = document.createElement("article");
+            newsItem.className = "news-card";
+            newsItem.dataset.category = item.category;
 
-            // Создаем элементы новости
-            const img = document.createElement("img");
-            img.src = item.image;
-            img.alt = item.title;
-
-            const title = document.createElement("h2");
-            title.textContent = item.title;
-
-            const summary = document.createElement("p");
-            summary.textContent = item.summary;
-
-            const content = document.createElement("p");
-            content.textContent = item.content;
-            content.classList.add("hidden"); // Скрытый текст новости
-
-            const metaInfo = document.createElement("div");
-            metaInfo.classList.add("news-meta");
-            metaInfo.innerHTML = `
-                <span>${formatDate(item.date)}</span>
-                <span> | ${item.author}</span>
-                <span> | ${item.category}</span>
+            newsItem.innerHTML = `
+                <div class="news-card__header">
+                    <img src="${item.image}" alt="${item.title}" class="news-card__image">
+                    <div class="news-card__badge">${item.category}</div>
+                </div>
+                <div class="news-card__body">
+                    <div class="news-card__meta">
+                        <time datetime="${item.date}">${formatDate(item.date)}</time>
+                        <span>•</span>
+                        <span class="news-card__author">${item.author}</span>
+                    </div>
+                    <h2 class="news-card__title">${item.title}</h2>
+                    <p class="news-card__excerpt">${item.summary}</p>
+                    <div class="news-card__content hidden">${item.content}</div>
+                    <button class="news-card__toggle">Читать дальше</button>
+                </div>
             `;
 
-            // Кнопка "Читать дальше"
-            const readMoreBtn = document.createElement("button");
-            readMoreBtn.textContent = "Читать дальше";
-            readMoreBtn.classList.add("read-more-btn");
-            readMoreBtn.addEventListener("click", () => {
+            // Добавляем обработчик для кнопки "Читать дальше"
+            const toggleBtn = newsItem.querySelector(".news-card__toggle");
+            const content = newsItem.querySelector(".news-card__content");
+            
+            toggleBtn.addEventListener("click", () => {
                 content.classList.toggle("hidden");
-                readMoreBtn.textContent = content.classList.contains("hidden") ? "Читать дальше" : "Скрыть";
+                toggleBtn.textContent = content.classList.contains("hidden") 
+                    ? "Читать дальше" 
+                    : "Свернуть";
             });
 
-            // Добавляем в контейнер
-            newsItem.append(img, title, summary, metaInfo, readMoreBtn, content);
             newsContainer.appendChild(newsItem);
         });
+
     } catch (error) {
         console.error("Ошибка загрузки новостей:", error);
+        showError("Не удалось загрузить новости. Попробуйте обновить страницу.");
     }
 }
 
 /**
- * Фильтрует новости по категориям.
+ * Фильтрует новости по категориям
  */
 function filterNews(category) {
-    const newsItems = document.querySelectorAll(".news-item");
+    const newsItems = document.querySelectorAll(".news-card");
+    let visibleCount = 0;
 
     newsItems.forEach(item => {
-        item.style.display = category === "all" || item.dataset.category === category ? "block" : "none";
+        const shouldShow = category === "all" || item.dataset.category === category;
+        item.style.display = shouldShow ? "block" : "none";
+        if (shouldShow) visibleCount++;
     });
+
+    // Показываем сообщение, если нет новостей в категории
+    const newsContainer = document.getElementById("news-container");
+    const emptyState = newsContainer.querySelector(".empty-state");
+    
+    if (visibleCount === 0) {
+        if (!emptyState) {
+            newsContainer.innerHTML = `
+                <div class="empty-state">
+                    <img src="webnews/assets/no-news.svg" alt="Нет новостей">
+                    <h3>Новостей в этой категории нет</h3>
+                    <p>Попробуйте выбрать другую категорию или зайдите позже</p>
+                </div>
+            `;
+        }
+    } else if (emptyState) {
+        emptyState.remove();
+    }
 }
 
 /**
- * Преобразует дату в читаемый формат.
+ * Форматирует дату в читаемый вид
  */
 function formatDate(isoString) {
-    const options = { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" };
-    return new Date(isoString).toLocaleDateString("ru-RU", options);
+    const date = new Date(isoString);
+    const options = { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    };
+    return date.toLocaleDateString('ru-RU', options);
 }
 
 /**
- * Загружает навигационное меню из внешнего файла.
+ * Показывает сообщение об ошибке
+ */
+function showError(message) {
+    const errorElement = document.createElement("div");
+    errorElement.className = "error-message";
+    errorElement.innerHTML = `
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="currentColor"/>
+        </svg>
+        <span>${message}</span>
+    `;
+    
+    const container = document.getElementById("news-container") || document.body;
+    container.prepend(errorElement);
+    
+    // Автоматическое скрытие через 5 секунд
+    setTimeout(() => {
+        errorElement.classList.add("fade-out");
+        setTimeout(() => errorElement.remove(), 300);
+    }, 5000);
+}
+
+/**
+ * Загружает навигационное меню
  */
 async function loadNavbar() {
     try {
         const response = await fetch("webnews/nav/navbar.html");
-        if (!response.ok) throw new Error("Ошибка загрузки навигационной панели");
+        if (!response.ok) throw new Error("Ошибка загрузки навигации");
 
         const navbarContainer = document.getElementById("navbar-container");
         navbarContainer.innerHTML = await response.text();
+        
+        // Активируем текущую страницу в навигации
+        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('.nav-link').forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active');
+            }
+        });
+        
     } catch (error) {
-        console.error("Ошибка при загрузке навигационной панели:", error);
+        console.error("Ошибка при загрузке навигации:", error);
     }
 }
 
 /**
- * Настраивает обработчики для формы отправки сообщений.
+ * Настраивает обработчики формы
  */
 function setupFormHandlers() {
     const form = document.getElementById("contact-form");
@@ -155,102 +231,99 @@ function setupFormHandlers() {
 
     form.addEventListener("submit", async function (event) {
         event.preventDefault();
-
-        const botToken = "7745335635:AAGbPdzXplwqbMky-xgJ9KOhsWln5z6toYo";  // Токен бота (замените на безопасный метод хранения)
-        const chatId = "250356592";  // Твой chat_id
-
-        const name = document.getElementById("name").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const message = document.getElementById("message").value.trim();
-        const betaTest = document.getElementById("beta-test").checked ? "✅ Участвует в бета-тесте" : "❌ Не участвует в бета-тесте";
-
-        if (!name || !message) {
-            showStatus("❌ Заполните все обязательные поля!", "red");
-            return;
-        }
-
-        const text = `🆕 *WebNews Запрос:*\n\n` +
-                     `📝 *Имя:* ${name}\n` +
-                     `📧 *Email:* ${email || "Не указан"}\n` +
-                     `💬 *Сообщение:* ${message}\n` +
-                     `🚀 *Бета-тестирование:* ${betaTest}`;
+        
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner"></span> Отправка...';
 
         try {
-            const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: text,
-                    parse_mode: "Markdown"
-                })
-            });
-
-            const result = await response.json();
-            if (result.ok) {
-                showStatus("✅ Сообщение отправлено!", "green");
-                form.reset();
-            } else {
-                showStatus("❌ Ошибка отправки: " + result.description, "red");
-            }
+            await sendFormData(new FormData(form));
+            showFormStatus("Сообщение успешно отправлено!", "success");
+            form.reset();
         } catch (error) {
-            showStatus("❌ Ошибка соединения: " + error.message, "red");
+            showFormStatus(error.message, "error");
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
         }
     });
 }
 
 /**
- * Показывает статус отправки сообщения.
- * @param {string} message Текст сообщения
- * @param {string} color Цвет текста
+ * Отправляет данные формы
  */
-function showStatus(message, color) {
-    const statusMessage = document.getElementById("status");
-    statusMessage.textContent = message;
-    statusMessage.style.color = color;
+async function sendFormData(formData) {
+    // Здесь должна быть ваша логика отправки данных
+    // Например, через Telegram Bot API или на сервер
+    
+    // Имитация задержки сети
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // В реальном коде замените на реальный запрос:
+    /*
+    const response = await fetch('your-endpoint', {
+        method: 'POST',
+        body: formData
+    });
+    
+    if (!response.ok) {
+        throw new Error('Ошибка отправки формы');
+    }
+    */
+    
+    return true;
 }
 
 /**
- * Настраивает поведение чекбокса "Участвовать в бета-тесте".
+ * Показывает статус отправки формы
+ */
+function showFormStatus(message, type) {
+    const statusElement = document.getElementById("form-status") || createStatusElement();
+    statusElement.textContent = message;
+    statusElement.className = `form-status ${type}`;
+    
+    setTimeout(() => {
+        statusElement.classList.add("fade-out");
+        setTimeout(() => statusElement.remove(), 300);
+    }, 5000);
+}
+
+function createStatusElement() {
+    const element = document.createElement("div");
+    element.id = "form-status";
+    document.getElementById("contact-form")?.appendChild(element);
+    return element;
+}
+
+/**
+ * Настраивает переключатель бета-теста
  */
 function setupBetaTestToggle() {
     const betaTestCheckbox = document.getElementById("beta-test");
     const emailField = document.getElementById("email");
-    const emailContainer = document.getElementById("email-container");
-    const emailLabel = document.getElementById("email-label");
+    
+    if (!betaTestCheckbox || !emailField) return;
 
-    if (!betaTestCheckbox || !emailField || !emailContainer || !emailLabel) return;
-
-    function toggleEmailField() {
-        if (betaTestCheckbox.checked) {
-            emailContainer.style.display = "none";
-            emailField.disabled = true;
-            emailField.required = false;
-            emailLabel.style.opacity = "0.5";
-        } else {
-            emailContainer.style.display = "block";
-            emailField.disabled = false;
-            emailField.required = true;
-            emailLabel.style.opacity = "1";
-        }
-    }
-
-    betaTestCheckbox.addEventListener("change", function () {
-        toggleEmailField();
+    betaTestCheckbox.addEventListener("change", function() {
+        emailField.disabled = this.checked;
+        emailField.required = !this.checked;
+        
         if (this.checked) {
-            alert("⚠️ Внимание! Если вы участвуете в бета-тесте, вводить email не нужно.");
+            showBetaTestInfo();
         }
     });
+}
 
-    document.getElementById("contact-form").addEventListener("submit", function (event) {
-        if (betaTestCheckbox.checked) {
-            const confirmBeta = confirm("Вы уверены, что хотите участвовать в бета-тесте?");
-            if (!confirmBeta) {
-                betaTestCheckbox.checked = false;
-                event.preventDefault();
-            }
-        }
-    });
-
-    toggleEmailField();
+function showBetaTestInfo() {
+    const infoBox = document.createElement("div");
+    infoBox.className = "beta-info";
+    infoBox.innerHTML = `
+        <h4>Участие в бета-тестировании</h4>
+        <p>Вы получите ранний доступ к новым функциям, но можете столкнуться с нестабильной работой системы.</p>
+    `;
+    
+    const container = document.getElementById("beta-container") || 
+                      document.getElementById("contact-form");
+    container?.appendChild(infoBox);
 }
