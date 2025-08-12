@@ -4,24 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HW Project | Технические работы</title>
-
-    <!-- SEO и мета-теги -->
-    <meta name="description" content="HW Project временно недоступен из-за технических работ">
+    
+    <meta name="description" content="HW Project временно недоступен из-за плановых технических работ">
     <meta name="robots" content="noindex, nofollow">
-    <meta http-equiv="refresh" content="3600"> <!-- Автообновление каждый час -->
-
+    
     <style>
         :root {
             --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1e40af;
             --dark: #0f172a;
             --light: #f8fafc;
             --surface: #1e293b;
+            --success: #10b981;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        @font-face {
+            font-family: 'Inter';
+            src: url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         }
 
         body {
@@ -37,22 +43,42 @@
             padding: 20px;
             line-height: 1.6;
             background-image: 
-                radial-gradient(circle at 25% 25%, rgba(37, 99, 235, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, rgba(37, 99, 235, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.15) 0%, transparent 25%),
+                radial-gradient(circle at 90% 80%, rgba(37, 99, 235, 0.15) 0%, transparent 25%);
         }
 
         .maintenance-container {
             max-width: 600px;
             padding: 40px;
             background-color: var(--surface);
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .maintenance-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
         }
 
         h1 {
-            color: var(--primary);
-            margin-bottom: 20px;
-            font-size: 2rem;
+            color: var(--primary-light);
+            margin-bottom: 24px;
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .logo {
@@ -60,44 +86,121 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 30px;
-            gap: 10px;
-            font-size: 1.8rem;
+            gap: 12px;
+            font-size: 2rem;
             font-weight: 700;
         }
 
         .logo svg {
-            width: 40px;
-            height: 40px;
+            width: 48px;
+            height: 48px;
             color: var(--primary);
+            animation: pulse 2s infinite;
         }
 
         p {
             margin-bottom: 20px;
             font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .progress-container {
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
+        .time-container {
+            background: rgba(59, 130, 246, 0.15);
+            border-radius: 12px;
+            padding: 25px;
             margin: 30px 0;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            position: relative;
             overflow: hidden;
         }
 
-        .progress-bar {
-            height: 10px;
-            background-color: var(--primary);
-            width: 0;
-            border-radius: 8px;
-            transition: width 1s ease;
+        .time-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            animation: shine 3s infinite;
         }
 
-        .status {
+        .time-title {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .time-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin: 10px 0;
+        }
+
+        .time-details {
             display: flex;
-            justify-content: space-between;
-            margin-top: 5px;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .time-detail {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        .time-note {
             font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.7);
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        .update-details {
+            text-align: left;
+            margin: 25px 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .update-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .update-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--primary);
+        }
+
+        .item-icon {
+            margin-right: 12px;
+            font-size: 1.2rem;
+            color: var(--primary-light);
         }
 
         .social-links {
@@ -109,34 +212,80 @@
 
         .social-link {
             color: var(--light);
-            background: rgba(255, 255, 255, 0.1);
-            width: 40px;
-            height: 40px;
+            background: rgba(255, 255, 255, 0.08);
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .social-link:hover {
             background: var(--primary);
             transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
         }
 
-        .countdown {
-            font-size: 1.2rem;
-            margin: 20px 0;
-            font-weight: 600;
-            color: var(--primary);
+        .system-info {
+            margin-top: 25px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
         }
 
-        @media (max-width: 600px) {
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
             .maintenance-container {
                 padding: 30px 20px;
+                width: 95%;
             }
+            
             h1 {
-                font-size: 1.5rem;
+                font-size: 1.8rem;
+            }
+            
+            .logo {
+                font-size: 1.6rem;
+            }
+            
+            .logo svg {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .time-value {
+                font-size: 2rem;
+            }
+            
+            .time-details {
+                gap: 10px;
+            }
+            
+            .time-detail {
+                padding: 6px 10px;
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -150,82 +299,152 @@
             <span>HW Project</span>
         </div>
 
-        <h1>Идут технические работы</h1>
+        <h1>Идут плановые технические работы</h1>
         
-        <p>Мы улучшаем наш проект, чтобы предложить вам лучший опыт. Приносим извинения за временные неудобства.</p>
+        <p>Мы обновляем систему, чтобы предложить вам улучшенную производительность и новые возможности. Приносим извинения за временные неудобства.</p>
         
-        <div class="progress-container">
-            <div class="progress-bar" id="progress-bar"></div>
-            <div class="status">
-                <span>Обновление системы</span>
-                <span id="progress-text">0%</span>
+        <div class="time-container">
+            <div class="time-title">Ориентировочное время завершения</div>
+            <div class="time-value" id="time-estimate">15 августа, 18:00</div>
+            
+            <div class="time-details">
+                <div class="time-detail" id="days-left">2 дня</div>
+                <div class="time-detail" id="hours-left">12 часов</div>
+                <div class="time-detail" id="minutes-left">45 минут</div>
             </div>
+            
+            <div class="time-note">До завершения работ осталось: <span id="time-left"></span></div>
         </div>
 
-        <div class="countdown" id="countdown">
-            Ориентировочное время завершения: <span id="time-estimate">~1 час</span>
-        </div>
-
-        <p>Следите за нашими соцсетями, чтобы быть в курсе обновлений:</p>
+        <ul class="update-details">
+            <li class="update-item">
+                <span class="item-icon">🛠️</span>
+                <span>Обновление серверной инфраструктуры</span>
+            </li>
+            <li class="update-item">
+                <span class="item-icon">⚡</span>
+                <span>Оптимизация производительности</span>
+            </li>
+            <li class="update-item">
+                <span class="item-icon">🔒</span>
+                <span>Улучшения безопасности</span>
+            </li>
+            <li class="update-item">
+                <span class="item-icon">✨</span>
+                <span>Подготовка новых функций</span>
+            </li>
+        </ul>
+        
+        <p>Следите за нашими соцсетями для получения обновлений:</p>
         
         <div class="social-links">
-            <a href="https://t.me/HackWeb_25" class="social-link" aria-label="Telegram">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM16.64 8.8C16.49 10.38 15.84 14.22 15.51 15.99C15.37 16.74 15.09 16.99 14.83 17.02C14.25 17.07 13.81 16.63 13.25 16.25C12.37 15.69 11.87 15.33 11.02 14.8C10.03 14.18 10.67 13.85 11.24 13.25C11.39 13.1 13.95 10.7 14 10.49C14.0069 10.4582 14.006 10.4252 13.9973 10.3938C13.9886 10.3624 13.9724 10.3337 13.95 10.31C13.89 10.26 13.81 10.28 13.74 10.29C13.65 10.31 12.25 11.24 9.52 13.08C9.12 13.35 8.76 13.49 8.44 13.48C8.08 13.47 7.4 13.28 6.89 13.11C6.26 12.91 5.77 12.8 5.81 12.45C5.83 12.27 6.08 12.09 6.55 11.9C9.47 10.63 11.41 9.79 12.38 9.39C15.16 8.23 15.73 8.03 16.11 8.03C16.19 8.03 16.38 8.05 16.5 8.15C16.6 8.23 16.63 8.34 16.64 8.42C16.63 8.48 16.65 8.66 16.64 8.8Z"/></svg>
+            <a href="https://t.me/HackWeb_25" class="social-link" aria-label="Telegram" target="_blank">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM16.64 8.8C16.49 10.38 15.84 14.22 15.51 15.99C15.37 16.74 15.09 16.99 14.83 17.02C14.25 17.07 13.81 16.63 13.25 16.25C12.37 15.69 11.87 15.33 11.02 14.8C10.03 14.18 10.67 13.85 11.24 13.25C11.39 13.1 13.95 10.7 14 10.49C14.0069 10.4582 14.006 10.4252 13.9973 10.3938C13.9886 10.3624 13.9724 10.3337 13.95 10.31C13.89 10.26 13.81 10.28 13.74 10.29C13.65 10.31 12.25 11.24 9.52 13.08C9.12 13.35 8.76 13.49 8.44 13.48C8.08 13.47 7.4 13.28 6.89 13.11C6.26 12.91 5.77 12.8 5.81 12.45C5.83 12.27 6.08 12.09 6.55 11.9C9.47 10.63 11.41 9.79 12.38 9.39C15.16 8.23 15.73 8.03 16.11 8.03C16.19 8.03 16.38 8.05 16.5 8.15C16.6 8.23 16.63 8.34 16.64 8.42C16.63 8.48 16.65 8.66 16.64 8.8Z"/></svg>
             </a>
-            <a href="#" class="social-link" aria-label="Vk">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M14.82 4.26C14.06 4.05 13.28 3.91 12.5 3.84C12.42 4.16 12.34 4.48 12.24 4.8C11.42 4.66 10.6 4.59 9.78 4.59C9 4.59 8.22 4.66 7.44 4.8C7.34 4.47 7.26 4.15 7.18 3.83C6.4 3.9 5.62 4.04 4.86 4.26C2.92 6.7 2.26 9.05 2.5 11.4C3.58 12.67 4.74 13.7 6 14.46C6.38 14.76 6.78 15.03 7.18 15.28C7.24 15.32 7.3 15.36 7.36 15.39C7.8 15.67 8.24 15.92 8.7 16.14C8.72 16.15 8.74 16.16 8.76 16.17C9.64 16.56 10.56 16.86 11.5 17.06C11.54 17.07 11.58 17.08 11.62 17.09C11.9 17.14 12.18 17.19 12.46 17.23C12.78 17.28 13.1 17.32 13.42 17.35C13.94 17.4 14.46 17.43 15 17.43C15.5 17.43 16 17.4 16.5 17.35C16.82 17.32 17.14 17.28 17.46 17.23C17.74 17.19 18.02 17.14 18.3 17.09C18.34 17.08 18.38 17.07 18.42 17.06C19.36 16.86 20.28 16.56 21.16 16.17C21.18 16.16 21.2 16.15 21.22 16.14C21.68 15.92 22.12 15.67 22.56 15.39C22.62 15.36 22.68 15.32 22.74 15.28C23.14 15.03 23.54 14.76 23.92 14.46C25.18 13.7 26.34 12.67 27.42 11.4C27.74 8.15 26.52 5.11 23.06 4.26C22.3 4.05 21.52 3.91 20.74 3.84C20.66 4.16 20.58 4.48 20.48 4.8C19.66 4.66 18.84 4.59 18.02 4.59C17.2 4.59 16.38 4.66 15.56 4.8C15.46 4.47 15.38 4.15 15.3 3.83C14.52 3.9 13.74 4.04 12.98 4.26H12.96ZM8.5 14C7.4 14 6.5 13.1 6.5 12C6.5 10.9 7.4 10 8.5 10C9.6 10 10.5 10.9 10.5 12C10.5 13.1 9.6 14 8.5 14ZM17.5 14C16.4 14 15.5 13.1 15.5 12C15.5 10.9 16.4 10 17.5 10C18.6 10 19.5 10.9 19.5 12C19.5 13.1 18.6 14 17.5 14Z"/></svg>
+            <a href="https://t.me/time_zoneHW" class="social-link" aria-label="Telegram" target="_blank">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM16.64 8.8C16.49 10.38 15.84 14.22 15.51 15.99C15.37 16.74 15.09 16.99 14.83 17.02C14.25 17.07 13.81 16.63 13.25 16.25C12.37 15.69 11.87 15.33 11.02 14.8C10.03 14.18 10.67 13.85 11.24 13.25C11.39 13.1 13.95 10.7 14 10.49C14.0069 10.4582 14.006 10.4252 13.9973 10.3938C13.9886 10.3624 13.9724 10.3337 13.95 10.31C13.89 10.26 13.81 10.28 13.74 10.29C13.65 10.31 12.25 11.24 9.52 13.08C9.12 13.35 8.76 13.49 8.44 13.48C8.08 13.47 7.4 13.28 6.89 13.11C6.26 12.91 5.77 12.8 5.81 12.45C5.83 12.27 6.08 12.09 6.55 11.9C9.47 10.63 11.41 9.79 12.38 9.39C15.16 8.23 15.73 8.03 16.11 8.03C16.19 8.03 16.38 8.05 16.5 8.15C16.6 8.23 16.63 8.34 16.64 8.42C16.63 8.48 16.65 8.66 16.64 8.8Z"/></svg>
             </a>
-            <a href="#" class="social-link" aria-label="Twitter">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22.162 5.656a8.384 8.384 0 01-2.402.658A4.196 4.196 0 0021.6 4c-.82.488-1.719.83-2.656 1.015a4.182 4.182 0 00-7.126 3.814 11.874 11.874 0 01-8.62-4.37 4.168 4.168 0 00-.566 2.103c0 1.45.738 2.731 1.86 3.481a4.168 4.168 0 01-1.894-.523v.052a4.185 4.185 0 003.355 4.101 4.21 4.21 0 01-1.89.072A4.185 4.185 0 007.97 16.65a8.394 8.394 0 01-6.191 1.732 11.83 11.83 0 006.41 1.88c7.693 0 11.9-6.373 11.9-11.9 0-.18-.005-.362-.013-.54a8.496 8.496 0 002.087-2.165z"/></svg>
+            <a href="https://vk.com/hw_project_vk" class="social-link" aria-label="VK" target="_blank">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M14.82 4.26C14.06 4.05 13.28 3.91 12.5 3.84C12.42 4.16 12.34 4.48 12.24 4.8C11.42 4.66 10.6 4.59 9.78 4.59C9 4.59 8.22 4.66 7.44 4.8C7.34 4.47 7.26 4.15 7.18 3.83C6.4 3.9 5.62 4.04 4.86 4.26C2.92 6.7 2.26 9.05 2.5 11.4C3.58 12.67 4.74 13.7 6 14.46C6.38 14.76 6.78 15.03 7.18 15.28C7.24 15.32 7.3 15.36 7.36 15.39C7.8 15.67 8.24 15.92 8.7 16.14C8.72 16.15 8.74 16.16 8.76 16.17C9.64 16.56 10.56 16.86 11.5 17.06C11.54 17.07 11.58 17.08 11.62 17.09C11.9 17.14 12.18 17.19 12.46 17.23C12.78 17.28 13.1 17.32 13.42 17.35C13.94 17.4 14.46 17.43 15 17.43C15.5 17.43 16 17.4 16.5 17.35C16.82 17.32 17.14 17.28 17.46 17.23C17.74 17.19 18.02 17.14 18.3 17.09C18.34 17.08 18.38 17.07 18.42 17.06C19.36 16.86 20.28 16.56 21.16 16.17C21.18 16.16 21.2 16.15 21.22 16.14C21.68 15.92 22.12 15.67 22.56 15.39C22.62 15.36 22.68 15.32 22.74 15.28C23.14 15.03 23.54 14.76 23.92 14.46C25.18 13.7 26.34 12.67 27.42 11.4C27.74 8.15 26.52 5.11 23.06 4.26C22.3 4.05 21.52 3.91 20.74 3.84C20.66 4.16 20.58 4.48 20.48 4.8C19.66 4.66 18.84 4.59 18.02 4.59C17.2 4.59 16.38 4.66 15.56 4.8C15.46 4.47 15.38 4.15 15.3 3.83C14.52 3.9 13.74 4.04 12.98 4.26H12.96ZM8.5 14C7.4 14 6.5 13.1 6.5 12C6.5 10.9 7.4 10 8.5 10C9.6 10 10.5 10.9 10.5 12C10.5 13.1 9.6 14 8.5 14ZM17.5 14C16.4 14 15.5 13.1 15.5 12C15.5 10.9 16.4 10 17.5 10C18.6 10 19.5 10.9 19.5 12C19.5 13.1 18.6 14 17.5 14Z"/></svg>
             </a>
+        </div>
+        
+        <div class="system-info">
+            Время начала работ: <span id="start-time"></span> | Версия системы: HW Project v3.2.1
         </div>
     </div>
 
     <script>
-        // Анимация прогресс-бара
-        let progress = 0;
-        const progressBar = document.getElementById('progress-bar');
-        const progressText = document.getElementById('progress-text');
+        // Установка времени начала работ
+        const now = new Date();
+        document.getElementById('start-time').textContent = 
+            `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
         
-        // Случайное время завершения от 30 до 90 минут
-        const randomMinutes = Math.floor(Math.random() * 90) + 30;
-        document.getElementById('time-estimate').textContent = `~${randomMinutes} мин`;
+        // Статическое время окончания работ (15 августа 18:00 текущего года)
+        const endDate = new Date();
+        endDate.setMonth(7); // Август (0-11)
+        endDate.setDate(15);
+        endDate.setHours(18, 0, 0, 0);
         
-        // Обновление каждые 5 секунд
-        const progressInterval = setInterval(() => {
-            progress += Math.floor(Math.random() * 20) + 1;
+        // Если указанная дата уже прошла в этом году, устанавливаем на следующий год
+        if (endDate < now) {
+            endDate.setFullYear(endDate.getFullYear() + 1);
+        }
+        
+        // Форматируем дату окончания
+        const options = { month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+        document.getElementById('time-estimate').textContent = 
+            endDate.toLocaleDateString('ru-RU', options);
+        
+        // Функция обновления оставшегося времени
+        function updateTimeLeft() {
+            const now = new Date();
+            const diff = endDate - now;
             
-            if (progress > 100) {
-                progress = 100;
-                clearInterval(progressInterval);
-            }
-            
-            progressBar.style.width = `${progress}%`;
-            progressText.textContent = `${progress}%`;
-            
-            // Если прогресс 100%, обновляем страницу
-            if (progress === 100) {
+            if (diff <= 0) {
+                // Работы завершены
+                document.getElementById('days-left').textContent = '0 дней';
+                document.getElementById('hours-left').textContent = '0 часов';
+                document.getElementById('minutes-left').textContent = '0 минут';
+                document.getElementById('time-left').textContent = 'работы завершены';
+                
+                // Предложить обновить страницу
                 setTimeout(() => {
-                    window.location.reload();
-                }, 3000);
+                    if (confirm("Технические работы завершены. Обновить страницу?")) {
+                        window.location.reload();
+                    }
+                }, 5000);
+                return;
             }
-        }, 5000);
-        
-        // Обновление таймера каждую минуту
-        let minutesLeft = randomMinutes;
-        const countdownElement = document.getElementById('countdown');
-        
-        const timerInterval = setInterval(() => {
-            minutesLeft--;
             
-            if (minutesLeft <= 0) {
-                minutesLeft = 0;
-                clearInterval(timerInterval);
-                countdownElement.innerHTML = 'Работы должны быть завершены. Страница автоматически обновится.';
-            } else {
-                document.getElementById('time-estimate').textContent = `~${minutesLeft} мин`;
-            }
-        }, 60000);
+            // Рассчитываем оставшееся время
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            
+            // Обновляем отображение
+            document.getElementById('days-left').textContent = `${days} ${declOfNum(days, ['день', 'дня', 'дней'])}`;
+            document.getElementById('hours-left').textContent = `${hours} ${declOfNum(hours, ['час', 'часа', 'часов'])}`;
+            document.getElementById('minutes-left').textContent = `${minutes} ${declOfNum(minutes, ['минута', 'минуты', 'минут'])}`;
+            
+            // Полная строка оставшегося времени
+            let timeLeftStr = '';
+            if (days > 0) timeLeftStr += `${days} ${declOfNum(days, ['день', 'дня', 'дней'])} `;
+            if (hours > 0 || days > 0) timeLeftStr += `${hours} ${declOfNum(hours, ['час', 'часа', 'часов'])} `;
+            timeLeftStr += `${minutes} ${declOfNum(minutes, ['минута', 'минуты', 'минут'])}`;
+            
+            document.getElementById('time-left').textContent = timeLeftStr;
+        }
+        
+        // Функция для склонения слов
+        function declOfNum(number, titles) {
+            const cases = [2, 0, 1, 1, 1, 2];
+            return titles[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
+        }
+        
+        // Первоначальное обновление
+        updateTimeLeft();
+        
+        // Обновляем каждую минуту
+        setInterval(updateTimeLeft, 60000);
+        
+        // Анимация пульсации при изменении времени
+        const timeElements = [
+            document.getElementById('days-left'),
+            document.getElementById('hours-left'),
+            document.getElementById('minutes-left')
+        ];
+        
+        timeElements.forEach(el => {
+            const observer = new MutationObserver(() => {
+                el.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    el.style.transform = 'scale(1)';
+                }, 300);
+            });
+            
+            observer.observe(el, { childList: true });
+        });
     </script>
 </body>
-</html>
+</html>     
