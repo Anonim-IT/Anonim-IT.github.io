@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="HW Project - инновационная мультидисциплинарная платформа с фокусом на IT-решениях, образовании и технологиях будущего">
     <meta name="keywords" content="IT платформа, веб-разработка, кибербезопасность, цифровые решения, инновации, HW проект">
-    <title>HW Project | Мультидисциплинарная технологическая платформа</title>
+    <title>HW Project | С Новым Годом! 🎄</title>
     
     <!-- Preload ресурсов -->
     <link rel="preload" href="css/main.css" as="style">
@@ -20,140 +20,386 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <!-- PWA -->
-    <meta name="theme-color" content="#0f172a">
+    <meta name="theme-color" content="#0a2a3e">
     <link rel="manifest" href="manifest.webmanifest">
+    
+    <!-- Новогодние стили -->
+    <style>
+        :root {
+            --newyear-primary: #0a2a3e;
+            --newyear-secondary: #1a3b4f;
+            --newyear-accent: #2dd4bf;
+            --newyear-gold: #fbbf24;
+            --newyear-red: #dc2626;
+            --newyear-green: #16a34a;
+            --snow-color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Анимированные снежинки */
+        .snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: var(--snow-color);
+            font-size: 1em;
+            animation-name: fall;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Новогодний декор в шапке */
+        .newyear-decoration {
+            position: absolute;
+            width: 100%;
+            height: 60px;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .garland {
+            position: absolute;
+            top: 10px;
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(90deg, 
+                var(--newyear-red) 0%, 
+                var(--newyear-green) 25%, 
+                var(--newyear-gold) 50%, 
+                var(--newyear-accent) 75%, 
+                var(--newyear-red) 100%);
+            opacity: 0.6;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.4; }
+            100% { opacity: 0.8; }
+        }
+
+        /* Обратный отсчет */
+        .countdown-section {
+            background: linear-gradient(135deg, var(--newyear-primary) 0%, #0c4a6e 100%);
+            padding: 3rem 1rem;
+            margin: 2rem 0;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--newyear-accent);
+            box-shadow: 0 10px 30px rgba(45, 212, 191, 0.2);
+        }
+
+        .countdown-section::before {
+            content: '🎄 🎅 ✨';
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 2rem;
+            opacity: 0.3;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .countdown-title {
+            text-align: center;
+            color: var(--newyear-gold);
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem 1rem;
+            min-width: 120px;
+            text-align: center;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .countdown-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--newyear-gold);
+        }
+
+        .countdown-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--newyear-gold);
+            font-family: 'JetBrains Mono', monospace;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+            line-height: 1;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            color: var(--newyear-accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Новогодние элементы в карточках */
+        .domain-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .domain-card::before {
+            content: '🎁';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .domain-card:hover::before {
+            opacity: 0.3;
+        }
+
+        .domain-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(45, 212, 191, 0.2);
+        }
+
+        /* Новогодние цвета */
+        .hero-section {
+            background: linear-gradient(135deg, var(--newyear-primary) 0%, #1e3a8a 100%);
+            position: relative;
+        }
+
+        .hero-title .highlight {
+            background: linear-gradient(90deg, var(--newyear-gold), var(--newyear-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--newyear-red), var(--newyear-green));
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(90deg, var(--newyear-green), var(--newyear-red));
+            transform: scale(1.05);
+        }
+
+        .badge {
+            background: linear-gradient(90deg, var(--newyear-accent), var(--newyear-primary));
+        }
+
+        /* Футер с новогодним стилем */
+        .main-footer {
+            background: var(--newyear-primary);
+            border-top: 3px solid var(--newyear-gold);
+            position: relative;
+        }
+
+        .main-footer::before {
+            content: '✨ С Новым 2026 Годом! ✨';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, var(--newyear-red), var(--newyear-gold), var(--newyear-green));
+            padding: 0.5rem 2rem;
+            border-radius: 20px 20px 0 0;
+            font-weight: bold;
+            color: var(--newyear-primary);
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .countdown-container {
+                gap: 1rem;
+            }
+            
+            .countdown-item {
+                min-width: 90px;
+                padding: 1rem 0.5rem;
+            }
+            
+            .countdown-number {
+                font-size: 2rem;
+            }
+            
+            .countdown-title {
+                font-size: 2rem;
+            }
+            
+            .main-footer::before {
+                font-size: 0.8rem;
+                padding: 0.5rem 1rem;
+                white-space: normal;
+                text-align: center;
+                width: 90%;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <!-- Глобное уведомление -->
-<div class="global-notice">
-    <div class="marquee-wrapper">
-        <div class="marquee-content">
-            <span>🚀 HW Project 2.0 запущен! Теперь мы - мультидисциплинарная технологическая платформа</span>
-            <span>🚀 HW Project 2.0 запущен! Теперь мы - мультидисциплинарная технологическая платформа</span>
-            <!-- Повторяем для плавного перехода -->
+    <!-- Снежинки -->
+    <div class="snowflakes" aria-hidden="true" id="snowflakes-container"></div>
+
+    <!-- Глобное уведомление с новогодней тематикой -->
+    <div class="global-notice" style="background: linear-gradient(90deg, var(--newyear-red), var(--newyear-green), var(--newyear-gold));">
+        <div class="marquee-wrapper">
+            <div class="marquee-content">
+                <span>🎄 С Наступающим Новым 2026 Годом! HW Project дарит технологические чудеса! ✨</span>
+                <span>🎄 С Наступающим Новым 2026 Годом! HW Project дарит технологические чудеса! ✨</span>
+            </div>
         </div>
+        <button class="notice-close" aria-label="Закрыть уведомление">&times;</button>
     </div>
-    <button class="notice-close" aria-label="Закрыть уведомление">&times;</button>
-</div>
 
-<style>
-    .global-notice {
-        position: relative;
-        overflow: hidden;
-        background-color: #2c3e50;
-        color: white;
-        padding: 10px 0;
-    }
-    
-    .marquee-wrapper {
-        width: 100%;
-        overflow: hidden;
-        white-space: nowrap;
-    }
-    
-    .marquee-content {
-        display: inline-block;
-        animation: marquee 20s linear infinite;
-    }
-    
-    .marquee-content span {
-        display: inline-block;
-        padding-right: 50px; /* Расстояние между повторениями */
-    }
-    
-    @keyframes marquee {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
-    }
-    
-    .notice-close {
-        position: absolute;
-        right: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        background: transparent;
-        border: none;
-        color: white;
-        font-size: 20px;
-        cursor: pointer;
-    }
-</style>
-
-<script>
-    document.querySelector('.notice-close').addEventListener('click', function() {
-        document.querySelector('.global-notice').style.display = 'none';
-    });
-</script>
+    <!-- Новогодний декор в шапке -->
+    <div class="newyear-decoration">
+        <div class="garland"></div>
+    </div>
 
     <!-- Главное меню -->
-    <header class="main-header">
+    <header class="main-header" style="background: var(--newyear-secondary);">
         <div class="container">
             <a href="/" class="logo" aria-label="HW Project">
                 <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 0C8.96 0 0 8.96 0 20C0 31.04 8.96 40 20 40C31.04 40 40 31.04 40 20C40 8.96 31.04 0 20 0ZM16 30H12V16H16V30ZM28 30H24V16H28V30Z" fill="currentColor"/>
+                    <path d="M20 0C8.96 0 0 8.96 0 20C0 31.04 8.96 40 20 40C31.04 40 40 31.04 40 20C40 8.96 31.04 0 20 0ZM16 30H12V16H16V30ZM28 30H24V16H28V30Z" fill="#fbbf24"/>
                 </svg>
-                <span>HW Project</span>
+                <span style="color: var(--newyear-gold);">HW Project</span>
+                <small style="color: var(--newyear-accent); font-size: 0.8em; margin-left: 5px;">🎁 С Новым Годом!</small>
             </a>
             
             <nav class="main-nav">
                 <ul class="nav-list">
-                    <li><a href="/" class="active">Главная</a></li>
-                    <li><a href="/solutions">Решения</a></li>
-                    <li><a href="/HWschool.html">Образование</a></li>
-                    <li><a href="/research">Исследования</a></li>
-                    <li><a href="/maintenance.html">Сообщество</a></li><!--community-->
-                    <li><a href="/maintenance.html" class="active">Новости</a></li><!--webnews.html-->
-                    <li><a href="/about">О нас</a></li>
+                    <li><a href="/" class="active">🎄 Главная</a></li>
+                    <li><a href="/solutions">🎁 Решения</a></li>
+                    <li><a href="/HWschool.html">📚 Образование</a></li>
+                    <li><a href="/research">🔬 Исследования</a></li>
+                    <li><a href="/maintenance.html">👥 Сообщество</a></li>
+                    <li><a href="/maintenance.html" class="active">📰 Новости</a></li>
+                    <li><a href="/about">✨ О нас</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <main class="main-content">
-        <!-- Герой секция -->
+        <!-- Герой секция с обратным отсчетом -->
         <section class="hero-section">
             <div class="container">
                 <div class="hero-content">
                     <h1 class="hero-title">
-                        <span class="highlight">HW Project</span> — технологии будущего сегодня
+                        <span class="highlight">HW Project</span> — дарим технологии будущего на Новый Год! 🎄
                     </h1>
                     
-                    <p class="hero-subtitle">
-                        Мультидисциплинарная платформа, объединяющая IT-решения, образование и инновационные разработки
+                    <p class="hero-subtitle" style="color: var(--newyear-accent);">
+                        Подводим итоги года и готовим инновационные сюрпризы к 2026!
                     </p>
+                    
+                    <!-- Секция обратного отсчета -->
+                    <div class="countdown-section">
+                        <h2 class="countdown-title">До Нового 2026 года осталось:</h2>
+                        <div class="countdown-container">
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="days">00</div>
+                                <div class="countdown-label">Дней</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="hours">00</div>
+                                <div class="countdown-label">Часов</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="minutes">00</div>
+                                <div class="countdown-label">Минут</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="seconds">00</div>
+                                <div class="countdown-label">Секунд</div>
+                            </div>
+                        </div>
+                    </div>
                     
                     <div class="hero-actions">
                         <a href="#solutions" class="btn btn-primary">
-                            Наши решения
+                            🎁 Новогодние предложения
                         </a>
                         <a href="/education" class="btn btn-secondary">
-                            Образовательные программы
+                            📚 Годовой отчет
+                        </a>
+                        <a href="https://github.com/Anonim-IT/HackerWeb" target="_blank" class="btn btn-outline">
+                            ⭐ Наш GitHub
                         </a>
                     </div>
                     
                     <div class="tech-badges">
-                        <span class="badge">Web3</span>
-                        <span class="badge">AI</span>
-                        <span class="badge">Кибербезопасность</span>
-                        <span class="badge">IoT</span>
+                        <span class="badge">🎄 Web3</span>
+                        <span class="badge">🤖 AI 2026</span>
+                        <span class="badge">🛡️ Кибербезопасность</span>
+                        <span class="badge">🎁 IoT</span>
                     </div>
                 </div>
                 
                 <div class="hero-visual">
-                    <div class="platform-diagram">
-                        <div class="diagram-layer core">
-                            <span>Ядро платформы</span>
+                    <div class="platform-diagram" style="position: relative;">
+                        <div class="diagram-layer core" style="border-color: var(--newyear-gold);">
+                            <span>🎯 Ядро платформы</span>
                         </div>
-                        <div class="diagram-layer solutions">
-                            <span>Бизнес-решения</span>
+                        <div class="diagram-layer solutions" style="border-color: var(--newyear-red);">
+                            <span>🎁 Бизнес-решения</span>
                         </div>
-                        <div class="diagram-layer education">
-                            <span>Образование</span>
+                        <div class="diagram-layer education" style="border-color: var(--newyear-green);">
+                            <span>✨ Образование</span>
                         </div>
-                        <div class="diagram-layer research">
-                            <span>Исследования</span>
+                        <div class="diagram-layer research" style="border-color: var(--newyear-accent);">
+                            <span>🔮 Исследования 2026</span>
                         </div>
+                        <!-- Новогодний декор для диаграммы -->
+                        <div style="position: absolute; top: -20px; right: -10px; font-size: 2rem;">🎄</div>
                     </div>
                 </div>
             </div>
@@ -163,70 +409,70 @@
         <section id="solutions" class="domains-section">
             <div class="container">
                 <h2 class="section-title">
-                    <span class="underline">Основные направления</span> деятельности
+                    <span class="underline" style="border-color: var(--newyear-gold);">Новогодние инициативы</span> на 2026 год
                 </h2>
                 
                 <div class="domains-grid">
                     <article class="domain-card">
                         <div class="card-icon">
                             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor"/>
-                                <path d="M12.31 11.23C12.21 11.09 12.1 11 12 11C11.9 11 11.79 11.09 11.69 11.23L7.44 17.56C7.17 17.99 7.3 18.55 7.74 18.82C8.17 19.09 8.73 18.96 9 18.52L12 13.85L15 18.52C15.27 18.96 15.83 19.09 16.26 18.82C16.7 18.55 16.83 17.99 16.56 17.56L12.31 11.23Z" fill="currentColor"/>
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="#fbbf24"/>
+                                <path d="M12.31 11.23C12.21 11.09 12.1 11 12 11C11.9 11 11.79 11.09 11.69 11.23L7.44 17.56C7.17 17.99 7.3 18.55 7.74 18.82C8.17 19.09 8.73 18.96 9 18.52L12 13.85L15 18.52C15.27 18.96 15.83 19.09 16.26 18.82C16.7 18.55 16.83 17.99 16.56 17.56L12.31 11.23Z" fill="#fbbf24"/>
                             </svg>
                         </div>
-                        <h3>IT-Решения</h3>
-                        <p>Разработка комплексных технологических решений для бизнеса и государственных структур</p>
+                        <h3>🎁 IT-Решения 2026</h3>
+                        <p>Специальные новогодние условия на внедрение технологий</p>
                         <ul>
-                            <li>Корпоративные системы</li>
-                            <li>Кибербезопасность</li>
-                            <li>Цифровая трансформация</li>
+                            <li>🎄 Корпоративные системы</li>
+                            <li>✨ Кибербезопасность</li>
+                            <li>🔮 Цифровая трансформация</li>
                         </ul>
                     </article>
                     
                     <article class="domain-card">
                         <div class="card-icon">
                             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 3C7.03 3 3 7.03 3 12C3 16.97 7.03 21 12 21C16.97 21 21 16.97 21 12C21 7.03 16.97 3 12 3ZM12 19C8.14 19 5 15.86 5 12C5 8.14 8.14 5 12 5C15.86 5 19 8.14 19 12C19 15.86 15.86 19 12 19Z" fill="currentColor"/>
-                                <path d="M12 7C11.45 7 11 7.45 11 8V12C11 12.55 11.45 13 12 13C12.55 13 13 12.55 13 12V8C13 7.45 12.55 7 12 7Z" fill="currentColor"/>
-                                <path d="M16 1H8C7.45 1 7 1.45 7 2C7 2.55 7.45 3 8 3H16C16.55 3 17 2.55 17 2C17 1.45 16.55 1 16 1Z" fill="currentColor"/>
+                                <path d="M12 3C7.03 3 3 7.03 3 12C3 16.97 7.03 21 12 21C16.97 21 21 16.97 21 12C21 7.03 16.97 3 12 3ZM12 19C8.14 19 5 15.86 5 12C5 8.14 8.14 5 12 5C15.86 5 19 8.14 19 12C19 15.86 15.86 19 12 19Z" fill="#16a34a"/>
+                                <path d="M12 7C11.45 7 11 7.45 11 8V12C11 12.55 11.45 13 12 13C12.55 13 13 12.55 13 12V8C13 7.45 12.55 7 12 7Z" fill="#16a34a"/>
+                                <path d="M16 1H8C7.45 1 7 1.45 7 2C7 2.55 7.45 3 8 3H16C16.55 3 17 2.55 17 2C17 1.45 16.55 1 16 1Z" fill="#16a34a"/>
                             </svg>
                         </div>
-                        <h3>Образование</h3>
-                        <p>Профессиональная подготовка специалистов будущего</p>
+                        <h3>✨ Образование</h3>
+                        <p>Новогодние скидки на курсы и программы</p>
                         <ul>
-                            <li>HW Academy</li>
-                            <li>Корпоративное обучение</li>
-                            <li>Сертификационные программы</li>
+                            <li>🎁 HW Academy</li>
+                            <li>📚 Корпоративное обучение</li>
+                            <li>⭐ Сертификационные программы</li>
                         </ul>
                     </article>
                     
                     <article class="domain-card">
                         <div class="card-icon">
                             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1ZM12 11.99H19C18.47 16.11 15.72 19.78 12 20.93V12H5V6.3L12 3.19V11.99Z" fill="currentColor"/>
+                                <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1ZM12 11.99H19C18.47 16.11 15.72 19.78 12 20.93V12H5V6.3L12 3.19V11.99Z" fill="#2dd4bf"/>
                             </svg>
                         </div>
-                        <h3>Исследования</h3>
-                        <p>Инновационные разработки в области новых технологий</p>
+                        <h3>🔮 Исследования 2026</h3>
+                        <p>Планы на новый год в области инноваций</p>
                         <ul>
-                            <li>AI и машинное обучение</li>
-                            <li>Квантовые вычисления</li>
-                            <li>Блокчейн-технологии</li>
+                            <li>🤖 AI и машинное обучение</li>
+                            <li>⚛️ Квантовые вычисления</li>
+                            <li>⛓️ Блокчейн-технологии</li>
                         </ul>
                     </article>
                     
                     <article class="domain-card">
                         <div class="card-icon">
                             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20 2H4C4 2 2 2 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2 21.1 2 20 2ZM20 16H6L4 18V4H20V16Z" fill="currentColor"/>
+                                <path d="M20 2H4C4 2 2 2 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2 21.1 2 20 2ZM20 16H6L4 18V4H20V16Z" fill="#dc2626"/>
                             </svg>
                         </div>
-                        <h3>Сообщество</h3>
-                        <p>Платформа для взаимодействия профессионалов</p>
+                        <h3>🎉 Сообщество</h3>
+                        <p>Новогодние мероприятия и активность</p>
                         <ul>
-                            <li>Хакатоны и конкурсы</li>
-                            <li>Экспертные сообщества</li>
-                            <li>Карьерные возможности</li>
+                            <li>🎄 Новогодний хакатон</li>
+                            <li>✨ Экспертные встречи</li>
+                            <li>🎁 Карьерные возможности</li>
                         </ul>
                     </article>
                 </div>
@@ -237,32 +483,32 @@
         <section class="cases-section">
             <div class="container">
                 <h2 class="section-title">
-                    <span class="underline">Реализованные проекты</span> и кейсы
+                    <span class="underline" style="border-color: var(--newyear-gold);">Годовые итоги</span> и достижения
                 </h2>
                 
                 <div class="cases-tabs">
-                    <button class="tab-btn active" data-tab="all">Все</button>
-                    <button class="tab-btn" data-tab="finance">Финтех</button>
-                    <button class="tab-btn" data-tab="education">Образование</button>
-                    <button class="tab-btn" data-tab="security">Безопасность</button>
+                    <button class="tab-btn active" data-tab="all">🎄 Все проекты</button>
+                    <button class="tab-btn" data-tab="finance">🎁 Финтех</button>
+                    <button class="tab-btn" data-tab="education">✨ Образование</button>
+                    <button class="tab-btn" data-tab="security">🛡️ Безопасность</button>
                 </div>
                 
                 <div class="cases-grid">
                     <article class="case-card" data-category="finance">
-                        <h3>Банковская экосистема</h3>
-                        <p>Разработка безопасной платформы для цифрового банкинга</p>
-                        <span class="case-tag">Финтех</span>
+                        <h3>🎁 Банковская экосистема</h3>
+                        <p>Успешное внедрение к новогоднему сезону</p>
+                        <span class="case-tag">Финтех 2025</span>
                     </article>
                     
                     <article class="case-card" data-category="education">
-                        <h3>Государственная образовательная платформа</h3>
-                        <p>Создание системы дистанционного обучения для вузов</p>
+                        <h3>✨ Государственная образовательная платформа</h3>
+                        <p>Запуск к началу нового учебного года</p>
                         <span class="case-tag">Образование</span>
                     </article>
                     
                     <article class="case-card" data-category="security">
-                        <h3>Система кибербезопасности</h3>
-                        <p>Комплексная защита корпоративной инфраструктуры</p>
+                        <h3>🛡️ Система кибербезопасности</h3>
+                        <p>Защита от новогодних кибератак</p>
                         <span class="case-tag">Безопасность</span>
                     </article>
                 </div>
@@ -273,21 +519,21 @@
         <section class="tech-section">
             <div class="container">
                 <h2 class="section-title">
-                    <span class="underline">Технологический стек</span> платформы
+                    <span class="underline" style="border-color: var(--newyear-gold);">Технологии</span> 2026 года
                 </h2>
                 
                 <div class="tech-stack">
                     <div class="tech-category">
-                        <h3>Frontend</h3>
+                        <h3>🎄 Frontend</h3>
                         <div class="tech-items">
-                            <span>React</span>
+                            <span>React 2026</span>
                             <span>WebAssembly</span>
                             <span>TypeScript</span>
                         </div>
                     </div>
                     
                     <div class="tech-category">
-                        <h3>Backend</h3>
+                        <h3>✨ Backend</h3>
                         <div class="tech-items">
                             <span>Rust</span>
                             <span>Node.js</span>
@@ -296,18 +542,18 @@
                     </div>
                     
                     <div class="tech-category">
-                        <h3>Безопасность</h3>
+                        <h3>🛡️ Безопасность</h3>
                         <div class="tech-items">
                             <span>Zero Trust</span>
-                            <span>OWASP</span>
-                            <span>GDPR</span>
+                            <span>OWASP 2026</span>
+                            <span>GDPR+</span>
                         </div>
                     </div>
                     
                     <div class="tech-category">
-                        <h3>Инновации</h3>
+                        <h3>🔮 Инновации</h3>
                         <div class="tech-items">
-                            <span>AI/ML</span>
+                            <span>AI/ML 2026</span>
                             <span>Blockchain</span>
                             <span>IoT</span>
                         </div>
@@ -317,14 +563,14 @@
         </section>
 
         <!-- CTA секция -->
-        <section class="cta-section">
+        <section class="cta-section" style="background: linear-gradient(135deg, var(--newyear-primary) 0%, #1e3a8a 100%);">
             <div class="container">
-                <h2>Станьте частью технологической революции</h2>
-                <p>Присоединяйтесь к HW Project как партнер, клиент или участник образовательных программ</p>
+                <h2 style="color: var(--newyear-gold);">🎁 Станьте частью нашего новогоднего технологического чуда!</h2>
+                <p style="color: var(--newyear-accent);">Загадайте технологическое желание на 2026 год — мы поможем его осуществить!</p>
                 <div class="cta-actions">
-                    <a href="/contact" class="btn btn-large btn-primary">Связаться с нами</a>
-                    <a href="/join" class="btn btn-large btn-outline">Присоединиться к команде</a>
-                    <a href="https://github.com/Anonim-IT/HackerWeb" target="_blank" class="btn btn-large btn-outline">Наш GitHub</a>
+                    <a href="/contact" class="btn btn-large btn-primary">🎄 Связаться с Дедом Морозом (нами)</a>
+                    <a href="/join" class="btn btn-large btn-outline">✨ Присоединиться к команде 2026</a>
+                    <a href="https://github.com/Anonim-IT/HackerWeb" target="_blank" class="btn btn-large btn-outline">⭐ Наш GitHub</a>
                 </div>
             </div>
         </section>
@@ -336,58 +582,142 @@
                 <div class="footer-brand">
                     <a href="/" class="footer-logo">
                         <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M20 0C8.96 0 0 8.96 0 20C0 31.04 8.96 40 20 40C31.04 40 40 31.04 40 20C40 8.96 31.04 0 20 0ZM16 30H12V16H16V30ZM28 30H24V16H28V30Z" fill="#3b82f6"/>
+                            <path d="M20 0C8.96 0 0 8.96 0 20C0 31.04 8.96 40 20 40C31.04 40 40 31.04 40 20C40 8.96 31.04 0 20 0ZM16 30H12V16H16V30ZM28 30H24V16H28V30Z" fill="#fbbf24"/>
                         </svg>
-                        <span>HW Project</span>
+                        <span style="color: var(--newyear-gold);">HW Project</span>
                     </a>
                     <p class="footer-description">
-                        Мультидисциплинарная технологическая платформа, создающая будущее сегодня.
+                        🎄 Мультидисциплинарная технологическая платформа, создающая будущее. С Новым 2026 Годом!
                     </p>
                 </div>
                 
                 <div class="footer-links">
-                    <h3>Направления</h3>
+                    <h3 style="color: var(--newyear-accent);">🎁 Направления</h3>
                     <ul>
-                        <li><a href="/solutions">IT-Решения</a></li>
-                        <li><a href="/education">Образование</a></li>
-                        <li><a href="/research">Исследования</a></li>
-                        <li><a href="/community">Сообщество</a></li>
+                        <li><a href="/solutions">🎄 IT-Решения</a></li>
+                        <li><a href="/education">✨ Образование</a></li>
+                        <li><a href="/research">🔮 Исследования</a></li>
+                        <li><a href="/community">🎉 Сообщество</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-links">
-                    <h3>Ресурсы</h3>
+                    <h3 style="color: var(--newyear-accent);">✨ Ресурсы</h3>
                     <ul>
-                        <li><a href="/blog">Блог</a></li>
-                        <li><a href="/webnews.html">Новости</a></li>
-                        <li><a href="/docs">Документация</a></li>
-                        <li><a href="/careers">Карьера</a></li>
+                        <li><a href="/blog">🎄 Блог</a></li>
+                        <li><a href="/webnews.html">📰 Новости</a></li>
+                        <li><a href="/docs">📚 Документация</a></li>
+                        <li><a href="/careers">🎁 Карьера</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-links">
-                    <h3>Контакты</h3>
+                    <h3 style="color: var(--newyear-accent);">🎅 Контакты</h3>
                     <ul>
-                        <li><a href="mailto:contact@hwproject.com">contact@hwproject.com</a></li>
-                        <li><a href="tel:+78001234567">+7 (800) 123-45-67</a></li>
-                        <li><a href="https://t.me/hwproject" target="_blank">Telegram</a></li>
+                        <li><a href="mailto:contact@hwproject.com">📧 contact@hwproject.com</a></li>
+                        <li><a href="tel:+78001234567">📞 +7 (800) 123-45-67</a></li>
+                        <li><a href="https://t.me/hwproject" target="_blank">✈️ Telegram</a></li>
                     </ul>
                 </div>
             </div>
             
             <div class="footer-bottom">
                 <div class="footer-legal">
-                    <a href="/privacy">Конфиденциальность</a>
-                    <a href="/terms">Условия</a>
-                    <a href="/cookies">Cookies</a>
+                    <a href="/privacy">🎄 Конфиденциальность</a>
+                    <a href="/terms">✨ Условия</a>
+                    <a href="/cookies">🍪 Cookies</a>
                 </div>
                 <div class="footer-copyright">
-                    <p>&copy; 2025 HW Project. Все права защищены.</p>
+                    <p style="color: var(--newyear-accent);">🎁 &copy; 2025-2026 HW Project. С Новым Годом! Все права защищены.</p>
                 </div>
             </div>
         </div>
     </footer>
 
+    <!-- Скрипт для снежинок -->
+    <script>
+        // Создание снежинок
+        function createSnowflakes() {
+            const container = document.getElementById('snowflakes-container');
+            const snowflakeCount = 50;
+            
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.innerHTML = '❄';
+                
+                // Случайные параметры
+                const size = Math.random() * 0.8 + 0.5;
+                const startX = Math.random() * 100;
+                const duration = Math.random() * 10 + 10;
+                const delay = Math.random() * 5;
+                
+                snowflake.style.left = `${startX}vw`;
+                snowflake.style.fontSize = `${size}em`;
+                snowflake.style.animationDuration = `${duration}s`;
+                snowflake.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(snowflake);
+            }
+        }
+
+        // Обратный отсчет до Нового 2026 года
+        function updateCountdown() {
+            const now = new Date();
+            const newYear = new Date(now.getFullYear() + 1, 0, 1, 0, 0, 0);
+            
+            // Если уже 2026 год, показывать поздравление
+            if (now.getFullYear() >= 2026) {
+                document.querySelector('.countdown-title').textContent = '🎉 С Новым 2026 Годом! 🎉';
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+                return;
+            }
+            
+            const diff = newYear - now;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            
+            // Новогодние эффекты при приближении
+            if (days === 0 && hours < 24) {
+                document.querySelector('.countdown-section').style.animation = 'pulse 1s infinite';
+            }
+        }
+
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            createSnowflakes();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+            
+            // Новогодний звук при наведении на счетчик (опционально)
+            const countdownItems = document.querySelectorAll('.countdown-item');
+            countdownItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.1)';
+                });
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+            
+            // Закрытие уведомления
+            document.querySelector('.notice-close').addEventListener('click', function() {
+                document.querySelector('.global-notice').style.display = 'none';
+            });
+        });
+    </script>
+    
     <script src="js/main.js" type="module"></script>
 </body>
 </html>
