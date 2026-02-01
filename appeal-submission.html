@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SCP-ARC: Classified Sector - Appeal Submission</title>
+    <title>HW Hell Block - Appeal for Parole</title>
 
     <!-- Подключаем стили -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
@@ -17,61 +17,71 @@
     <nav id="navbar"></nav>
 
     <main class="container">
-        <h1><i class="fas fa-gavel"></i> Appeal Submission - SCP-ARC</h1>
+        <h1><i class="fas fa-handcuffs"></i> Parole Appeal - HW Hell Block</h1>
 
         <p class="info-message">
-            This submission form is for those who wish to challenge their punishment or ban within the SCP-ARC classified sector. Ensure that you provide sufficient details to facilitate the investigation of your case.
+            This is your only chance to request parole from the HW Hell Block. Your appeal will be reviewed by the Block Administration. 
             <br><br>
-            All submissions are highly confidential and subject to approval by the Sector Command. Incomplete appeals may be disregarded.
+            <strong>Warning:</strong> False information or attempts to deceive will result in extended sentence and additional penalties. 
+            Be honest, concise, and demonstrate genuine rehabilitation.
         </p>
 
         <form id="appeal-form">
             <div class="form-group">
-                <label for="username"><i class="fas fa-user"></i> Your Username:</label>
-                <input type="text" id="username" name="username" required>
+                <label for="username"><i class="fas fa-id-badge"></i> Prisoner ID / Username:</label>
+                <input type="text" id="username" name="username" placeholder="e.g., PRISONER-XXX" required>
             </div>
 
             <div class="form-group">
-                <label for="email"><i class="fas fa-envelope"></i> Your Email (for response):</label>
-                <input type="email" id="email" name="email" placeholder="example@mail.com" required>
+                <label for="email"><i class="fas fa-envelope"></i> Contact Email (for parole decision):</label>
+                <input type="email" id="email" name="email" placeholder="prisoner@hellblock.hw" required>
             </div>
 
             <div class="form-group">
-                <label for="telegram-nick"><i class="fab fa-telegram"></i> Your Telegram Nick:</label>
-                <input type="text" id="telegram-nick" name="telegram-nick" required>
+                <label for="telegram-nick"><i class="fab fa-telegram"></i> Telegram (for urgent communication):</label>
+                <input type="text" id="telegram-nick" name="telegram-nick" placeholder="@hellblock_prisoner" required>
             </div>
 
             <div class="form-group">
-                <label for="appeal-reason"><i class="fas fa-comment-alt"></i> Reason for Appeal:</label>
-                <textarea id="appeal-reason" name="appeal-reason" rows="5" required></textarea>
+                <label for="appeal-reason"><i class="fas fa-file-contract"></i> Parole Justification:</label>
+                <textarea id="appeal-reason" name="appeal-reason" rows="5" 
+                          placeholder="Explain why you deserve parole. Include:
+- What rule you violated
+- How you have reformed
+- Why you should be released early
+- Your plans upon release" required></textarea>
             </div>
 
             <!-- Drag & Drop загрузка файлов -->
             <div class="form-group">
-                <label for="evidence"><i class="fas fa-paperclip"></i> Additional Evidence (Optional):</label>
-                <div id="drop-area">
-                    <p>Drag & drop files here or click to select</p>
+                <label for="evidence"><i class="fas fa-folder-open"></i> Supporting Documents (Optional):</label>
+                <div id="drop-area" style="border: 2px dashed #8B0000; background: rgba(139, 0, 0, 0.1); padding: 20px; text-align: center; border-radius: 5px;">
+                    <p><i class="fas fa-upload"></i> Drag & drop evidence files here or click to select</p>
+                    <p style="font-size: 12px; color: #666;">Max 10MB. Accepted: .txt, .jpg, .png, .pdf</p>
                     <input type="file" id="evidence" name="evidence" hidden>
                 </div>
             </div>
 
             <!-- Информационное сообщение -->
-            <p id="status" class="error-message">Please make sure to fill out all fields correctly.</p>
+            <p id="status" class="error-message" style="color: #8B0000; font-weight: bold;">
+                <i class="fas fa-exclamation-triangle"></i> All appeals are final. You may only submit once per sentence.
+            </p>
 
-            <button type="submit" id="submit-button">
-                <i class="fas fa-paper-plane"></i> Submit Appeal
+            <button type="submit" id="submit-button" style="background: linear-gradient(to right, #8B0000, #5a0000);">
+                <i class="fas fa-gavel"></i> Submit Parole Appeal
             </button>
 
             <!-- Индикатор загрузки -->
             <div id="loading" class="hidden">
-                <i class="fas fa-spinner fa-spin"></i> Submitting your appeal...
+                <i class="fas fa-spinner fa-spin"></i> Your appeal is being processed by HW Hell Block Administration...
             </div>
         </form>
     </main>
 
     <!-- Подвал -->
-    <footer>
-        <p>&copy; 2025 SCP-ARC: Classified Sector. All rights reserved. Unauthorized access to this page is prohibited.</p>
+    <footer style="background-color: #222; color: #ccc; padding: 15px; text-align: center; border-top: 3px solid #8B0000;">
+        <p>&copy; 2025 HW Hell Block Penal System. All rights reserved. Unauthorized appeals are punishable by extended confinement.</p>
+        <p style="font-size: 12px; margin-top: 5px;"><i class="fas fa-shield-alt"></i> Secured by HW Administration</p>
     </footer>
 
     <!-- Подключаем скрипты -->
