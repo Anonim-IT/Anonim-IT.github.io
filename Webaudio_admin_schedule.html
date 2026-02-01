@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель расписания | HW Audio Podcast</title>
+    <link rel="stylesheet" href="WebAudio/css/style_admin.css">
+</head>
+<body>
+    <div class="admin-container" id="loginSection">
+        <div class="login-section">
+            <h2>🔒 Вход в админ-панель</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="adminKey">Ключ доступа</label>
+                    <input type="password" id="adminKey" required placeholder="Введите ключ доступа">
+                </div>
+                <button type="submit" class="submit-btn">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="admin-container" id="adminSection" style="display: none;">
+        <a href="#" class="logout-btn" onclick="logout()">Выйти</a>
+        
+        <div class="admin-header">
+            <h1>⚙️ Админ-панель расписания</h1>
+            <p>Управление эфирами HW Audio Podcast</p>
+        </div>
+
+        <div class="admin-nav">
+            <button class="admin-btn active" onclick="showSection('streams')">📅 Эфиры</button>
+            <button class="admin-btn" onclick="showSection('settings')">⚙️ Настройки</button>
+            <button class="admin-btn" onclick="showSection('stats')">📊 Статистика</button>
+        </div>
+
+        <!-- Раздел управления эфирами -->
+        <div id="streamsSection">
+            <button class="add-stream-btn" onclick="addNewStream()">➕ Добавить новый эфир</button>
+            
+            <div class="streams-list" id="streamsList">
+                <!-- Эфиры будут загружены динамически -->
+            </div>
+        </div>
+
+        <!-- Форма добавления/редактирования эфира -->
+        <div id="streamFormSection" style="display: none;">
+            <div style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 10px; margin-bottom: 2rem;">
+                <h2 style="margin-bottom: 1.5rem; color: var(--boosty-orange);" id="formTitle">
+                    Добавить новый эфир
+                </h2>
+                
+                <form id="streamForm">
+                    <input type="hidden" id="streamId">
+                    
+                    <div class="form-group">
+                        <label for="streamTitle">Название эфира *</label>
+                        <input type="text" id="streamTitle" required placeholder="Например: Искусственный интеллект в музыке">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="streamDescription">Описание *</label>
+                        <textarea id="streamDescription" required placeholder="Подробное описание эфира"></textarea>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div class="form-group">
+                            <label for="streamDate">Дата *</label>
+                            <input type="date" id="streamDate" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="streamTime">Время (МСК) *</label>
+                            <input type="time" id="streamTime" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="streamDuration">Продолжительность</label>
+                        <input type="text" id="streamDuration" placeholder="Например: 2 часа">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="streamTopic">Тема *</label>
+                        <input type="text" id="streamTopic" required placeholder="Например: Технологии, Наука, Искусство">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="streamStatus">Статус</label>
+                        <select id="streamStatus">
+                            <option value="upcoming">Запланирован</option>
+                            <option value="live">В эфире</option>
+                            <option value="finished">Завершен</option>
+                        </select>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem;">
+                        <button type="submit" class="submit-btn">Сохранить</button>
+                        <button type="button" class="admin-btn" onclick="cancelEdit()">Отмена</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Раздел статистики -->
+        <div id="statsSection" style="display: none;">
+            <h2 style="margin-bottom: 2rem; color: var(--boosty-orange);">📊 Статистика</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="background: rgba(255, 107, 53, 0.1); padding: 1.5rem; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 2rem; font-weight: bold; color: var --boosty-orange;" id="totalStreams">0</div>
+                    <div style="color: var(--text-secondary);">Всего эфиров</div>
+                </div>
+                <div style="background: rgba(0, 123, 255, 0.1); padding: 1.5rem; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 2rem; font-weight: bold; color: #007bff;" id="upcomingStreams">0</div>
+                    <div style="color: var(--text-secondary);">Запланировано</div>
+                </div>
+                <div style="background: rgba(40, 167, 69, 0.1); padding: 1.5rem; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 2rem; font-weight: bold; color: #28a745;" id="pastStreams">0</div>
+                    <div style="color: var(--text-secondary);">Завершено</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Уведомление -->
+    <div class="notification" id="notification"></div>
+
+    <script>
+        let currentStreams = [];
+        let isEditing = false;
+
+        // Проверить авторизацию
+        function checkAuth() {
+            const adminKey = localStorage.getItem('hw_admin_key');
+            if (adminKey === 'hw_audio_admin_2024') {
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('adminSection').style.display = 'block';
+                loadStreams();
+                return true;
+            }
+            return false;
+        }
+
+        // Вход в систему
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const adminKey = document.getElementById('adminKey').value;
+            
+            if (adminKey === 'hw_audio_admin_2024') {
+                localStorage.setItem('hw_admin_key', adminKey);
+                checkAuth();
+                showNotification('Успешный вход!', 'success');
+            } else {
+                showNotification('Неверный ключ доступа!', 'error');
+            }
+        });
+
+        // Выйти из системы
+        function logout() {
+            localStorage.removeItem('hw_admin_key');
+            location.reload();
+        }
+
+        // Показать раздел
+        function showSection(sectionId) {
+            // Скрыть все разделы
+            document.querySelectorAll('[id$="Section"]').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Показать выбранный раздел
+            document.getElementById(sectionId + 'Section').style.display = 'block';
+            
+            // Обновить активные кнопки
+            document.querySelectorAll('.admin-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Загрузить эфиры
+        async function loadStreams() {
+            try {
+                const response = await fetch('streams_data.json');
+                const data = await response.json();
+                currentStreams = data.streams || [];
+                displayStreams();
+                updateStats();
+            } catch (error) {
+                console.error('Ошибка загрузки эфиров:', error);
+                currentStreams = [];
+                displayStreams();
+            }
+        }
+
+        // Отобразить эфиры
+        function displayStreams() {
+            const streamsList = document.getElementById('streamsList');
+            if (!streamsList) return;
+
+            if (currentStreams.length === 0) {
+                streamsList.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: var(--text-secondary);">
+                        📭 Нет добавленных эфиров
+                    </div>
+                `;
+                return;
+            }
+
+            streamsList.innerHTML = currentStreams.sort((a, b) => 
+                new Date(b.date + 'T' + b.time) - new Date(a.date + 'T' + a.time)
+            ).map(stream => `
+                <div class="stream-item">
+                    <div class="stream-info">
+                        <h3>${stream.title}</h3>
+                        <p>📅 ${formatDate(stream.date)} | ${stream.time} | ${stream.topic}</p>
+                        <p style="font-size: 0.8rem; margin-top: 0.5rem; color: var(--text-secondary);">
+                            ${stream.description.substring(0, 100)}...
+                        </p>
+                    </div>
+                    <div class="stream-actions">
+                        <button class="action-btn edit-btn" onclick="editStream(${stream.id})">✏️</button>
+                        <button class="action-btn delete-btn" onclick="deleteStream(${stream.id})">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Добавить новый эфир
+        function addNewStream() {
+            isEditing = false;
+            document.getElementById('formTitle').textContent = 'Добавить новый эфир';
+            document.getElementById('streamForm').reset();
+            document.getElementById('streamId').value = '';
+            
+            // Установить сегодняшнюю дату по умолчанию
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('streamDate').value = today;
+            document.getElementById('streamTime').value = '19:00';
+            
+            showSection('streamForm');
+        }
+
+        // Редактировать эфир
+        function editStream(streamId) {
+            const stream = currentStreams.find(s => s.id == streamId);
+            if (!stream) return;
+
+            isEditing = true;
+            document.getElementById('formTitle').textContent = 'Редактировать эфир';
+            
+            document.getElementById('streamId').value = stream.id;
+            document.getElementById('streamTitle').value = stream.title;
+            document.getElementById('streamDescription').value = stream.description;
+            document.getElementById('streamDate').value = stream.date;
+            document.getElementById('streamTime').value = stream.time;
+            document.getElementById('streamDuration').value = stream.duration || '';
+            document.getElementById('streamTopic').value = stream.topic;
+            document.getElementById('streamStatus').value = stream.status || 'upcoming';
+            
+            showSection('streamForm');
+        }
+
+        // Сохранить эфир
+        document.getElementById('streamForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const streamData = {
+                id: isEditing ? parseInt(document.getElementById('streamId').value) : Date.now(),
+                title: document.getElementById('streamTitle').value,
+                description: document.getElementById('streamDescription').value,
+                date: document.getElementById('streamDate').value,
+                time: document.getElementById('streamTime').value,
+                duration: document.getElementById('streamDuration').value,
+                topic: document.getElementById('streamTopic').value,
+                status: document.getElementById('streamStatus').value
+            };
+
+            if (isEditing) {
+                const index = currentStreams.findIndex(s => s.id == streamData.id);
+                if (index !== -1) {
+                    currentStreams[index] = streamData;
+                }
+            } else {
+                currentStreams.push(streamData);
+            }
+
+            await saveStreams();
+            showSection('streams');
+            showNotification('Эфир сохранен успешно!', 'success');
+        });
+
+        // Удалить эфир
+        function deleteStream(streamId) {
+            if (confirm('Вы уверены, что хотите удалить этот эфир?')) {
+                currentStreams = currentStreams.filter(s => s.id != streamId);
+                saveStreams();
+                showNotification('Эфир удален!', 'success');
+            }
+        }
+
+        // Отменить редактирование
+        function cancelEdit() {
+            showSection('streams');
+        }
+
+        // Сохранить эфиры
+        async function saveStreams() {
+            const data = { streams: currentStreams };
+            
+            try {
+                // В реальном проекте здесь был бы запрос к серверу
+                // Для демо сохраняем в localStorage
+                localStorage.setItem('hw_audio_streams', JSON.stringify(data));
+                
+                // Обновляем данные на странице расписания
+                displayStreams();
+                updateStats();
+                
+                // Симулируем сохранение в файл
+                console.log('Данные сохранены:', data);
+            } catch (error) {
+                console.error('Ошибка сохранения:', error);
+                showNotification('Ошибка сохранения!', 'error');
+            }
+        }
+
+        // Обновить статистику
+        function updateStats() {
+            const now = new Date();
+            
+            const totalStreams = currentStreams.length;
+            const upcomingStreams = currentStreams.filter(stream => 
+                new Date(stream.date + 'T' + stream.time) > now
+            ).length;
+            const pastStreams = totalStreams - upcomingStreams;
+            
+            document.getElementById('totalStreams').textContent = totalStreams;
+            document.getElementById('upcomingStreams').textContent = upcomingStreams;
+            document.getElementById('pastStreams').textContent = pastStreams;
+        }
+
+        // Форматировать дату
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ru-RU', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+        }
+
+        // Показать уведомление
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.background = type === 'success' 
+                ? 'rgba(40, 167, 69, 0.9)' 
+                : 'rgba(220, 53, 69, 0.9)';
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+        });
+    </script>
+</body>
+</html>

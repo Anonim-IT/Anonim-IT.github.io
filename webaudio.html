@@ -3,57 +3,271 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HWAudio — Погрузись в мир качественного звука</title>
+    <title>HW Audio Podcast — Эксклюзивные подкасты и стримы на Boosty</title>
     <link rel="stylesheet" href="WebAudio/css/style.css">
 </head>
 <body>
 
-    <!-- Подключение навбара -->
-    <div id="navbar-container"></div>
-
     <!-- Главный блок -->
     <section class="hero">
-        <h1>HWAudio — будущее цифрового звука</h1>
-        <p>Мы помогаем вам с настройкой аудиооборудования, монтажом видео и аудио,  
-           а также предоставляем инновационные решения для работы с музыкой и звуком.</p>
-        <a href="webstore.html" class="btn">Перейти в магазин</a>
-    </section>
-
-    <!-- Возможности -->
-    <section class="features">
-        <h2>Наши возможности</h2>
-        <div class="feature-grid">
-            <div class="feature">
-                <h3>🎛 Настройка аудиооборудования</h3>
-                <p>Мы помогаем с настройкой и оптимизацией вашего оборудования для идеального звучания.</p>
-            </div>
-            <div class="feature">
-                <h3>🎥 Монтаж видео и аудио</h3>
-                <p>Профессиональный монтаж звука и видео для любого типа контента, от роликов до фильмов.</p>
-            </div>
-            <div class="feature">
-                <h3>⚡ Минимальная задержка</h3>
-                <p>Оптимизированные технологии обеспечивают мгновенный отклик звука и видео.</p>
-            </div>
-            <div class="feature">
-                <h3>🔊 Гибкая настройка звука</h3>
-                <p>Настроим эквалайзер, добавим эффекты и сделаем звук уникальным для ваших нужд.</p>
+        <div class="hero-content">
+            <h1>HW Audio Podcast</h1>
+            <p>
+                <span class="hero-highlight">🎙 Эксклюзивные аудиоподкасты и живые стримы теперь на Boosty!</span><br><br>
+                Мы переносим всё лучшее звуковое производство на одну платформу. 
+                Качественные подкасты, прямые эфиры и профессиональный аудиоконтент - всё в одном месте.
+            </p>
+            
+            <a href="https://boosty.to/admin_ru" target="_blank" class="boosty-badge">
+                <span>🚀</span>
+                BOOSTY - наша новая домашняя платформа
+            </a>
+            
+            <div class="btn-group">
+                <a href="https://boosty.to/admin_ru" target="_blank" class="btn btn-boosty">
+                    <span>🚀</span>
+                    Перейти на Boosty
+                </a>
+                <a href="#podcasts" class="btn btn-secondary">
+                    <span>🎧</span>
+                    О подкастах
+                </a>
+                <a href="#streams" class="btn btn-secondary">
+                    <span>🔴</span>
+                    О стримах
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Цены и магазин -->
-    <section class="pricing">
-        <h2>Цены и магазин</h2>
-        <p>Все цены на наши услуги и товары вы можете найти в нашем магазине.<br> Мы предлагаем  
-           разумные расценки и гибкие условия для каждого клиента.<br> Все товары доступны для покупки  
-           через наш онлайн-магазин, и мы всегда готовы помочь вам с выбором.</p>
-        <a href="webstore.html" class="btn">Посмотреть цены и товары</a>
+    <!-- Особенности Boosty -->
+    <section class="boosty-features">
+        <h2 class="section-title">Почему <span style="color: #FF6B35;">Boosty?</span></h2>
+        <div class="features-grid">
+            <div class="feature">
+                <div class="feature-icon">🎙</div>
+                <h3>Эксклюзивные подкасты</h3>
+                <p>Аудиоподкасты высшего качества на различные темы: технологии, наука, искусство, психология и многое другое.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔴</div>
+                <h3>Прямые эфиры</h3>
+                <p>Регулярные стримы по стабильному расписанию. Живое общение, ответы на вопросы и обсуждение актуальных тем в отличном качестве.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">💬</div>
+                <h3>Прямое общение</h3>
+                <p>Возможность задавать вопросы, предлагать темы и напрямую влиять на контент.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎯</div>
+                <h3>Ранний доступ</h3>
+                <p>Подписчики получают доступ к новым выпускам раньше всех и к бонусным материалам.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔊</div>
+                <h3>Качественный звук</h3>
+                <p>Профессиональная запись, сведение и мастеринг всех выпусков.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h3>Никакой рекламы</h3>
+                <p>Чистый контент без навязчивой рекламы и спонсорских вставок.</p>
+            </div>
+        </div>
     </section>
 
-    <!-- Подключение скрипта для загрузки навбара -->
-    <script src="WebAudio/js/main.js"></script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Подкасты на Boosty -->
+    <section id="podcasts" class="podcasts-boosty">
+        <div class="podcasts-content">
+            <h2 class="section-title">Наши <span style="color: #FF6B35;">подкасты</span> на Boosty</h2>
+            <p style="text-align: center; color: var(--text-secondary); max-width: 800px; margin: 0 auto 3rem; font-size: 1.2rem;">
+                Каждый выпуск - это глубокое погружение в тему с экспертами индустрии. 
+                Мы говорим о том, что действительно интересно, без воды и поверхностных обсуждений.
+            </p>
+            
+            <div class="podcast-types">
+                <div class="podcast-type">
+                    <h4>🎮 Tech & Games</h4>
+                    <p>Обсуждение игровой индустрии, технологий и digital-трендов</p>
+                </div>
+                <div class="podcast-type">
+                    <h4>🧠 Science & Psychology</h4>
+                    <p>Научные открытия, психология и исследование человеческого сознания</p>
+                </div>
+                <div class="podcast-type">
+                    <h4>🎨 Art & Creativity</h4>
+                    <p>Творчество, искусство и всё, что вдохновляет</p>
+                </div>
+                <div class="podcast-type">
+                    <h4>💼 Business & Startups</h4>
+                    <p>Предпринимательство, стартапы и бизнес-стратегии</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="https://boosty.to/admin_ru" target="_blank" class="btn btn-boosty" style="padding: 1rem 3rem;">
+                    <span>🎧</span>
+                    Слушать все подкасты
+                </a>
+            </div>
+        </div>
+    </section>
 
+    <!-- Стримы на Boosty -->
+    <section id="streams" class="streams-boosty">
+        <div class="streams-content">
+            <h2 class="section-title"><span style="color: #FF6B35;">Прямые эфиры</span> на Boosty</h2>
+            
+            <div class="stream-highlight">
+                🔴 ВСЕ СТРИМЫ ТЕПЕРЬ ТОЛЬКО НА BOOSTY!
+            </div>
+            
+            <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.2rem; line-height: 1.8;">
+                Мы перешли на Boosty для всех прямых эфиров! Теперь наши стримы стали ещё лучше:<br><br>
+                
+                <strong style="color: #FF6B35;">🎯 Что нового:</strong><br>
+                • Более тесное общение с аудиторией<br>
+                • Возможность задавать вопросы в реальном времени<br>
+                • Эксклюзивный контент только для подписчиков<br>
+                • Регулярные Q&A сессии<br>
+                • Совместные просмотры и обсуждения<br><br>
+                
+                <strong style="color: #FF6B35;">📅 Расписание:</strong><br>
+                Прямые эфиры проходят <strong>2 раза в неделю</strong> с возможностью просмотра записи
+            </p>
+            
+            <div class="btn-group">
+                <a href="/" target="_blank" class="btn btn-boosty">
+                    <span>🔴</span>
+                    Смотреть расписание стримов
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Boosty -->
+    <section class="cta-boosty">
+        <div class="cta-content">
+            <div class="cta-icon">🚀</div>
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem; color: #FF6B35;">
+                Присоединяйтесь к нам на Boosty!
+            </h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.2rem; line-height: 1.8;">
+                На Boosty вас ждёт:<br><br>
+                ✅ <strong>Эксклюзивные аудиоподкасты</strong> на самые разные темы<br>
+                ✅ <strong>Прямые эфиры</strong> с живым общением<br>
+                ✅ <strong>Ранний доступ</strong> ко всем новым выпускам<br>
+                ✅ <strong>Бонусные материалы</strong> только для подписчиков<br>
+                ✅ <strong>Прямое влияние</strong> на контент<br>
+                ✅ <strong>Комьюнити</strong> единомышленников
+            </p>
+            
+            <a href="https://boosty.to/your-profile" target="_blank" class="btn btn-boosty" style="padding: 1rem 3rem; font-size: 1.3rem;">
+                <span>🚀</span>
+                ПОДПИСАТЬСЯ НА BOOSTY
+            </a>
+            
+            <p style="color: var(--text-secondary); margin-top: 1.5rem; font-size: 0.9rem;">
+                Поддержите нас и получите доступ к лучшему аудиоконтенту!
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="https://boosty.to/your-profile" target="_blank">Наш Boosty</a>
+            <a href="#podcasts">Подкасты</a>
+            <a href="#streams">Стримы</a>
+            <a href="#">О проекте</a>
+            <a href="#">Контакты</a>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+            <h3 style="color: #FF6B35; margin-bottom: 1rem; font-size: 2rem;">HW Audio Podcast</h3>
+            <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
+                Эксклюзивные аудиоподкасты и прямые эфиры на Boosty.<br>
+                Качественный контент, профессиональный звук и сообщество единомышленников.
+            </p>
+        </div>
+        
+        <div class="copyright">
+            © 2024 HW Audio Podcast. Все права защищены.<br>
+            <span style="color: #FF6B35;">ВСЁ НА BOOSTY!</span> | Часть экосистемы <a href="/" style="color: #FF6B35; text-decoration: none;">HW Project</a>
+        </div>
+    </footer>
+
+    <script>
+        // Анимация при скролле
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Наблюдаем за карточками и секциями
+        document.querySelectorAll('.feature, .podcast-type').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(element);
+        });
+
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 HW Audio Podcast (Boosty Edition) загружен!');
+            
+            // Анимация героя
+            const heroTitle = document.querySelector('.hero h1');
+            if (heroTitle) {
+                setTimeout(() => {
+                    heroTitle.style.opacity = '1';
+                }, 300);
+            }
+            
+            // Обновление заголовка с временем
+            const updateTime = () => {
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const timeString = `${hours}:${minutes}`;
+                
+                // Обновляем заголовок если есть элемент с классом .time-display
+                const timeDisplay = document.querySelector('.time-display');
+                if (timeDisplay) {
+                    timeDisplay.textContent = timeString;
+                }
+            };
+            
+            updateTime();
+            setInterval(updateTime, 60000);
+        });
+    </script>
 </body>
 </html>

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Расписание эфиров | HW Audio Podcast на Boosty</title>
+    <link rel="stylesheet" href="WebAudio/css/style_rasp.css">
+</head>
+<body>
+
+    <!-- Кнопка админ-панели (только для админа) -->
+    <a href="Webaudio_admin_schedule.html" class="admin-btn" id="adminBtn" style="display: none;">⚙️ Админ</a>
+
+    <!-- Header -->
+    <header class="stream-header">
+        <div class="header-content">
+            <h1 class="header-title">📅 Расписание эфиров</h1>
+            <p class="header-subtitle">
+                Все прямые эфиры HW Audio Podcast теперь на Boosty!<br>
+                Следите за расписанием, не пропускайте интересные трансляции.
+            </p>
+            <a href="https://boosty.to/your-profile" target="_blank" class="boosty-badge">
+                <span>🚀</span>
+                BOOSTY - наша домашняя платформа
+            </a>
+            <div style="margin-top: 2rem;">
+                <a href="#next" class="btn btn-boosty">
+                    <span>🔴</span>
+                    Ближайший эфир
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Ближайший эфир -->
+    <section id="next" class="next-stream">
+        <div class="next-stream-card">
+            <div class="live-badge">🔴 СКОРО В ЭФИРЕ</div>
+            <h2 style="font-size: 2.2rem; margin-bottom: 1rem; color: #FF6B35;" id="nextStreamTitle">
+                Загрузка...
+            </h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 1.1rem;" id="nextStreamDate">
+                Загрузка...
+            </p>
+            <p style="color: var(--text-primary); margin-bottom: 2rem;" id="nextStreamDesc">
+                Загрузка...
+            </p>
+            
+            <div class="countdown" id="countdown">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">00</div>
+                    <div class="countdown-label">Дней</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">00</div>
+                    <div class="countdown-label">Часов</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">00</div>
+                    <div class="countdown-label">Минут</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">00</div>
+                    <div class="countdown-label">Секунд</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 2rem;">
+                <a href="https://boosty.to/your-profile" target="_blank" class="btn btn-boosty">
+                    <span>📅</span>
+                    Добавить в календарь
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Календарь эфиров -->
+    <section class="calendar-section">
+        <h2 class="section-title">Календарь эфиров</h2>
+        <div class="calendar">
+            <div class="calendar-header">
+                <div>
+                    <h3 style="color: var(--text-primary); font-size: 1.5rem;" id="calendarMonth">
+                        Загрузка...
+                    </h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                        Нажмите на дату с эфиром для подробностей
+                    </p>
+                </div>
+                <div class="calendar-nav">
+                    <button class="nav-btn" onclick="changeMonth(-1)">←</button>
+                    <button class="nav-btn" onclick="goToToday()">Сегодня</button>
+                    <button class="nav-btn" onclick="changeMonth(1)">→</button>
+                </div>
+            </div>
+            
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Календарь будет сгенерирован динамически -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Все эфиры -->
+    <section class="all-streams">
+        <h2 class="section-title">Будущие эфиры</h2>
+        <div class="streams-grid" id="streamsGrid">
+            <!-- Эфиры будут загружены динамически -->
+        </div>
+    </section>
+
+    <!-- Форматы эфиров -->
+    <section class="formats-section">
+        <h2 class="section-title">Форматы эфиров</h2>
+        <div class="formats-grid">
+            <div class="format-card">
+                <div class="format-icon">🎙</div>
+                <h3 style="color: var(--text-primary); margin-bottom: 1rem;">Интервью</h3>
+                <p style="color: var(--text-secondary);">Разговоры с экспертами индустрии и интересными гостями</p>
+            </div>
+            
+            <div class="format-card">
+                <div class="format-icon">💬</div>
+                <h3 style="color: var(--text-primary); margin-bottom: 1rem;">Q&A сессии</h3>
+                <p style="color: var(--text-secondary);">Ответы на ваши вопросы, живые обсуждения тем</p>
+            </div>
+            
+            <div class="format-card">
+                <div class="format-icon">🎧</div>
+                <h3 style="color: var(--text-primary); margin-bottom: 1rem;">Обзоры технологий</h3>
+                <p style="color: var(--text-secondary);">Демонстрация нового оборудования и программного обеспечения</p>
+            </div>
+            
+            <div class="format-card">
+                <div class="format-icon">🚀</div>
+                <h3 style="color: var(--text-primary); margin-bottom: 1rem;">Мастер-классы</h3>
+                <p style="color: var(--text-secondary);">Практические уроки по работе со звуком и оборудованием</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подписка -->
+    <section class="subscription">
+        <div class="subscription-card">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem; color: #FF6B35;">
+                Не пропустите ни одного эфира!
+            </h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.2rem; line-height: 1.8;">
+                Подпишитесь на Boosty, чтобы получать уведомления о новых эфирах,<br>
+                иметь доступ к записям прошедших трансляций и общаться с нами напрямую.
+            </p>
+            
+            <a href="https://boosty.to/your-profile" target="_blank" class="btn btn-boosty" style="padding: 1rem 3rem; font-size: 1.3rem;">
+                <span>🚀</span>
+                ПОДПИСАТЬСЯ НА BOOSTY
+            </a>
+            
+            <div style="margin-top: 2rem; display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
+                <div style="text-align: center;">
+                    <div style="font-size: 1.5rem; color: #FF6B35; font-weight: bold;">2+</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Эфира в неделю</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 1.5rem; color: #FF6B35; font-weight: bold;">2ч</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Средняя продолжительность</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 1.5rem; color: #FF6B35; font-weight: bold;">100%</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Живое общение</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="https://boosty.to/your-profile" target="_blank">Наш Boosty</a>
+            <a href="#">Расписание эфиров</a>
+            <a href="#next">Ближайший эфир</a>
+            <a href="#formats">Форматы</a>
+            <a href="#">Прошедшие эфиры</a>
+        </div>
+        
+        <div style="margin: 2rem 0;">
+            <h3 style="color: #FF6B35; margin-bottom: 1rem; font-size: 2rem;">HW Audio Podcast</h3>
+            <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
+                Все прямые эфиры теперь на Boosty! Следите за расписанием, задавайте вопросы<br>
+                и становитесь частью нашего аудиосообщества.
+            </p>
+        </div>
+        
+        <div class="copyright">
+            © 2024 HW Audio Podcast. Все права защищены.<br>
+            <span style="color: #FF6B35;">ВСЕ ЭФИРЫ НА BOOSTY!</span> | Часть экосистемы <a href="/" style="color: #FF6B35; text-decoration: none;">HW Project</a>
+        </div>
+    </footer>
+
+    <script>
+        // Глобальные переменные
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+        let streamsData = {};
+        let isAdmin = false;
+
+        // Месяцы на русском
+        const months = [
+            'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+            'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+        ];
+
+        // Дни недели на русском
+        const daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+
+        // Загрузить данные эфиров
+        async function loadStreamsData() {
+            try {
+                const response = await fetch('streams_data.json');
+                streamsData = await response.json();
+                updateUI();
+            } catch (error) {
+                console.error('Ошибка загрузки данных:', error);
+                // Загружаем тестовые данные
+                streamsData = {
+                    streams: [
+                        {
+                            id: 1,
+                            title: "Искусственный интеллект в музыке",
+                            description: "Обсуждение современных AI инструментов для создания музыки и их влияния на индустрию.",
+                            date: new Date(new Date().setDate(new Date().getDate() + 3)).toISOString().split('T')[0],
+                            time: "19:00",
+                            duration: "2 часа",
+                            topic: "AI в музыке",
+                            status: "upcoming"
+                        },
+                        {
+                            id: 2,
+                            title: "Новогодний Q&A",
+                            description: "Ответы на ваши вопросы, подведение итогов года и планы на 2025.",
+                            date: new Date(new Date().setDate(new Date().getDate() + 10)).toISOString().split('T')[0],
+                            time: "18:30",
+                            duration: "1.5 часа",
+                            topic: "Q&A сессия",
+                            status: "upcoming"
+                        }
+                    ]
+                };
+                updateUI();
+            }
+        }
+
+        // Найти ближайший эфир
+        function findNextStream() {
+            const now = new Date();
+            let nextStream = null;
+            let minDiff = Infinity;
+
+            streamsData.streams.forEach(stream => {
+                const streamDate = new Date(stream.date + 'T' + stream.time);
+                const diff = streamDate - now;
+                
+                if (diff > 0 && diff < minDiff) {
+                    minDiff = diff;
+                    nextStream = stream;
+                }
+            });
+
+            return nextStream;
+        }
+
+        // Обновить обратный отсчет
+        function updateCountdown() {
+            const nextStream = findNextStream();
+            if (!nextStream) {
+                document.getElementById('countdown').innerHTML = `
+                    <div style="color: var(--text-secondary); font-size: 1.2rem;">
+                        🎉 Нет запланированных эфиров
+                    </div>
+                `;
+                return;
+            }
+
+            const streamDate = new Date(nextStream.date + 'T' + nextStream.time);
+            const now = new Date();
+            const diff = streamDate - now;
+
+            if (diff <= 0) {
+                document.getElementById('countdown').innerHTML = `
+                    <div style="color: #FF0000; font-size: 2rem; font-weight: bold;">
+                        🔴 В ЭФИРЕ СЕЙЧАС
+                    </div>
+                `;
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+
+            if (days === 0 && hours < 24) {
+                document.getElementById('countdown').style.animation = 'pulse 1s infinite';
+            }
+        }
+
+        // Сгенерировать календарь
+        function generateCalendar() {
+            const firstDay = new Date(currentYear, currentMonth, 1);
+            const lastDay = new Date(currentYear, currentMonth + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            const startingDay = firstDay.getDay();
+            
+            // Обновляем заголовок
+            document.getElementById('calendarMonth').textContent = 
+                `${months[currentMonth]} ${currentYear}`;
+
+            // Очищаем календарь
+            const calendarGrid = document.getElementById('calendarGrid');
+            calendarGrid.innerHTML = '';
+
+            // Добавляем дни недели
+            daysOfWeek.forEach(day => {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = day;
+                calendarGrid.appendChild(dayElement);
+            });
+
+            // Добавляем пустые ячейки для первого дня
+            const adjustedStartingDay = startingDay === 0 ? 6 : startingDay - 1;
+            for (let i = 0; i < adjustedStartingDay; i++) {
+                const emptyCell = document.createElement('div');
+                emptyCell.className = 'calendar-date';
+                calendarGrid.appendChild(emptyCell);
+            }
+
+            // Добавляем дни месяца
+            const today = new Date();
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateCell = document.createElement('div');
+                dateCell.className = 'calendar-date';
+                
+                const currentDate = new Date(currentYear, currentMonth, day);
+                const dateString = currentDate.toISOString().split('T')[0];
+                
+                // Проверяем, есть ли эфир на эту дату
+                const hasStream = streamsData.streams?.some(stream => {
+                    const streamDate = new Date(stream.date);
+                    return streamDate.getDate() === day && 
+                           streamDate.getMonth() === currentMonth && 
+                           streamDate.getFullYear() === currentYear;
+                });
+
+                // Находим эфир на эту дату
+                const streamOnDate = streamsData.streams?.find(stream => {
+                    const streamDate = new Date(stream.date);
+                    return streamDate.getDate() === day && 
+                           streamDate.getMonth() === currentMonth && 
+                           streamDate.getFullYear() === currentYear;
+                });
+
+                if (hasStream && streamOnDate) {
+                    dateCell.classList.add('has-stream');
+                    dateCell.onclick = () => showStreamDetails(streamOnDate);
+                    
+                    dateCell.innerHTML = `
+                        <div class="date-number ${currentDate.toDateString() === today.toDateString() ? 'today' : ''}">${day}</div>
+                        <div class="stream-indicator"></div>
+                        <div class="stream-time">${streamOnDate.time}</div>
+                        <div class="stream-topic">${streamOnDate.topic}</div>
+                    `;
+                } else {
+                    dateCell.innerHTML = `
+                        <div class="date-number ${currentDate.toDateString() === today.toDateString() ? 'today' : ''}">${day}</div>
+                    `;
+                }
+
+                calendarGrid.appendChild(dateCell);
+            }
+        }
+
+        // Сменить месяц
+        function changeMonth(direction) {
+            currentMonth += direction;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            generateCalendar();
+        }
+
+        // Перейти к сегодняшнему дню
+        function goToToday() {
+            const today = new Date();
+            currentMonth = today.getMonth();
+            currentYear = today.getFullYear();
+            generateCalendar();
+        }
+
+        // Показать детали эфира
+        function showStreamDetails(stream) {
+            alert(`🎙 ${stream.title}\n📅 ${formatDate(stream.date)} | ${stream.time} МСК\n⏱ ${stream.duration}\n\n${stream.description}\n\nДля просмотра и участия перейдите на наш Boosty!`);
+        }
+
+        // Форматировать дату
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const day = date.getDate();
+            const month = months[date.getMonth()];
+            const year = date.getFullYear();
+            return `${day} ${month} ${year}`;
+        }
+
+        // Обновить список будущих эфиров
+        function updateUpcomingStreams() {
+            const streamsGrid = document.getElementById('streamsGrid');
+            if (!streamsGrid) return;
+
+            const now = new Date();
+            const upcomingStreams = streamsData.streams
+                .filter(stream => new Date(stream.date + 'T' + stream.time) > now)
+                .sort((a, b) => new Date(a.date + 'T' + a.time) - new Date(b.date + 'T' + b.time));
+
+            if (upcomingStreams.length === 0) {
+                streamsGrid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-secondary);">
+                        🎉 Нет запланированных эфиров. Скоро появятся!
+                    </div>
+                `;
+                return;
+            }
+
+            streamsGrid.innerHTML = upcomingStreams.slice(0, 3).map(stream => `
+                <div class="stream-card">
+                    <div class="stream-date">${formatDate(stream.date)} | ${stream.time} МСК</div>
+                    <div class="stream-status ${stream.status === 'upcoming' ? 'status-upcoming' : 'status-live'}">
+                        ${stream.status === 'upcoming' ? 'СКОРО' : 'В ЭФИРЕ'}
+                    </div>
+                    <h3 class="stream-title">${stream.title}</h3>
+                    <p class="stream-desc">${stream.description}</p>
+                    <a href="https://boosty.to/your-profile" target="_blank" class="btn btn-boosty" style="padding: 0.8rem 1.5rem; font-size: 0.9rem;">
+                        <span>📅</span>
+                        Запланировать
+                    </a>
+                </div>
+            `).join('');
+        }
+
+        // Обновить ближайший эфир
+        function updateNextStream() {
+            const nextStream = findNextStream();
+            if (nextStream) {
+                document.getElementById('nextStreamTitle').textContent = `"${nextStream.title}"`;
+                document.getElementById('nextStreamDate').textContent = 
+                    `${formatDate(nextStream.date)} | ${nextStream.time} МСК | Продолжительность: ${nextStream.duration}`;
+                document.getElementById('nextStreamDesc').textContent = nextStream.description;
+            }
+        }
+
+        // Обновить весь UI
+        function updateUI() {
+            generateCalendar();
+            updateNextStream();
+            updateUpcomingStreams();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+
+        // Проверить права админа (простая проверка)
+        function checkAdmin() {
+            const adminKey = localStorage.getItem('hw_admin_key');
+            if (adminKey === 'hw_audio_admin_2024') {
+                isAdmin = true;
+                document.getElementById('adminBtn').style.display = 'block';
+            }
+        }
+
+        // Плавная прокрутка
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Анимация при скролле
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.stream-card, .format-card').forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(element);
+            });
+        }
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAdmin();
+            loadStreamsData();
+            initSmoothScroll();
+            initScrollAnimations();
+        });
+    </script>
+</body>
+</html>
