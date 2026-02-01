@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="hell">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="HW Hell Block - уникальный Minecraft сервер в адской тематике. Выживание в аду, кастомные мобы, квесты и эпические приключения!">
+    <meta name="keywords" content="Minecraft сервер, адский сервер, Hell Block, HW Project, выживание в аду, кастомный Minecraft">
+    <title>HW Hell Block - Адский Minecraft сервер</title>
+    
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Иконка -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+    
+    <!-- Стили -->
+    <style>
+        :root {
+            --hell-red: #ff3300;
+            --hell-orange: #ff6600;
+            --hell-yellow: #ff9900;
+            --hell-dark: #1a0a0a;
+            --hell-darker: #0a0505;
+            --hell-lava: #ff4400;
+            --hell-rock: #332222;
+            --hell-smoke: #222222;
+            --hell-text: #ffffff;
+            --hell-text-secondary: #ffaaaa;
+            --hell-accent: #ff3366;
+            --hell-glow: rgba(255, 51, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, var(--hell-darker) 0%, var(--hell-dark) 50%, var(--hell-darker) 100%);
+            color: var(--hell-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 51, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 102, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 153, 0, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Анимация огня */
+        @keyframes fire {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes lavaFlow {
+            0% { transform: translateX(-100%) rotate(0deg); }
+            100% { transform: translateX(100%) rotate(360deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Хедер */
+        .hell-header {
+            background: rgba(26, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--hell-red);
+            box-shadow: 0 5px 30px rgba(255, 51, 0, 0.3);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--hell-text);
+            text-shadow: 0 0 15px var(--hell-red);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 25px var(--hell-lava);
+            transform: scale(1.05);
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--hell-text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--hell-red), transparent);
+            transition: left 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--hell-text);
+            text-shadow: 0 0 10px var(--hell-red);
+        }
+
+        .nav-links a:hover::before {
+            left: 100%;
+        }
+
+        /* Герой секция */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 6rem 2rem 2rem;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(180deg, 
+                    rgba(255, 51, 0, 0.1) 0%, 
+                    transparent 20%, 
+                    transparent 80%, 
+                    rgba(255, 51, 0, 0.1) 100%);
+            z-index: -1;
+        }
+
+        .lava-animation {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(90deg, 
+                var(--hell-lava), 
+                var(--hell-orange), 
+                var(--hell-yellow),
+                var(--hell-orange),
+                var(--hell-lava));
+            background-size: 200% 100%;
+            animation: lavaFlow 20s linear infinite;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--hell-red), var(--hell-orange), var(--hell-yellow));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 30px var(--hell-glow);
+            animation: fire 3s ease-in-out infinite;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--hell-text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .server-status {
+            display: inline-block;
+            background: rgba(255, 51, 0, 0.2);
+            border: 2px solid var(--hell-red);
+            border-radius: 30px;
+            padding: 0.8rem 2rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--hell-text);
+            text-shadow: 0 0 10px var(--hell-red);
+            box-shadow: 0 0 20px var(--hell-glow);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .status-online {
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        /* Кнопки */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--hell-red), var(--hell-orange));
+            color: white;
+            box-shadow: 0 5px 20px rgba(255, 51, 0, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 51, 0, 0.6);
+            background: linear-gradient(45deg, var(--hell-orange), var(--hell-red));
+        }
+
+        .btn-secondary {
+            background: rgba(255, 51, 0, 0.1);
+            border: 2px solid var(--hell-red);
+            color: var(--hell-text);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 51, 0, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px var(--hell-glow);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        /* Особенности */
+        .features-section {
+            padding: 6rem 2rem;
+            background: rgba(10, 5, 5, 0.8);
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            color: var(--hell-text);
+            text-shadow: 0 0 20px var(--hell-red);
+        }
+
+        .section-title span {
+            background: linear-gradient(45deg, var(--hell-red), var(--hell-orange));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(51, 34, 34, 0.5);
+            border: 2px solid var(--hell-rock);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--hell-red);
+            box-shadow: 0 10px 30px var(--hell-glow);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 51, 0, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--hell-orange);
+            text-shadow: 0 0 15px var(--hell-red);
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--hell-text);
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .feature-desc {
+            color: var(--hell-text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Геймплей */
+        .gameplay-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, rgba(10, 5, 5, 0.8), rgba(26, 10, 10, 0.8));
+        }
+
+        .gameplay-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gameplay-item {
+            background: rgba(255, 51, 0, 0.1);
+            border: 1px solid rgba(255, 102, 0, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .gameplay-item:hover {
+            background: rgba(255, 51, 0, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px var(--hell-glow);
+        }
+
+        .gameplay-item h3 {
+            color: var(--hell-orange);
+            margin-bottom: 0.5rem;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        /* Правила */
+        .rules-section {
+            padding: 6rem 2rem;
+            background: rgba(26, 10, 10, 0.9);
+        }
+
+        .rules-list {
+            max-width: 800px;
+            margin: 0 auto;
+            list-style: none;
+        }
+
+        .rules-list li {
+            background: rgba(51, 34, 34, 0.5);
+            border-left: 4px solid var(--hell-red);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 0 10px 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .rules-list li:hover {
+            background: rgba(51, 34, 34, 0.8);
+            border-left-width: 8px;
+            transform: translateX(10px);
+        }
+
+        /* Как подключиться */
+        .connect-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, rgba(26, 10, 10, 0.8), var(--hell-darker));
+            text-align: center;
+        }
+
+        .server-info {
+            background: rgba(255, 51, 0, 0.1);
+            border: 2px solid var(--hell-red);
+            border-radius: 15px;
+            padding: 3rem;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            box-shadow: 0 10px 40px var(--hell-glow);
+        }
+
+        .server-ip {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2.5rem;
+            color: var(--hell-text);
+            margin: 2rem 0;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            border: 2px dashed var(--hell-orange);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .server-ip:hover {
+            background: rgba(255, 51, 0, 0.2);
+            border-color: var(--hell-red);
+            transform: scale(1.05);
+        }
+
+        .copy-btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: var(--hell-red);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: var(--hell-orange);
+            transform: scale(1.1);
+        }
+
+        /* Сообщество */
+        .community-section {
+            padding: 6rem 2rem;
+            background: rgba(10, 5, 5, 0.9);
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2rem;
+            background: rgba(255, 51, 0, 0.1);
+            border: 2px solid var(--hell-red);
+            border-radius: 10px;
+            color: var(--hell-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(255, 51, 0, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px var(--hell-glow);
+        }
+
+        .social-icon {
+            width: 24px;
+            height: 24px;
+            filter: brightness(0) invert(1);
+        }
+
+        /* Футер */
+        .hell-footer {
+            background: var(--hell-darker);
+            border-top: 2px solid var(--hell-red);
+            padding: 3rem 2rem 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2rem;
+            color: var(--hell-text);
+            text-shadow: 0 0 15px var(--hell-red);
+            margin-bottom: 1rem;
+        }
+
+        .footer-desc {
+            color: var(--hell-text-secondary);
+            line-height: 1.6;
+        }
+
+        .footer-links h3 {
+            color: var(--hell-orange);
+            margin-bottom: 1.5rem;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--hell-text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--hell-text);
+            text-shadow: 0 0 10px var(--hell-red);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 51, 0, 0.3);
+            color: var(--hell-text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .server-ip {
+                font-size: 1.8rem;
+            }
+            
+            .header-container {
+                padding: 0 1rem;
+            }
+        }
+
+        /* Анимации */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        /* Скороллбар */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--hell-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--hell-red);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--hell-orange);
+        }
+    </style>
+</head>
+<body>
+    <!-- Хедер -->
+    <header class="hell-header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <span class="logo-icon">🔥</span>
+                <span>HW HELL BLOCK</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#features">Особенности</a></li>
+                    <li><a href="#gameplay">Геймплей</a></li>
+                    <li><a href="#rules">Правила</a></li>
+                    <li><a href="#connect">Подключиться</a></li>
+                    <li><a href="#community">Сообщество</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Герой секция -->
+    <section class="hero-section">
+        <div class="hero-bg"></div>
+        <div class="lava-animation"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">HW HELL BLOCK</h1>
+            <p class="hero-subtitle">
+                Окунись в самый жаркий адский сервер Minecraft!<br>
+                Уникальный мир, кастомные мобы, эпические квесты и выживание в условиях вечного ада.
+            </p>
+            <div class="server-status">
+                Статус: <span class="status-online">●</span> Сервер скоро откроется!
+            </div>
+            <div class="btn-group">
+                <a href="#connect" class="btn btn-primary">
+                    <span>🔥</span>
+                    Подключиться к серверу
+                </a>
+                <a href="#features" class="btn btn-secondary">
+                    <span>⚡</span>
+                    Узнать больше
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Особенности -->
+    <section id="features" class="features-section">
+        <h2 class="section-title">Адские <span>особенности</span></h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔥</div>
+                <h3 class="feature-title">Уникальный мир</h3>
+                <p class="feature-desc">
+                    Полностью кастомная генерация мира с адской тематикой. 
+                    Лавовые озера, огненные горы, проклятые леса и древние руины.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👹</div>
+                <h3 class="feature-title">Кастомные мобы</h3>
+                <p class="feature-desc">
+                    Более 20 уникальных адских существ с особым поведением и дропом. 
+                    От мелких огненных демонов до эпических адских боссов.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚔️</div>
+                <h3 class="feature-title">Система квестов</h3>
+                <p class="feature-desc">
+                    Разветвленная система заданий с уникальными наградами. 
+                    Исследуй, сражайся, выживай и становись легендой ада.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏰</div>
+                <h3 class="feature-title">Клановые войны</h3>
+                <p class="feature-desc">
+                    Создавай кланы, захватывай территории, участвуй в войнах за ресурсы 
+                    и доминируй в адском мире.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3 class="feature-title">Адская экономика</h3>
+                <p class="feature-desc">
+                    Уникальная экономическая система с адской валютой. 
+                    Торгуй, создавай магазины, зарабатывай душы для прокачки.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3 class="feature-title">Система прокачки</h3>
+                <p class="feature-desc">
+                    Прокачивай навыки, получай уникальные способности, 
+                    создавай легендарные предметы и стань самым сильным в аду.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Геймплей -->
+    <section id="gameplay" class="gameplay-section">
+        <h2 class="section-title">Игровой <span>процесс</span></h2>
+        <div class="gameplay-grid">
+            <div class="gameplay-item">
+                <h3>Выживание</h3>
+                <p>Классический выживач в адских условиях</p>
+            </div>
+            <div class="gameplay-item">
+                <h3>Приключения</h3>
+                <p>Исследование уникальных локаций и данжей</p>
+            </div>
+            <div class="gameplay-item">
+                <h3>PvP</h3>
+                <p>Сражения игроков в специальных аренах</p>
+            </div>
+            <div class="gameplay-item">
+                <h3>PvE</h3>
+                <p>Бои с уникальными адскими мобами</p>
+            </div>
+            <div class="gameplay-item">
+                <h3>Экономика</h3>
+                <p>Торговля и развитие своего бизнеса</p>
+            </div>
+            <div class="gameplay-item">
+                <h3>Ролевая игра</h3>
+                <p>Создание своей истории в мире ада</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Правила -->
+    <section id="rules" class="rules-section">
+        <h2 class="section-title">Правила <span>сервера</span></h2>
+        <ul class="rules-list">
+            <li><strong>Уважение к другим игрокам:</strong> Любые оскорбления, троллинг и дискриминация запрещены</li>
+            <li><strong>Читерство:</strong> Использование читов, модов дающих преимущество, дюпов - бан</li>
+            <li><strong>Гриферство:</strong> Разрешен только в специальных PvP зонах</li>
+            <li><strong>Реклама:</strong> Запрещена любая реклама других серверов</li>
+            <li><strong>Баги:</strong> Обнаруженные баги нужно сообщать администрации, использование запрещено</li>
+            <li><strong>Спам:</strong> Не спамьте в чат, используйте для этого специальные каналы</li>
+            <li><strong>18+ контент:</strong> Запрещены любые отсылки к взрослому контенту</li>
+        </ul>
+    </section>
+
+    <!-- Как подключиться -->
+    <section id="connect" class="connect-section">
+        <h2 class="section-title">Как <span>подключиться</span></h2>
+        <div class="server-info">
+            <h3 style="color: var(--hell-orange); margin-bottom: 2rem; font-size: 1.8rem;">
+                🎮 Подключение к серверу
+            </h3>
+            
+            <div style="text-align: left; margin-bottom: 2rem;">
+                <h4 style="color: var(--hell-text); margin-bottom: 1rem;">Требования:</h4>
+                <ul style="color: var(--hell-text-secondary); line-height: 1.8; padding-left: 1.5rem;">
+                    <li>Minecraft Java Edition версии 1.20.1</li>
+                    <li>Стабильное интернет-соединение</li>
+                    <li>Официальный клиент Minecraft (без читов)</li>
+                </ul>
+            </div>
+
+            <h4 style="color: var(--hell-text); margin-bottom: 1rem;">IP-адрес сервера:</h4>
+            <div class="server-ip" id="serverIp" onclick="copyIP()">
+                <span style="color: var(--hell-orange);">IP:</span> 
+                <span id="ipText">coming.soon</span>
+                <div style="font-size: 0.8rem; color: var(--hell-text-secondary); margin-top: 0.5rem;">
+                    (Сервер откроется в ближайшее время)
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <button class="copy-btn" onclick="copyIP()">
+                    <span>📋</span> Копировать IP
+                </button>
+                <p style="color: var(--hell-text-secondary); margin-top: 1rem; font-size: 0.9rem;">
+                    Нажмите кнопку выше чтобы скопировать IP-адрес
+                </p>
+            </div>
+
+            <div style="margin-top: 3rem; padding: 1.5rem; background: rgba(255, 51, 0, 0.05); border-radius: 10px;">
+                <h4 style="color: var(--hell-orange); margin-bottom: 1rem;">Инструкция по подключению:</h4>
+                <ol style="color: var(--hell-text-secondary); line-height: 1.8; padding-left: 1.5rem; text-align: left;">
+                    <li>Запустите Minecraft Java Edition 1.20.1</li>
+                    <li>В главном меню нажмите "Сетевая игра"</li>
+                    <li>Выберите "Добавить сервер"</li>
+                    <li>Вставьте IP-адрес нашего сервера</li>
+                    <li>Нажмите "Готово" и подключитесь</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <!-- Сообщество -->
+    <section id="community" class="community-section">
+        <h2 class="section-title">Наше <span>сообщество</span></h2>
+        <p style="color: var(--hell-text-secondary); max-width: 800px; margin: 0 auto 2rem; line-height: 1.6;">
+            Присоединяйтесь к нашему активному сообществу! Общайтесь с другими игроками, 
+            получайте новости о сервере, участвуйте в ивентах и помогайте развитию проекта.
+        </p>
+        
+        <div class="social-links">
+            <a href="max://join/[ваша_группа]" target="_blank" class="social-link">
+                <img src="https://logo-teka.com/wp-content/uploads/2025/07/max-messenger-sign-logo.png" 
+                     alt="Max" 
+                     class="social-icon">
+                <span>Группа в Max</span>
+            </a>
+            <a href="https://t.me/hwproject" target="_blank" class="social-link">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM16.36 14.3C16.36 14.69 16.05 15 15.66 15H8.34C7.95 15 7.64 14.69 7.64 14.3V9.7C7.64 9.31 7.95 9 8.34 9H15.66C16.05 9 16.36 9.31 16.36 9.7V14.3ZM11.5 12L9 14H10.5L12.5 12L10.5 10H9L11.5 12Z" fill="white"/>
+                </svg>
+                <span>Telegram канал</span>
+            </a>
+            <a href="https://discord.gg/example" target="_blank" class="social-link">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.317 4.37C18.339 3.5 16.249 2.92 14.079 2.67C13.679 2.62 13.279 2.58 12.879 2.54C12.479 2.5 12.079 2.47 11.679 2.45C11.279 2.43 10.879 2.42 10.479 2.42C10.079 2.42 9.679 2.43 9.279 2.45C8.879 2.47 8.479 2.5 8.079 2.54C7.679 2.58 7.279 2.62 6.879 2.67C4.709 2.92 2.619 3.5 0.641 4.37C0.241 4.52 0 4.93 0 5.36V18.64C0 19.07 0.241 19.48 0.641 19.63C2.619 20.5 4.709 21.08 6.879 21.33C7.279 21.38 7.679 21.42 8.079 21.46C8.479 21.5 8.879 21.53 9.279 21.55C9.679 21.57 10.079 21.58 10.479 21.58C10.879 21.58 11.279 21.57 11.679 21.55C12.079 21.53 12.479 21.5 12.879 21.46C13.279 21.42 13.679 21.38 14.079 21.33C16.249 21.08 18.339 20.5 20.317 19.63C20.717 19.48 21 19.07 21 18.64V5.36C21 4.93 20.717 4.52 20.317 4.37ZM8.5 15.5C7.4 15.5 6.5 14.6 6.5 13.5C6.5 12.4 7.4 11.5 8.5 11.5C9.6 11.5 10.5 12.4 10.5 13.5C10.5 14.6 9.6 15.5 8.5 15.5ZM15.5 15.5C14.4 15.5 13.5 14.6 13.5 13.5C13.5 12.4 14.4 11.5 15.5 11.5C16.6 11.5 17.5 12.4 17.5 13.5C17.5 14.6 16.6 15.5 15.5 15.5Z" fill="white"/>
+                </svg>
+                <span>Discord сервер</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="hell-footer">
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo">🔥 HW HELL BLOCK</div>
+                <p class="footer-desc">
+                    Самый адский Minecraft сервер в истории. Уникальный мир, 
+                    кастомные мобы, эпические приключения и активное сообщество. 
+                    Присоединяйся к нам и стань легендой ада!
+                </p>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Навигация</h3>
+                <ul>
+                    <li><a href="#features">Особенности</a></li>
+                    <li><a href="#gameplay">Геймплей</a></li>
+                    <li><a href="#rules">Правила</a></li>
+                    <li><a href="#connect">Подключение</a></li>
+                    <li><a href="#community">Сообщество</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Проекты</h3>
+                <ul>
+                    <li><a href="/">HW Project</a></li>
+                    <li><a href="/education">Образование</a></li>
+                    <li><a href="/research">Исследования</a></li>
+                    <li><a href="/community">Сообщество</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Контакты</h3>
+                <ul>
+                    <li><a href="mailto:minecraft@hwproject.com">minecraft@hwproject.com</a></li>
+                    <li><a href="max://join/[ваша_группа]">Max группа</a></li>
+                    <li><a href="https://t.me/hwproject">Telegram канал</a></li>
+                    <li><a href="https://github.com/Anonim-IT/HackerWeb">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2024 HW Hell Block Minecraft Server. Все права защищены.</p>
+            <p style="margin-top: 0.5rem; color: rgba(255, 170, 170, 0.6);">
+                Minecraft © Mojang AB. Этот сервер не аффилирован с Mojang.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Копирование IP-адреса
+        function copyIP() {
+            const ipText = document.getElementById('ipText');
+            const textToCopy = ipText.textContent;
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                // Анимация успешного копирования
+                const ipElement = document.getElementById('serverIp');
+                ipElement.style.backgroundColor = 'rgba(0, 255, 0, 0.1)';
+                ipElement.style.borderColor = '#00ff00';
+                ipElement.style.color = '#00ff00';
+                
+                setTimeout(() => {
+                    ipElement.style.backgroundColor = '';
+                    ipElement.style.borderColor = '';
+                    ipElement.style.color = '';
+                }, 2000);
+                
+                // Временное уведомление
+                alert('IP-адрес скопирован в буфер обмена! Сервер откроется в ближайшее время.');
+            }).catch(err => {
+                console.error('Ошибка копирования: ', err);
+                alert('Не удалось скопировать IP-адрес. Пожалуйста, скопируйте вручную.');
+            });
+        }
+
+        // Плавная прокрутка для якорных ссылок
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Анимация элементов при скролле
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Наблюдаем за карточками
+        document.querySelectorAll('.feature-card, .gameplay-item').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
+
+        // Анимация статуса сервера
+        setInterval(() => {
+            const statusElement = document.querySelector('.status-online');
+            statusElement.classList.toggle('pulse');
+        }, 2000);
+
+        // Эффект параллакса для герой секции
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroBg = document.querySelector('.hero-bg');
+            if (heroBg) {
+                heroBg.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            // Добавляем класс анимации к герой заголовку
+            const heroTitle = document.querySelector('.hero-title');
+            if (heroTitle) {
+                heroTitle.style.opacity = '1';
+            }
+            
+            console.log('🔥 HW Hell Block страница загружена!');
+        });
+    </script>
+</body>
+</html>

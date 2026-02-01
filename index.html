@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="HW Project - инновационная мультидисциплинарная платформа">
-    <meta name="keywords" content="IT платформа, технологии, инновации, HW проект">
-    <title>HW Project | С Новым 2026 Годом! ✨</title>
+    <meta name="keywords" content="IT платформа, технологии, инновации, HW проект, Minecraft сервер">
+    <title>HW Project | Технологии будущего</title>
     
     <!-- Основные стили -->
     <link rel="stylesheet" href="css/main.css">
@@ -19,19 +19,21 @@
     <meta name="theme-color" content="#0a0a1a">
     <link rel="manifest" href="manifest.webmanifest">
     
-    <!-- Минималистичные новогодние стили -->
+    <!-- Основные стили платформы -->
     <style>
         :root {
             --bg-primary: #0a0a1a;
             --bg-secondary: #111127;
-            --accent-gold: #ffd700;
-            --accent-red: #ff3366;
-            --accent-blue: #00ccff;
+            --accent-primary: #ff3366;
+            --accent-secondary: #00ccff;
+            --accent-tertiary: #9d4edd;
             --text-primary: #ffffff;
             --text-secondary: #a0a0c0;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border-color: rgba(255, 255, 255, 0.1);
         }
 
-        /* Полностраничный фон с градиентом */
+        /* Основные стили */
         body {
             margin: 0;
             padding: 0;
@@ -47,44 +49,16 @@
             overflow-x: hidden;
         }
 
-        /* Минималистичные снежинки */
-        .snowflakes {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .snowflake {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            0% {
-                transform: translateY(-10px) rotate(0deg);
-                opacity: 0.5;
-            }
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        /* Минималистичный хедер */
+        /* Хедер */
         .main-header {
-            background: rgba(10, 10, 26, 0.9);
+            background: rgba(10, 10, 26, 0.95);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            border-bottom: 1px solid var(--border-color);
             padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
         }
 
         .logo {
@@ -92,9 +66,14 @@
             align-items: center;
             gap: 0.5rem;
             text-decoration: none;
-            color: var(--accent-gold);
+            color: var(--accent-primary);
             font-weight: 700;
             font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .logo:hover {
+            color: var(--accent-secondary);
         }
 
         .nav-list {
@@ -109,17 +88,18 @@
             color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.9rem;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
             padding: 0.5rem 0;
             position: relative;
+            font-weight: 500;
         }
 
         .nav-list a:hover {
-            color: var(--accent-gold);
+            color: var(--accent-primary);
         }
 
         .nav-list a.active {
-            color: var(--accent-gold);
+            color: var(--accent-primary);
         }
 
         .nav-list a.active::after {
@@ -129,194 +109,279 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background: var(--accent-gold);
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
         }
 
-        /* Полноэкранный обратный отсчет */
-        .fullwidth-countdown {
+        /* Главный баннер с анонсом */
+        .hero-banner {
             background: linear-gradient(135deg, 
-                rgba(10, 10, 26, 0.9) 0%, 
-                rgba(26, 26, 46, 0.9) 100%);
-            padding: 4rem 1rem;
+                rgba(255, 51, 102, 0.1) 0%, 
+                rgba(157, 78, 221, 0.1) 50%, 
+                rgba(0, 204, 255, 0.1) 100%);
+            padding: 5rem 1rem;
             margin: 0;
             position: relative;
             overflow: hidden;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .countdown-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            max-width: 1400px;
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 51, 102, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .banner-content {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            position: relative;
+            z-index: 2;
         }
 
-        .countdown-item {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            border: 1px solid rgba(255, 215, 0, 0.05);
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-
-        .countdown-item:hover {
-            border-color: var(--accent-gold);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.1);
-        }
-
-        .countdown-number {
-            font-size: 4rem;
-            font-weight: 700;
-            color: var(--accent-gold);
-            font-family: 'JetBrains Mono', monospace;
-            line-height: 1;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-        }
-
-        .countdown-label {
+        .announcement-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-tertiary));
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
             font-size: 0.8rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 300;
-        }
-
-        .countdown-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: var(--text-primary);
-            font-weight: 300;
-        }
-
-        .countdown-title span {
-            color: var(--accent-gold);
             font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+            animation: pulse 2s infinite;
         }
 
-        /* Минималистичный контент */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .banner-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .banner-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .minecraft-theme {
+            display: inline-block;
+            color: var(--accent-primary);
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(255, 51, 102, 0.3);
+        }
+
+        .release-info {
+            display: flex;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .info-item svg {
+            fill: var(--accent-primary);
+        }
+
+        /* Основной контент */
         .main-content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem 1rem;
+            padding: 4rem 1rem;
         }
 
-        .hero-section {
-            padding: 4rem 0;
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
             text-align: center;
+            color: var(--text-primary);
         }
 
-        .hero-title {
-            font-size: 3rem;
-            font-weight: 300;
-            margin-bottom: 1rem;
-            line-height: 1.2;
+        .section-title span {
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
-        .hero-title .highlight {
-            color: var(--accent-gold);
+        /* Карточки проекта */
+        .project-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .detail-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .detail-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 10px 30px rgba(255, 51, 102, 0.1);
+        }
+
+        .detail-card h3 {
+            color: var(--accent-primary);
+            margin-top: 0;
+            font-size: 1.5rem;
             font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .hero-subtitle {
-            font-size: 1.2rem;
+        .detail-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Особенности проекта */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            border-color: var(--accent-secondary);
+            transform: translateY(-3px);
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-tertiary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .feature-item h4 {
+            color: var(--text-primary);
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .feature-item p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* CTA секция */
+        .cta-section {
+            background: linear-gradient(135deg, 
+                rgba(255, 51, 102, 0.05) 0%, 
+                rgba(157, 78, 221, 0.05) 100%);
+            padding: 4rem 2rem;
+            border-radius: 20px;
+            margin-top: 4rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .cta-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .cta-subtitle {
             color: var(--text-secondary);
             max-width: 600px;
             margin: 0 auto 2rem;
             line-height: 1.6;
         }
 
-        .hero-actions {
+        .btn-group {
             display: flex;
             gap: 1rem;
             justify-content: center;
-            margin-top: 2rem;
+            flex-wrap: wrap;
         }
 
         .btn {
             padding: 0.8rem 2rem;
-            border: 1px solid var(--accent-gold);
+            border: 1px solid var(--accent-primary);
             background: transparent;
-            color: var(--accent-gold);
+            color: var(--accent-primary);
             text-decoration: none;
             border-radius: 25px;
             font-size: 0.9rem;
+            font-weight: 600;
             transition: all 0.3s ease;
             cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .btn:hover {
-            background: var(--accent-gold);
+            background: var(--accent-primary);
             color: var(--bg-primary);
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 51, 102, 0.3);
         }
 
         .btn-primary {
-            background: var(--accent-gold);
-            color: var(--bg-primary);
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-tertiary));
+            color: white;
+            border: none;
         }
 
         .btn-primary:hover {
-            background: transparent;
-            color: var(--accent-gold);
+            background: linear-gradient(90deg, var(--accent-tertiary), var(--accent-primary));
+            color: white;
         }
 
-        /* Минималистичные карточки */
-        .domains-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .domain-card {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .domain-card:hover {
-            border-color: var(--accent-gold);
-            transform: translateY(-5px);
-        }
-
-        .domain-card h3 {
-            color: var(--accent-gold);
-            margin-top: 0;
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-
-        .domain-card p {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin: 1rem 0;
-        }
-
-        .domain-card ul {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0 0;
-        }
-
-        .domain-card li {
-            color: var(--text-secondary);
-            padding: 0.3rem 0;
-            font-size: 0.9rem;
-        }
-
-        /* Минималистичный футер */
+        /* Футер */
         .main-footer {
             background: rgba(10, 10, 26, 0.95);
-            border-top: 1px solid rgba(255, 215, 0, 0.1);
+            border-top: 1px solid var(--border-color);
             padding: 3rem 0 1rem;
             margin-top: 4rem;
         }
@@ -331,7 +396,7 @@
         }
 
         .footer-links h3 {
-            color: var(--accent-gold);
+            color: var(--accent-primary);
             font-size: 1rem;
             margin-bottom: 1rem;
             font-weight: 600;
@@ -355,53 +420,57 @@
         }
 
         .footer-links a:hover {
-            color: var(--accent-gold);
+            color: var(--accent-primary);
         }
 
         .footer-bottom {
             max-width: 1200px;
             margin: 2rem auto 0;
             padding: 2rem 1rem 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid var(--border-color);
             text-align: center;
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
 
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .social-links a {
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-primary);
+        }
+
         /* Адаптивность */
         @media (max-width: 1024px) {
-            .countdown-container {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
-                padding: 1rem;
+            .banner-title {
+                font-size: 2.8rem;
             }
             
-            .countdown-number {
-                font-size: 3rem;
-            }
-            
-            .hero-title {
-                font-size: 2.5rem;
+            .section-title {
+                font-size: 2.2rem;
             }
         }
 
         @media (max-width: 768px) {
-            .countdown-container {
-                grid-template-columns: 1fr;
-                gap: 1rem;
+            .hero-banner {
+                padding: 3rem 1rem;
             }
             
-            .countdown-item {
-                padding: 1.5rem;
+            .banner-title {
+                font-size: 2.2rem;
             }
             
-            .hero-title {
-                font-size: 2rem;
-            }
-            
-            .hero-actions {
-                flex-direction: column;
-                align-items: center;
+            .banner-subtitle {
+                font-size: 1.1rem;
             }
             
             .nav-list {
@@ -414,30 +483,74 @@
                 font-size: 0.8rem;
                 white-space: nowrap;
             }
+            
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .release-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
         }
 
-        /* Анимация пульсации для счетчика */
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+        @media (max-width: 480px) {
+            .banner-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .detail-card {
+                padding: 1.5rem;
+            }
         }
+        .max-btn-png {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #0088ff 0%, #0066cc 100%);
+    border: none;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 136, 255, 0.3);
+}
 
-        .pulse {
-            animation: pulse 1s infinite;
-        }
+.max-btn-png:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 136, 255, 0.4);
+    background: linear-gradient(135deg, #0066cc 0%, #0055aa 100%);
+}
+
+.max-icon-png {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+}
     </style>
 </head>
 
 <body>
-    <!-- Минималистичные снежинки -->
-    <div class="snowflakes" id="snowflakes-container"></div>
-
-    <!-- Минималистичный хедер -->
+    <!-- Хедер -->
     <header class="main-header">
         <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 1rem;">
             <a href="/" class="logo">
                 <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
-                    <path d="M20 0C8.96 0 0 8.96 0 20C0 31.04 8.96 40 20 40C31.04 40 40 31.04 40 20C40 8.96 31.04 0 20 0ZM16 30H12V16H16V30ZM28 30H24V16H28V30Z" fill="#ffd700"/>
+                    <path d="M20 0C8.96 0 0 8.96 0 20C0 31.04 8.96 40 20 40C31.04 40 40 31.04 40 20C40 8.96 31.04 0 20 0ZM16 30H12V16H16V30ZM28 30H24V16H28V30Z" fill="#ff3366"/>
                 </svg>
                 <span>HW Project</span>
             </a>
@@ -449,130 +562,187 @@
                     <li><a href="/education">Образование</a></li>
                     <li><a href="/research">Исследования</a></li>
                     <li><a href="/community">Сообщество</a></li>
+                    <li><a href="/HWHellBlock.html">Minecraft сервер</a></li>
                     <li><a href="https://github.com/Anonim-IT/HackerWeb" target="_blank">GitHub</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Полноэкранный обратный отсчет -->
-    <section class="fullwidth-countdown">
-        <h1 class="countdown-title">
-            До <span>Нового 2026 Года</span> осталось
-        </h1>
-        
-        <div class="countdown-container">
-            <div class="countdown-item">
-                <div class="countdown-number" id="days">00</div>
-                <div class="countdown-label">Дней</div>
+    <!-- Главный баннер с анонсом -->
+    <section class="hero-banner">
+        <div class="banner-content">
+            <div class="announcement-badge">СКОРО ЗАПУСК</div>
+            
+            <h1 class="banner-title">
+                Адский Minecraft<br>Проект
+            </h1>
+            
+            <p class="banner-subtitle">
+                Готовьтесь к уникальному опыту в <span class="minecraft-theme">адской тематике</span>! 
+                Мы создаем масштабный Minecraft проект с уникальной механикой выживания в аду, 
+                кастомными мобами и эпическими приключениями.
+            </p>
+            
+            <div class="btn-group">
+                <a href="#subscribe" class="btn btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM16.36 14.3C16.36 14.69 16.05 15 15.66 15H8.34C7.95 15 7.64 14.69 7.64 14.3V9.7C7.64 9.31 7.95 9 8.34 9H15.66C16.05 9 16.36 9.31 16.36 9.7V14.3ZM11.5 12L9 14H10.5L12.5 12L10.5 10H9L11.5 12Z" fill="currentColor"/>
+                    </svg>
+                    Узнать больше
+                </a>
+                <a href="https://discord.gg/example" target="_blank" class="btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M20.317 4.37C18.339 3.5 16.249 2.92 14.079 2.67C13.679 2.62 13.279 2.58 12.879 2.54C12.479 2.5 12.079 2.47 11.679 2.45C11.279 2.43 10.879 2.42 10.479 2.42C10.079 2.42 9.679 2.43 9.279 2.45C8.879 2.47 8.479 2.5 8.079 2.54C7.679 2.58 7.279 2.62 6.879 2.67C4.709 2.92 2.619 3.5 0.641 4.37C0.241 4.52 0 4.93 0 5.36V18.64C0 19.07 0.241 19.48 0.641 19.63C2.619 20.5 4.709 21.08 6.879 21.33C7.279 21.38 7.679 21.42 8.079 21.46C8.479 21.5 8.879 21.53 9.279 21.55C9.679 21.57 10.079 21.58 10.479 21.58C10.879 21.58 11.279 21.57 11.679 21.55C12.079 21.53 12.479 21.5 12.879 21.46C13.279 21.42 13.679 21.38 14.079 21.33C16.249 21.08 18.339 20.5 20.317 19.63C20.717 19.48 21 19.07 21 18.64V5.36C21 4.93 20.717 4.52 20.317 4.37ZM8.5 15.5C7.4 15.5 6.5 14.6 6.5 13.5C6.5 12.4 7.4 11.5 8.5 11.5C9.6 11.5 10.5 12.4 10.5 13.5C10.5 14.6 9.6 15.5 8.5 15.5ZM15.5 15.5C14.4 15.5 13.5 14.6 13.5 13.5C13.5 12.4 14.4 11.5 15.5 11.5C16.6 11.5 17.5 12.4 17.5 13.5C17.5 14.6 16.6 15.5 15.5 15.5Z" fill="currentColor"/>
+                    </svg>
+                    Discord сообщество
+                </a>
             </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="hours">00</div>
-                <div class="countdown-label">Часов</div>
-            </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="minutes">00</div>
-                <div class="countdown-label">Минут</div>
-            </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="seconds">00</div>
-                <div class="countdown-label">Секунд</div>
+            
+            <div class="release-info">
+                <div class="info-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="currentColor"/>
+                    </svg>
+                    <span>Статус: В разработке</span>
+                </div>
+                <div class="info-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M19 4H5C3.89 4 3 4.9 3 6V18C3 19.1 3.89 20 5 20H19C20.1 20 21 19.1 21 18V6C21 4.9 20.1 4 19 4ZM19 18H5V8H19V18Z" fill="currentColor"/>
+                    </svg>
+                    <span>Версия: Minecraft 1.21.x (Так же доступны и ниже версии)</span>
+                </div>
+                <div class="info-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="currentColor"/>
+                    </svg>
+                    <span>Режим: Survival + Vanilla</span>
+                </div>
             </div>
         </div>
     </section>
 
     <main class="main-content">
-        <!-- Герой секция -->
-        <section class="hero-section">
-            <h1 class="hero-title">
-                <span class="highlight">HW Project</span> встречает 2026 год
-            </h1>
+        <!-- Детали проекта -->
+        <section id="project-details">
+            <h2 class="section-title">
+                О проекте <span>HW HellBlock</span>
+            </h2>
             
-            <p class="hero-subtitle">
-                Технологическая платформа, создающая будущее. Готовим инновационные решения к новому году
+            <div class="project-details">
+                <article class="detail-card">
+                    <h3>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="currentColor"/>
+                        </svg>
+                        Концепция
+                    </h3>
+                    <p>
+                        Уникальный Minecraft проект в адской тематике, где игрокам предстоит выживать 
+                        в условиях вечного ада. Исследуйте уникальные биомы, сражайтесь с кастомными 
+                        мобами и открывайте секреты этого опасного мира.
+                    </p>
+                </article>
+                
+                <article class="detail-card">
+                    <h3>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1Z" fill="currentColor"/>
+                        </svg>
+                        Особенности
+                    </h3>
+                    <p>
+                        Полностью кастомный мир с уникальной механикой, системой квестов, 
+                        экономикой на основе адских ресурсов и эпическими боссами. 
+                        Реализована собственная система прокачки и достижений.
+                    </p>
+                </article>
+                
+                <article class="detail-card">
+                    <h3>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4C7.58 4 4 7.58 4 12C4 16.42 7.58 20 12 20C15.73 20 18.84 17.45 19.73 14H17.65C16.83 16.33 14.61 18 12 18C8.69 18 6 15.31 6 12C6 8.69 8.69 6 12 6C13.66 6 15.14 6.69 16.22 7.78L13 11H20V4L17.65 6.35Z" fill="currentColor"/>
+                        </svg>
+                        Технологии
+                    </h3>
+                    <p>
+                        Используем современные плагины и моды для создания уникального геймплея. 
+                        Оптимизированный сервер с защитой от гриферства и честной экономической системой.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Основные особенности -->
+        <section style="margin-top: 4rem;">
+            <h2 class="section-title">
+                Ключевые <span>особенности</span>
+            </h2>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                            <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1ZM12 11.99H19C18.47 16.11 15.72 19.78 12 20.93V12H5V6.3L12 3.19V11.99Z"/>
+                        </svg>
+                    </div>
+                    <h4>Уникальный мир</h4>
+                    <p>Полностью кастомная генерация мира с адской тематикой и уникальными структурами</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z"/>
+                        </svg>
+                    </div>
+                    <h4>Кастомные мобы</h4>
+                    <p>Новые типы врагов и нейтральных мобов с уникальным поведением и дропом</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                            <path d="M19 4H5C3.89 4 3 4.9 3 6V18C3 19.1 3.89 20 5 20H19C20.1 20 21 19.1 21 18V6C21 4.9 20.1 4 19 4ZM19 18H5V8H19V18Z"/>
+                        </svg>
+                    </div>
+                    <h4>Система квестов</h4>
+                    <p>Разветвленная система заданий и достижений с наградной системой</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                            <path d="M2 17H20V19H2V17ZM2 11H20V13H2V11ZM2 5H20V7H2V5Z"/>
+                        </svg>
+                    </div>
+                    <h4>Экономика</h4>
+                    <p>Сбалансированная экономическая система с уникальными адскими ресурсами</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA секция -->
+        <section id="subscribe" class="cta-section">
+            <h2 class="cta-title">Готовы к адскому приключению?</h2>
+            <p class="cta-subtitle">
+                Подпишитесь на уведомления о запуске сервера и получите эксклюзивный доступ 
+                к бета-тестированию и уникальные бонусы при старте!
             </p>
             
-            <div class="hero-actions">
-                <a href="#solutions" class="btn btn-primary">
-                    Новогодние инициативы
+            <div class="btn-group">
+<a href="https://max.ru/join/7BjWOPwk9I2IqacCuOp1V90bEVg176J-QipEJ_jjisA" target="_blank" class="btn btn-primary max-btn-png">
+    <img src="https://logo-teka.com/wp-content/uploads/2025/07/max-messenger-sign-logo.png" 
+         alt="Max Messenger" 
+         class="max-icon-png">
+    <span>Присоединиться в Max</span>
+</a>
+                <a href="https://t.me/hellblock_hw" target="_blank" class="btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM16.36 14.3C16.36 14.69 16.05 15 15.66 15H8.34C7.95 15 7.64 14.69 7.64 14.3V9.7C7.64 9.31 7.95 9 8.34 9H15.66C16.05 9 16.36 9.31 16.36 9.7V14.3ZM11.5 12L9 14H10.5L12.5 12L10.5 10H9L11.5 12Z" fill="currentColor"/>
+                    </svg>
+                    Телеграм канал
                 </a>
-                <a href="/education" class="btn">
-                    Годовой отчет
-                </a>
-                <a href="https://github.com/Anonim-IT/HackerWeb" target="_blank" class="btn">
-                    Наш GitHub
-                </a>
-            </div>
-        </section>
-
-        <!-- Основные направления -->
-        <section id="solutions" class="domains-section">
-            <h2 style="text-align: center; color: var(--text-primary); font-weight: 300; margin-bottom: 3rem;">
-                <span style="color: var(--accent-gold);">Технологические направления</span> 2026 года
-            </h2>
-            
-            <div class="domains-grid">
-                <article class="domain-card">
-                    <h3>IT-Решения</h3>
-                    <p>Комплексные технологические решения для бизнеса нового года</p>
-                    <ul>
-                        <li>Корпоративные системы</li>
-                        <li>Кибербезопасность</li>
-                        <li>Цифровая трансформация</li>
-                    </ul>
-                </article>
-                
-                <article class="domain-card">
-                    <h3>Образование</h3>
-                    <p>Профессиональная подготовка специалистов будущего</p>
-                    <ul>
-                        <li>HW Academy</li>
-                        <li>Корпоративное обучение</li>
-                        <li>Сертификационные программы</li>
-                    </ul>
-                </article>
-                
-                <article class="domain-card">
-                    <h3>Исследования</h3>
-                    <p>Инновационные разработки в области новых технологий</p>
-                    <ul>
-                        <li>AI и машинное обучение</li>
-                        <li>Квантовые вычисления</li>
-                        <li>Блокчейн-технологии</li>
-                    </ul>
-                </article>
-                
-                <article class="domain-card">
-                    <h3>Сообщество</h3>
-                    <p>Платформа для взаимодействия профессионалов</p>
-                    <ul>
-                        <li>Технологические хакатоны</li>
-                        <li>Экспертные сообщества</li>
-                        <li>Карьерные возможности</li>
-                    </ul>
-                </article>
-            </div>
-        </section>
-
-        <!-- Технологии -->
-        <section style="margin-top: 4rem; padding: 3rem; background: rgba(255, 255, 255, 0.02); border-radius: 12px;">
-            <h2 style="text-align: center; color: var(--text-primary); font-weight: 300; margin-bottom: 2rem;">
-                <span style="color: var(--accent-gold);">Технологический стек</span> будущего
-            </h2>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                <div style="text-align: center;">
-                    <div style="color: var(--accent-gold); font-size: 1.2rem; margin-bottom: 0.5rem;">Frontend</div>
-                    <div style="color: var(--text-secondary); font-size: 0.9rem;">React • TypeScript • WebAssembly</div>
-                </div>
-                <div style="text-align: center;">
-                    <div style="color: var(--accent-gold); font-size: 1.2rem; margin-bottom: 0.5rem;">Backend</div>
-                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Rust • Go • Node.js</div>
-                </div>
-                <div style="text-align: center;">
-                    <div style="color: var(--accent-gold); font-size: 1.2rem; margin-bottom: 0.5rem;">AI & ML</div>
-                    <div style="color: var(--text-secondary); font-size: 0.9rem;">PyTorch • TensorFlow • OpenAI</div>
-                </div>
             </div>
         </section>
     </main>
@@ -584,17 +754,18 @@
                     <span>HW Project</span>
                 </a>
                 <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">
-                    Технологическая платформа, создающая будущее. С Новым 2026 Годом!
+                    Технологическая платформа, создающая будущее. 
+                    Готовим к запуску уникальный Minecraft проект в адской тематике.
                 </p>
             </div>
             
             <div class="footer-links">
-                <h3>Направления</h3>
+                <h3>Проекты</h3>
                 <ul>
+                    <li><a href="/HWHellBlock.html">Minecraft HellBlock</a></li>
                     <li><a href="/solutions">IT-Решения</a></li>
                     <li><a href="/education">Образование</a></li>
                     <li><a href="/research">Исследования</a></li>
-                    <li><a href="/community">Сообщество</a></li>
                 </ul>
             </div>
             
@@ -603,102 +774,53 @@
                 <ul>
                     <li><a href="/blog">Блог</a></li>
                     <li><a href="/docs">Документация</a></li>
-                    <li><a href="/careers">Карьера</a></li>
+                    <li><a href="https://github.com/Anonim-IT/HackerWeb" target="_blank">GitHub</a></li>
                     <li><a href="/contact">Контакты</a></li>
                 </ul>
             </div>
             
             <div class="footer-links">
-                <h3>Контакты</h3>
+                <h3>Сообщество</h3>
                 <ul>
-                    <li><a href="mailto:contact@hwproject.com">contact@hwproject.com</a></li>
+                    <li><a href="https://discord.gg/example" target="_blank">Discord</a></li>
                     <li><a href="https://t.me/hwproject" target="_blank">Telegram</a></li>
-                    <li><a href="https://github.com/Anonim-IT/HackerWeb" target="_blank">GitHub</a></li>
+                    <li><a href="https://vk.com/hwproject" target="_blank">VK</a></li>
+                    <li><a href="mailto:minecraft@hwproject.com">minecraft@hwproject.com</a></li>
                 </ul>
             </div>
         </div>
         
         <div class="footer-bottom">
-            <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem;">
-                <a href="/privacy" style="color: var(--text-secondary); text-decoration: none; font-size: 0.8rem;">Конфиденциальность</a>
-                <a href="/terms" style="color: var(--text-secondary); text-decoration: none; font-size: 0.8rem;">Условия</a>
-                <a href="/cookies" style="color: var(--text-secondary); text-decoration: none; font-size: 0.8rem;">Cookies</a>
+            <div class="social-links">
+                <a href="https://discord.gg/example" target="_blank" title="Discord">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.317 4.37C18.339 3.5 16.249 2.92 14.079 2.67C13.679 2.62 13.279 2.58 12.879 2.54C12.479 2.5 12.079 2.47 11.679 2.45C11.279 2.43 10.879 2.42 10.479 2.42C10.079 2.42 9.679 2.43 9.279 2.45C8.879 2.47 8.479 2.5 8.079 2.54C7.679 2.58 7.279 2.62 6.879 2.67C4.709 2.92 2.619 3.5 0.641 4.37C0.241 4.52 0 4.93 0 5.36V18.64C0 19.07 0.241 19.48 0.641 19.63C2.619 20.5 4.709 21.08 6.879 21.33C7.279 21.38 7.679 21.42 8.079 21.46C8.479 21.5 8.879 21.53 9.279 21.55C9.679 21.57 10.079 21.58 10.479 21.58C10.879 21.58 11.279 21.57 11.679 21.55C12.079 21.53 12.479 21.5 12.879 21.46C13.279 21.42 13.679 21.38 14.079 21.33C16.249 21.08 18.339 20.5 20.317 19.63C20.717 19.48 21 19.07 21 18.64V5.36C21 4.93 20.717 4.52 20.317 4.37ZM8.5 15.5C7.4 15.5 6.5 14.6 6.5 13.5C6.5 12.4 7.4 11.5 8.5 11.5C9.6 11.5 10.5 12.4 10.5 13.5C10.5 14.6 9.6 15.5 8.5 15.5ZM15.5 15.5C14.4 15.5 13.5 14.6 13.5 13.5C13.5 12.4 14.4 11.5 15.5 11.5C16.6 11.5 17.5 12.4 17.5 13.5C17.5 14.6 16.6 15.5 15.5 15.5Z"/>
+                    </svg>
+                </a>
+                <a href="https://t.me/hwproject" target="_blank" title="Telegram">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM16.36 14.3C16.36 14.69 16.05 15 15.66 15H8.34C7.95 15 7.64 14.69 7.64 14.3V9.7C7.64 9.31 7.95 9 8.34 9H15.66C16.05 9 16.36 9.31 16.36 9.7V14.3ZM11.5 12L9 14H10.5L12.5 12L10.5 10H9L11.5 12Z"/>
+                    </svg>
+                </a>
+                <a href="https://github.com/Anonim-IT/HackerWeb" target="_blank" title="GitHub">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20C7.59 20 4 16.41 4 12Z"/>
+                    </svg>
+                </a>
             </div>
-            <p>&copy; 2025-2026 HW Project. Все права защищены.</p>
+            
+            <div style="margin-bottom: 1rem;">
+                <a href="/privacy" style="color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; margin: 0 1rem;">Конфиденциальность</a>
+                <a href="/terms" style="color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; margin: 0 1rem;">Условия</a>
+                <a href="/cookies" style="color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; margin: 0 1rem;">Cookies</a>
+            </div>
+            <p>&copy; 2025 HW Project. Все права защищены.</p>
         </div>
     </footer>
 
     <script>
-        // Минималистичные снежинки
-        function createSnowflakes() {
-            const container = document.getElementById('snowflakes-container');
-            const snowflakeCount = 20;
-            
-            for (let i = 0; i < snowflakeCount; i++) {
-                const snowflake = document.createElement('div');
-                snowflake.className = 'snowflake';
-                
-                const size = Math.random() * 4 + 1;
-                const startX = Math.random() * 100;
-                const duration = Math.random() * 20 + 10;
-                const delay = Math.random() * 5;
-                const opacity = Math.random() * 0.3 + 0.1;
-                
-                snowflake.style.width = `${size}px`;
-                snowflake.style.height = `${size}px`;
-                snowflake.style.left = `${startX}vw`;
-                snowflake.style.opacity = opacity;
-                snowflake.style.animationDuration = `${duration}s`;
-                snowflake.style.animationDelay = `${delay}s`;
-                
-                container.appendChild(snowflake);
-            }
-        }
-
-        // Обратный отсчет до Нового 2026 года
-        function updateCountdown() {
-            const now = new Date();
-            const newYear = new Date(now.getFullYear() + 1, 0, 1, 0, 0, 0);
-            
-            // Если уже 2026 год
-            if (now.getFullYear() >= 2026) {
-                document.querySelector('.countdown-title').innerHTML = 
-                    '🎉 <span>С Новым 2026 Годом!</span> 🎉';
-                document.getElementById('days').textContent = '00';
-                document.getElementById('hours').textContent = '00';
-                document.getElementById('minutes').textContent = '00';
-                document.getElementById('seconds').textContent = '00';
-                return;
-            }
-            
-            const diff = newYear - now;
-            
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            
-            document.getElementById('days').textContent = days.toString().padStart(2, '0');
-            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-            
-            // Эффекты при приближении Нового года
-            if (days === 0 && hours < 24) {
-                const countdownItems = document.querySelectorAll('.countdown-item');
-                countdownItems.forEach(item => item.classList.add('pulse'));
-            } else {
-                const countdownItems = document.querySelectorAll('.countdown-item');
-                countdownItems.forEach(item => item.classList.remove('pulse'));
-            }
-        }
-
         // Инициализация
         document.addEventListener('DOMContentLoaded', function() {
-            createSnowflakes();
-            updateCountdown();
-            setInterval(updateCountdown, 1000);
-            
             // Плавная прокрутка для якорных ссылок
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
@@ -714,6 +836,29 @@
                         });
                     }
                 });
+            });
+
+            // Анимация при скролле
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Наблюдаем за карточками
+            document.querySelectorAll('.detail-card, .feature-item').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
             });
         });
     </script>
