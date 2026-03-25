@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="hell">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Правила и руководство для игры на HW Hell Block — уникальном адском Minecraft сервере. Свод законов, советы по выживанию, гайд для новичков и информация о вайтлисте.">
+    <meta name="keywords" content="Minecraft сервер, правила сервера, Hell Block, HW Project, гайд по игре, выживание в аду, вайтлист, как играть на сервере">
+    <title>HW Hell Block — Правила и руководство | Адский гайд</title>
+    
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📜</text></svg>">
+    
+    <style>
+        :root {
+            --hell-red: #ff3300;
+            --hell-orange: #ff6600;
+            --hell-yellow: #ff9900;
+            --hell-dark: #1a0a0a;
+            --hell-darker: #0a0505;
+            --hell-lava: #ff4400;
+            --hell-rock: #442222;
+            --hell-smoke: #2a1a1a;
+            --hell-text: #ffffff;
+            --hell-text-secondary: #ffbbbb;
+            --hell-accent: #ff3366;
+            --hell-glow: rgba(255, 51, 0, 0.4);
+            --law-gold: #ffaa33;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, var(--hell-darker) 0%, #120808 100%);
+            color: var(--hell-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 15% 20%, rgba(255, 50, 0, 0.08) 0%, transparent 55%),
+                        radial-gradient(circle at 85% 70%, rgba(255, 100, 0, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* анимации */
+        @keyframes fireFlicker {
+            0%, 100% { opacity: 0.6; text-shadow: 0 0 3px var(--hell-red); }
+            50% { opacity: 1; text-shadow: 0 0 12px var(--hell-orange); }
+        }
+
+        @keyframes lavaGlow {
+            0% { border-color: rgba(255, 51, 0, 0.3); box-shadow: 0 0 5px rgba(255, 51, 0, 0.2);}
+            100% { border-color: rgba(255, 102, 0, 0.9); box-shadow: 0 0 20px rgba(255, 51, 0, 0.5);}
+        }
+
+        /* хедер */
+        .hell-header {
+            background: rgba(10, 5, 5, 0.96);
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid var(--hell-red);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 0.8rem 0;
+        }
+
+        .header-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 800;
+            font-size: 1.7rem;
+            color: var(--hell-text);
+            text-shadow: 0 0 12px var(--hell-red);
+            transition: 0.2s;
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 20px #ff5500;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ffc0c0;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid transparent;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            border-bottom-color: var(--hell-red);
+            text-shadow: 0 0 5px #ff4400;
+        }
+
+        /* hero */
+        .hero-rules {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+        }
+
+        .hero-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff5533, #ffaa44);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .hero-sub {
+            font-size: 1.3rem;
+            color: #ffbbaa;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        /* контейнер правил */
+        .rules-container {
+            max-width: 1300px;
+            margin: 2rem auto 3rem;
+            padding: 0 2rem;
+        }
+
+        .law-section {
+            background: rgba(20, 8, 8, 0.7);
+            backdrop-filter: blur(3px);
+            border-radius: 32px;
+            border: 1px solid rgba(255, 70, 0, 0.4);
+            margin-bottom: 3rem;
+            overflow: hidden;
+            transition: 0.2s;
+        }
+
+        .law-header {
+            background: linear-gradient(95deg, rgba(255, 51, 0, 0.2), rgba(40, 15, 5, 0.8));
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--hell-red);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .law-header h2 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 1px;
+            color: var(--hell-orange);
+        }
+
+        .law-icon {
+            font-size: 2.4rem;
+        }
+
+        .law-content {
+            padding: 2rem;
+        }
+
+        .rule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .rule-card {
+            background: #221111aa;
+            border-left: 4px solid var(--hell-red);
+            padding: 1.3rem 1.5rem;
+            border-radius: 16px;
+            transition: 0.2s;
+        }
+
+        .rule-card strong {
+            color: var(--hell-yellow);
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .rule-card p {
+            color: #ffddcc;
+            line-height: 1.45;
+        }
+
+        .warning-badge {
+            background: rgba(255, 40, 0, 0.3);
+            border-radius: 30px;
+            padding: 0.3rem 1rem;
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-top: 0.8rem;
+            color: #ffaa77;
+        }
+
+        .guide-steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+
+        .step {
+            flex: 1;
+            background: #1f1111;
+            padding: 1.5rem;
+            border-radius: 24px;
+            text-align: center;
+            border: 1px solid #aa4422;
+        }
+
+        .step-number {
+            background: var(--hell-red);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+            box-shadow: 0 0 10px #ff6633;
+        }
+
+        .whitelist-box {
+            background: linear-gradient(145deg, #2a1210, #1a0806);
+            border-radius: 28px;
+            padding: 2rem;
+            text-align: center;
+            border: 2px solid var(--hell-orange);
+            margin: 2rem 0;
+        }
+
+        .btn-copy {
+            background: #ff4411;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 60px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
+
+        .btn-copy:hover {
+            background: #ff7722;
+            transform: scale(1.02);
+            box-shadow: 0 0 15px #ff4411;
+        }
+
+        .footer-links a {
+            color: #ffaa99;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: #ff6633;
+        }
+
+        @media (max-width: 800px) {
+            .hero-title { font-size: 2.8rem; }
+            .law-header h2 { font-size: 1.6rem; }
+            .nav-links { gap: 1rem; }
+            .guide-steps { flex-direction: column; }
+        }
+
+        .glow-text {
+            color: #ff9966;
+            font-weight: 600;
+        }
+        hr {
+            border-color: #ff441155;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+
+<header class="hell-header">
+    <div class="header-container">
+        <a href="/" class="logo">
+            <span class="logo-icon">📜🔥</span>
+            <span>HW HELL BLOCK</span>
+        </a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#gameplay-guide">Как играть</a></li>
+                <li><a href="#commandments">Законы Ада</a></li>
+                <li><a href="#whitelist">Вайтлист</a></li>
+                <li><a href="#punishment">Наказания</a></li>
+                <li><a href="#community">Сообщество</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Герой правил -->
+<section class="hero-rules">
+    <div>
+        <h1 class="hero-title">⚖️ Кодекс Преисподней ⚖️</h1>
+        <p class="hero-sub">Свод железных правил и выживания в аду. Здесь каждый демон чтит закон, чтобы пламя служило порядку.<br>
+        Прочти, запомни и выжги в памяти — иначе сгоришь сам.</p>
+    </div>
+</section>
+
+<div class="rules-container">
+
+    <!-- ГЛАВА 1: КАК ИГРАТЬ – руководство для новичков -->
+    <section id="gameplay-guide" class="law-section">
+        <div class="law-header">
+            <div class="law-icon">🔥🪓</div>
+            <h2>Гайд: Выживание в HW Hell Block</h2>
+        </div>
+        <div class="law-content">
+            <p style="margin-bottom: 1.5rem; font-size: 1.1rem;">🔥 <strong class="glow-text">Адское приключение начинается здесь!</strong> Наш сервер основан на кастомной генерации Незера, но с механиками выживания, уникальной экономикой и клановыми войнами. Вот база, чтобы не сгореть в первый же час:</p>
+            
+            <div class="guide-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>🏁 Старт в аду</h3>
+                    <p>Вы появляетесь в «Осквернённом убежище». Ваша первая цель — добыть <strong>адский обсидиан</strong> и создать базовые инструменты. Используй <span class="glow-text">/kit starter</span> раз в 24ч.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>⚔️ Кланы и территории</h3>
+                    <p>Создай клан через <code>/clan create</code>. Захватывайте лавовые источники — основной ресурс для крафта легендарок. Участвуйте в осадах!</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>🎯 Прокачка навыков</h3>
+                    <p>Убивайте адских мобов (включая кастомных — <strong>Магма-големов, Инферно-скелетов</strong>), выполняйте ежедневные квесты у NPC «Глашатай Бездны».</p>
+                </div>
+            </div>
+            <hr>
+            <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1rem;">
+                <div><span class="glow-text">📌 Важно:</span> Ресурсы в аду возобновляются медленно — не вырубайте всё подчистую, уважайте чужой труд.</div>
+                <div><span class="glow-text">💬 Команды:</span> /spawn , /trade , /clan , /quest , /rtp (рандомный телепорт).</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ГЛАВА 2: 10 ЗАПОВЕДЕЙ АДА (правила поведения) -->
+    <section id="commandments" class="law-section">
+        <div class="law-header">
+            <div class="law-icon">📜⚡</div>
+            <h2>Законы Преисподней (обязательны к исполнению)</h2>
+        </div>
+        <div class="law-content">
+            <div class="rule-grid">
+                <div class="rule-card"><strong>1. Уважение к пламени 🔥</strong><p>Любые оскорбления, травля, агрессия в чате или голосовом канале караются мгновенным предупреждением. Ад — место жестокое, но не для токсичности.</p></div>
+                <div class="rule-card"><strong>2. Читы и нечестное пламя 🧙‍♂️</strong><p>Использование X-Ray, автокликеров, дюпов, а также любых модов, дающих преимущество (кроме оптимизации) — вечный бан без права апелляции.</p></div>
+                <div class="rule-card"><strong>3. Гриферство под контролем 💣</strong><p>Разрушать постройки и воровать сундуки разрешено ТОЛЬКО на PvP-аренах и во время клановых войн. В обычном мире — запрещено.</p></div>
+                <div class="rule-card"><strong>4. Спам и реклама 🚫</strong><p>Запрещена любая реклама сторонних ресурсов, проектов, а также повторяющийся спам в чате. Наказание — мут до 7 дней.</p></div>
+                <div class="rule-card"><strong>5. Баги = баны 🐛</strong><p>Обнаружил уязвимость? Сразу сообщи администрации в тикеты. Использование багов для наживы — бан без права восстановления.</p></div>
+                <div class="rule-card"><strong>6. Честная PvP ⚔️</strong><p>Не килл-сталкинг, не фарм новичков на спавне. Сражения только в designated зонах или по обоюдному согласию. За нарушение — варн.</p></div>
+                <div class="rule-card"><strong>7. Строительство в аду 🏗️</strong><p>Не перекрывайте ключевые проходы к варпам и не стройте лаги-машины (редстоун-спам). Администрация вправе снести постройку без возврата.</p></div>
+                <div class="rule-card"><strong>8. Вайтлист и мультиаккаунты 👤</strong><p>Один игрок — один аккаунт на сервере. Мультиаккаунты для обхода банов или накрутки ресурсов = перманент.</p></div>
+                <div class="rule-card"><strong>9. 18+ контент и оскорбления чувств 🚷</strong><p>Запрещены никнеймы/скины/постройки с откровенным содержанием, нацистской символикой. Мгновенный бан.</p></div>
+                <div class="rule-card"><strong>10. Уважение к админам 🛡️</strong><p>Решения администрации не обсуждаются в публичном чате. Спорные моменты — в Discord/Max с доказательствами.</p></div>
+            </div>
+            <div class="warning-badge">⚠️ Нарушение любого из правил влечёт за собой наказание по статуту сервера</div>
+        </div>
+    </section>
+
+    <!-- Вайтлист и процесс вступления -->
+    <section id="whitelist" class="law-section">
+        <div class="law-header">
+            <div class="law-icon">📝🔥</div>
+            <h2>Вайтлист & Вступление в ад</h2>
+        </div>
+        <div class="law-content">
+            <div class="whitelist-box">
+                <span style="font-size: 3rem;">🔒</span>
+                <h3 style="color: #ff8844; margin: 1rem 0;">Сервер работает по вайтлисту</h3>
+                <p style="margin-bottom: 1.2rem;">Чтобы попасть в HW Hell Block, необходимо подать заявку в нашем сообществе. Заполни короткую анкету и дождись одобрения.</p>
+                <div style="background: #00000055; border-radius: 20px; padding: 1rem;">
+                    <p><strong>IP для заявки и игры:</strong> <span id="whitelistIp" style="font-family: monospace; font-size: 1.6rem; background: #00000066; padding: 0.2rem 1rem; border-radius: 12px;">hwpro.online</span></p>
+                    <button class="btn-copy" id="copyWhitelistBtn">📋 Скопировать IP сервера</button>
+                    <p style="font-size: 0.85rem; margin-top: 1rem;">✅ После получения вайтлиста заходите на версии 1.21.11 (Java Edition) и присоединяйтесь к битве.</p>
+                </div>
+            </div>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: space-between; margin-top: 1rem;">
+                <div><span class="glow-text">📌 Как подать заявку:</span> Вступи в Telegram/Max группу, перейди в канал #заявки-whitelist и напиши: ник, возраст, опыт игры в майнкрафт.</div>
+                <div><span class="glow-text">⏳ Время рассмотрения:</span> до 24 часов. Будь вежлив, и ад примет тебя.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ГЛАВА 3: Система наказаний -->
+    <section id="punishment" class="law-section">
+        <div class="law-header">
+            <div class="law-icon">⚖️💀</div>
+            <h2>Шкала наказаний (Карма Ада)</h2>
+        </div>
+        <div class="law-content">
+            <div class="rule-grid">
+                <div class="rule-card"><strong>⚠️ Предупреждение (Warn)</strong><p>Незначительные нарушения: мелкий спам, нецензурная брань (1-2 раза). После 3 варнов — автоматический мут на 3 дня.</p></div>
+                <div class="rule-card"><strong>🔇 Мут (Mute)</strong><p>От 2 часов до 14 дней за агрессию в чате, флуд, клевету. Снимается только по истечении срока или при апелляции.</p></div>
+                <div class="rule-card"><strong>⛔ Бан временный</strong><p>Гриферство (не в PvP зоне), мелкое читерство (не авто-клик), оскорбление администрации — от 7 до 30 дней.</p></div>
+                <div class="rule-card"><strong>💀 Перманентный бан</strong><p>Использование X-Ray, дюпов, DDoS-угрозы, пропаганда насилия, обход бана, мультиаккаунтинг. Обжалованию не подлежит.</p></div>
+            </div>
+            <div class="warning-badge" style="margin-top: 1rem;">❗ Каждое наказание фиксируется в логах. Администраторы всегда могут пересмотреть решение при наличии веских доказательств в тикете.</div>
+        </div>
+    </section>
+
+    <!-- ГЛАВА 4: Советы и механики для выживания -->
+    <section class="law-section">
+        <div class="law-header">
+            <div class="law-icon">🧠💡</div>
+            <h2>Советы бывалых чертей</h2>
+        </div>
+        <div class="law-content">
+            <div style="display: flex; flex-wrap: wrap; gap: 1.8rem;">
+                <div style="flex: 1; min-width: 220px;">
+                    <h3 style="color: #ff8844;">🛡️ На старте</h3>
+                    <ul style="margin-left: 1.3rem; color: #ffddcc;">
+                        <li>Используй /rtp чтобы найти безопасное место для базы.</li>
+                        <li>Не строй рядом с варпом — могут быть клановые рейды.</li>
+                        <li>Первым делом добудь огнеупорный камень и создай улучшенный верстак.</li>
+                    </ul>
+                </div>
+                <div style="flex: 1;">
+                    <h3 style="color: #ff8844;">💰 Экономика</h3>
+                    <ul style="margin-left: 1.3rem;">
+                        <li>Валюта — «Пепел душ». Зарабатывай выполняя квесты и продавая редкие ресурсы на /ah.</li>
+                        <li>Торгуй с другими игроками, создавай свой магазин.</li>
+                    </ul>
+                </div>
+                <div style="flex: 1;">
+                    <h3 style="color: #ff8844;">👥 Кланы</h3>
+                    <ul style="margin-left: 1.3rem;">
+                        <li>В клане действуют общие хранилища и усиления.</li>
+                        <li>Участвуй в еженедельных «Адских набегах» — топ кланы получают уникальные ключи.</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <p><span class="glow-text">🎮 Дополнительно:</span> На сервере присутствуют кастомные боссы: «Повелитель Магмы» и «Страж Преисподней». Дроп — легендарные реликвии и титулы. Следи за объявлениями в чате!</p>
+        </div>
+    </section>
+
+    <!-- Сообщество и контакты -->
+    <section id="community" class="law-section">
+        <div class="law-header">
+            <div class="law-icon">🌋👥</div>
+            <h2>Где обитают грешники</h2>
+        </div>
+        <div class="law-content" style="text-align: center;">
+            <p style="margin-bottom: 1.5rem;">Присоединяйся к официальным сообществам, чтобы быть в курсе ивентов, анонсов и просто общаться с единомышленниками.</p>
+            <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+                <a href="https://max.ru/join/7BjWOPwk9I2IqacCuOp1V90bEVg176J-QipEJ_jjisA" target="_blank" style="background:#882211; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; color: white; display: inline-flex; gap: 10px; align-items: center;">📱 Max-сообщество</a>
+                <a href="https://t.me/hwproject" target="_blank" style="background:#226688; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; color: white; display: inline-flex; gap: 10px; align-items: center;">✈️ Telegram канал</a>
+                <a href="#" style="background:#442211; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; color: #ffaa77;">📢 Поддержка (тикеты)</a>
+            </div>
+            <p style="margin-top: 2rem; font-size: 0.9rem;">Правила могут дополняться администрацией. Актуальная редакция: 2026, Адское измерение.</p>
+        </div>
+    </section>
+</div>
+
+<!-- Футер -->
+<footer class="hell-footer" style="background: #0a0303; border-top: 2px solid #ff4422; padding: 2rem; margin-top: 2rem;">
+    <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+        <div class="footer-logo" style="font-size: 1.8rem;">📜 HW HELL BLOCK — RULES & GUIDE</div>
+        <p style="color: #dd9988; margin: 0.5rem 0;">Соблюдай законы ада — и сам станешь его легендой. Нарушителей ждёт вечное пламя бана.</p>
+        <div class="footer-links" style="margin-top: 1rem;">
+            <a href="#gameplay-guide">Гайд</a> | 
+            <a href="#commandments">Правила</a> | 
+            <a href="#whitelist">Вайтлист</a> | 
+            <a href="https://github.com/Anonim-IT/HackerWeb" target="_blank">GitHub проекта</a>
+        </div>
+        <div class="footer-bottom" style="margin-top: 1.5rem; font-size: 0.8rem;">© 2026 HW Hell Block. Minecraft © Mojang. Неофициальный фанатский сервер.</div>
+    </div>
+</footer>
+
+<script>
+    // Копирование IP
+    function copyGenericIp(ipElementId, toastMessage) {
+        const ipSpan = document.getElementById(ipElementId);
+        if(!ipSpan) return;
+        const ip = ipSpan.innerText.trim();
+        navigator.clipboard.writeText(ip).then(() => {
+            alert(`✅ IP "${ip}" скопирован! Теперь можно подавать заявку или подключаться после вайтлиста.`);
+        }).catch(() => alert("❌ Не удалось скопировать, скопируй вручную: " + ip));
+    }
+
+    // для первой кнопки в вайтлисте
+    const copyBtn = document.getElementById('copyWhitelistBtn');
+    if(copyBtn){
+        copyBtn.addEventListener('click', () => {
+            copyGenericIp('whitelistIp', 'IP скопирован');
+        });
+    }
+    
+    // также оставим возможность скопировать IP с блока (на случай)
+    const ipDisplayDiv = document.querySelector('#whitelistIp');
+    if(ipDisplayDiv){
+        ipDisplayDiv.style.cursor = 'pointer';
+        ipDisplayDiv.addEventListener('click', () => copyGenericIp('whitelistIp', 'IP скопирован'));
+    }
+
+    // плавный скролл для якорей
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if(targetId === '#') return;
+            const targetElem = document.querySelector(targetId);
+            if(targetElem){
+                e.preventDefault();
+                window.scrollTo({ top: targetElem.offsetTop - 80, behavior: 'smooth' });
+            }
+        });
+    });
+
+    // анимация появления карточек
+    const cards = document.querySelectorAll('.rule-card, .step');
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting){
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+    cards.forEach(c => {
+        c.style.opacity = '0';
+        c.style.transform = 'translateY(18px)';
+        c.style.transition = '0.3s ease-out';
+        obs.observe(c);
+    });
+</script>
+</body>
+</html>
