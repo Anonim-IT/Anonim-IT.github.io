@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Горячая линия — HW Pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 32px;
+            padding: 2rem;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badge {
+            background: #3b82f6;
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 40px;
+            font-weight: normal;
+        }
+
+        .sub {
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            border-left: 3px solid #3b82f6;
+            padding-left: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            color: #cbd5e1;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        button {
+            width: 100%;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border: none;
+            padding: 14px;
+            border-radius: 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: scale(0.98);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 16px;
+            text-align: center;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .status.success {
+            background: #064e3b;
+            color: #34d399;
+            display: block;
+            border: 1px solid #10b981;
+        }
+
+        .status.error {
+            background: #7f1d1d;
+            color: #f87171;
+            display: block;
+            border: 1px solid #ef4444;
+        }
+
+        .tg-link {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #334155;
+        }
+
+        .tg-link a {
+            color: #60a5fa;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tg-link a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 0.75rem;
+            color: #475569;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>
+        🎫 Горячая линия
+        <span class="badge">HW Pro</span>
+    </h1>
+    <div class="sub">
+        📩 Опишите вашу проблему — ответ придёт в Telegram и на сайт
+    </div>
+
+    <form id="ticketForm">
+        <div class="form-group">
+            <label>👤 Ваше имя</label>
+            <input type="text" id="name" placeholder="Иван Иванов" required>
+        </div>
+
+        <div class="form-group">
+            <label>📱 Telegram (ник или ID)</label>
+            <input type="text" id="telegram" placeholder="@username или ID" required>
+        </div>
+
+        <div class="form-group">
+            <label>🔖 Тема обращения</label>
+            <select id="subject">
+                <option value="Техническая проблема">🛠 Техническая проблема</option>
+                <option value="Вопрос по проекту">❓ Вопрос по проекту</option>
+                <option value="Жалоба">⚠️ Жалоба</option>
+                <option value="Предложение">💡 Предложение</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>📝 Текст обращения</label>
+            <textarea id="message" placeholder="Опишите подробно..." required></textarea>
+        </div>
+
+        <button type="submit">📨 Отправить тикет</button>
+    </form>
+
+    <div id="statusMessage" class="status"></div>
+
+    <div class="tg-link">
+        <a href="https://t.me/adm1npanelbot" target="_blank">
+            💬 Написать в Telegram-бот напрямую
+        </a>
+    </div>
+
+    <footer>
+        🔒 Все обращения защищены. Вы получите ответ в Telegram и в личном кабинете на сайте.
+    </footer>
+</div>
+
+<script>
+    // Настройки подключения к вашему серверу
+    const API_URL = "https://ваш-сервер.ru/api/ticket";  // замените на реальный endpoint
+    const TELEGRAM_BOT_TOKEN = "8074754044:AAH6kyyvzVDQR5KAkThM7rBApbxqpdZHWr0"; // ваш токен бота
+    const ADMIN_CHAT_ID = "250356592"; // Telegram ID администратора или канала
+
+    const form = document.getElementById('ticketForm');
+    const statusDiv = document.getElementById('statusMessage');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const ticketData = {
+            name: document.getElementById('name').value.trim(),
+            telegram: document.getElementById('telegram').value.trim(),
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value.trim(),
+            timestamp: new Date().toISOString(),
+            ip: await getUserIP() // опционально
+        };
+
+        if (!ticketData.name || !ticketData.telegram || !ticketData.message) {
+            showStatus("Заполните все обязательные поля", "error");
+            return;
+        }
+
+        showStatus("⏳ Отправка тикета...", "info");
+
+        try {
+            // 1. Отправка на ваш веб-сайт (база/панель)
+            const webResponse = await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(ticketData)
+            });
+
+            // 2. Отправка в Telegram администраторам
+            const tgMessage = `🆕 *Новый тикет* от ${ticketData.name}\n\n` +
+                              `📌 *Тема:* ${ticketData.subject}\n` +
+                              `📱 *Telegram:* ${ticketData.telegram}\n` +
+                              `💬 *Сообщение:*\n${ticketData.message}\n\n` +
+                              `🕒 ${ticketData.timestamp}`;
+
+            const tgResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    chat_id: ADMIN_CHAT_ID,
+                    text: tgMessage,
+                    parse_mode: "Markdown"
+                })
+            });
+
+            if (webResponse.ok && tgResponse.ok) {
+                showStatus("✅ Тикет успешно отправлен! Администратор свяжется с вами в Telegram.", "success");
+                form.reset();
+            } else {
+                throw new Error("Ошибка при отправке");
+            }
+        } catch (error) {
+            console.error(error);
+            showStatus("❌ Не удалось отправить тикет. Попробуйте позже или напишите в Telegram напрямую.", "error");
+        }
+    });
+
+    function showStatus(msg, type) {
+        statusDiv.textContent = msg;
+        statusDiv.className = `status ${type === "error" ? "error" : type === "success" ? "success" : ""}`;
+        if (type === "info") statusDiv.style.display = "block";
+        setTimeout(() => {
+            if (type !== "info") setTimeout(() => statusDiv.style.display = "none", 4000);
+        }, 100);
+    }
+
+    async function getUserIP() {
+        try {
+            const res = await fetch("https://api.ipify.org?format=json");
+            const data = await res.json();
+            return data.ip;
+        } catch {
+            return "unknown";
+        }
+    }
+</script>
+</body>
+</html>
