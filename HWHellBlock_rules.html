@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Правила и руководство для игры на HW Hell Block — уникальном адском Minecraft сервере. Свод законов, архитектурный кодекс, советы по выживанию, гайд для новичков и информация о вайтлисте.">
-    <meta name="keywords" content="Minecraft сервер, правила сервера, Hell Block, HW Project, гайд по игре, выживание в аду, вайтлист, как играть на сервере, архитектура ада, реестр ада">
+    <meta name="description" content="Правила и руководство для игры на HW Hell Block — уникальном адском Minecraft сервере. Свод законов, архитектурный кодекс, благоустройство ада, советы по выживанию, гайд для новичков и информация о вайтлисте.">
+    <meta name="keywords" content="Minecraft сервер, правила сервера, Hell Block, HW Project, гайд по игре, выживание в аду, вайтлист, как играть на сервере, архитектура ада, благоустройство ада, реестр ада">
     <title>HW Hell Block — Правила и руководство | Адский гайд</title>
     
     <!-- Шрифты -->
@@ -59,18 +59,11 @@
             z-index: -1;
         }
 
-        /* анимации */
         @keyframes fireFlicker {
             0%, 100% { opacity: 0.6; text-shadow: 0 0 3px var(--hell-red); }
             50% { opacity: 1; text-shadow: 0 0 12px var(--hell-orange); }
         }
 
-        @keyframes lavaGlow {
-            0% { border-color: rgba(255, 51, 0, 0.3); box-shadow: 0 0 5px rgba(255, 51, 0, 0.2);}
-            100% { border-color: rgba(255, 102, 0, 0.9); box-shadow: 0 0 20px rgba(255, 51, 0, 0.5);}
-        }
-
-        /* хедер */
         .hell-header {
             background: rgba(10, 5, 5, 0.96);
             backdrop-filter: blur(12px);
@@ -131,7 +124,6 @@
             text-shadow: 0 0 5px #ff4400;
         }
 
-        /* hero */
         .hero-rules {
             min-height: 60vh;
             display: flex;
@@ -160,7 +152,6 @@
             margin: 0 auto;
         }
 
-        /* контейнер правил */
         .rules-container {
             max-width: 1300px;
             margin: 2rem auto 3rem;
@@ -321,6 +312,15 @@
             border-color: #ff441155;
             margin: 1rem 0;
         }
+        
+        .improvement-note {
+            background: #2a1510;
+            border-radius: 20px;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-left: 3px solid #ffaa33;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -336,6 +336,7 @@
                 <li><a href="#gameplay-guide">Как играть</a></li>
                 <li><a href="#commandments">Законы Ада</a></li>
                 <li><a href="#build-codex">Архитектура</a></li>
+                <li><a href="#improvement">Благоустройство</a></li>
                 <li><a href="#whitelist">Вайтлист</a></li>
                 <li><a href="#punishment">Наказания</a></li>
                 <li><a href="#community">Сообщество</a></li>
@@ -344,7 +345,6 @@
     </div>
 </header>
 
-<!-- Герой правил -->
 <section class="hero-rules">
     <div>
         <h1 class="hero-title">⚖️ Кодекс Преисподней ⚖️</h1>
@@ -355,7 +355,6 @@
 
 <div class="rules-container">
 
-    <!-- ГЛАВА 1: КАК ИГРАТЬ – руководство для новичков -->
     <section id="gameplay-guide" class="law-section">
         <div class="law-header">
             <div class="law-icon">🔥🪓</div>
@@ -389,7 +388,6 @@
         </div>
     </section>
 
-    <!-- ГЛАВА 2: 10 ЗАПОВЕДЕЙ АДА (правила поведения) -->
     <section id="commandments" class="law-section">
         <div class="law-header">
             <div class="law-icon">📜⚡</div>
@@ -412,7 +410,6 @@
         </div>
     </section>
 
-    <!-- ГЛАВА 3: АРХИТЕКТУРНЫЙ КОДЕКС АДА (новые правила построек) -->
     <section id="build-codex" class="law-section">
         <div class="law-header">
             <div class="law-icon">🏛️🔥</div>
@@ -430,7 +427,36 @@
         </div>
     </section>
 
-    <!-- Вайтлист и процесс вступления -->
+    <!-- НОВАЯ СЕКЦИЯ: БЛАГОУСТРОЙСТВО АДА (без упоминаний Череповца) -->
+    <section id="improvement" class="law-section">
+        <div class="law-header">
+            <div class="law-icon">🌿🔥</div>
+            <h2>Благоустройство Преисподней</h2>
+        </div>
+        <div class="law-content">
+            <p style="margin-bottom: 1rem; font-size: 1.1rem;">🏺 <strong class="glow-text">Ад должен быть не только страшным, но и ухоженным!</strong> На протяжении тысячелетий демоны наводили порядок в своих владениях. Теперь эти законы закреплены в Кодексе.</p>
+            
+            <div class="rule-grid">
+                <div class="rule-card"><strong>1. Запрет на хламовые зоны 🗑️</strong><p>Запрещается складирование любых предметов, блоков, сундуков, механизмов и строительного мусора на общей территории вне отведённых участков. Любая свалка должна быть ликвидирована в течение 24 часов. В противном случае — штраф и принудительная уборка.</p></div>
+                <div class="rule-card"><strong>2. Содержание прилегающей территории 🧹</strong><p>Каждый игрок / клан обязан поддерживать порядок в радиусе 15 блоков от своей постройки и вдоль адских троп. Это включает уборку случайно выпавших предметов, заполнение кратеров и восстановление рельефа после взрывов гастов.</p></div>
+                <div class="rule-card"><strong>3. Освещение и видимость 💡</strong><p>В радиусе 10 блоков от любой постройки необходимо обеспечить уровень освещения не ниже 7 (факелы, светокамни, лава в ограждении). Тёмные участки, способствующие неконтролируемому спауну враждебных существ, считаются нарушением благоустройства.</p></div>
+                <div class="rule-card"><strong>4. Адское озеленение 🍄</strong><p>Приветствуется высадка адского нароста, багряных и искажённых грибов, корняных блоков. Однако хаотичная, бесконтрольная посадка, мешающая проходу или нарушающая визуальный облик, запрещена. Все насаждения должны иметь ухоженный вид.</p></div>
+                <div class="rule-card"><strong>5. Вывоз пепла и душ 🧴</strong><p>Запрещено оставлять «души» (душевой песок, песок душ) и пепел вне специальных контейнеров или построек. Массовое рассыпание пепла и душ по территории приравнивается к засорению и карается штрафом.</p></div>
+                <div class="rule-card"><strong>6. Эстетика троп и переходов 🛤️</strong><p>Любые тропы, мосты, переходы над лавой должны быть выполнены в едином стиле (камень, адский кирпич, незерит) и иметь перила/ограждения. Недостроенные, разрушенные или неэстетичные конструкции подлежат сносу по требованию администрации.</p></div>
+            </div>
+            
+            <div class="improvement-note">
+                <strong>📜 Статья 1. «О благоустройстве Преисподней»</strong><br>
+                За нарушение правил благоустройства предусмотрены: предупреждения, денежные штрафы (пеплом), принудительные работы по уборке территории, а при систематических нарушениях — демонтаж построек и временная блокировка.
+            </div>
+            
+            <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between;">
+                <div><span class="glow-text">🏆 Поощрение:</span> За образцовое благоустройство и создание красивых, ухоженных зон — награда от администрации, титул «Хранитель Порядка» и доступ к эксклюзивным декоративным блокам.</div>
+                <div><span class="glow-text">👁️ Контроль:</span> За состоянием территории следят мобы-инспекторы и администраторы. Фиксация нарушений через /report или тикеты.</div>
+            </div>
+        </div>
+    </section>
+
     <section id="whitelist" class="law-section">
         <div class="law-header">
             <div class="law-icon">📝🔥</div>
@@ -454,7 +480,6 @@
         </div>
     </section>
 
-    <!-- ГЛАВА 4: Система наказаний -->
     <section id="punishment" class="law-section">
         <div class="law-header">
             <div class="law-icon">⚖️💀</div>
@@ -471,7 +496,6 @@
         </div>
     </section>
 
-    <!-- ГЛАВА 5: Советы и механики для выживания -->
     <section class="law-section">
         <div class="law-header">
             <div class="law-icon">🧠💡</div>
@@ -507,7 +531,6 @@
         </div>
     </section>
 
-    <!-- Сообщество и контакты -->
     <section id="community" class="law-section">
         <div class="law-header">
             <div class="law-icon">🌋👥</div>
@@ -516,16 +539,15 @@
         <div class="law-content" style="text-align: center;">
             <p style="margin-bottom: 1.5rem;">Присоединяйся к официальным сообществам, чтобы быть в курсе ивентов, анонсов и просто общаться с единомышленниками.</p>
             <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
-                <a href="https://max.ru/join/7BjWOPwk9I2IqacCuOp1V90bEVg176J-QipEJ_jjisA" target="_blank" style="background:#882211; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; color: white; display: inline-flex; gap: 10px; align-items: center;">📱 Max-сообщество</a>
-                <a href="https://t.me/hwproject" target="_blank" style="background:#226688; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; color: white; display: inline-flex; gap: 10px; align-items: center;">✈️ Telegram канал</a>
-                <a href="ticket.html" style="background:#442211; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; color: #ffaa77;">📢 Поддержка (тикеты)</a>
+                <a href="#" target="_blank" style="background:#882211; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; color: white; display: inline-flex; gap: 10px; align-items: center;">📱 Max-сообщество</a>
+                <a href="#" target="_blank" style="background:#226688; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; color: white; display: inline-flex; gap: 10px; align-items: center;">✈️ Telegram канал</a>
+                <a href="#" style="background:#442211; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; color: #ffaa77;">📢 Поддержка (тикеты)</a>
             </div>
             <p style="margin-top: 2rem; font-size: 0.9rem;">Правила могут дополняться администрацией. Актуальная редакция: 2026, Адское измерение.</p>
         </div>
     </section>
 </div>
 
-<!-- Футер -->
 <footer class="hell-footer" style="background: #0a0303; border-top: 2px solid #ff4422; padding: 2rem; margin-top: 2rem;">
     <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
         <div class="footer-logo" style="font-size: 1.8rem;">📜 HW HELL BLOCK — RULES & GUIDE</div>
@@ -533,17 +555,17 @@
         <div class="footer-links" style="margin-top: 1rem;">
             <a href="#gameplay-guide">Гайд</a> | 
             <a href="#commandments">Правила</a> | 
-            <a href="#build-codex">Архитектура</a> | 
+            <a href="#build-codex">Архитектура</a> |
+            <a href="#improvement">Благоустройство</a> | 
             <a href="#whitelist">Вайтлист</a> | 
-            <a href="https://github.com/Anonim-IT/HackerWeb" target="_blank">GitHub проекта</a>
+            <a href="#">GitHub проекта</a>
         </div>
         <div class="footer-bottom" style="margin-top: 1.5rem; font-size: 0.8rem;">© 2026 HW Hell Block. Minecraft © Mojang. Неофициальный фанатский сервер.</div>
     </div>
 </footer>
 
 <script>
-    // Копирование IP
-    function copyGenericIp(ipElementId, toastMessage) {
+    function copyGenericIp(ipElementId) {
         const ipSpan = document.getElementById(ipElementId);
         if(!ipSpan) return;
         const ip = ipSpan.innerText.trim();
@@ -552,22 +574,19 @@
         }).catch(() => alert("❌ Не удалось скопировать, скопируй вручную: " + ip));
     }
 
-    // для первой кнопки в вайтлисте
     const copyBtn = document.getElementById('copyWhitelistBtn');
     if(copyBtn){
         copyBtn.addEventListener('click', () => {
-            copyGenericIp('whitelistIp', 'IP скопирован');
+            copyGenericIp('whitelistIp');
         });
     }
     
-    // также оставим возможность скопировать IP с блока (на случай)
     const ipDisplayDiv = document.querySelector('#whitelistIp');
     if(ipDisplayDiv){
         ipDisplayDiv.style.cursor = 'pointer';
-        ipDisplayDiv.addEventListener('click', () => copyGenericIp('whitelistIp', 'IP скопирован'));
+        ipDisplayDiv.addEventListener('click', () => copyGenericIp('whitelistIp'));
     }
 
-    // плавный скролл для якорей
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const targetId = this.getAttribute('href');
@@ -580,7 +599,6 @@
         });
     });
 
-    // анимация появления карточек
     const cards = document.querySelectorAll('.rule-card, .step');
     const obs = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
