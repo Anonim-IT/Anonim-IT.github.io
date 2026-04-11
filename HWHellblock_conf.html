@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="hell">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Политика конфиденциальности HW Hell Block — как мы защищаем ваши данные, обеспечиваем анонимность и конфиденциальность при игре на нашем адском Minecraft сервере.">
+    <meta name="keywords" content="конфиденциальность, политика конфиденциальности, защита данных, HW Hell Block, Minecraft сервер, анонимность, приватность">
+    <meta name="robots" content="noindex, nofollow">
+    <title>HW Hell Block — Политика конфиденциальности | Защита данных</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #0a0505 0%, #120808 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        /* Адский декоративный фон */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 51, 0, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 102, 0, 0.06) 0%, transparent 50%),
+                repeating-linear-gradient(45deg, rgba(255, 51, 0, 0.02) 0px, rgba(255, 51, 0, 0.02) 2px, transparent 2px, transparent 8px);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Хедер */
+        .conf-header {
+            background: rgba(10, 5, 5, 0.96);
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid #ff3300;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 0;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 800;
+            font-size: 1.6rem;
+            color: #fff;
+            text-decoration: none;
+            text-shadow: 0 0 8px #ff3300;
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 15px #ff6600;
+        }
+
+        .back-link {
+            color: #ffaa77;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid #ff6633;
+            border-radius: 40px;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            background: #ff330022;
+            border-color: #ff8855;
+            color: #fff;
+        }
+
+        /* Основной контент */
+        .conf-main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 2rem 4rem;
+        }
+
+        /* Герой */
+        .conf-hero {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+            border-bottom: 1px solid #ff442255;
+            margin-bottom: 2rem;
+        }
+
+        .conf-hero h1 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 3rem;
+            background: linear-gradient(135deg, #ff6644, #ffaa55);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .conf-hero .badge {
+            display: inline-block;
+            background: #ff330022;
+            border: 1px solid #ff6633;
+            border-radius: 60px;
+            padding: 0.3rem 1.2rem;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            color: #ffaa88;
+        }
+
+        /* Карточки секций */
+        .conf-section {
+            background: rgba(20, 8, 8, 0.65);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 70, 0, 0.35);
+            border-radius: 28px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: 0.2s;
+        }
+
+        .conf-section-header {
+            background: linear-gradient(95deg, rgba(255, 51, 0, 0.2), rgba(40, 15, 5, 0.7));
+            padding: 1.2rem 2rem;
+            border-bottom: 1px solid #ff4422;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .conf-section-header .icon {
+            font-size: 1.8rem;
+        }
+
+        .conf-section-header h2 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.6rem;
+            color: #ff8855;
+        }
+
+        .conf-section-content {
+            padding: 1.8rem 2rem;
+        }
+
+        .conf-section-content p {
+            margin-bottom: 1rem;
+            color: #ffddcc;
+        }
+
+        .conf-section-content ul, .conf-section-content ol {
+            margin: 1rem 0 1rem 1.8rem;
+            color: #ffccbb;
+        }
+
+        .conf-section-content li {
+            margin: 0.5rem 0;
+        }
+
+        .highlight {
+            color: #ffaa66;
+            font-weight: 600;
+        }
+
+        .privacy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.2rem;
+            margin: 1.5rem 0;
+        }
+
+        .privacy-card {
+            background: #1f0f0faa;
+            border-left: 3px solid #ff6633;
+            padding: 1rem 1.2rem;
+            border-radius: 16px;
+        }
+
+        .privacy-card strong {
+            color: #ffaa55;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .privacy-card p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        .warning-note {
+            background: #2a1510;
+            border-radius: 20px;
+            padding: 1rem 1.5rem;
+            border-left: 4px solid #ffaa33;
+            margin: 1.5rem 0;
+        }
+
+        .footer-conf {
+            background: #0a0303;
+            border-top: 1px solid #ff4422;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .footer-conf a {
+            color: #ffaa88;
+            text-decoration: none;
+        }
+
+        .footer-conf a:hover {
+            color: #ff6633;
+        }
+
+        hr {
+            border-color: #ff441155;
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 700px) {
+            .conf-hero h1 { font-size: 2rem; }
+            .conf-section-header h2 { font-size: 1.3rem; }
+            .conf-section-content { padding: 1.2rem; }
+            .header-container { flex-direction: column; }
+        }
+
+        .glow {
+            text-shadow: 0 0 4px #ff5533;
+        }
+    </style>
+</head>
+<body>
+
+<header class="conf-header">
+    <div class="header-container">
+        <a href="/" class="logo">
+            <span class="logo-icon">🔒🔥</span>
+            <span>HW HELL BLOCK</span>
+        </a>
+        <a href="#" class="back-link" onclick="history.back(); return false;">← Вернуться к правилам</a>
+    </div>
+</header>
+
+<main class="conf-main">
+    <div class="conf-hero">
+        <h1>Политика конфиденциальности</h1>
+        <p>HW Hell Block — проект, где ваша приватность горит в безопасности, а не в аду.</p>
+        <div class="badge">🔐 Актуально на апрель 2026 | Версия 2.0</div>
+    </div>
+
+    <!-- Введение -->
+    <div class="conf-section">
+        <div class="conf-section-header">
+            <div class="icon">📜🔥</div>
+            <h2>Введение: Почему это важно</h2>
+        </div>
+        <div class="conf-section-content">
+            <p><span class="highlight">HW Hell Block</span> — это не просто Minecraft сервер. Это закрытое сообщество, где мы ценим каждого игрока и его право на <strong>анонимность и конфиденциальность</strong>. Мы разработали данный документ, чтобы вы чётко понимали: какие данные собираются, как они используются и почему вы можете быть спокойны за свою цифровую тень, даже играя в адском измерении.</p>
+            <p>Наш проект разрабатывается с нуля с упором на <strong>Privacy by Design</strong> — принцип, при котором защита данных закладывается в архитектуру сервера и всех сопутствующих сервисов (бота, сайта, панели администрации). Мы не продаём, не передаём и не раскрываем вашу личную информацию третьим лицам.</p>
+        </div>
+    </div>
+
+    <!-- Какие данные собираем -->
+    <div class="conf-section">
+        <div class="conf-section-header">
+            <div class="icon">🕵️‍♂️</div>
+            <h2>Какие данные мы собираем</h2>
+        </div>
+        <div class="conf-section-content">
+            <p>Для обеспечения стабильной работы сервера, защиты от читеров и решения спорных ситуаций мы вынуждены хранить <strong>строго необходимый минимум информации</strong>:</p>
+            <div class="privacy-grid">
+                <div class="privacy-card">
+                    <strong>🎮 Игровой ник (UUID)</strong>
+                    <p>Уникальный идентификатор вашего аккаунта Minecraft. Нужен для вайтлиста, статистики и логирования действий.</p>
+                </div>
+                <div class="privacy-card">
+                    <strong>🌐 IP-адрес (хешированный)</strong>
+                    <p>Хранится в зашифрованном виде. Используется для защиты от банов и мультиаккаунтинга. Администраторы видят только хеш, а не原始 IP.</p>
+                </div>
+                <div class="privacy-card">
+                    <strong>💬 История чата и действий</strong>
+                    <p>Логируются сообщения и ключевые команды для разрешения конфликтов и споров. Автоматически удаляются через 30 дней.</p>
+                </div>
+                <div class="privacy-card">
+                    <strong>📱 Данные Discord/Telegram (опционально)</strong>
+                    <p>Если вы связываете аккаунт — хранится ваш ID в мессенджере для уведомлений и тикетов. Не передаётся никуда.</p>
+                </div>
+            </div>
+            <p><span class="highlight">Мы НЕ собираем:</span> реальные имена, адреса, номера телефонов, платёжные данные (если донаты — через анонимные системы), пароли от аккаунтов, историю браузера или любые другие личные данные.</p>
+        </div>
+    </div>
+
+    <!-- Как мы защищаем данные -->
+    <div class="conf-section">
+        <div class="conf-section-header">
+            <div class="icon">🛡️</div>
+            <h2>Меры защиты: адский фаервол</h2>
+        </div>
+        <div class="conf-section-content">
+            <p>Мы внедряем современные методы для того, чтобы ваши данные оставались в безопасности даже в случае нештатных ситуаций:</p>
+            <ul>
+                <li><strong>🔒 Хеширование IP-адресов</strong> — даже администратор не видит ваш реальный IP, только его уникальный «отпечаток».</li>
+                <li><strong>📁 Минимальное хранение</strong> — логи очищаются автоматически каждые 30 дней. Только перманентные баны хранятся дольше.</li>
+                <li><strong>👥 Ограниченный доступ</strong> — только 2 человека из высшей администрации имеют доступ к сырым логам. Все действия с логами аудируются.</li>
+                <li><strong>🔐 Шифрование бэкапов</strong> — все резервные копии сервера хранятся с AES-256 шифрованием.</li>
+                <li><strong>🌍 Анонимные серверы</strong> — хостинг проекта расположен в юрисдикции с сильными законами о защите данных.</li>
+            </ul>
+            <div class="warning-note">
+                <strong>📢 Важное замечание:</strong> Никто из администрации не имеет права требовать у вас пароль от аккаунта Minecraft, личные документы или доступ к вашему ПК. Если кто-то пытается — немедленно сообщите в службу безопасности.
+            </div>
+        </div>
+    </div>
+
+    <!-- Политика для игроков: как сохранить конфиденциальность -->
+    <div class="conf-section">
+        <div class="conf-section-header">
+            <div class="icon">🧙‍♂️</div>
+            <h2>Как оставаться конфиденциальным в игре</h2>
+        </div>
+        <div class="conf-section-content">
+            <p>Мы разработали инфраструктуру, позволяющую вам сохранять полную анонимность даже при активной игре. Вот что мы для этого делаем:</p>
+            <div class="privacy-grid">
+                <div class="privacy-card">
+                    <strong>🎭 Система «Теневой Ник»</strong>
+                    <p>Вы можете использовать псевдоним, отличный от вашего реального ника Minecraft. Другие игроки видят только ваш «адский титул».</p>
+                </div>
+                <div class="privacy-card">
+                    <strong>🗣️ Анонимный чат</strong>
+                    <p>Команда <code>/anon</code> позволяет отправлять сообщения в глобальный чат без отображения вашего ника.</p>
+                </div>
+                <div class="privacy-card">
+                    <strong>🏠 Скрытые базы</strong>
+                    <p>Ваш дом не отображается на динамической карте, если вы не добавите его в публичный реестр самостоятельно.</p>
+                </div>
+                <div class="privacy-card">
+                    <strong>🚫 Запрет на доксинг</strong>
+                    <p>Любые попытки раскрыть личную информацию другого игрока (реальное имя, город, соцсети) — мгновенный перманентный бан.</p>
+                </div>
+            </div>
+            <p><span class="highlight">Совет:</span> Для максимальной анонимности рекомендуем использовать отдельный аккаунт Minecraft (без привязки к реальным соцсетям) и VPN/прокси. Мы не блокируем VPN-соединения.</p>
+        </div>
+    </div>
+
+    <!-- Права игроков -->
+    <div class="conf-section">
+        <div class="conf-section-header">
+            <div class="icon">⚖️</div>
+            <h2>Ваши права</h2>
+        </div>
+        <div class="conf-section-content">
+            <p>В соответствии с политикой конфиденциальности HW Hell Block, каждый игрок имеет право:</p>
+            <ul>
+                <li><strong>На доступ к своим данным</strong> — вы можете запросить полный список информации, которую мы храним о вас (через тикет-систему).</li>
+                <li><strong>На удаление данных</strong> — после прекращения игры на сервере вы можете потребовать полного удаления всех логов и записей, связанных с вашим аккаунтом.</li>
+                <li><strong>На исправление ошибок</strong> — если какие-то данные неверны (например, ошибочная блокировка), мы их скорректируем.</li>
+                <li><strong>На отказ от сбора</strong> — вы можете отказаться от сбора расширенной статистики (оставив только минимально необходимую).</li>
+            </ul>
+            <p>Для реализации любого из этих прав — создайте тикет в нашем сообществе с пометкой <span class="highlight">#privacy-request</span>. Ответ даётся в течение 7 дней.</p>
+        </div>
+    </div>
+
+    <!-- Разработка проекта для приватности -->
+    <div class="conf-section">
+        <div class="conf-section-header">
+            <div class="icon">⚙️🔧</div>
+            <h2>Как проект разрабатывается для приватности</h2>
+        </div>
+        <div class="conf-section-content">
+            <p>HW Hell Block — это не просто сервер, а <strong>экосистема с открытой философией приватности</strong>. Вот ключевые принципы нашей разработки:</p>
+            <ul>
+                <li><strong>🔐 Локальная аутентификация</strong> — мы не используем сторонние сервисы входа (вроде Discord OAuth2) для игровой авторизации. Всё завязано только на Minecraft UUID.</li>
+                <li><strong>📦 Отсутствие внешних трекеров</strong> — на сайт и в бота не встроены счётчики Google Analytics, Яндекс.Метрики и подобные системы сбора данных.</li>
+                <li><strong>🧩 Модульность</strong> — все плагины и скрипты написаны in-house, без левых зависимостей, которые могли бы «утекать» данные.</li>
+                <li><strong>📜 Open Source политика</strong> — основные модули безопасности и работы с данными доступны для аудита (по запросу).</li>
+                <li><strong>🔄 Регулярные аудиты</strong> — раз в квартал проводится внутренняя проверка систем на предмет утечек и уязвимостей.</li>
+            </ul>
+            <div class="warning-note">
+                <strong>💡 Разработка ведётся с мыслью о вас:</strong> Мы убеждены, что даже в многопользовательской игре можно сохранить цифровую анонимность. Наша цель — доказать это на практике, создавая безопасное место для игры без страха за свою приватность.
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookies и сторонние сервисы -->
+    <div class="conf-section">
+        <div class="conf-section-header">
+            <div class="icon">🍪</div>
+            <h2>Cookies и сторонние сервисы</h2>
+        </div>
+        <div class="conf-section-content">
+            <p>Наш сайт (данная страница и правила) использует <strong>только технически необходимые cookies</strong> для запоминания темы оформления. Мы не используем:</p>
+            <ul>
+                <li>Рекламные трекеры</li>
+                <li>Аналитические скрипты</li>
+                <li>Социальные виджеты</li>
+                <li>Сторонние шрифты (все шрифты загружаются с Google Fonts, но мы не передаём им ваши данные — используется стандартный кеш браузера)</li>
+            </ul>
+            <p>Никакие данные с этого сайта не передаются третьим лицам. Логи обращений к сайту не хранятся дольше 7 дней и используются только для защиты от DDoS-атак.</p>
+        </div>
+    </div>
+
+    <!-- Изменения политики -->
+    <div class="conf-section">
+        <div class="conf-section-header">
+            <div class="icon">📅</div>
+            <h2>Изменения политики конфиденциальности</h2>
+        </div>
+        <div class="conf-section-content">
+            <p>Мы можем обновлять данный документ по мере развития проекта. Все изменения будут опубликованы на этой странице с новой датой вверху. Если изменения существенные (например, расширение сбора данных), мы дополнительно оповестим игроков через игровой чат и Telegram-канал за 7 дней до вступления в силу.</p>
+            <p>Актуальная версия всегда доступна по адресу <span class="highlight">/conf</span> на сайте проекта. Старые версии хранятся в архиве.</p>
+        </div>
+    </div>
+
+    <!-- Контакты -->
+    <div class="conf-section">
+        <div class="conf-section-header">
+            <div class="icon">📬</div>
+            <h2>Контакты по вопросам приватности</h2>
+        </div>
+        <div class="conf-section-content">
+            <p>Если у вас есть вопросы, касающиеся данной политики конфиденциальности, обработки ваших данных или вы хотите запросить удаление информации — пожалуйста, свяжитесь с нашим <strong>Data Protection Officer (DPO)</strong>:</p>
+            <ul style="list-style: none; margin-left: 0; padding-left: 0;">
+                <li>📧 <strong>Email:</strong> <span class="highlight">privacy@hwhellblock.net</span> (зашифрованная почта, PGP ключ доступен по запросу)</li>
+                <li>📱 <strong>Тикет-система:</strong> Через официальный Telegram-бот @HWHellBlockSupportBot (раздел #privacy)</li>
+                <li>📮 <strong>Discord:</strong> Канал #support с меткой [PRIVACY]</li>
+            </ul>
+            <p>Мы стараемся отвечать на все запросы, связанные с приватностью, в течение 3-5 рабочих дней.</p>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin: 2rem 0 1rem;">
+        <hr style="max-width: 300px; margin: 0 auto;">
+        <p style="font-size: 0.85rem; color: #aa8866;">© 2026 HW Hell Block. Все права защищены. <br>Проект не аффилирован с Mojang Studios. <br>Мы заботимся о вашей конфиденциальности, как об обсидиановом щите.</p>
+    </div>
+</main>
+
+<footer class="footer-conf">
+    <div>
+        <a href="#">Правила сервера</a> &nbsp;|&nbsp;
+        <a href="#">Политика конфиденциальности</a> &nbsp;|&nbsp;
+        <a href="#">Сообщество</a>
+    </div>
+    <p style="margin-top: 1rem; font-size: 0.75rem;">HW Hell Block — адский Minecraft проект с нулевой токсичностью и максимальной приватностью.</p>
+</footer>
+
+<script>
+    // Простая анимация при скролле для карточек
+    const cards = document.querySelectorAll('.conf-section');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+    cards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = '0.4s ease-out';
+        observer.observe(card);
+    });
+</script>
+</body>
+</html>
