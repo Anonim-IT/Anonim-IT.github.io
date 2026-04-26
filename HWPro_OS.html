@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HWPro_OS</title>
+    <style>
+        /* === СБРОС И БАЗОВЫЙ МИНИМАЛИЗМ === */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #000000;
+            --panel-bg: #000000;
+            --text: #00cc00;
+            --text-dim: #007700;
+            --accent: #00ff00;
+            --border: #005500;
+            --highlight-bg: #003300;
+            --highlight-text: #ffffff;
+            --bar-bg: #001a00;
+            --error: #00aa00;
+            --font-mono: 'Courier New', 'Liberation Mono', 'DejaVu Sans Mono', monospace;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-mono);
+            font-size: 14px;
+            line-height: 1.3;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            cursor: default;
+        }
+
+        /* === ВЕРХНЯЯ СТРОКА МЕНЮ Midnight Commander === */
+        .mc-topbar {
+            display: flex;
+            align-items: center;
+            height: 28px;
+            background-color: var(--bar-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 0 8px;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .mc-topbar span {
+            cursor: default;
+            padding: 2px 8px;
+            margin-right: 4px;
+            color: var(--text-dim);
+            transition: color 0.1s, background-color 0.1s;
+        }
+
+        .mc-topbar span:hover {
+            color: var(--highlight-text);
+            background-color: var(--highlight-bg);
+        }
+
+        .mc-topbar .hotkey {
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* === ОСНОВНАЯ ОБЛАСТЬ: ДВЕ ПАНЕЛИ === */
+        .mc-panels {
+            display: flex;
+            flex: 1;
+            min-height: 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mc-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border);
+            min-width: 0;
+        }
+
+        .mc-panel:last-child {
+            border-right: none;
+        }
+
+        /* === ЗАГОЛОВОК ПАНЕЛИ === */
+        .panel-header {
+            height: 26px;
+            background-color: var(--bar-bg);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--highlight-text);
+            flex-shrink: 0;
+        }
+
+        .panel-header .path {
+            color: var(--text-dim);
+            font-weight: normal;
+            margin-left: auto;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* === ТЕЛО ПАНЕЛИ (СПИСОК ФАЙЛОВ/ДИРЕКТОРИЙ) === */
+        .panel-body {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 2px 0;
+            background-color: var(--panel-bg);
+            font-size: 13px;
+            line-height: 1.4;
+            cursor: default;
+        }
+
+        .panel-body::-webkit-scrollbar {
+            width: 6px;
+        }
+        .panel-body::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        .panel-body::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        .file-row {
+            display: flex;
+            align-items: center;
+            padding: 2px 8px;
+            white-space: nowrap;
+            transition: background-color 0.1s;
+            min-height: 20px;
+        }
+
+        .file-row:hover,
+        .file-row.selected {
+            background-color: var(--highlight-bg);
+            color: var(--highlight-text);
+        }
+
+        .file-row.selected {
+            outline: 1px solid var(--accent);
+            outline-offset: -1px;
+        }
+
+        .file-row .icon {
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+            margin-right: 4px;
+            color: var(--accent);
+        }
+
+        .file-row .name {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
+        }
+
+        .file-row.dir .name {
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .file-row .size {
+            width: 70px;
+            text-align: right;
+            flex-shrink: 0;
+            color: var(--text-dim);
+            margin-left: 8px;
+        }
+
+        .file-row.dir .size {
+            color: var(--text-dim);
+        }
+
+        /* === НИЖНЯЯ СТРОКА ПОДСКАЗОК === */
+        .mc-bottombar {
+            height: 26px;
+            background-color: var(--bar-bg);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .mc-bottombar .hint {
+            margin-right: 16px;
+            color: var(--text-dim);
+        }
+
+        .mc-bottombar .key {
+            color: var(--accent);
+            font-weight: bold;
+            background-color: var(--highlight-bg);
+            padding: 0 4px;
+            margin-right: 4px;
+        }
+
+        /* === МОДАЛЬНОЕ ОКНО (ПРОСМОТР ФАЙЛА) === */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-window {
+            width: 75vw;
+            max-width: 900px;
+            height: 70vh;
+            max-height: 700px;
+            background-color: var(--bg);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 40px rgba(0, 255, 0, 0.15);
+        }
+
+        .modal-header {
+            height: 26px;
+            background-color: var(--bar-bg);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            font-size: 13px;
+            color: var(--highlight-text);
+        }
+
+        .modal-header .close-btn {
+            margin-left: auto;
+            cursor: pointer;
+            padding: 0 6px;
+            color: var(--text-dim);
+            transition: color 0.1s;
+        }
+
+        .modal-header .close-btn:hover {
+            color: var(--highlight-text);
+            background-color: var(--highlight-bg);
+        }
+
+        .modal-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px 20px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: var(--text);
+            background-color: var(--panel-bg);
+        }
+
+        .modal-body::-webkit-scrollbar {
+            width: 6px;
+        }
+        .modal-body::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        .modal-body::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        .modal-body h2 {
+            color: var(--accent);
+            font-size: 15px;
+            margin: 18px 0 8px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 4px;
+        }
+
+        .modal-body h2:first-child {
+            margin-top: 0;
+        }
+
+        .modal-body p {
+            margin: 6px 0;
+        }
+
+        .modal-body ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 8px 0;
+        }
+
+        .modal-body ul li::before {
+            content: ">";
+            color: var(--accent);
+            margin-right: 8px;
+        }
+
+        .modal-body .highlight {
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .modal-body .email-link {
+            color: var(--accent);
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .modal-body .terminal-line {
+            display: block;
+            color: var(--text-dim);
+            margin: 2px 0;
+        }
+
+        /* === АДАПТИВНОСТЬ === */
+        @media (max-width: 700px) {
+            .mc-panels {
+                flex-direction: column;
+            }
+            .mc-panel {
+                flex: 1;
+                min-height: 0;
+            }
+            .mc-panel:first-child {
+                border-bottom: 1px solid var(--border);
+            }
+            .file-row .size {
+                display: none;
+            }
+            .modal-window {
+                width: 95vw;
+                height: 85vh;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== ВЕРХНЕЕ МЕНЮ ===== -->
+    <div class="mc-topbar">
+        <span><span class="hotkey">F1</span> Help</span>
+        <span><span class="hotkey">F2</span> Menu</span>
+        <span><span class="hotkey">F3</span> View</span>
+        <span><span class="hotkey">F4</span> Edit</span>
+        <span><span class="hotkey">F5</span> Copy</span>
+        <span><span class="hotkey">F6</span> RenMov</span>
+        <span><span class="hotkey">F7</span> Mkdir</span>
+        <span><span class="hotkey">F8</span> Delete</span>
+        <span style="margin-left:auto; color:var(--accent);">HWPro_OS</span>
+    </div>
+
+    <!-- ===== ДВЕ ПАНЕЛИ ===== -->
+    <div class="mc-panels">
+
+        <!-- === ЛЕВАЯ ПАНЕЛЬ === -->
+        <div class="mc-panel">
+            <div class="panel-header">
+                &larr; &middot; <span class="path">~/HWPro_OS/docs</span>
+            </div>
+            <div class="panel-body" id="left-panel">
+                <!-- Заполняется JS -->
+            </div>
+        </div>
+
+        <!-- === ПРАВАЯ ПАНЕЛЬ === -->
+        <div class="mc-panel">
+            <div class="panel-header">
+                &larr; &middot; <span class="path">~/HWPro_OS/team</span>
+            </div>
+            <div class="panel-body" id="right-panel">
+                <!-- Заполняется JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== НИЖНЯЯ СТРОКА ПОДСКАЗОК ===== -->
+    <div class="mc-bottombar">
+        <span class="hint"><span class="key">F3</span> Просмотр файла</span>
+        <span class="hint"><span class="key">Tab</span> Сменить панель</span>
+        <span class="hint"><span class="key">Arrows</span> Навигация</span>
+        <span class="hint"><span class="key">Esc</span> Закрыть окно</span>
+        <span style="margin-left:auto; color:var(--text-dim);">HWPro_OS v0.1.0 | Console &amp; Encryption</span>
+    </div>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО ПРОСМОТРА ===== -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-window">
+            <div class="modal-header">
+                <span id="modal-title">README.md</span>
+                <span class="close-btn" id="modal-close">[ X ]</span>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Заполняется JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ===== ДАННЫЕ: СОДЕРЖИМОЕ ПАНЕЛЕЙ И ФАЙЛОВ =====
+            const leftFiles = [
+                { type: 'dir', name: '..', size: 'UP--DIR', icon: '&#x2191;' },
+                { type: 'dir', name: 'core/', size: '4096', icon: '&#x1F4C1;', contentId: 'core' },
+                { type: 'file', name: 'README.md', size: '2451', icon: '&#x1F4C4;', contentId: 'readme' },
+                { type: 'file', name: 'MANIFEST.md', size: '1830', icon: '&#x1F4C4;', contentId: 'manifest' },
+                { type: 'file', name: 'ANONYMITY.md', size: '3102', icon: '&#x1F4C4;', contentId: 'anonymity' },
+                { type: 'file', name: 'APPLY.md', size: '2744', icon: '&#x1F4C4;', contentId: 'apply' },
+                { type: 'file', name: 'CONSOLE_ONLY.md', size: '1622', icon: '&#x1F4C4;', contentId: 'console' },
+                { type: 'file', name: 'KERNEL.log', size: '890', icon: '&#x1F4C4;', contentId: 'kernel' },
+            ];
+
+            const rightFiles = [
+                { type: 'dir', name: '..', size: 'UP--DIR', icon: '&#x2191;' },
+                { type: 'dir', name: 'testers/', size: '4096', icon: '&#x1F4C1;', contentId: 'testers' },
+                { type: 'dir', name: 'devs/', size: '4096', icon: '&#x1F4C1;', contentId: 'devs' },
+                { type: 'file', name: 'ROSTER.md', size: '1204', icon: '&#x1F4C4;', contentId: 'roster' },
+                { type: 'file', name: 'pgp_public_key.asc', size: '3180', icon: '&#x1F511;', contentId: 'pgpkey' },
+                { type: 'file', name: 'contact.info', size: '512', icon: '&#x1F4E7;', contentId: 'contact' },
+                { type: 'file', name: 'CHANGELOG.md', size: '678', icon: '&#x1F4C4;', contentId: 'changelog' },
+            ];
+
+            // ===== СОДЕРЖИМОЕ ФАЙЛОВ (ДЛЯ МОДАЛЬНОГО ОКНА) =====
+            const fileContents = {
+                readme: `
+                    <h2>HWPro_OS — Операционная система Проекта HW</h2>
+                    <p><span class="highlight">Кодовое имя:</span> HWPro_OS</p>
+                    <p><span class="highlight">Основа:</span> Монолитное ядро версии 7.0.1</p>
+                    <p><span class="highlight">Целевое окно релиза:</span> Q2 2027</p>
+
+                    <h2>Что такое HWPro_OS?</h2>
+                    <p>Полностью свободная и открытая операционная система, построенная вокруг концепции цифровой анонимности и максимального пользовательского контроля.</p>
+                    <ul>
+                        <li>Никакой телеметрии.</li>
+                        <li>Никакого фонового наблюдения.</li>
+                        <li>Никакой принудительной идентификации.</li>
+                    </ul>
+                    <p>Система собрана с нуля с использованием минимального набора ключевых компонентов, проверенных в соответствии с принципами Манифеста HW.</p>
+
+                    <h2>Ключевые принципы</h2>
+                    <ul>
+                        <li>Полное шифрование диска по умолчанию. Без исключений. Без бэкдоров.</li>
+                        <li>Ноль исходящих соединений без явного согласия пользователя.</li>
+                        <li>Неизменяемая корневая файловая система с атомарными обновлениями.</li>
+                        <li>Предварительно настроенное окружение разработки.</li>
+                        <li>Минимальная поверхность атаки.</li>
+                    </ul>
+                `,
+                manifest: `
+                    <h2>Манифест Проекта HW</h2>
+                    <p>Проект HW функционирует по строгому протоколу <span class="highlight">нулевой идентификации</span>.</p>
+
+                    <h2>Правила</h2>
+                    <ul>
+                        <li>Мы не упоминаем названия компаний, конкретных продуктов или торговые марки.</li>
+                        <li>Мы не обсуждаем личности, авторов кода или мейнтейнеров.</li>
+                        <li>Мы не ссылаемся на конкретные версии дистрибутивов или прошивок.</li>
+                    </ul>
+
+                    <h2>Обфускация</h2>
+                    <p>Любое прямое указание заменяется конструкцией с символами. Примеры:</p>
+                    <p><span class="terminal-line">L***x — широко известное ядро</span></p>
+                    <p><span class="terminal-line">*BSD — семейство операционных систем</span></p>
+
+                    <p class="highlight">Фокус: логика низкоуровневого программирования, архитектура ОС, взаимодействие ПО с аппаратным обеспечением.</p>
+                `,
+                anonymity: `
+                    <h2>Правила анонимности</h2>
+                    <p>Обязательны к соблюдению. Нарушение — удаление заявки и внесение в чёрный список.</p>
+
+                    <h2>Запрещено</h2>
+                    <ul>
+                        <li>Реальные имена, фамилии, инициалы.</li>
+                        <li>Географические метки: страна, город, провайдер.</li>
+                        <li>Внешние контактные данные за пределами протокола PGP.</li>
+                        <li>Информация о третьих лицах.</li>
+                        <li>Избыток персональных данных.</li>
+                    </ul>
+                    <p class="highlight">Проект HW не хочет знать, кто вы. Проекту нужно знать, что вы умеете находить баги.</p>
+                `,
+                apply: `
+                    <h2>Подача заявки тестировщика</h2>
+                    <p>Отправьте PGP-зашифрованное письмо на адрес:</p>
+                    <p class="highlight email-link">hwmail@hwpro.online</p>
+                    <p>Тема письма: <span class="highlight">HWProOS-TESTER-APP</span></p>
+
+                    <h2>Содержание заявки</h2>
+                    <ul>
+                        <li>Псевдоним (не связанный с реальной личностью).</li>
+                        <li>Открытый PGP-ключ (plain-text, 4096 бит RSA минимум).</li>
+                        <li>Список доступного оборудования (модели можно указывать полностью).</li>
+                        <li>Опыт: только техническая суть, без имён и названий компаний.</li>
+                        <li>Фраза: «Я принимаю, что HWPro_OS не имеет графического окружения. Моя работа — только в консоли».</li>
+                        <li>Интересующая область тестирования.</li>
+                    </ul>
+                    <p>Ответ — в течение 48 часов.</p>
+                `,
+                console: `
+                    <h2>HWPro_OS: Консоль и шифрование. Ничего больше.</h2>
+                    <p>В HWPro_OS <span class="highlight">нет графического окружения</span>.</p>
+
+                    <h2>В системе отсутствуют</h2>
+                    <ul>
+                        <li>Рабочий стол в любом виде.</li>
+                        <li>Оконные менеджеры.</li>
+                        <li>Графические оболочки.</li>
+                        <li>X-сервер и Wayland.</li>
+                        <li>Фреймбуферные терминалы, эмулирующие графику.</li>
+                    </ul>
+
+                    <h2>Единственный интерфейс</h2>
+                    <p>Чистая текстовая консоль. Клавиатура. Команды. Шифрованный ввод и вывод.</p>
+                    <p class="highlight">В мире Hacker Web мы уходим от рабочих столов. Мы работаем напрямую с машиной.</p>
+                `,
+                kernel: `
+                    <h2>HWPro_OS — Информация о ядре</h2>
+                    <p><span class="highlight">Версия ядра:</span> 7.0.1</p>
+                    <p><span class="highlight">Тип:</span> Монолитное</p>
+                    <p><span class="highlight">Поддержка Rust:</span> Инфраструктура стабильна. Второй язык в ядре.</p>
+                    <p><span class="highlight">Патчи:</span> XFS, Btrfs, ext4, сетевой стек, драйверы GPU.</p>
+                    <p class="terminal-line">$ uname -r</p>
+                    <p class="terminal-line">7.0.1</p>
+                    <p>Никакой драмы. Только цифры.</p>
+                `,
+                core: `
+                    <h2>core/ — Системное ядро HWPro_OS</h2>
+                    <p>Директория содержит базовые компоненты сборки системы.</p>
+                    <ul>
+                        <li>initramfs/ — Образ начальной загрузки</li>
+                        <li>toolchain/ — Сборочный инструментарий</li>
+                        <li>configs/ — Конфигурационные файлы ядра</li>
+                    </ul>
+                `,
+                testers: `
+                    <h2>testers/ — Команда тестирования</h2>
+                    <p>Мы набираем тестировщиков с опытом в:</p>
+                    <ul>
+                        <li>Bare-metal и виртуализированных средах.</li>
+                        <li>Системной отладке и чтении логов ядра.</li>
+                        <li>Разнообразных аппаратных конфигурациях.</li>
+                        <li>Работе исключительно в командной строке.</li>
+                    </ul>
+                    <p><span class="highlight">Не ищем:</span> желающих ранний доступ для повседневного использования и тех, кто не готов к консоли.</p>
+                `,
+                devs: `
+                    <h2>devs/ — Основная команда разработки</h2>
+                    <p>Ядро команды. Информация не раскрывается публично.</p>
+                    <p>Связь с разработчиками — только через зашифрованные каналы и официальную почту проекта.</p>
+                `,
+                roster: `
+                    <h2>ROSTER.md — Список участников</h2>
+                    <p>Все участники проекта числятся под псевдонимами или хеш-идентификаторами.</p>
+                    <p>Никаких реальных имён. Никаких фотографий. Никаких биографий.</p>
+                    <p class="highlight">Публичный список не ведётся.</p>
+                `,
+                pgpkey: `
+                    <h2>Публичный PGP-ключ отдела набора</h2>
+                    <p>Будет опубликован отдельным постом в Телеграм-канале Проекта HW.</p>
+                    <p>Не отправляйте заявки до публикации ключа.</p>
+                    <p>Алгоритм: RSA 4096 или эквивалент на эллиптических кривых.</p>
+                `,
+                contact: `
+                    <h2>Контактная информация</h2>
+                    <p><span class="highlight">Email:</span> <span class="email-link">hwmail@hwpro.online</span></p>
+                    <p><span class="highlight">Канал:</span> Телеграм-канал Проекта HW</p>
+                    <p><span class="highlight">Сайт:</span> Данная страница</p>
+                    <p class="highlight">Мы не используем Tor. Никаких скрытых сервисов.</p>
+                `,
+                changelog: `
+                    <h2>CHANGELOG.md</h2>
+                    <p>2026-04-27 — Публичный анонс HWPro_OS.</p>
+                    <p>2026-04-26 — Публикация правил подачи заявок.</p>
+                    <p>2026-04-25 — Выход ядра 7.0. Закладка фундамента HWPro_OS.</p>
+                    <p>2026-Q1 — Начало внутренней разработки.</p>
+                `,
+            };
+
+            // ===== ОТРИСОВКА ПАНЕЛИ =====
+            function renderPanel(containerId, files, panelSide) {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+                container.innerHTML = '';
+
+                files.forEach((file, index) => {
+                    const row = document.createElement('div');
+                    row.className = 'file-row' + (file.type === 'dir' ? ' dir' : '');
+                    row.dataset.index = index;
+                    row.dataset.panel = panelSide;
+                    row.dataset.contentId = file.contentId || '';
+                    row.dataset.type = file.type;
+                    row.tabIndex = 0;
+
+                    const iconSpan = document.createElement('span');
+                    iconSpan.className = 'icon';
+                    iconSpan.innerHTML = file.icon;
+
+                    const nameSpan = document.createElement('span');
+                    nameSpan.className = 'name';
+                    nameSpan.textContent = file.name;
+
+                    const sizeSpan = document.createElement('span');
+                    sizeSpan.className = 'size';
+                    sizeSpan.textContent = file.size;
+
+                    row.appendChild(iconSpan);
+                    row.appendChild(nameSpan);
+                    row.appendChild(sizeSpan);
+
+                    row.addEventListener('click', function(e) {
+                        selectRow(row, panelSide);
+                        if (file.type === 'file' && file.contentId) {
+                            openModal(file.contentId, file.name);
+                        }
+                    });
+
+                    row.addEventListener('dblclick', function(e) {
+                        if (file.type === 'file' && file.contentId) {
+                            openModal(file.contentId, file.name);
+                        }
+                    });
+
+                    container.appendChild(row);
+                });
+
+                // Автовыделение первой строки (кроме "..")
+                const firstRealRow = container.querySelector('.file-row:not(:first-child)');
+                if (firstRealRow) {
+                    selectRow(firstRealRow, panelSide);
+                }
+            }
+
+            // ===== ВЫДЕЛЕНИЕ СТРОКИ =====
+            let activePanel = 'left';
+            let selectedIndex = { left: 1, right: 1 };
+
+            function selectRow(row, panelSide) {
+                const panelId = panelSide === 'left' ? 'left-panel' : 'right-panel';
+                const container = document.getElementById(panelId);
+                // Снять выделение со всех строк в этой панели
+                container.querySelectorAll('.file-row').forEach(r => r.classList.remove('selected'));
+                // Выделить текущую
+                row.classList.add('selected');
+                // Обновить индекс
+                selectedIndex[panelSide] = parseInt(row.dataset.index);
+                activePanel = panelSide;
+            }
+
+            // ===== МОДАЛЬНОЕ ОКНО =====
+            function openModal(contentId, fileName) {
+                const overlay = document.getElementById('modal-overlay');
+                const title = document.getElementById('modal-title');
+                const body = document.getElementById('modal-body');
+
+                if (fileContents[contentId]) {
+                    title.textContent = fileName;
+                    body.innerHTML = fileContents[contentId];
+                    overlay.classList.add('active');
+                }
+            }
+
+            function closeModal() {
+                const overlay = document.getElementById('modal-overlay');
+                overlay.classList.remove('active');
+            }
+
+            document.getElementById('modal-close').addEventListener('click', closeModal);
+            document.getElementById('modal-overlay').addEventListener('click', function(e) {
+                if (e.target === this) closeModal();
+            });
+
+            // ===== КЛАВИАТУРНАЯ НАВИГАЦИЯ =====
+            document.addEventListener('keydown', function(e) {
+                // Esc — закрыть модальное окно
+                if (e.key === 'Escape') {
+                    const overlay = document.getElementById('modal-overlay');
+                    if (overlay.classList.contains('active')) {
+                        closeModal();
+                        return;
+                    }
+                }
+
+                // Tab — переключение активной панели
+                if (e.key === 'Tab') {
+                    e.preventDefault();
+                    activePanel = activePanel === 'left' ? 'right' : 'left';
+                    highlightCurrentInActivePanel();
+                    return;
+                }
+
+                // F3 — открыть файл
+                if (e.key === 'F3' || e.key === 'f3') {
+                    e.preventDefault();
+                    openCurrentFile();
+                    return;
+                }
+
+                // Enter — открыть файл
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    openCurrentFile();
+                    return;
+                }
+
+                // Стрелки — навигация
+                if (['ArrowUp', 'ArrowDown'].includes(e.key)) {
+                    e.preventDefault();
+                    const panelId = activePanel === 'left' ? 'left-panel' : 'right-panel';
+                    const container = document.getElementById(panelId);
+                    const rows = container.querySelectorAll('.file-row');
+                    if (rows.length === 0) return;
+
+                    let currentIdx = selectedIndex[activePanel];
+                    if (e.key === 'ArrowUp' && currentIdx > 0) {
+                        currentIdx--;
+                    } else if (e.key === 'ArrowDown' && currentIdx < rows.length - 1) {
+                        currentIdx++;
+                    }
+                    selectedIndex[activePanel] = currentIdx;
+                    const targetRow = rows[currentIdx];
+                    if (targetRow) {
+                        selectRow(targetRow, activePanel);
+                        targetRow.scrollIntoView({ block: 'nearest' });
+                    }
+                }
+            });
+
+            function highlightCurrentInActivePanel() {
+                const panelId = activePanel === 'left' ? 'left-panel' : 'right-panel';
+                const container = document.getElementById(panelId);
+                const rows = container.querySelectorAll('.file-row');
+                const idx = selectedIndex[activePanel];
+                if (rows[idx]) {
+                    selectRow(rows[idx], activePanel);
+                    rows[idx].scrollIntoView({ block: 'nearest' });
+                }
+            }
+
+            function openCurrentFile() {
+                const panelId = activePanel === 'left' ? 'left-panel' : 'right-panel';
+                const container = document.getElementById(panelId);
+                const rows = container.querySelectorAll('.file-row');
+                const idx = selectedIndex[activePanel];
+                const row = rows[idx];
+                if (row && row.dataset.type === 'file' && row.dataset.contentId) {
+                    openModal(row.dataset.contentId, row.querySelector('.name').textContent);
+                }
+            }
+
+            // ===== КЛИК ПО ПАНЕЛИ ДЛЯ ПЕРЕКЛЮЧЕНИЯ АКТИВНОСТИ =====
+            document.getElementById('left-panel').addEventListener('click', function(e) {
+                if (e.target.closest('.file-row')) return;
+                activePanel = 'left';
+                highlightCurrentInActivePanel();
+            });
+            document.getElementById('right-panel').addEventListener('click', function(e) {
+                if (e.target.closest('.file-row')) return;
+                activePanel = 'right';
+                highlightCurrentInActivePanel();
+            });
+
+            // ===== ИНИЦИАЛИЗАЦИЯ =====
+            renderPanel('left-panel', leftFiles, 'left');
+            renderPanel('right-panel', rightFiles, 'right');
+            activePanel = 'left';
+            highlightCurrentInActivePanel();
+
+            console.log('HWPro_OS — Midnight Commander Interface loaded.');
+            console.log('No telemetry. No tracking. No cookies.');
+            console.log('Use Arrows, Tab, Enter, F3, Esc.');
+        })();
+    </script>
+</body>
+</html>
