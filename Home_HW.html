@@ -372,9 +372,10 @@
 <script>
     // ----------------------------------------------
     // БАЗА ДАННЫХ ВАШИХ САЙТОВ (полностью редактируемая)
-    // Добавьте, удалите или измените любые сайты под свои нужды
+    // Добавлены новые сайты по вашему запросу с подобранными иконками
     // ----------------------------------------------
     const sitesData = [
+        // --- ПРЕЖНИЕ САЙТЫ (сохранены полностью) ---
         {
             id: 1,
             name: "GitHub",
@@ -494,6 +495,72 @@
             description: "Трекинг задач и менеджмент проектов для команд разработки.",
             category: "Продуктивность",
             icon: "fas fa-chart-line"
+        },
+
+        // === НОВЫЕ САЙТЫ (по вашему списку) с продуманными иконками ===
+        {
+            id: 16,
+            name: "HW Protection VK",
+            url: "https://vk.com/hw_protection",
+            description: "Сообщество VK, посвящённое HW Protection — обсуждения, новости и поддержка.",
+            category: "Сообщества",
+            icon: "fab fa-vk"
+        },
+        {
+            id: 17,
+            name: "HWHellBlock",
+            url: "https://anonim-it.github.io/HWHellBlock.html",
+            description: "Инструмент или информационная страница проекта HWHellBlock.",
+            category: "Инструменты",
+            icon: "fas fa-shield-haltered"
+        },
+        {
+            id: 18,
+            name: "Anonim-IT Hub",
+            url: "https://anonim-it.github.io/",
+            description: "Главная страница GitHub-проектов Anonim-IT, центральный хаб.",
+            category: "Разработка",
+            icon: "fab fa-github-alt"
+        },
+        {
+            id: 19,
+            name: "HWPro OS",
+            url: "https://anonim-it.github.io/HWPro_OS.html",
+            description: "Страница проекта HWPro OS, возможно собственная ОС или среда.",
+            category: "Инструменты",
+            icon: "fas fa-microchip"
+        },
+        {
+            id: 20,
+            name: "Reddit HW Hell Block",
+            url: "https://www.reddit.com/r/HW_Hell_Block/",
+            description: "Сабреддит для обсуждения HW Hell Block, фидбек и новости сообщества.",
+            category: "Сообщества",
+            icon: "fab fa-reddit-alien"
+        },
+        {
+            id: 21,
+            name: "Twitch HW_RS",
+            url: "https://www.twitch.tv/hw_rs",
+            description: "Стримы по проектам HW, разработка в реальном времени и общение.",
+            category: "Медиа",
+            icon: "fab fa-twitch"
+        },
+        {
+            id: 22,
+            name: "Timeweb Cloud",
+            url: "https://timeweb.cloud/my/projects/2255557",
+            description: "Панель управления проектами на Timeweb Cloud, хостинг и серверы.",
+            category: "Хостинг",
+            icon: "fas fa-cloud-upload-alt"
+        },
+        {
+            id: 23,
+            name: "Google Sheets (HW)",
+            url: "https://docs.google.com/spreadsheets/d/1_9d6mV9sQcAZmm6YisB22h12hYO7qOU0aY3t0J79bUY/edit?gid=0#gid=0",
+            description: "Рабочая таблица Google Sheets: важные данные, логи или планирование.",
+            category: "Продуктивность",
+            icon: "fas fa-table"
         }
     ];
 
@@ -652,10 +719,8 @@
         });
     }
     
-    // дополнительная функция для быстрого добавления нового сайта (для демо - необязательно), 
-    // но можно раскомментировать, если вы хотите динамически добавлять через консоль. Оставляем для гибкости:
+    // дополнительная функция для быстрого добавления нового сайта (для демо - необязательно)
     window.addNewSite = function(siteObject) {
-        // siteObject = { name, url, description, category, icon? }
         if(siteObject && siteObject.name && siteObject.url) {
             const newId = Date.now();
             const defaultIcon = "fas fa-star";
