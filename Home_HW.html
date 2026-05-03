@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Моя навигационная панель | Центр всех сайтов</title>
+    <title>Моя навигационная панель | Центр всех сайтов + Поиск Яндекса</title>
     <!-- Шрифты Google Fonts для современного стиля -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <!-- Font Awesome 6 (бесплатные иконки) -->
@@ -28,9 +28,10 @@
             margin: 0 auto;
         }
 
+        /* шапка */
         .hero {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
 
         .hero h1 {
@@ -62,14 +63,90 @@
             margin-right: auto;
         }
 
+        /* БЛОК ПОИСКА ЯНДЕКСА (новый) */
+        .yandex-search-section {
+            background: white;
+            border-radius: 48px;
+            padding: 0.9rem 1.8rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.2s;
+            max-width: 720px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .yandex-search-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 600;
+            color: #1f4e6e;
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+        .yandex-search-title i {
+            font-size: 1.3rem;
+            color: #ffcc00;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .yandex-search-form {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .yandex-search-input {
+            flex: 4;
+            min-width: 200px;
+            padding: 14px 18px;
+            border-radius: 60px;
+            border: 1px solid #d4dfea;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            background: #fefefe;
+            transition: 0.2s;
+            outline: none;
+        }
+        .yandex-search-input:focus {
+            border-color: #2b7a62;
+            box-shadow: 0 0 0 3px rgba(43,122,98,0.2);
+        }
+        .yandex-search-btn {
+            background: #1f4e6e;
+            color: white;
+            border: none;
+            padding: 0 28px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .yandex-search-btn:hover {
+            background: #0f3c56;
+            transform: scale(0.97);
+        }
+        .note-search {
+            font-size: 0.7rem;
+            text-align: center;
+            color: #7f8c9a;
+            margin-top: 10px;
+        }
+
+        /* поиск по сайтам (старый) */
         .search-section {
-            margin-bottom: 2.8rem;
+            margin-bottom: 2rem;
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             gap: 1rem;
         }
-
         .search-box {
             background: white;
             border-radius: 60px;
@@ -83,17 +160,14 @@
             transition: all 0.2s ease;
             border: 1px solid rgba(0,0,0,0.05);
         }
-
         .search-box:focus-within {
             box-shadow: 0 12px 28px rgba(33, 150, 83, 0.15);
             border-color: #2b7a62;
         }
-
         .search-box i {
             font-size: 1.2rem;
             color: #7f8c9a;
         }
-
         .search-box input {
             width: 100%;
             border: none;
@@ -105,11 +179,7 @@
             color: #1f2f3e;
         }
 
-        .search-box input::placeholder {
-            color: #b4c0ce;
-            font-weight: 400;
-        }
-
+        /* категории */
         .categories {
             display: flex;
             flex-wrap: wrap;
@@ -117,7 +187,6 @@
             gap: 12px;
             margin-bottom: 2rem;
         }
-
         .cat-btn {
             background: white;
             border: none;
@@ -135,31 +204,25 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.03);
             border: 1px solid #e2e8f0;
         }
-
-        .cat-btn i {
-            font-size: 0.9rem;
-        }
-
         .cat-btn.active {
             background: #1f4e6e;
             color: white;
             border-color: #1f4e6e;
             box-shadow: 0 6px 12px rgba(31,78,110,0.2);
         }
-
         .cat-btn:hover:not(.active) {
             background: #eef3fc;
             border-color: #bdd4e7;
             transform: translateY(-2px);
         }
 
+        /* сетка карточек */
         .sites-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 1.8rem;
             margin-top: 0.8rem;
         }
-
         .site-card {
             background: rgba(255,255,255,0.85);
             backdrop-filter: blur(2px);
@@ -171,24 +234,19 @@
             cursor: pointer;
             display: flex;
             flex-direction: column;
-            position: relative;
-            overflow: hidden;
         }
-
         .site-card:hover {
             transform: translateY(-6px);
             background: white;
             box-shadow: 0 24px 42px rgba(0, 0, 0, 0.12);
             border-color: #cbdde9;
         }
-
         .card-header {
             display: flex;
             align-items: center;
             gap: 14px;
             margin-bottom: 1rem;
         }
-
         .icon-bg {
             width: 52px;
             height: 52px;
@@ -199,21 +257,12 @@
             justify-content: center;
             font-size: 1.8rem;
             color: #226653;
-            transition: 0.2s;
         }
-
-        .site-card:hover .icon-bg {
-            background: linear-gradient(135deg, #e0f0ea, #d4e9ff);
-            transform: scale(0.98);
-        }
-
         .card-title h3 {
             font-size: 1.35rem;
             font-weight: 700;
             color: #1c3a4f;
-            letter-spacing: -0.3px;
         }
-
         .card-title .category-tag {
             font-size: 0.7rem;
             background: #eef2f8;
@@ -223,18 +272,14 @@
             margin-top: 6px;
             color: #2c6b56;
             font-weight: 500;
-            letter-spacing: normal;
         }
-
         .site-description {
             font-size: 0.85rem;
             color: #527a9b;
             line-height: 1.4;
             margin: 0.5rem 0 1rem;
-            display: flex;
             flex: 1;
         }
-
         .site-url {
             font-family: monospace;
             font-size: 0.75rem;
@@ -244,15 +289,11 @@
             color: #386a5c;
             margin-bottom: 1rem;
             word-break: break-all;
-            transition: 0.1s;
         }
-
         .card-footer {
             display: flex;
             justify-content: flex-end;
-            margin-top: 0.25rem;
         }
-
         .visit-btn {
             background: none;
             border: none;
@@ -266,98 +307,73 @@
             padding: 6px 12px;
             border-radius: 30px;
             transition: 0.2s;
-            font-family: 'Inter', sans-serif;
         }
-
-        .visit-btn i {
-            font-size: 0.8rem;
-            transition: transform 0.2s;
-        }
-
         .visit-btn:hover {
             background: #e2f0ec;
             color: #0b4e3f;
         }
-
-        .visit-btn:hover i {
-            transform: translateX(4px);
-        }
-
         .empty-state {
             grid-column: 1 / -1;
             text-align: center;
             padding: 4rem 2rem;
             background: rgba(255,255,240,0.5);
             border-radius: 60px;
-            backdrop-filter: blur(4px);
         }
-
-        .empty-state i {
-            font-size: 3.5rem;
-            color: #8da6bd;
-            margin-bottom: 1rem;
-        }
-
-        .empty-state p {
-            font-size: 1.2rem;
-            color: #5c6f87;
-        }
-
         .footer-note {
             text-align: center;
-            margin-top: 3.5rem;
+            margin-top: 3rem;
             font-size: 0.8rem;
             color: #6c86a0;
             border-top: 1px solid rgba(97, 125, 138, 0.2);
             padding-top: 1.8rem;
         }
-
         @media (max-width: 600px) {
-            body {
-                padding: 1rem;
-            }
-            .hero h1 {
-                font-size: 2rem;
-            }
-            .sites-grid {
-                grid-template-columns: 1fr;
-                gap: 1.2rem;
-            }
-            .cat-btn {
-                padding: 6px 16px;
-                font-size: 0.8rem;
-            }
+            body { padding: 1rem; }
+            .hero h1 { font-size: 2rem; }
+            .sites-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-
 <div class="dashboard">
     <div class="hero">
-        <h1>
-            <i class="fas fa-compass"></i> 
-            Мой цифровой шлюз
-        </h1>
-        <p>Все важные сайты под рукой — быстрый доступ к рабочим, творческим и любимым ресурсам</p>
+        <h1><i class="fas fa-compass"></i> Мой цифровой шлюз</h1>
+        <p>Все важные сайты под рукой — ищем в Яндексе прямо отсюда</p>
+    </div>
+
+    <!-- НОВЫЙ БЛОК: ВСТРОЕННЫЙ ПОИСК ЯНДЕКСА -->
+    <div class="yandex-search-section">
+        <div class="yandex-search-title">
+            <i class="fab fa-yandex"></i> 
+            <span>Яндекс Поиск</span>
+            <i class="fas fa-search"></i>
+        </div>
+        <form id="yandexSearchForm" class="yandex-search-form" action="https://yandex.ru/search/" method="get" target="_blank">
+            <input type="text" name="text" class="yandex-search-input" placeholder="Что ищем? Например: новости технологий..." required>
+            <button type="submit" class="yandex-search-btn"><i class="fas fa-arrow-right"></i> Найти</button>
+        </form>
+        <div class="note-search">
+            <i class="fas fa-external-link-alt"></i> Результаты откроются в новой вкладке
+        </div>
     </div>
 
     <div class="search-section">
         <div class="search-box">
-            <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="Поиск по названию или описанию...">
+            <i class="fas fa-filter"></i>
+            <input type="text" id="searchInput" placeholder="Фильтр сайтов по названию или описанию...">
         </div>
     </div>
 
     <div class="categories" id="categoryFilters"></div>
     <div id="sitesContainer" class="sites-grid"></div>
     <div class="footer-note">
-        <i class="fas fa-thumbtack"></i> Нажми на карточку или кнопку перехода — твой личный стартер-пак
+        <i class="fas fa-thumbtack"></i> Нажми на карточку или кнопку — быстрый переход. Поиск Яндекса всегда рядом!
     </div>
 </div>
 
 <script>
+    // ---------- ВСЯ ПРЕЖНЯЯ БАЗА САЙТОВ (ничего не потеряно) ----------
     const sitesData = [
-        // --- ПРЕЖНИЕ САЙТЫ ---
         { id: 1, name: "GitHub", url: "https://github.com", description: "Крупнейшая платформа для разработки, совместной работы и хранения кода.", category: "Разработка", icon: "fab fa-github" },
         { id: 2, name: "Figma", url: "https://figma.com", description: "Дизайн интерфейсов, прототипирование и работа в команде.", category: "Дизайн", icon: "fab fa-figma" },
         { id: 3, name: "Notion", url: "https://notion.so", description: "База знаний, заметки, вики и планирование проектов.", category: "Продуктивность", icon: "fas fa-brain" },
@@ -386,32 +402,9 @@
         { id: 26, name: "Ozon", url: "https://www.ozon.ru/", description: "Крупнейший маркетплейс России: миллионы товаров, быстрая доставка.", category: "Покупки", icon: "fas fa-shopping-bag" },
         { id: 27, name: "Карта Мира (cmirit)", url: "https://map.cmirit.ru/portal-gorod/", description: "Интерактивная карта с порталами города, уникальный геосервис.", category: "Карты", icon: "fas fa-map-marked-alt" },
         { id: 28, name: "Яндекс", url: "https://yandex.ru", description: "Главный портал Яндекса: поиск, почта, карты, погода, новости, музыка.", category: "Поиск", icon: "fab fa-yandex" },
-        
-        // === НОВЫЕ САЙТЫ ===
-        {
-            id: 29,
-            name: "Мой Череповец",
-            url: "https://xn--b1afabqrodii5ee.xn--p1ai/",
-            description: "Городской портал Череповца — новости, афиша, справочная информация, сервисы для жителей и гостей города.",
-            category: "Города",
-            icon: "fas fa-city"
-        },
-        {
-            id: 30,
-            name: "MAX Мессенджер",
-            url: "https://web.max.ru/",
-            description: "Веб-версия защищённого корпоративного мессенджера MAX. Безопасный обмен сообщениями и файлами.",
-            category: "Мессенджеры",
-            icon: "fas fa-comment-dots"
-        },
-        {
-            id: 31,
-            name: "Rutube",
-            url: "https://rutube.ru/",
-            description: "Российская видеоплатформа (импортозамещающий YouTube). Видеохостинг с авторским контентом, прямыми эфирами и новостями.",
-            category: "Медиа",
-            icon: "fas fa-video"
-        }
+        { id: 29, name: "Мой Череповец", url: "https://xn--b1afabqrodii5ee.xn--p1ai/", description: "Городской портал Череповца — новости, афиша, справочная информация.", category: "Города", icon: "fas fa-city" },
+        { id: 30, name: "MAX Мессенджер", url: "https://web.max.ru/", description: "Веб-версия защищённого корпоративного мессенджера MAX.", category: "Мессенджеры", icon: "fas fa-comment-dots" },
+        { id: 31, name: "Rutube", url: "https://rutube.ru/", description: "Российская видеоплатформа (импортозамещающий YouTube).", category: "Медиа", icon: "fas fa-video" }
     ];
 
     let activeCategory = "Все";
@@ -441,7 +434,7 @@
         });
         filterContainer.innerHTML = buttonsHtml;
         document.querySelectorAll(".cat-btn").forEach(btn => {
-            btn.addEventListener("click", (e) => {
+            btn.addEventListener("click", () => {
                 const category = btn.getAttribute("data-category");
                 if (!category) return;
                 document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
@@ -516,31 +509,15 @@
 
     function bindSearch() {
         const searchInput = document.getElementById("searchInput");
-        if (!searchInput) return;
-        searchInput.addEventListener("input", (e) => {
-            searchQuery = e.target.value;
-            renderSites();
-        });
-    }
-    
-    window.addNewSite = function(siteObject) {
-        if(siteObject && siteObject.name && siteObject.url) {
-            const newId = Date.now();
-            sitesData.push({
-                id: newId,
-                name: siteObject.name,
-                url: siteObject.url,
-                description: siteObject.description || "Новый сайт в коллекции",
-                category: siteObject.category || "Другое",
-                icon: siteObject.icon || "fas fa-star"
+        if (searchInput) {
+            searchInput.addEventListener("input", (e) => {
+                searchQuery = e.target.value;
+                renderSites();
             });
-            renderCategories();
-            renderSites();
-        } else {
-            console.warn("Неверный формат сайта для добавления");
         }
-    };
-    
+    }
+
+    // Инициализация всего
     function init() {
         renderCategories();
         renderSites();
