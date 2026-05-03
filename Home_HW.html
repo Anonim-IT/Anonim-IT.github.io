@@ -23,13 +23,11 @@
             min-height: 100vh;
         }
 
-        /* основной контейнер */
         .dashboard {
             max-width: 1400px;
             margin: 0 auto;
         }
 
-        /* шапка с приветствием */
         .hero {
             text-align: center;
             margin-bottom: 3rem;
@@ -64,7 +62,6 @@
             margin-right: auto;
         }
 
-        /* поиск и фильтрация */
         .search-section {
             margin-bottom: 2.8rem;
             display: flex;
@@ -113,7 +110,6 @@
             font-weight: 400;
         }
 
-        /* кнопки категорий */
         .categories {
             display: flex;
             flex-wrap: wrap;
@@ -157,7 +153,6 @@
             transform: translateY(-2px);
         }
 
-        /* сетка карточек */
         .sites-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -165,7 +160,6 @@
             margin-top: 0.8rem;
         }
 
-        /* карточка сайта */
         .site-card {
             background: rgba(255,255,255,0.85);
             backdrop-filter: blur(2px);
@@ -188,7 +182,6 @@
             border-color: #cbdde9;
         }
 
-        /* верхняя часть иконки + заголовок */
         .card-header {
             display: flex;
             align-items: center;
@@ -290,7 +283,6 @@
             transform: translateX(4px);
         }
 
-        /* пустое состояние */
         .empty-state {
             grid-column: 1 / -1;
             text-align: center;
@@ -311,7 +303,6 @@
             color: #5c6f87;
         }
 
-        /* подвал */
         .footer-note {
             text-align: center;
             margin-top: 3.5rem;
@@ -357,288 +348,102 @@
         </div>
     </div>
 
-    <div class="categories" id="categoryFilters">
-        <!-- Категории будут сгенерированы через JS -->
-    </div>
-
-    <div id="sitesContainer" class="sites-grid">
-        <!-- Карточки сайтов появятся динамически -->
-    </div>
+    <div class="categories" id="categoryFilters"></div>
+    <div id="sitesContainer" class="sites-grid"></div>
     <div class="footer-note">
         <i class="fas fa-thumbtack"></i> Нажми на карточку или кнопку перехода — твой личный стартер-пак
     </div>
 </div>
 
 <script>
-    // ----------------------------------------------
-    // БАЗА ДАННЫХ ВАШИХ САЙТОВ (полностью редактируемая)
-    // Добавлены новые сайты по вашему запросу с подобранными иконками
-    // ----------------------------------------------
     const sitesData = [
-        // --- ПРЕЖНИЕ САЙТЫ (сохранены полностью) ---
-        {
-            id: 1,
-            name: "GitHub",
-            url: "https://github.com",
-            description: "Крупнейшая платформа для разработки, совместной работы и хранения кода.",
-            category: "Разработка",
-            icon: "fab fa-github"
-        },
-        {
-            id: 2,
-            name: "Figma",
-            url: "https://figma.com",
-            description: "Дизайн интерфейсов, прототипирование и работа в команде.",
-            category: "Дизайн",
-            icon: "fab fa-figma"
-        },
-        {
-            id: 3,
-            name: "Notion",
-            url: "https://notion.so",
-            description: "База знаний, заметки, вики и планирование проектов.",
-            category: "Продуктивность",
-            icon: "fas fa-brain"
-        },
-        {
-            id: 4,
-            name: "YouTube",
-            url: "https://youtube.com",
-            description: "Видеохостинг с обучающими курсами, музыкой и развлечениями.",
-            category: "Медиа",
-            icon: "fab fa-youtube"
-        },
-        {
-            id: 5,
-            name: "Stack Overflow",
-            url: "https://stackoverflow.com",
-            description: "Сообщество программистов: вопросы, ответы и код-ревью.",
-            category: "Разработка",
-            icon: "fab fa-stack-overflow"
-        },
-        {
-            id: 6,
-            name: "Dribbble",
-            url: "https://dribbble.com",
-            description: "Вдохновение и портфолио дизайнеров со всего мира.",
-            category: "Дизайн",
-            icon: "fab fa-dribbble"
-        },
-        {
-            id: 7,
-            name: "Trello",
-            url: "https://trello.com",
-            description: "Канбан-доски для управления задачами и командной работы.",
-            category: "Продуктивность",
-            icon: "fab fa-trello"
-        },
-        {
-            id: 8,
-            name: "Spotify",
-            url: "https://spotify.com",
-            description: "Музыка, подкасты и плейлисты для фокуса и отдыха.",
-            category: "Медиа",
-            icon: "fab fa-spotify"
-        },
-        {
-            id: 9,
-            name: "MDN Web Docs",
-            url: "https://developer.mozilla.org",
-            description: "Исчерпывающая документация по HTML, CSS, JavaScript и веб-API.",
-            category: "Разработка",
-            icon: "fab fa-firefox"
-        },
-        {
-            id: 10,
-            name: "Canva",
-            url: "https://canva.com",
-            description: "Графический редактор для быстрого создания макетов и соцсетей.",
-            category: "Дизайн",
-            icon: "fas fa-palette"
-        },
-        {
-            id: 11,
-            name: "Gmail",
-            url: "https://mail.google.com",
-            description: "Почтовый сервис и календарь от Google.",
-            category: "Продуктивность",
-            icon: "fas fa-envelope"
-        },
-        {
-            id: 12,
-            name: "Netflix",
-            url: "https://netflix.com",
-            description: "Фильмы, сериалы и документальное кино для отдыха.",
-            category: "Медиа",
-            icon: "fab fa-netflix"
-        },
-        {
-            id: 13,
-            name: "ChatGPT",
-            url: "https://chat.openai.com",
-            description: "AI-помощник для генерации идей, кода и текстов.",
-            category: "Инструменты",
-            icon: "fas fa-robot"
-        },
-        {
-            id: 14,
-            name: "Figma Community",
-            url: "https://figma.com/community",
-            description: "Готовые UI-киты, плагины и шаблоны для Figma.",
-            category: "Дизайн",
-            icon: "fas fa-shapes"
-        },
-        {
-            id: 15,
-            name: "Linear",
-            url: "https://linear.app",
-            description: "Трекинг задач и менеджмент проектов для команд разработки.",
-            category: "Продуктивность",
-            icon: "fas fa-chart-line"
-        },
-
-        // === НОВЫЕ САЙТЫ (по вашему списку) с продуманными иконками ===
-        {
-            id: 16,
-            name: "HW Protection VK",
-            url: "https://vk.com/hw_protection",
-            description: "Сообщество VK, посвящённое HW Protection — обсуждения, новости и поддержка.",
-            category: "Сообщества",
-            icon: "fab fa-vk"
-        },
-        {
-            id: 17,
-            name: "HWHellBlock",
-            url: "https://anonim-it.github.io/HWHellBlock.html",
-            description: "Инструмент или информационная страница проекта HWHellBlock.",
-            category: "Инструменты",
-            icon: "fas fa-shield-haltered"
-        },
-        {
-            id: 18,
-            name: "Anonim-IT Hub",
-            url: "https://anonim-it.github.io/",
-            description: "Главная страница GitHub-проектов Anonim-IT, центральный хаб.",
-            category: "Разработка",
-            icon: "fab fa-github-alt"
-        },
-        {
-            id: 19,
-            name: "HWPro OS",
-            url: "https://anonim-it.github.io/HWPro_OS.html",
-            description: "Страница проекта HWPro OS, возможно собственная ОС или среда.",
-            category: "Инструменты",
-            icon: "fas fa-microchip"
-        },
-        {
-            id: 20,
-            name: "Reddit HW Hell Block",
-            url: "https://www.reddit.com/r/HW_Hell_Block/",
-            description: "Сабреддит для обсуждения HW Hell Block, фидбек и новости сообщества.",
-            category: "Сообщества",
-            icon: "fab fa-reddit-alien"
-        },
-        {
-            id: 21,
-            name: "Twitch HW_RS",
-            url: "https://www.twitch.tv/hw_rs",
-            description: "Стримы по проектам HW, разработка в реальном времени и общение.",
-            category: "Медиа",
-            icon: "fab fa-twitch"
-        },
-        {
-            id: 22,
-            name: "Timeweb Cloud",
-            url: "https://timeweb.cloud/my/projects/2255557",
-            description: "Панель управления проектами на Timeweb Cloud, хостинг и серверы.",
-            category: "Хостинг",
-            icon: "fas fa-cloud-upload-alt"
-        },
-        {
-            id: 23,
-            name: "Google Sheets (HW)",
-            url: "https://docs.google.com/spreadsheets/d/1_9d6mV9sQcAZmm6YisB22h12hYO7qOU0aY3t0J79bUY/edit?gid=0#gid=0",
-            description: "Рабочая таблица Google Sheets: важные данные, логи или планирование.",
-            category: "Продуктивность",
-            icon: "fas fa-table"
-        },
+        // --- ПРЕЖНИЕ САЙТЫ ---
+        { id: 1, name: "GitHub", url: "https://github.com", description: "Крупнейшая платформа для разработки, совместной работы и хранения кода.", category: "Разработка", icon: "fab fa-github" },
+        { id: 2, name: "Figma", url: "https://figma.com", description: "Дизайн интерфейсов, прототипирование и работа в команде.", category: "Дизайн", icon: "fab fa-figma" },
+        { id: 3, name: "Notion", url: "https://notion.so", description: "База знаний, заметки, вики и планирование проектов.", category: "Продуктивность", icon: "fas fa-brain" },
+        { id: 4, name: "YouTube", url: "https://youtube.com", description: "Видеохостинг с обучающими курсами, музыкой и развлечениями.", category: "Медиа", icon: "fab fa-youtube" },
+        { id: 5, name: "Stack Overflow", url: "https://stackoverflow.com", description: "Сообщество программистов: вопросы, ответы и код-ревью.", category: "Разработка", icon: "fab fa-stack-overflow" },
+        { id: 6, name: "Dribbble", url: "https://dribbble.com", description: "Вдохновение и портфолио дизайнеров со всего мира.", category: "Дизайн", icon: "fab fa-dribbble" },
+        { id: 7, name: "Trello", url: "https://trello.com", description: "Канбан-доски для управления задачами и командной работы.", category: "Продуктивность", icon: "fab fa-trello" },
+        { id: 8, name: "Spotify", url: "https://spotify.com", description: "Музыка, подкасты и плейлисты для фокуса и отдыха.", category: "Медиа", icon: "fab fa-spotify" },
+        { id: 9, name: "MDN Web Docs", url: "https://developer.mozilla.org", description: "Исчерпывающая документация по HTML, CSS, JavaScript и веб-API.", category: "Разработка", icon: "fab fa-firefox" },
+        { id: 10, name: "Canva", url: "https://canva.com", description: "Графический редактор для быстрого создания макетов и соцсетей.", category: "Дизайн", icon: "fas fa-palette" },
+        { id: 11, name: "Gmail", url: "https://mail.google.com", description: "Почтовый сервис и календарь от Google.", category: "Продуктивность", icon: "fas fa-envelope" },
+        { id: 12, name: "Netflix", url: "https://netflix.com", description: "Фильмы, сериалы и документальное кино для отдыха.", category: "Медиа", icon: "fab fa-netflix" },
+        { id: 13, name: "ChatGPT", url: "https://chat.openai.com", description: "AI-помощник для генерации идей, кода и текстов.", category: "Инструменты", icon: "fas fa-robot" },
+        { id: 14, name: "Figma Community", url: "https://figma.com/community", description: "Готовые UI-киты, плагины и шаблоны для Figma.", category: "Дизайн", icon: "fas fa-shapes" },
+        { id: 15, name: "Linear", url: "https://linear.app", description: "Трекинг задач и менеджмент проектов для команд разработки.", category: "Продуктивность", icon: "fas fa-chart-line" },
+        { id: 16, name: "HW Protection VK", url: "https://vk.com/hw_protection", description: "Сообщество VK, посвящённое HW Protection — обсуждения, новости и поддержка.", category: "Сообщества", icon: "fab fa-vk" },
+        { id: 17, name: "HWHellBlock", url: "https://anonim-it.github.io/HWHellBlock.html", description: "Инструмент или информационная страница проекта HWHellBlock.", category: "Инструменты", icon: "fas fa-shield-haltered" },
+        { id: 18, name: "Anonim-IT Hub", url: "https://anonim-it.github.io/", description: "Главная страница GitHub-проектов Anonim-IT, центральный хаб.", category: "Разработка", icon: "fab fa-github-alt" },
+        { id: 19, name: "HWPro OS", url: "https://anonim-it.github.io/HWPro_OS.html", description: "Страница проекта HWPro OS, возможно собственная ОС или среда.", category: "Инструменты", icon: "fas fa-microchip" },
+        { id: 20, name: "Reddit HW Hell Block", url: "https://www.reddit.com/r/HW_Hell_Block/", description: "Сабреддит для обсуждения HW Hell Block, фидбек и новости сообщества.", category: "Сообщества", icon: "fab fa-reddit-alien" },
+        { id: 21, name: "Twitch HW_RS", url: "https://www.twitch.tv/hw_rs", description: "Стримы по проектам HW, разработка в реальном времени и общение.", category: "Медиа", icon: "fab fa-twitch" },
+        { id: 22, name: "Timeweb Cloud", url: "https://timeweb.cloud/my/projects/2255557", description: "Панель управления проектами на Timeweb Cloud, хостинг и серверы.", category: "Хостинг", icon: "fas fa-cloud-upload-alt" },
+        { id: 23, name: "Google Sheets (HW)", url: "https://docs.google.com/spreadsheets/d/1_9d6mV9sQcAZmm6YisB22h12hYO7qOU0aY3t0J79bUY/edit?gid=0#gid=0", description: "Рабочая таблица Google Sheets: важные данные, логи или планирование.", category: "Продуктивность", icon: "fas fa-table" },
+        { id: 24, name: "DeepSeek Chat", url: "https://chat.deepseek.com/", description: "Мощный AI-ассистент для генерации текста, кода, анализа и творчества.", category: "Инструменты", icon: "fas fa-comments" },
+        { id: 25, name: "Google Translate", url: "https://translate.google.ru/", description: "Бесплатный сервис перевода текстов, веб-страниц и документов от Google.", category: "Инструменты", icon: "fas fa-language" },
+        { id: 26, name: "Ozon", url: "https://www.ozon.ru/", description: "Крупнейший маркетплейс России: миллионы товаров, быстрая доставка.", category: "Покупки", icon: "fas fa-shopping-bag" },
+        { id: 27, name: "Карта Мира (cmirit)", url: "https://map.cmirit.ru/portal-gorod/", description: "Интерактивная карта с порталами города, уникальный геосервис.", category: "Карты", icon: "fas fa-map-marked-alt" },
+        { id: 28, name: "Яндекс", url: "https://yandex.ru", description: "Главный портал Яндекса: поиск, почта, карты, погода, новости, музыка.", category: "Поиск", icon: "fab fa-yandex" },
         
-        // === ДОБАВЛЕН DeepSeek Chat по просьбе ===
+        // === НОВЫЕ САЙТЫ ===
         {
-            id: 24,
-            name: "DeepSeek Chat",
-            url: "https://chat.deepseek.com/",
-            description: "Мощный AI-ассистент для генерации текста, кода, анализа и творчества. Бесплатный интеллектуальный помощник.",
-            category: "Инструменты",
-            icon: "fas fa-comments"
-        },
-        
-        // === ДОБАВЛЕН Google Translate ===
-        {
-            id: 25,
-            name: "Google Translate",
-            url: "https://translate.google.ru/",
-            description: "Бесплатный сервис перевода текстов, веб-страниц и документов от Google. Поддержка более 100 языков.",
-            category: "Инструменты",
-            icon: "fas fa-language"
-        },
-        
-        // === ТРИ НОВЫХ САЙТА (Ozon, Карта мира, Яндекс) ===
-        {
-            id: 26,
-            name: "Ozon",
-            url: "https://www.ozon.ru/",
-            description: "Крупнейший маркетплейс России: миллионы товаров, быстрая доставка, электроника, одежда, книги и многое другое.",
-            category: "Покупки",
-            icon: "fas fa-shopping-bag"
+            id: 29,
+            name: "Мой Череповец",
+            url: "https://xn--b1afabqrodii5ee.xn--p1ai/",
+            description: "Городской портал Череповца — новости, афиша, справочная информация, сервисы для жителей и гостей города.",
+            category: "Города",
+            icon: "fas fa-city"
         },
         {
-            id: 27,
-            name: "Карта Мира (cmirit)",
-            url: "https://map.cmirit.ru/portal-gorod/",
-            description: "Интерактивная карта с порталами города, уникальный геосервис для исследования пространств и маршрутов.",
-            category: "Карты",
-            icon: "fas fa-map-marked-alt"
+            id: 30,
+            name: "MAX Мессенджер",
+            url: "https://web.max.ru/",
+            description: "Веб-версия защищённого корпоративного мессенджера MAX. Безопасный обмен сообщениями и файлами.",
+            category: "Мессенджеры",
+            icon: "fas fa-comment-dots"
         },
         {
-            id: 28,
-            name: "Яндекс",
-            url: "https://yandex.ru",
-            description: "Главный портал Яндекса: поиск, почта, карты, погода, новости, музыка и другие сервисы для повседневной жизни.",
-            category: "Поиск",
-            icon: "fab fa-yandex"
+            id: 31,
+            name: "Rutube",
+            url: "https://rutube.ru/",
+            description: "Российская видеоплатформа (импортозамещающий YouTube). Видеохостинг с авторским контентом, прямыми эфирами и новостями.",
+            category: "Медиа",
+            icon: "fas fa-video"
         }
     ];
 
-    // получить уникальные категории, отсортированные
-    function getUniqueCategories() {
-        const catsSet = new Set(sitesData.map(site => site.category));
-        // приоритет: сначала популярные разделы, но просто сортировка по алфавиту
-        return Array.from(catsSet).sort((a,b) => a.localeCompare(b));
-    }
-
-    // глобальные переменные
     let activeCategory = "Все";
     let searchQuery = "";
 
-    // рендер категорий (кнопки-фильтры)
+    function getUniqueCategories() {
+        const catsSet = new Set(sitesData.map(site => site.category));
+        return Array.from(catsSet).sort((a,b) => a.localeCompare(b));
+    }
+
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
     function renderCategories() {
         const categories = getUniqueCategories();
         const filterContainer = document.getElementById("categoryFilters");
         if (!filterContainer) return;
-        
         let buttonsHtml = `<button class="cat-btn active" data-category="Все"><i class="fas fa-globe"></i> Все</button>`;
         categories.forEach(cat => {
             buttonsHtml += `<button class="cat-btn" data-category="${escapeHtml(cat)}"><i class="fas fa-tag"></i> ${escapeHtml(cat)}</button>`;
         });
         filterContainer.innerHTML = buttonsHtml;
-        
-        // добавить обработчики на кнопки
         document.querySelectorAll(".cat-btn").forEach(btn => {
             btn.addEventListener("click", (e) => {
                 const category = btn.getAttribute("data-category");
                 if (!category) return;
-                // обновить активный класс
                 document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
                 btn.classList.add("active");
                 activeCategory = category;
@@ -647,28 +452,11 @@
         });
     }
 
-    // простая защита от XSS
-    function escapeHtml(str) {
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-            return c;
-        });
-    }
-
-    // фильтрация сайтов на основе активной категории и поискового запроса
     function getFilteredSites() {
         let filtered = [...sitesData];
-        
-        // фильтр по категории (если не "Все")
         if (activeCategory !== "Все") {
             filtered = filtered.filter(site => site.category === activeCategory);
         }
-        
-        // фильтр по поиску (название или описание)
         if (searchQuery.trim() !== "") {
             const queryLower = searchQuery.trim().toLowerCase();
             filtered = filtered.filter(site => 
@@ -679,63 +467,37 @@
         return filtered;
     }
 
-    // генерация карточек
     function renderSites() {
         const container = document.getElementById("sitesContainer");
         if (!container) return;
-        
         const filtered = getFilteredSites();
-        
         if (filtered.length === 0) {
-            container.innerHTML = `
-                <div class="empty-state">
-                    <i class="fas fa-map-signs"></i>
-                    <p>Ничего не найдено 😕 <br> Попробуйте другой запрос или категорию</p>
-                </div>
-            `;
+            container.innerHTML = `<div class="empty-state"><i class="fas fa-map-signs"></i><p>Ничего не найдено 😕 <br> Попробуйте другой запрос или категорию</p></div>`;
             return;
         }
-        
         let cardsHtml = "";
         for (let site of filtered) {
-            // безопасное экранирование для динамических полей
             const safeName = escapeHtml(site.name);
             const safeDesc = escapeHtml(site.description);
             const safeUrl = escapeHtml(site.url);
             const safeCategory = escapeHtml(site.category);
-            // иконка: если fab fa-... или fas fa-... оставляем как есть, но проверим чтобы не было ошибок
-            let iconClass = site.icon;
-            if (!iconClass) iconClass = "fas fa-link";
-            
+            let iconClass = site.icon || "fas fa-link";
             cardsHtml += `
                 <div class="site-card" data-url="${safeUrl}">
                     <div class="card-header">
-                        <div class="icon-bg">
-                            <i class="${iconClass}"></i>
-                        </div>
+                        <div class="icon-bg"><i class="${iconClass}"></i></div>
                         <div class="card-title">
                             <h3>${safeName}</h3>
                             <span class="category-tag"><i class="fas fa-folder-open"></i> ${safeCategory}</span>
                         </div>
                     </div>
-                    <div class="site-description">
-                        ${safeDesc}
-                    </div>
-                    <div class="site-url">
-                        <i class="fas fa-link"></i> ${safeUrl}
-                    </div>
-                    <div class="card-footer">
-                        <button class="visit-btn" data-url="${safeUrl}">
-                            Перейти <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
+                    <div class="site-description">${safeDesc}</div>
+                    <div class="site-url"><i class="fas fa-link"></i> ${safeUrl}</div>
+                    <div class="card-footer"><button class="visit-btn" data-url="${safeUrl}">Перейти <i class="fas fa-arrow-right"></i></button></div>
                 </div>
             `;
         }
-        
         container.innerHTML = cardsHtml;
-        
-        // добавить обработчики на кнопки и на всю карточку (клик по карточке тоже открывает)
         document.querySelectorAll(".visit-btn").forEach(btn => {
             btn.addEventListener("click", (e) => {
                 e.stopPropagation();
@@ -743,19 +505,15 @@
                 if (url) window.open(url, "_blank", "noopener,noreferrer");
             });
         });
-        
         document.querySelectorAll(".site-card").forEach(card => {
             card.addEventListener("click", (e) => {
-                // если клик был не по кнопке, открываем ссылку
-                const target = e.target;
-                if (target.closest('.visit-btn')) return;
+                if (e.target.closest('.visit-btn')) return;
                 const url = card.getAttribute("data-url");
                 if (url) window.open(url, "_blank", "noopener,noreferrer");
             });
         });
     }
 
-    // слушатель для поля поиска
     function bindSearch() {
         const searchInput = document.getElementById("searchInput");
         if (!searchInput) return;
@@ -765,20 +523,17 @@
         });
     }
     
-    // дополнительная функция для быстрого добавления нового сайта (для демо - необязательно)
     window.addNewSite = function(siteObject) {
         if(siteObject && siteObject.name && siteObject.url) {
             const newId = Date.now();
-            const defaultIcon = "fas fa-star";
             sitesData.push({
                 id: newId,
                 name: siteObject.name,
                 url: siteObject.url,
                 description: siteObject.description || "Новый сайт в коллекции",
                 category: siteObject.category || "Другое",
-                icon: siteObject.icon || defaultIcon
+                icon: siteObject.icon || "fas fa-star"
             });
-            // обновляем фильтры категорий и рендер
             renderCategories();
             renderSites();
         } else {
@@ -786,13 +541,11 @@
         }
     };
     
-    // простая инициализация
     function init() {
         renderCategories();
         renderSites();
         bindSearch();
     }
-    
     init();
 </script>
 </body>
