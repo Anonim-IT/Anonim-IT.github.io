@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Моя навигационная панель | Центр всех сайтов + Поиск Яндекса</title>
-    <!-- Шрифты Google Fonts для современного стиля -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <!-- Font Awesome 6 (бесплатные иконки) -->
+    <title>H|W Portal | Secure Dashboard</title>
+    <!-- Шрифты: JetBrains Mono для кода, Inter для остального -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -15,29 +15,84 @@
             box-sizing: border-box;
         }
 
+        /* === DARK THEME / HACKER WEB === */
         body {
-            background: linear-gradient(145deg, #f4f7fc 0%, #e9eef4 100%);
-            font-family: 'Inter', sans-serif;
-            color: #1a2c3e;
+            background: #0a0c10;
+            background-image: radial-gradient(circle at 15% 30%, rgba(0, 255, 0, 0.02) 0%, #0a0c10 90%);
+            font-family: 'Inter', 'JetBrains Mono', monospace;
+            color: #c3d4e6;
             padding: 2rem 1.5rem;
             min-height: 100vh;
+            transition: background 0.2s ease, color 0.2s;
         }
 
+        /* переключатель темы (светлая/тёмная) пока не нужен, но мы делаем единую тёмную хакерскую, без светлой, 
+           но добавим кнопку "светлая тема" по требованию? Заказчик просил смену темы светлую на тёмную. 
+           Реализуем тумблер: по умолчанию тёмная хакерская, при клике — светлая "терминальная бумага". 
+           При этом сохраняем строгость. */
+        body.light-mode {
+            background: #eef2f5;
+            background-image: none;
+            color: #1e2a36;
+        }
+        body.light-mode .site-card {
+            background: rgba(255,255,245,0.96);
+            border-color: #cbd5e1;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+        }
+        body.light-mode .site-card:hover {
+            background: #ffffff;
+            box-shadow: 0 18px 30px rgba(0,0,0,0.1);
+            border-color: #2b7a62;
+        }
+        body.light-mode .icon-bg {
+            background: #e2e8f0;
+            color: #1f6e5c;
+        }
+        body.light-mode .cat-btn {
+            background: #f8fafc;
+            color: #1f3b4c;
+            border-color: #cbd5e1;
+        }
+        body.light-mode .cat-btn.active {
+            background: #0f3b2c;
+            color: #eef2ff;
+            border-color: #2d6a4f;
+        }
+        body.light-mode .search-box, body.light-mode .yandex-search-section {
+            background: #ffffff;
+            border-color: #cbd5e6;
+        }
+        body.light-mode .site-url {
+            background: #eef2f8;
+            color: #2c5a4a;
+        }
+        body.light-mode .footer-note {
+            border-top-color: #cad2db;
+        }
+        /* терминальная подсветка линукс */
+        body.light-mode .hero h1 {
+            background: linear-gradient(135deg, #1f4e6e, #2b7a62);
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+        
         .dashboard {
             max-width: 1400px;
             margin: 0 auto;
         }
 
-        /* шапка */
+        /* шапка с хакерским оттенком */
         .hero {
             text-align: center;
             margin-bottom: 2rem;
+            position: relative;
         }
-
         .hero h1 {
-            font-size: 2.8rem;
+            font-size: 2.6rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #1f4e6e, #2b7a62);
+            font-family: 'JetBrains Mono', monospace;
+            background: linear-gradient(135deg, #8bc6ff, #3eff9e);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
@@ -46,32 +101,56 @@
             align-items: center;
             gap: 12px;
         }
-
         .hero h1 i {
             background: none;
-            color: #2b7a62;
-            font-size: 2.4rem;
+            color: #3eff9e;
+            text-shadow: 0 0 6px #1f9e6e;
         }
-
         .hero p {
-            font-size: 1.2rem;
-            color: #4a627a;
-            margin-top: 0.7rem;
-            font-weight: 400;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            font-size: 1rem;
+            color: #7e9ab8;
+            font-family: 'JetBrains Mono', monospace;
+            margin-top: 0.5rem;
+            letter-spacing: -0.2px;
+        }
+        /* переключатель темы */
+        .theme-switch-wrapper {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1rem;
+            position: relative;
+            top: 0;
+        }
+        .theme-btn {
+            background: #1e2a32;
+            border: 1px solid #2b4a5e;
+            color: #b3f0d0;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .theme-btn:hover {
+            background: #2b4a5e;
+            border-color: #5affb0;
+            color: #ffffff;
+            box-shadow: 0 0 8px rgba(58,255,120,0.3);
         }
 
-        /* БЛОК ПОИСКА ЯНДЕКСА (новый) */
+        /* Поиск Яндекс */
         .yandex-search-section {
-            background: white;
-            border-radius: 48px;
-            padding: 0.9rem 1.8rem;
+            background: rgba(20, 28, 34, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 0.8rem 1.8rem;
             margin-bottom: 2rem;
-            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
-            border: 1px solid rgba(0,0,0,0.05);
-            transition: all 0.2s;
+            border: 1px solid #2a4a3c;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
             max-width: 720px;
             margin-left: auto;
             margin-right: auto;
@@ -82,14 +161,10 @@
             justify-content: center;
             gap: 10px;
             font-weight: 600;
-            color: #1f4e6e;
-            margin-bottom: 16px;
-            font-size: 1rem;
-        }
-        .yandex-search-title i {
-            font-size: 1.3rem;
-            color: #ffcc00;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            color: #9effcf;
+            margin-bottom: 14px;
+            font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
         }
         .yandex-search-form {
             display: flex;
@@ -100,86 +175,73 @@
         .yandex-search-input {
             flex: 4;
             min-width: 200px;
-            padding: 14px 18px;
-            border-radius: 60px;
-            border: 1px solid #d4dfea;
-            font-size: 1rem;
-            font-family: 'Inter', sans-serif;
-            background: #fefefe;
-            transition: 0.2s;
+            padding: 12px 18px;
+            border-radius: 40px;
+            border: 1px solid #2f5b4a;
+            background: #0f1519;
+            color: #bbf0da;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
             outline: none;
         }
         .yandex-search-input:focus {
-            border-color: #2b7a62;
-            box-shadow: 0 0 0 3px rgba(43,122,98,0.2);
+            border-color: #2eff9e;
+            box-shadow: 0 0 8px rgba(46,255,158,0.3);
         }
         .yandex-search-btn {
-            background: #1f4e6e;
-            color: white;
-            border: none;
-            padding: 0 28px;
-            border-radius: 60px;
+            background: #0f3c2e;
+            border: 1px solid #2eff9e;
+            color: #b4ffda;
+            padding: 0 24px;
+            border-radius: 40px;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-family: 'JetBrains Mono', monospace;
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
             transition: 0.2s;
-            font-family: 'Inter', sans-serif;
         }
         .yandex-search-btn:hover {
-            background: #0f3c56;
-            transform: scale(0.97);
+            background: #1f5e48;
+            box-shadow: 0 0 6px #27ff98;
         }
         .note-search {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             text-align: center;
-            color: #7f8c9a;
-            margin-top: 10px;
+            opacity: 0.7;
+            margin-top: 8px;
         }
 
-        /* поиск по сайтам (старый) */
+        /* поиск по сайтам */
         .search-section {
             margin-bottom: 2rem;
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
-            gap: 1rem;
         }
         .search-box {
-            background: white;
-            border-radius: 60px;
+            background: #11181f;
+            border-radius: 48px;
             padding: 0.5rem 1.2rem;
             display: flex;
             align-items: center;
             gap: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-            flex: 1;
-            max-width: 480px;
-            transition: all 0.2s ease;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-        .search-box:focus-within {
-            box-shadow: 0 12px 28px rgba(33, 150, 83, 0.15);
-            border-color: #2b7a62;
-        }
-        .search-box i {
-            font-size: 1.2rem;
-            color: #7f8c9a;
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid #2e4d3e;
+            transition: 0.2s;
         }
         .search-box input {
-            width: 100%;
-            border: none;
-            outline: none;
-            font-size: 1rem;
-            padding: 12px 0;
             background: transparent;
-            font-weight: 500;
-            color: #1f2f3e;
+            border: none;
+            width: 100%;
+            padding: 12px 0;
+            color: #dcfce8;
+            font-family: 'JetBrains Mono', monospace;
+            outline: none;
+        }
+        .search-box i {
+            color: #44ffb0;
         }
 
-        /* категории */
+        /* категории — строгие кнопки */
         .categories {
             display: flex;
             flex-wrap: wrap;
@@ -188,276 +250,254 @@
             margin-bottom: 2rem;
         }
         .cat-btn {
-            background: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 40px;
-            font-family: 'Inter', sans-serif;
+            background: #0f171f;
+            border: 1px solid #2a5543;
+            padding: 6px 18px;
+            border-radius: 32px;
+            font-family: 'JetBrains Mono', monospace;
             font-weight: 500;
-            font-size: 0.9rem;
-            color: #2c4c6e;
+            font-size: 0.8rem;
+            color: #b0e6d0;
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
         }
         .cat-btn.active {
-            background: #1f4e6e;
-            color: white;
-            border-color: #1f4e6e;
-            box-shadow: 0 6px 12px rgba(31,78,110,0.2);
+            background: #1a4a3a;
+            border-color: #3effae;
+            color: #f0fff0;
+            box-shadow: 0 0 6px #2effa0;
         }
         .cat-btn:hover:not(.active) {
-            background: #eef3fc;
-            border-color: #bdd4e7;
-            transform: translateY(-2px);
+            background: #1f3a30;
+            border-color: #6effb5;
         }
 
         /* сетка карточек */
         .sites-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.8rem;
-            margin-top: 0.8rem;
+            gap: 1.5rem;
         }
         .site-card {
-            background: rgba(255,255,255,0.85);
-            backdrop-filter: blur(2px);
-            border-radius: 28px;
-            padding: 1.2rem 1.2rem 1.4rem 1.2rem;
-            transition: all 0.25s ease;
-            border: 1px solid rgba(255,255,255,0.6);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02), 0 2px 6px rgba(0,0,0,0.05);
+            background: rgba(15, 25, 30, 0.85);
+            backdrop-filter: blur(4px);
+            border-radius: 24px;
+            padding: 1.2rem;
+            border: 1px solid #2a5040;
+            transition: 0.2s ease;
             cursor: pointer;
             display: flex;
             flex-direction: column;
         }
         .site-card:hover {
-            transform: translateY(-6px);
-            background: white;
-            box-shadow: 0 24px 42px rgba(0, 0, 0, 0.12);
-            border-color: #cbdde9;
+            transform: translateY(-4px);
+            background: #111e24;
+            border-color: #3effae;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(62,255,174,0.2);
         }
         .card-header {
             display: flex;
             align-items: center;
             gap: 14px;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
         .icon-bg {
-            width: 52px;
-            height: 52px;
-            background: linear-gradient(135deg, #eef5ff, #e0f0ea);
-            border-radius: 20px;
+            width: 48px;
+            height: 48px;
+            background: #0f2d24;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
-            color: #226653;
+            font-size: 1.6rem;
+            color: #4effb5;
+            border: 1px solid #3c8268;
         }
         .card-title h3 {
-            font-size: 1.35rem;
-            font-weight: 700;
-            color: #1c3a4f;
+            font-size: 1.25rem;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+            color: #d2f0e4;
         }
-        .card-title .category-tag {
-            font-size: 0.7rem;
-            background: #eef2f8;
+        .category-tag {
+            font-size: 0.65rem;
+            background: #1f3a31;
             display: inline-block;
-            padding: 4px 12px;
-            border-radius: 40px;
-            margin-top: 6px;
-            color: #2c6b56;
-            font-weight: 500;
+            padding: 3px 10px;
+            border-radius: 24px;
+            margin-top: 5px;
+            color: #a2f0cf;
+            font-family: monospace;
         }
         .site-description {
-            font-size: 0.85rem;
-            color: #527a9b;
+            font-size: 0.8rem;
+            color: #9ab3cc;
             line-height: 1.4;
-            margin: 0.5rem 0 1rem;
+            margin: 0.5rem 0 0.8rem;
             flex: 1;
         }
         .site-url {
-            font-family: monospace;
-            font-size: 0.75rem;
-            background: #f0f4f9;
-            padding: 6px 10px;
-            border-radius: 14px;
-            color: #386a5c;
-            margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            background: #061016;
+            padding: 6px 8px;
+            border-radius: 12px;
+            color: #9effcf;
+            margin-bottom: 0.8rem;
             word-break: break-all;
-        }
-        .card-footer {
-            display: flex;
-            justify-content: flex-end;
         }
         .visit-btn {
             background: none;
-            border: none;
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: #1f6e5c;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
+            border: 1px solid #3f8b72;
+            color: #bffff0;
             padding: 6px 12px;
-            border-radius: 30px;
+            border-radius: 26px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            font-family: monospace;
+            cursor: pointer;
+            width: fit-content;
             transition: 0.2s;
         }
         .visit-btn:hover {
-            background: #e2f0ec;
-            color: #0b4e3f;
+            background: #2c8268;
+            border-color: #aaffdd;
+            color: #000;
         }
         .empty-state {
-            grid-column: 1 / -1;
+            grid-column: 1/-1;
             text-align: center;
-            padding: 4rem 2rem;
-            background: rgba(255,255,240,0.5);
-            border-radius: 60px;
+            padding: 3rem;
+            background: #0f171e;
+            border-radius: 36px;
+            border: 1px dashed #3b7e66;
         }
         .footer-note {
             text-align: center;
             margin-top: 3rem;
-            font-size: 0.8rem;
-            color: #6c86a0;
-            border-top: 1px solid rgba(97, 125, 138, 0.2);
-            padding-top: 1.8rem;
+            font-size: 0.7rem;
+            border-top: 1px solid #2d5543;
+            padding-top: 1.5rem;
+            color: #6c98b0;
+            font-family: monospace;
         }
         @media (max-width: 600px) {
             body { padding: 1rem; }
-            .hero h1 { font-size: 2rem; }
-            .sites-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 <div class="dashboard">
+    <div class="theme-switch-wrapper">
+        <button id="themeToggle" class="theme-btn"><i class="fas fa-skull-crossbones"></i> <span id="themeText">DARK/HACK</span> <i class="fas fa-terminal"></i></button>
+    </div>
     <div class="hero">
-        <h1><i class="fas fa-compass"></i> Мой цифровой шлюз</h1>
-        <p>Все важные сайты под рукой — ищем в Яндексе прямо отсюда</p>
+        <h1><i class="fas fa-shield-haltered"></i> H|W PORTAL <i class="fas fa-code"></i></h1>
+        <p>// anonymous gateway | linux core | zero tracking</p>
     </div>
 
-    <!-- НОВЫЙ БЛОК: ВСТРОЕННЫЙ ПОИСК ЯНДЕКСА -->
+    <!-- Яндекс Поиск (стилизован) -->
     <div class="yandex-search-section">
-        <div class="yandex-search-title">
-            <i class="fab fa-yandex"></i> 
-            <span>Яндекс Поиск</span>
-            <i class="fas fa-search"></i>
-        </div>
-        <form id="yandexSearchForm" class="yandex-search-form" action="https://yandex.ru/search/" method="get" target="_blank">
-            <input type="text" name="text" class="yandex-search-input" placeholder="Что ищем? Например: новости технологий..." required>
-            <button type="submit" class="yandex-search-btn"><i class="fas fa-arrow-right"></i> Найти</button>
+        <div class="yandex-search-title"><i class="fab fa-yandex"></i> Yandex Search :: encrypted query <i class="fas fa-lock"></i></div>
+        <form id="yandexSearchForm" action="https://yandex.ru/search/" method="get" target="_blank" class="yandex-search-form">
+            <input type="text" name="text" class="yandex-search-input" placeholder=">_ search or type URL..." required>
+            <button type="submit" class="yandex-search-btn"><i class="fas fa-arrow-right"></i> find</button>
         </form>
-        <div class="note-search">
-            <i class="fas fa-external-link-alt"></i> Результаты откроются в новой вкладке
-        </div>
+        <div class="note-search">[ results in new tab :: no logs ]</div>
     </div>
 
     <div class="search-section">
         <div class="search-box">
             <i class="fas fa-filter"></i>
-            <input type="text" id="searchInput" placeholder="Фильтр сайтов по названию или описанию...">
+            <input type="text" id="searchInput" placeholder="filter bookmarks by name / description...">
         </div>
     </div>
 
     <div class="categories" id="categoryFilters"></div>
     <div id="sitesContainer" class="sites-grid"></div>
     <div class="footer-note">
-        <i class="fas fa-thumbtack"></i> Нажми на карточку или кнопку — быстрый переход. Поиск Яндекса всегда рядом!
+        <i class="fas fa-microchip"></i> hardened bookmarks | privacy first | arch linux mindset
     </div>
 </div>
 
 <script>
-    // ---------- ВСЯ ПРЕЖНЯЯ БАЗА САЙТОВ (ничего не потеряно) ----------
+    // ---- ВСЯ БАЗА САЙТОВ (ПОЛНОСТЬЮ СОХРАНЕНА) ----
     const sitesData = [
-        { id: 1, name: "GitHub", url: "https://github.com", description: "Крупнейшая платформа для разработки, совместной работы и хранения кода.", category: "Разработка", icon: "fab fa-github" },
-        { id: 2, name: "Figma", url: "https://figma.com", description: "Дизайн интерфейсов, прототипирование и работа в команде.", category: "Дизайн", icon: "fab fa-figma" },
-        { id: 3, name: "Notion", url: "https://notion.so", description: "База знаний, заметки, вики и планирование проектов.", category: "Продуктивность", icon: "fas fa-brain" },
-        { id: 4, name: "YouTube", url: "https://youtube.com", description: "Видеохостинг с обучающими курсами, музыкой и развлечениями.", category: "Медиа", icon: "fab fa-youtube" },
-        { id: 5, name: "Stack Overflow", url: "https://stackoverflow.com", description: "Сообщество программистов: вопросы, ответы и код-ревью.", category: "Разработка", icon: "fab fa-stack-overflow" },
-        { id: 6, name: "Dribbble", url: "https://dribbble.com", description: "Вдохновение и портфолио дизайнеров со всего мира.", category: "Дизайн", icon: "fab fa-dribbble" },
-        { id: 7, name: "Trello", url: "https://trello.com", description: "Канбан-доски для управления задачами и командной работы.", category: "Продуктивность", icon: "fab fa-trello" },
-        { id: 8, name: "Spotify", url: "https://spotify.com", description: "Музыка, подкасты и плейлисты для фокуса и отдыха.", category: "Медиа", icon: "fab fa-spotify" },
-        { id: 9, name: "MDN Web Docs", url: "https://developer.mozilla.org", description: "Исчерпывающая документация по HTML, CSS, JavaScript и веб-API.", category: "Разработка", icon: "fab fa-firefox" },
-        { id: 10, name: "Canva", url: "https://canva.com", description: "Графический редактор для быстрого создания макетов и соцсетей.", category: "Дизайн", icon: "fas fa-palette" },
-        { id: 11, name: "Gmail", url: "https://mail.google.com", description: "Почтовый сервис и календарь от Google.", category: "Продуктивность", icon: "fas fa-envelope" },
-        { id: 12, name: "Netflix", url: "https://netflix.com", description: "Фильмы, сериалы и документальное кино для отдыха.", category: "Медиа", icon: "fab fa-netflix" },
-        { id: 13, name: "ChatGPT", url: "https://chat.openai.com", description: "AI-помощник для генерации идей, кода и текстов.", category: "Инструменты", icon: "fas fa-robot" },
-        { id: 14, name: "Figma Community", url: "https://figma.com/community", description: "Готовые UI-киты, плагины и шаблоны для Figma.", category: "Дизайн", icon: "fas fa-shapes" },
-        { id: 15, name: "Linear", url: "https://linear.app", description: "Трекинг задач и менеджмент проектов для команд разработки.", category: "Продуктивность", icon: "fas fa-chart-line" },
-        { id: 16, name: "HW Protection VK", url: "https://vk.com/hw_protection", description: "Сообщество VK, посвящённое HW Protection — обсуждения, новости и поддержка.", category: "Сообщества", icon: "fab fa-vk" },
-        { id: 17, name: "HWHellBlock", url: "https://anonim-it.github.io/HWHellBlock.html", description: "Инструмент или информационная страница проекта HWHellBlock.", category: "Инструменты", icon: "fas fa-shield-haltered" },
-        { id: 18, name: "Anonim-IT Hub", url: "https://anonim-it.github.io/", description: "Главная страница GitHub-проектов Anonim-IT, центральный хаб.", category: "Разработка", icon: "fab fa-github-alt" },
-        { id: 19, name: "HWPro OS", url: "https://anonim-it.github.io/HWPro_OS.html", description: "Страница проекта HWPro OS, возможно собственная ОС или среда.", category: "Инструменты", icon: "fas fa-microchip" },
-        { id: 20, name: "Reddit HW Hell Block", url: "https://www.reddit.com/r/HW_Hell_Block/", description: "Сабреддит для обсуждения HW Hell Block, фидбек и новости сообщества.", category: "Сообщества", icon: "fab fa-reddit-alien" },
-        { id: 21, name: "Twitch HW_RS", url: "https://www.twitch.tv/hw_rs", description: "Стримы по проектам HW, разработка в реальном времени и общение.", category: "Медиа", icon: "fab fa-twitch" },
-        { id: 22, name: "Timeweb Cloud", url: "https://timeweb.cloud/my/projects/2255557", description: "Панель управления проектами на Timeweb Cloud, хостинг и серверы.", category: "Хостинг", icon: "fas fa-cloud-upload-alt" },
-        { id: 23, name: "Google Sheets (HW)", url: "https://docs.google.com/spreadsheets/d/1_9d6mV9sQcAZmm6YisB22h12hYO7qOU0aY3t0J79bUY/edit?gid=0#gid=0", description: "Рабочая таблица Google Sheets: важные данные, логи или планирование.", category: "Продуктивность", icon: "fas fa-table" },
-        { id: 24, name: "DeepSeek Chat", url: "https://chat.deepseek.com/", description: "Мощный AI-ассистент для генерации текста, кода, анализа и творчества.", category: "Инструменты", icon: "fas fa-comments" },
-        { id: 25, name: "Google Translate", url: "https://translate.google.ru/", description: "Бесплатный сервис перевода текстов, веб-страниц и документов от Google.", category: "Инструменты", icon: "fas fa-language" },
-        { id: 26, name: "Ozon", url: "https://www.ozon.ru/", description: "Крупнейший маркетплейс России: миллионы товаров, быстрая доставка.", category: "Покупки", icon: "fas fa-shopping-bag" },
-        { id: 27, name: "Карта Мира (cmirit)", url: "https://map.cmirit.ru/portal-gorod/", description: "Интерактивная карта с порталами города, уникальный геосервис.", category: "Карты", icon: "fas fa-map-marked-alt" },
-        { id: 28, name: "Яндекс", url: "https://yandex.ru", description: "Главный портал Яндекса: поиск, почта, карты, погода, новости, музыка.", category: "Поиск", icon: "fab fa-yandex" },
-        { id: 29, name: "Мой Череповец", url: "https://xn--b1afabqrodii5ee.xn--p1ai/", description: "Городской портал Череповца — новости, афиша, справочная информация.", category: "Города", icon: "fas fa-city" },
-        { id: 30, name: "MAX Мессенджер", url: "https://web.max.ru/", description: "Веб-версия защищённого корпоративного мессенджера MAX.", category: "Мессенджеры", icon: "fas fa-comment-dots" },
-        { id: 31, name: "Rutube", url: "https://rutube.ru/", description: "Российская видеоплатформа (импортозамещающий YouTube).", category: "Медиа", icon: "fas fa-video" }
+        { id: 1, name: "GitHub", url: "https://github.com", description: "Репозитории, open-source, совместный код.", category: "Разработка", icon: "fab fa-github" },
+        { id: 2, name: "Figma", url: "https://figma.com", description: "Дизайн интерфейсов и прототипирование.", category: "Дизайн", icon: "fab fa-figma" },
+        { id: 3, name: "Notion", url: "https://notion.so", description: "База знаний, документация, планирование.", category: "Продуктивность", icon: "fas fa-brain" },
+        { id: 4, name: "YouTube", url: "https://youtube.com", description: "Видео-контент, уроки, развлечения.", category: "Медиа", icon: "fab fa-youtube" },
+        { id: 5, name: "Stack Overflow", url: "https://stackoverflow.com", description: "Решение проблем кода.", category: "Разработка", icon: "fab fa-stack-overflow" },
+        { id: 6, name: "Dribbble", url: "https://dribbble.com", description: "Вдохновение и UI/UX.", category: "Дизайн", icon: "fab fa-dribbble" },
+        { id: 7, name: "Trello", url: "https://trello.com", description: "Канбан-доски и задачи.", category: "Продуктивность", icon: "fab fa-trello" },
+        { id: 8, name: "Spotify", url: "https://spotify.com", description: "Музыка, подкасты, фон.", category: "Медиа", icon: "fab fa-spotify" },
+        { id: 9, name: "MDN Web Docs", url: "https://developer.mozilla.org", description: "Документация веб-технологий.", category: "Разработка", icon: "fab fa-firefox" },
+        { id: 10, name: "Canva", url: "https://canva.com", description: "Графический редактор.", category: "Дизайн", icon: "fas fa-palette" },
+        { id: 11, name: "Gmail", url: "https://mail.google.com", description: "Почта и календарь.", category: "Продуктивность", icon: "fas fa-envelope" },
+        { id: 12, name: "Netflix", url: "https://netflix.com", description: "Кино и сериалы.", category: "Медиа", icon: "fab fa-netflix" },
+        { id: 13, name: "ChatGPT", url: "https://chat.openai.com", description: "AI-помощник.", category: "Инструменты", icon: "fas fa-robot" },
+        { id: 14, name: "Figma Community", url: "https://figma.com/community", description: "Ресурсы для дизайна.", category: "Дизайн", icon: "fas fa-shapes" },
+        { id: 15, name: "Linear", url: "https://linear.app", description: "Трекинг задач.", category: "Продуктивность", icon: "fas fa-chart-line" },
+        { id: 16, name: "HW Protection VK", url: "https://vk.com/hw_protection", description: "Сообщество VK.", category: "Сообщества", icon: "fab fa-vk" },
+        { id: 17, name: "HWHellBlock", url: "https://anonim-it.github.io/HWHellBlock.html", description: "Страница проекта HWHellBlock.", category: "Инструменты", icon: "fas fa-shield-haltered" },
+        { id: 18, name: "Anonim-IT Hub", url: "https://anonim-it.github.io/", description: "Хаб Anonim-IT.", category: "Разработка", icon: "fab fa-github-alt" },
+        { id: 19, name: "HWPro OS", url: "https://anonim-it.github.io/HWPro_OS.html", description: "HWPro OS страница.", category: "Инструменты", icon: "fas fa-microchip" },
+        { id: 20, name: "Reddit HW Hell Block", url: "https://www.reddit.com/r/HW_Hell_Block/", description: "Сабреддит.", category: "Сообщества", icon: "fab fa-reddit-alien" },
+        { id: 21, name: "Twitch HW_RS", url: "https://www.twitch.tv/hw_rs", description: "Стримы.", category: "Медиа", icon: "fab fa-twitch" },
+        { id: 22, name: "Timeweb Cloud", url: "https://timeweb.cloud/my/projects/2255557", description: "Панель хостинга.", category: "Хостинг", icon: "fas fa-cloud-upload-alt" },
+        { id: 23, name: "Google Sheets (HW)", url: "https://docs.google.com/spreadsheets/d/1_9d6mV9sQcAZmm6YisB22h12hYO7qOU0aY3t0J79bUY/edit", description: "Таблица проектов.", category: "Продуктивность", icon: "fas fa-table" },
+        { id: 24, name: "DeepSeek Chat", url: "https://chat.deepseek.com/", description: "AI ассистент.", category: "Инструменты", icon: "fas fa-comments" },
+        { id: 25, name: "Google Translate", url: "https://translate.google.ru/", description: "Переводчик.", category: "Инструменты", icon: "fas fa-language" },
+        { id: 26, name: "Ozon", url: "https://www.ozon.ru/", description: "Маркетплейс.", category: "Покупки", icon: "fas fa-shopping-bag" },
+        { id: 27, name: "Карта Мира", url: "https://map.cmirit.ru/portal-gorod/", description: "Интерактивная карта.", category: "Карты", icon: "fas fa-map-marked-alt" },
+        { id: 28, name: "Яндекс", url: "https://yandex.ru", description: "Портал Яндекса.", category: "Поиск", icon: "fab fa-yandex" },
+        { id: 29, name: "Мой Череповец", url: "https://xn--b1afabqrodii5ee.xn--p1ai/", description: "Городской портал.", category: "Города", icon: "fas fa-city" },
+        { id: 30, name: "MAX Мессенджер", url: "https://web.max.ru/", description: "Защищённый мессенджер.", category: "Мессенджеры", icon: "fas fa-comment-dots" },
+        { id: 31, name: "Rutube", url: "https://rutube.ru/", description: "Видеоплатформа.", category: "Медиа", icon: "fas fa-video" }
     ];
 
     let activeCategory = "Все";
     let searchQuery = "";
 
     function getUniqueCategories() {
-        const catsSet = new Set(sitesData.map(site => site.category));
+        const catsSet = new Set(sitesData.map(s => s.category));
         return Array.from(catsSet).sort((a,b) => a.localeCompare(b));
     }
 
     function escapeHtml(str) {
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
+        return str.replace(/[&<>]/g, m => (m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;')));
     }
 
     function renderCategories() {
-        const categories = getUniqueCategories();
-        const filterContainer = document.getElementById("categoryFilters");
-        if (!filterContainer) return;
-        let buttonsHtml = `<button class="cat-btn active" data-category="Все"><i class="fas fa-globe"></i> Все</button>`;
-        categories.forEach(cat => {
-            buttonsHtml += `<button class="cat-btn" data-category="${escapeHtml(cat)}"><i class="fas fa-tag"></i> ${escapeHtml(cat)}</button>`;
+        const cats = getUniqueCategories();
+        const container = document.getElementById("categoryFilters");
+        if (!container) return;
+        let html = `<button class="cat-btn active" data-category="Все"><i class="fas fa-globe"></i> Все</button>`;
+        cats.forEach(c => {
+            html += `<button class="cat-btn" data-category="${escapeHtml(c)}"><i class="fas fa-tag"></i> ${escapeHtml(c)}</button>`;
         });
-        filterContainer.innerHTML = buttonsHtml;
+        container.innerHTML = html;
         document.querySelectorAll(".cat-btn").forEach(btn => {
             btn.addEventListener("click", () => {
-                const category = btn.getAttribute("data-category");
-                if (!category) return;
+                const cat = btn.getAttribute("data-category");
+                if (!cat) return;
                 document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
                 btn.classList.add("active");
-                activeCategory = category;
+                activeCategory = cat;
                 renderSites();
             });
         });
     }
 
     function getFilteredSites() {
-        let filtered = [...sitesData];
-        if (activeCategory !== "Все") {
-            filtered = filtered.filter(site => site.category === activeCategory);
+        let res = [...sitesData];
+        if (activeCategory !== "Все") res = res.filter(s => s.category === activeCategory);
+        if (searchQuery.trim()) {
+            const q = searchQuery.trim().toLowerCase();
+            res = res.filter(s => s.name.toLowerCase().includes(q) || s.description.toLowerCase().includes(q));
         }
-        if (searchQuery.trim() !== "") {
-            const queryLower = searchQuery.trim().toLowerCase();
-            filtered = filtered.filter(site => 
-                site.name.toLowerCase().includes(queryLower) || 
-                site.description.toLowerCase().includes(queryLower)
-            );
-        }
-        return filtered;
+        return res;
     }
 
     function renderSites() {
@@ -465,32 +505,32 @@
         if (!container) return;
         const filtered = getFilteredSites();
         if (filtered.length === 0) {
-            container.innerHTML = `<div class="empty-state"><i class="fas fa-map-signs"></i><p>Ничего не найдено 😕 <br> Попробуйте другой запрос или категорию</p></div>`;
+            container.innerHTML = `<div class="empty-state"><i class="fas fa-skull"></i> <p>no portals found // check your query</p></div>`;
             return;
         }
-        let cardsHtml = "";
-        for (let site of filtered) {
+        let cards = "";
+        filtered.forEach(site => {
             const safeName = escapeHtml(site.name);
             const safeDesc = escapeHtml(site.description);
             const safeUrl = escapeHtml(site.url);
-            const safeCategory = escapeHtml(site.category);
-            let iconClass = site.icon || "fas fa-link";
-            cardsHtml += `
+            const safeCat = escapeHtml(site.category);
+            const iconClass = site.icon || "fas fa-link";
+            cards += `
                 <div class="site-card" data-url="${safeUrl}">
                     <div class="card-header">
                         <div class="icon-bg"><i class="${iconClass}"></i></div>
                         <div class="card-title">
                             <h3>${safeName}</h3>
-                            <span class="category-tag"><i class="fas fa-folder-open"></i> ${safeCategory}</span>
+                            <span class="category-tag"><i class="fas fa-folder-open"></i> ${safeCat}</span>
                         </div>
                     </div>
                     <div class="site-description">${safeDesc}</div>
                     <div class="site-url"><i class="fas fa-link"></i> ${safeUrl}</div>
-                    <div class="card-footer"><button class="visit-btn" data-url="${safeUrl}">Перейти <i class="fas fa-arrow-right"></i></button></div>
+                    <div class="card-footer"><button class="visit-btn" data-url="${safeUrl}">ENTER <i class="fas fa-arrow-right"></i></button></div>
                 </div>
             `;
-        }
-        container.innerHTML = cardsHtml;
+        });
+        container.innerHTML = cards;
         document.querySelectorAll(".visit-btn").forEach(btn => {
             btn.addEventListener("click", (e) => {
                 e.stopPropagation();
@@ -508,22 +548,37 @@
     }
 
     function bindSearch() {
-        const searchInput = document.getElementById("searchInput");
-        if (searchInput) {
-            searchInput.addEventListener("input", (e) => {
-                searchQuery = e.target.value;
-                renderSites();
-            });
-        }
+        const inp = document.getElementById("searchInput");
+        if (inp) inp.addEventListener("input", (e) => { searchQuery = e.target.value; renderSites(); });
     }
 
-    // Инициализация всего
-    function init() {
+    // ========== СМЕНА ТЕМЫ (светлая/тёмная) сохраняя хакер-стиль ==========
+    function initTheme() {
+        const saved = localStorage.getItem('hw_theme');
+        const body = document.body;
+        if (saved === 'light') {
+            body.classList.add('light-mode');
+            document.getElementById('themeText').innerHTML = 'LIGHT MODE';
+        } else {
+            body.classList.remove('light-mode');
+            document.getElementById('themeText').innerHTML = 'DARK/HACK';
+        }
+        const toggle = document.getElementById('themeToggle');
+        toggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            const isLight = body.classList.contains('light-mode');
+            localStorage.setItem('hw_theme', isLight ? 'light' : 'dark');
+            document.getElementById('themeText').innerHTML = isLight ? 'LIGHT MODE' : 'DARK/HACK';
+        });
+    }
+
+    function start() {
         renderCategories();
         renderSites();
         bindSearch();
+        initTheme();
     }
-    init();
+    start();
 </script>
 </body>
 </html>
