@@ -2,866 +2,663 @@
 <html lang="ru" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="HW Project - инновационная мультидисциплинарная платформа">
-    <meta name="keywords" content="IT платформа, технологии, инновации, HW проект, Minecraft сервер">
-    <title>HW Project | Технологии будущего</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="HW Pro — неофициальный технологический проект. Информационная платформа в области IT, цифровой безопасности и инноваций.">
+    <meta name="keywords" content="HW Pro, white hacking, информационная безопасность, IT платформа, технологии, анонимность">
+    <title>HW Pro | Вход в технологический портал</title>
     
-    <!-- Основные стили -->
-    <link rel="stylesheet" href="css/main.css">
-    
-    <!-- Шрифты -->
+    <!-- Шрифты и база -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <!-- PWA -->
-    <meta name="theme-color" content="#0a0a1a">
-    <link rel="manifest" href="manifest.webmanifest">
-    
-    <!-- Основные стили платформы -->
     <style>
-        :root {
-            --bg-primary: #0a0a1a;
-            --bg-secondary: #111127;
-            --accent-primary: #ff3366;
-            --accent-secondary: #00ccff;
-            --accent-tertiary: #9d4edd;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0c0;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        /* Основные стили */
-        body {
+        /* ---------- ГЛОБАЛЬНЫЙ СТИЛЬ - АНОНИМНОСТЬ / WHITE HACKING ---------- */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-deep: #05050f;
+            --bg-surface: #0c0c18;
+            --bg-card: rgba(12, 12, 24, 0.75);
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --border-active: rgba(0, 255, 196, 0.4);
+            --accent-cyber: #00ffc4;
+            --accent-red: #ff3a6f;
+            --accent-purple: #b77eff;
+            --text-primary: #ededf5;
+            --text-secondary: #8f8fbb;
+            --text-muted: #5f5f8a;
+            --glow-cyan: 0 0 12px rgba(0, 255, 196, 0.3);
+            --glow-pink: 0 0 12px rgba(255, 58, 111, 0.3);
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #0a0a16, #020208);
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, 
-                var(--bg-primary) 0%, 
-                #1a1a2e 50%, 
-                var(--bg-primary) 100%);
-            background-attachment: fixed;
-            background-size: cover;
-            min-height: 100vh;
             color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
             overflow-x: hidden;
         }
 
-        /* Хедер */
-        .main-header {
-            background: rgba(10, 10, 26, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 0;
+        /* матричная линия-декор */
+        .matrix-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.2;
+            background-image: repeating-linear-gradient(0deg, rgba(0,255,196,0.08) 0px, rgba(0,255,196,0.08) 1px, transparent 1px, transparent 8px);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ---------- ХЕДЕР ---------- */
+        .glass-header {
+            background: rgba(5, 5, 15, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-subtle);
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-            color: var(--accent-primary);
+            gap: 12px;
+            font-family: var(--font-mono);
             font-weight: 700;
-            font-size: 1.5rem;
-            transition: color 0.3s ease;
+            font-size: 1.6rem;
+            letter-spacing: -0.5px;
+            text-decoration: none;
         }
 
-        .logo:hover {
-            color: var(--accent-secondary);
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--accent-cyber), var(--accent-purple));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--glow-cyan);
         }
 
-        .nav-list {
+        .logo span {
+            background: linear-gradient(130deg, #fff, var(--accent-cyber));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
             display: flex;
             gap: 2rem;
             list-style: none;
-            margin: 0;
-            padding: 0;
+            flex-wrap: wrap;
         }
 
-        .nav-list a {
+        .nav-links a {
             color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.9rem;
-            transition: all 0.3s ease;
-            padding: 0.5rem 0;
-            position: relative;
             font-weight: 500;
+            transition: 0.2s;
+            font-family: var(--font-mono);
         }
 
-        .nav-list a:hover {
-            color: var(--accent-primary);
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-cyber);
+            text-shadow: 0 0 5px rgba(0,255,196,0.5);
         }
 
-        .nav-list a.active {
-            color: var(--accent-primary);
+        /* кнопка правил */
+        .rule-trigger {
+            background: rgba(0, 255, 196, 0.08);
+            border: 1px solid var(--accent-cyber);
+            padding: 8px 20px;
+            border-radius: 60px;
+            font-weight: 500;
+            color: var(--accent-cyber);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .nav-list a.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+        .rule-trigger:hover {
+            background: rgba(0, 255, 196, 0.2);
+            box-shadow: var(--glow-cyan);
         }
 
-        /* Главный баннер с анонсом */
-        .hero-banner {
-            background: linear-gradient(135deg, 
-                rgba(255, 51, 102, 0.1) 0%, 
-                rgba(157, 78, 221, 0.1) 50%, 
-                rgba(0, 204, 255, 0.1) 100%);
-            padding: 5rem 1rem;
-            margin: 0;
-            position: relative;
-            overflow: hidden;
-            border-bottom: 1px solid var(--border-color);
+        /* ---------- ГЕРО ---------- */
+        .hero-section {
+            padding: 4rem 0 3rem;
+            text-align: center;
         }
 
-        .hero-banner::before {
-            content: '';
-            position: absolute;
+        .badge {
+            display: inline-block;
+            background: rgba(0, 255, 196, 0.12);
+            border: 1px solid var(--accent-cyber);
+            border-radius: 60px;
+            padding: 0.3rem 1.2rem;
+            font-size: 0.75rem;
+            font-family: var(--font-mono);
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .hero-title {
+            font-size: 3.8rem;
+            font-weight: 800;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #ffffff, var(--accent-cyber), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero-desc {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 720px;
+            margin: 0 auto 2rem;
+        }
+
+        .legal-note {
+            font-size: 0.75rem;
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+            background: rgba(0,0,0,0.4);
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 40px;
+            margin-top: 1rem;
+        }
+
+        /* карточки инфо-секции */
+        .grid-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+            margin: 4rem 0;
+        }
+
+        .info-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 28px;
+            padding: 1.8rem;
+            transition: 0.25s ease;
+        }
+
+        .info-card:hover {
+            border-color: var(--accent-cyber);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-card h3 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            letter-spacing: -0.3px;
+        }
+
+        .info-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .accent-text {
+            color: var(--accent-cyber);
+            font-family: var(--font-mono);
+        }
+
+        /* политика анонимности */
+        .ethics-block {
+            background: linear-gradient(115deg, rgba(0,255,196,0.05), rgba(183,126,255,0.02));
+            border-radius: 36px;
+            padding: 2rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(0,255,196,0.2);
+            text-align: center;
+        }
+
+        .ethics-block h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .badge-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .badge-list span {
+            background: rgba(0,0,0,0.5);
+            padding: 6px 18px;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            font-family: var(--font-mono);
+            border-left: 2px solid var(--accent-cyber);
+        }
+
+        /* футер */
+        .footer {
+            border-top: 1px solid var(--border-subtle);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* ---------- МОДАЛЬНОЕ ОКНО (ЗАКОНОДАТЕЛЬСТВО ПРОЕКТА) ---------- */
+        .modal-overlay {
+            position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 50%, rgba(255, 51, 102, 0.15) 0%, transparent 70%);
-            pointer-events: none;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 2, 8, 0.95);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.25s ease;
+            font-family: var(--font-mono);
         }
 
-        .banner-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
 
-        .announcement-badge {
-            display: inline-block;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-tertiary));
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin-bottom: 2rem;
-            animation: pulse 2s infinite;
+        .modal-container {
+            background: #0a0a14;
+            border: 1px solid var(--accent-cyber);
+            border-radius: 32px;
+            max-width: 750px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,255,196,0.2);
+            transform: scale(0.96);
+            transition: transform 0.2s;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
         }
 
-        .banner-title {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+        .modal-header {
+            padding: 1.5rem 2rem 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .modal-header h2 {
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, var(--accent-cyber), #fff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
 
-        .banner-subtitle {
-            font-size: 1.3rem;
+        .close-modal {
+            background: none;
+            border: none;
             color: var(--text-secondary);
-            max-width: 800px;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-
-        .minecraft-theme {
-            display: inline-block;
-            color: var(--accent-primary);
-            font-weight: 600;
-            text-shadow: 0 0 10px rgba(255, 51, 102, 0.3);
-        }
-
-        .release-info {
-            display: flex;
-            gap: 2rem;
-            margin-top: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .info-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .info-item svg {
-            fill: var(--accent-primary);
-        }
-
-        /* Основной контент */
-        .main-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 1rem;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            text-align: center;
-            color: var(--text-primary);
-        }
-
-        .section-title span {
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        /* Карточки проекта */
-        .project-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
-        }
-
-        .detail-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 15px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .detail-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-primary);
-            box-shadow: 0 10px 30px rgba(255, 51, 102, 0.1);
-        }
-
-        .detail-card h3 {
-            color: var(--accent-primary);
-            margin-top: 0;
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .detail-card p {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        /* Особенности проекта */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .feature-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .feature-item:hover {
-            border-color: var(--accent-secondary);
-            transform: translateY(-3px);
-        }
-
-        .feature-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-tertiary));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-        }
-
-        .feature-item h4 {
-            color: var(--text-primary);
-            margin: 0 0 0.5rem 0;
-            font-size: 1.1rem;
-        }
-
-        .feature-item p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin: 0;
-            line-height: 1.5;
-        }
-
-        /* CTA секция */
-        .cta-section {
-            background: linear-gradient(135deg, 
-                rgba(255, 51, 102, 0.05) 0%, 
-                rgba(157, 78, 221, 0.05) 100%);
-            padding: 4rem 2rem;
-            border-radius: 20px;
-            margin-top: 4rem;
-            text-align: center;
-            border: 1px solid var(--border-color);
-        }
-
-        .cta-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .cta-subtitle {
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            line-height: 1.6;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 0.8rem 2rem;
-            border: 1px solid var(--accent-primary);
-            background: transparent;
-            color: var(--accent-primary);
-            text-decoration: none;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            font-size: 1.8rem;
             cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .close-modal:hover {
+            color: var(--accent-red);
+        }
+
+        .modal-body {
+            padding: 1.5rem 2rem 2rem;
+        }
+
+        .rule-article {
+            margin-bottom: 1.8rem;
+            border-left: 2px solid var(--accent-cyber);
+            padding-left: 1rem;
+        }
+
+        .rule-article h4 {
+            font-size: 1.2rem;
+            color: var(--accent-cyber);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .rule-article p, .rule-article li {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 0.3rem;
+        }
+
+        .rule-article ul {
+            margin-left: 1.2rem;
+            margin-top: 0.3rem;
+        }
+
+        .legal-stamp {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            text-align: center;
+            font-size: 0.7rem;
+            border-top: 1px dashed var(--border-subtle);
+            color: var(--text-muted);
+        }
+
+        /* HW_Sandbox registry badge */
+        .sandbox-badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 8px;
+            background: rgba(0, 255, 196, 0.08);
+            border: 1px solid var(--accent-cyber);
+            border-radius: 60px;
+            padding: 6px 16px;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--accent-cyber);
+            margin-top: 1rem;
         }
 
-        .btn:hover {
-            background: var(--accent-primary);
-            color: var(--bg-primary);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 51, 102, 0.3);
-        }
-
-        .btn-primary {
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-tertiary));
-            color: white;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background: linear-gradient(90deg, var(--accent-tertiary), var(--accent-primary));
-            color: white;
-        }
-
-        /* Футер */
-        .main-footer {
-            background: rgba(10, 10, 26, 0.95);
-            border-top: 1px solid var(--border-color);
-            padding: 3rem 0 1rem;
-            margin-top: 4rem;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        .footer-links h3 {
-            color: var(--accent-primary);
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .footer-links ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent-primary);
-        }
-
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 2rem auto 0;
-            padding: 2rem 1rem 0;
-            border-top: 1px solid var(--border-color);
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .social-links {
+        .anonym-banner {
+            background: rgba(0,0,0,0.6);
+            border-left: 4px solid var(--accent-cyber);
+            padding: 1rem 1.5rem;
+            border-radius: 20px;
+            margin: 2rem 0;
             display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
             gap: 1rem;
-            justify-content: center;
-            margin-bottom: 1rem;
         }
 
-        .social-links a {
-            color: var(--text-secondary);
-            transition: color 0.3s ease;
+        @media (max-width: 760px) {
+            .hero-title { font-size: 2.4rem; }
+            .container { padding: 0 1.5rem; }
+            .header-inner { flex-direction: column; }
+            .nav-links { justify-content: center; gap: 1.2rem; }
         }
-
-        .social-links a:hover {
-            color: var(--accent-primary);
-        }
-
-        /* Адаптивность */
-        @media (max-width: 1024px) {
-            .banner-title {
-                font-size: 2.8rem;
-            }
-            
-            .section-title {
-                font-size: 2.2rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero-banner {
-                padding: 3rem 1rem;
-            }
-            
-            .banner-title {
-                font-size: 2.2rem;
-            }
-            
-            .banner-subtitle {
-                font-size: 1.1rem;
-            }
-            
-            .nav-list {
-                gap: 1rem;
-                overflow-x: auto;
-                padding: 0.5rem 0;
-            }
-            
-            .nav-list a {
-                font-size: 0.8rem;
-                white-space: nowrap;
-            }
-            
-            .btn-group {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .btn {
-                width: 100%;
-                max-width: 300px;
-                justify-content: center;
-            }
-            
-            .release-info {
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .banner-title {
-                font-size: 1.8rem;
-            }
-            
-            .section-title {
-                font-size: 1.8rem;
-            }
-            
-            .detail-card {
-                padding: 1.5rem;
-            }
-        }
-        .max-btn-png {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 28px;
-    background: linear-gradient(135deg, #0088ff 0%, #0066cc 100%);
-    border: none;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: white;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 136, 255, 0.3);
-}
-
-.max-btn-png:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 136, 255, 0.4);
-    background: linear-gradient(135deg, #0066cc 0%, #0055aa 100%);
-}
-
-.max-icon-png {
-    width: 20px;
-    height: 20px;
-    filter: brightness(0) invert(1);
-}
     </style>
 </head>
-
 <body>
-    <!-- Хедер -->
-    <header class="main-header">
-        <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 1rem;">
-            <a href="/" class="logo">
-                <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
-                    <path d="M20 0C8.96 0 0 8.96 0 20C0 31.04 8.96 40 20 40C31.04 40 40 31.04 40 20C40 8.96 31.04 0 20 0ZM16 30H12V16H16V30ZM28 30H24V16H28V30Z" fill="#ff3366"/>
-                </svg>
-                <span>HW Project</span>
-            </a>
-            
-            <nav>
-                <ul class="nav-list">
-                    <li><a href="/" class="active">Главная</a></li>
-                    <li><a href="/solutions">Решения</a></li>
-                    <li><a href="/education">Образование</a></li>
-                    <li><a href="/research">Исследования</a></li>
-                    <li><a href="/community">Сообщество</a></li>
-                    <li><a href="/webaudio.html">Web Audio</a></li>
-                    <li><a href="/HWHellBlock.html">Minecraft сервер</a></li>
-                    <li><a href="https://github.com/Anonim-IT/HackerWeb" target="_blank">GitHub</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+<div class="matrix-lines"></div>
 
-    <!-- Главный баннер с анонсом -->
-    <section class="hero-banner">
-        <div class="banner-content">
-            <div class="announcement-badge">СКОРО ЗАПУСК</div>
-            
-            <h1 class="banner-title">
-                Адский Minecraft<br>Проект
-            </h1>
-            
-            <p class="banner-subtitle">
-                Готовьтесь к уникальному опыту в <span class="minecraft-theme">адской тематике</span>! 
-                Мы создаем масштабный Minecraft проект с уникальной механикой выживания в аду, 
-                кастомными мобами и эпическими приключениями.
+<header class="glass-header">
+    <div class="container header-inner">
+        <a href="/" class="logo">
+            <div class="logo-icon">
+                <span style="color:#000; font-weight:800;">⟁</span>
+            </div>
+            <span>HW Pro</span>
+        </a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Портал</a></li>
+                <li><a href="#">Лаборатория</a></li>
+                <li><a href="#">Ресурсы</a></li>
+                <li><a href="#">Исследования</a></li>
+                <li><a href="#">Minecraft Lab</a></li>
+            </ul>
+        </nav>
+        <button class="rule-trigger" id="openRulesBtn">📜 Законодательство проекта</button>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <div class="hero-section">
+            <div class="badge">⚡ WHITE HACKING // NON OFFICIAL</div>
+            <h1 class="hero-title">HW Pro<br>цифровой резонанс</h1>
+            <p class="hero-desc">
+                Независимая технологическая платформа. Информационная среда для энтузиастов IT, 
+                кибербезопасности и инноваций. Проект носит <strong class="accent-text">исключительно ознакомительный</strong> характер.
             </p>
-            
-            <div class="btn-group">
-                <a href="#subscribe" class="btn btn-primary">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM16.36 14.3C16.36 14.69 16.05 15 15.66 15H8.34C7.95 15 7.64 14.69 7.64 14.3V9.7C7.64 9.31 7.95 9 8.34 9H15.66C16.05 9 16.36 9.31 16.36 9.7V14.3ZM11.5 12L9 14H10.5L12.5 12L10.5 10H9L11.5 12Z" fill="currentColor"/>
-                    </svg>
-                    Узнать больше
-                </a>
-                <a href="https://discord.gg/example" target="_blank" class="btn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                        <path d="M20.317 4.37C18.339 3.5 16.249 2.92 14.079 2.67C13.679 2.62 13.279 2.58 12.879 2.54C12.479 2.5 12.079 2.47 11.679 2.45C11.279 2.43 10.879 2.42 10.479 2.42C10.079 2.42 9.679 2.43 9.279 2.45C8.879 2.47 8.479 2.5 8.079 2.54C7.679 2.58 7.279 2.62 6.879 2.67C4.709 2.92 2.619 3.5 0.641 4.37C0.241 4.52 0 4.93 0 5.36V18.64C0 19.07 0.241 19.48 0.641 19.63C2.619 20.5 4.709 21.08 6.879 21.33C7.279 21.38 7.679 21.42 8.079 21.46C8.479 21.5 8.879 21.53 9.279 21.55C9.679 21.57 10.079 21.58 10.479 21.58C10.879 21.58 11.279 21.57 11.679 21.55C12.079 21.53 12.479 21.5 12.879 21.46C13.279 21.42 13.679 21.38 14.079 21.33C16.249 21.08 18.339 20.5 20.317 19.63C20.717 19.48 21 19.07 21 18.64V5.36C21 4.93 20.717 4.52 20.317 4.37ZM8.5 15.5C7.4 15.5 6.5 14.6 6.5 13.5C6.5 12.4 7.4 11.5 8.5 11.5C9.6 11.5 10.5 12.4 10.5 13.5C10.5 14.6 9.6 15.5 8.5 15.5ZM15.5 15.5C14.4 15.5 13.5 14.6 13.5 13.5C13.5 12.4 14.4 11.5 15.5 11.5C16.6 11.5 17.5 12.4 17.5 13.5C17.5 14.6 16.6 15.5 15.5 15.5Z" fill="currentColor"/>
-                    </svg>
-                    Discord сообщество
-                </a>
+            <div class="legal-note">
+                ⚠ Автор не претендует на авторские права. Проект имеет неофициальный статус. 
+                Любые материалы публикуются в образовательных целях.
             </div>
-            
-            <div class="release-info">
-                <div class="info-item">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="currentColor"/>
-                    </svg>
-                    <span>Статус: В разработке</span>
+            <!-- HW_Sandbox регистрация -->
+            <div class="sandbox-badge">
+                <span>📦</span> Зарегистрировано в реестре HW_Sandbox | ID: HW-PRO-2406
+            </div>
+        </div>
+
+        <!-- БЛОК АНОНИМИЗАЦИИ УЧАСТНИКОВ -->
+        <div class="anonym-banner">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <span style="font-size: 2rem;">🕶️</span>
+                <div style="text-align: left;">
+                    <strong style="color: var(--accent-cyber); font-family: monospace;">Анонимизация участников</strong>
+                    <p style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">Проект разработан для полной анонимизации участников. Никаких логинов, метрик, слежения. Только чистое знание и обезличенный опыт.</p>
                 </div>
-                <div class="info-item">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                        <path d="M19 4H5C3.89 4 3 4.9 3 6V18C3 19.1 3.89 20 5 20H19C20.1 20 21 19.1 21 18V6C21 4.9 20.1 4 19 4ZM19 18H5V8H19V18Z" fill="currentColor"/>
-                    </svg>
-                    <span>Версия: Minecraft 1.21.x (Так же доступны и ниже версии)</span>
+            </div>
+            <div style="font-size: 0.7rem; font-family: monospace; background: #00000040; padding: 6px 14px; border-radius: 40px;">
+                #no_track • #zero_fingerprint
+            </div>
+        </div>
+
+        <!-- Информационные блоки (новый вход в концепцию) -->
+        <div class="grid-info">
+            <div class="info-card">
+                <div class="card-icon">🛡️</div>
+                <h3>Анонимность <span style="color:var(--accent-cyber)">+</span></h3>
+                <p>Мы не собираем персональные данные. Все взаимодействия анонимны. Никаких трекеров — только чистая информация. Проект создан для защиты цифрового следа участников.</p>
+            </div>
+            <div class="info-card">
+                <div class="card-icon">🧠</div>
+                <h3>White Hack</h3>
+                <p>Этичный код, исследования уязвимостей на согласованных полигонах. Распространение культуры безопасной разработки и полная конфиденциальность.</p>
+            </div>
+            <div class="info-card">
+                <div class="card-icon">⚙️</div>
+                <h3>HW Sandbox</h3>
+                <p>Экспериментальная среда: IT-решения, Minecraft-архитектура, аудиотехнологии. Все проекты фиксируются в реестре HW_Sandbox — единой базе наших разработок.</p>
+            </div>
+        </div>
+
+        <!-- Акцент - законодательная база (краткий свод) + упоминание реестра sandbox -->
+        <div class="ethics-block">
+            <h3>📜 <span class="accent-text">Кодекс HW Pro</span> — Этическое законодательство</h3>
+            <p>Проект функционирует на принципах белого хакинга, свободы знаний и уважения к закону. <br>
+            Нарушители этических норм подлежат исключению из комьюнити. <strong>Все участники остаются анонимными.</strong></p>
+            <div class="badge-list">
+                <span>🔐 Нулевое доверие к трекерам</span>
+                <span>🧾 Прозрачность</span>
+                <span>⚖️ Не навреди</span>
+                <span>📚 Образовательная цель</span>
+                <span>🚫 Без токсичности</span>
+                <span>🕶️ Полная анонимность</span>
+            </div>
+            <button id="openRulesBtnInline" class="rule-trigger" style="margin-top: 20px;">Подробные правила →</button>
+        </div>
+
+        <!-- Информационный блок о Minecraft-составляющей и HW_Sandbox реестре -->
+        <div style="background: rgba(0,0,0,0.3); border-radius: 28px; padding: 1.8rem; margin: 1rem 0 2rem;">
+            <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center; justify-content: space-between;">
+                <div>
+                    <h3 style="font-size: 1.6rem;">📁 HW_Sandbox — реестр проектов</h3>
+                    <p style="color: var(--text-secondary); max-width: 550px;">Каждый наш проект вносится в единую базу HW_Sandbox. Текущая страница — официальная запись № HW-PRO-2406. Реестр предназначен для внутренней фиксации всех разработок и инициатив сообщества.</p>
                 </div>
-                <div class="info-item">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="currentColor"/>
-                    </svg>
-                    <span>Режим: Survival + Vanilla</span>
+                <div>
+                    <span style="background: #0f0f1c; padding: 0.8rem 1.6rem; border-radius: 80px; font-family: monospace; border: 1px solid var(--accent-cyber);">реестр: ACTIVE</span>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</main>
 
-    <main class="main-content">
-        <!-- Детали проекта -->
-        <section id="project-details">
-            <h2 class="section-title">
-                О проекте <span>HW HellBlock</span>
-            </h2>
-            
-            <div class="project-details">
-                <article class="detail-card">
-                    <h3>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="currentColor"/>
-                        </svg>
-                        Концепция
-                    </h3>
-                    <p>
-                        Уникальный Minecraft проект в адской тематике, где игрокам предстоит выживать 
-                        в условиях вечного ада. Исследуйте уникальные биомы, сражайтесь с кастомными 
-                        мобами и открывайте секреты этого опасного мира.
-                    </p>
-                </article>
-                
-                <article class="detail-card">
-                    <h3>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1Z" fill="currentColor"/>
-                        </svg>
-                        Особенности
-                    </h3>
-                    <p>
-                        Полностью кастомный мир с уникальной механикой, системой квестов, 
-                        экономикой на основе адских ресурсов и эпическими боссами. 
-                        Реализована собственная система прокачки и достижений.
-                    </p>
-                </article>
-                
-                <article class="detail-card">
-                    <h3>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4C7.58 4 4 7.58 4 12C4 16.42 7.58 20 12 20C15.73 20 18.84 17.45 19.73 14H17.65C16.83 16.33 14.61 18 12 18C8.69 18 6 15.31 6 12C6 8.69 8.69 6 12 6C13.66 6 15.14 6.69 16.22 7.78L13 11H20V4L17.65 6.35Z" fill="currentColor"/>
-                        </svg>
-                        Технологии
-                    </h3>
-                    <p>
-                        Используем современные плагины и моды для создания уникального геймплея. 
-                        Оптимизированный сервер с защитой от гриферства и честной экономической системой.
-                    </p>
-                </article>
-            </div>
-        </section>
+<footer class="footer">
+    <div class="container">
+        <p>© 2025 HW Pro — Неофициальный проект. Информация предоставлена в целях ознакомления.<br>
+        Все товарные знаки принадлежат их законным владельцам. Проект не связан с корпорациями и не нарушает права.</p>
+        <div style="margin-top: 1rem; font-size: 0.7rem;">
+            <a href="#" style="color: var(--text-muted); text-decoration: none;">Политика анонимности</a> &nbsp;|&nbsp;
+            <a href="#" id="footerRuleLink" style="color: var(--text-muted); text-decoration: none;">Законодательство HW Pro</a> &nbsp;|&nbsp;
+            <span style="color: var(--text-muted);">реестр HW_Sandbox · запись #2406</span>
+        </div>
+    </div>
+</footer>
 
-        <!-- Основные особенности -->
-        <section style="margin-top: 4rem;">
-            <h2 class="section-title">
-                Ключевые <span>особенности</span>
-            </h2>
-            
-            <div class="features-grid">
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
-                            <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1ZM12 11.99H19C18.47 16.11 15.72 19.78 12 20.93V12H5V6.3L12 3.19V11.99Z"/>
-                        </svg>
-                    </div>
-                    <h4>Уникальный мир</h4>
-                    <p>Полностью кастомная генерация мира с адской тематикой и уникальными структурами</p>
-                </div>
-                
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
-                            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z"/>
-                        </svg>
-                    </div>
-                    <h4>Кастомные мобы</h4>
-                    <p>Новые типы врагов и нейтральных мобов с уникальным поведением и дропом</p>
-                </div>
-                
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
-                            <path d="M19 4H5C3.89 4 3 4.9 3 6V18C3 19.1 3.89 20 5 20H19C20.1 20 21 19.1 21 18V6C21 4.9 20.1 4 19 4ZM19 18H5V8H19V18Z"/>
-                        </svg>
-                    </div>
-                    <h4>Система квестов</h4>
-                    <p>Разветвленная система заданий и достижений с наградной системой</p>
-                </div>
-                
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
-                            <path d="M2 17H20V19H2V17ZM2 11H20V13H2V11ZM2 5H20V7H2V5Z"/>
-                        </svg>
-                    </div>
-                    <h4>Экономика</h4>
-                    <p>Сбалансированная экономическая система с уникальными адскими ресурсами</p>
-                </div>
+<!-- МОДАЛЬНОЕ ОКНО: ПРАВИЛА / ЗАКОНОДАТЕЛЬСТВО ПРОЕКТА -->
+<div id="rulesModal" class="modal-overlay">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h2>📖 Законодательство HW Pro</h2>
+            <button class="close-modal" id="closeModalBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="rule-article">
+                <h4>Статья 1. Статус проекта</h4>
+                <p>1.1. HW Pro является неофициальным, некоммерческим информационно-технологическим проектом. Все материалы публикуются в ознакомительных и образовательных целях.</p>
+                <p>1.2. Авторы платформы не претендуют на исключительные права и открыто заявляют об отсутствии коммерческой выгоды. Любое сходство с существующими продуктами случайно.</p>
+                <p>1.3. Проект внесён в реестр HW_Sandbox (ID: HW-PRO-2406) — базу фиксации всех разработок инициативы.</p>
             </div>
-        </section>
-
-        <!-- CTA секция -->
-        <section id="subscribe" class="cta-section">
-            <h2 class="cta-title">Готовы к адскому приключению?</h2>
-            <p class="cta-subtitle">
-                Подпишитесь на уведомления о запуске сервера и получите эксклюзивный доступ 
-                к бета-тестированию и уникальные бонусы при старте!
-            </p>
-            
-            <div class="btn-group">
-<a href="https://max.ru/join/7BjWOPwk9I2IqacCuOp1V90bEVg176J-QipEJ_jjisA" target="_blank" class="btn btn-primary max-btn-png">
-    <img src="https://logo-teka.com/wp-content/uploads/2025/07/max-messenger-sign-logo.png" 
-         alt="Max Messenger" 
-         class="max-icon-png">
-    <span>Присоединиться в Max</span>
-</a>
-                <a href="https://t.me/hellblock_hw" target="_blank" class="btn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM16.36 14.3C16.36 14.69 16.05 15 15.66 15H8.34C7.95 15 7.64 14.69 7.64 14.3V9.7C7.64 9.31 7.95 9 8.34 9H15.66C16.05 9 16.36 9.31 16.36 9.7V14.3ZM11.5 12L9 14H10.5L12.5 12L10.5 10H9L11.5 12Z" fill="currentColor"/>
-                    </svg>
-                    Телеграм канал
-                </a>
+            <div class="rule-article">
+                <h4>Статья 2. Принципы белого хакинга и анонимизации</h4>
+                <p>2.1. Участники обязуются не наносить ущерб реальным системам и использовать полученные знания только в рамках закона и с разрешения владельцев систем.</p>
+                <p>2.2. Запрещены любые действия, направленные на кражу данных, несанкционированный доступ или нарушение приватности третьих лиц.</p>
+                <p>2.3. Проект разработан для полной анонимизации участников. Участники не обязаны раскрывать личные данные, а любые логи исключают идентификацию.</p>
             </div>
-        </section>
-    </main>
-
-    <footer class="main-footer">
-        <div class="footer-grid">
-            <div>
-                <a href="/" class="logo" style="font-size: 1.2rem; margin-bottom: 1rem; display: inline-block;">
-                    <span>HW Project</span>
-                </a>
-                <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">
-                    Технологическая платформа, создающая будущее. 
-                    Готовим к запуску уникальный Minecraft проект в адской тематике.
-                </p>
+            <div class="rule-article">
+                <h4>Статья 3. Анонимность и данные</h4>
+                <p>3.1. Платформа не собирает cookies без согласия, не использует метрики слежения. Логирование сведений о пользователях сведено к абсолютному минимуму (серверные логи не хранятся более 24ч).</p>
+                <p>3.2. Участники сообщества не вправе деанонимизировать других пользователей. Нарушение анонимности приравнивается к грубому нарушению кодекса.</p>
             </div>
-            
-            <div class="footer-links">
-                <h3>Проекты</h3>
-                <ul>
-                    <li><a href="/HWHellBlock.html">Minecraft HellBlock</a></li>
-                    <li><a href="/solutions">IT-Решения</a></li>
-                    <li><a href="/education">Образование</a></li>
-                    <li><a href="/research">Исследования</a></li>
-                </ul>
+            <div class="rule-article">
+                <h4>Статья 4. Контент и ответственность</h4>
+                <p>4.1. Материалы (код, статьи, видео) распространяются под лицензией, совместимой с Open Source, если не указано иное.</p>
+                <p>4.2. Администрация не несет ответственности за использование информации в незаконных целях. Каждый участник действует на свой страх и риск.</p>
+                <p>4.3. Любое упоминание торговых марок используется справедливо и без намерения присвоить права.</p>
             </div>
-            
-            <div class="footer-links">
-                <h3>Ресурсы</h3>
-                <ul>
-                    <li><a href="/blog">Блог</a></li>
-                    <li><a href="/docs">Документация</a></li>
-                    <li><a href="https://github.com/Anonim-IT/HackerWeb" target="_blank">GitHub</a></li>
-                    <li><a href="/contact">Контакты</a></li>
-                </ul>
+            <div class="rule-article">
+                <h4>Статья 5. Реестр HW_Sandbox</h4>
+                <p>5.1. Все проекты сообщества фиксируются в единой базе HW_Sandbox для внутреннего учёта и соблюдения стандартов.</p>
+                <p>5.2. Запись в реестре подтверждает легитимность инициативы в рамках этического кодекса HW Pro.</p>
             </div>
-            
-            <div class="footer-links">
-                <h3>Сообщество</h3>
-                <ul>
-                    <li><a href="https://discord.gg/example" target="_blank">Discord</a></li>
-                    <li><a href="https://t.me/hwproject" target="_blank">Telegram</a></li>
-                    <li><a href="https://vk.com/hwproject" target="_blank">VK</a></li>
-                    <li><a href="mailto:minecraft@hwproject.com">minecraft@hwproject.com</a></li>
-                </ul>
+            <div class="rule-article">
+                <h4>Статья 6. Сообщество и правоприменение</h4>
+                <p>6.1. Внутри экосистемы действует «нулевая толерантность» к хейту, дискриминации, пропаганде насилия.</p>
+                <p>6.2. Нарушение настоящего законодательства ведет к блокировке доступа и исключению из всех каналов проекта.</p>
+            </div>
+            <div class="legal-stamp">
+                ⚡ HW Pro — этический кодекс v2.4 | Основано на принципах свободы информации, ответственного хакинга и полной анонимности участников.<br>
+                📦 Зарегистрировано в HW_Sandbox (ID: HW-PRO-2406)
             </div>
         </div>
-        
-        <div class="footer-bottom">
-            <div class="social-links">
-                <a href="https://discord.gg/example" target="_blank" title="Discord">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20.317 4.37C18.339 3.5 16.249 2.92 14.079 2.67C13.679 2.62 13.279 2.58 12.879 2.54C12.479 2.5 12.079 2.47 11.679 2.45C11.279 2.43 10.879 2.42 10.479 2.42C10.079 2.42 9.679 2.43 9.279 2.45C8.879 2.47 8.479 2.5 8.079 2.54C7.679 2.58 7.279 2.62 6.879 2.67C4.709 2.92 2.619 3.5 0.641 4.37C0.241 4.52 0 4.93 0 5.36V18.64C0 19.07 0.241 19.48 0.641 19.63C2.619 20.5 4.709 21.08 6.879 21.33C7.279 21.38 7.679 21.42 8.079 21.46C8.479 21.5 8.879 21.53 9.279 21.55C9.679 21.57 10.079 21.58 10.479 21.58C10.879 21.58 11.279 21.57 11.679 21.55C12.079 21.53 12.479 21.5 12.879 21.46C13.279 21.42 13.679 21.38 14.079 21.33C16.249 21.08 18.339 20.5 20.317 19.63C20.717 19.48 21 19.07 21 18.64V5.36C21 4.93 20.717 4.52 20.317 4.37ZM8.5 15.5C7.4 15.5 6.5 14.6 6.5 13.5C6.5 12.4 7.4 11.5 8.5 11.5C9.6 11.5 10.5 12.4 10.5 13.5C10.5 14.6 9.6 15.5 8.5 15.5ZM15.5 15.5C14.4 15.5 13.5 14.6 13.5 13.5C13.5 12.4 14.4 11.5 15.5 11.5C16.6 11.5 17.5 12.4 17.5 13.5C17.5 14.6 16.6 15.5 15.5 15.5Z"/>
-                    </svg>
-                </a>
-                <a href="https://t.me/hwproject" target="_blank" title="Telegram">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM16.36 14.3C16.36 14.69 16.05 15 15.66 15H8.34C7.95 15 7.64 14.69 7.64 14.3V9.7C7.64 9.31 7.95 9 8.34 9H15.66C16.05 9 16.36 9.31 16.36 9.7V14.3ZM11.5 12L9 14H10.5L12.5 12L10.5 10H9L11.5 12Z"/>
-                    </svg>
-                </a>
-                <a href="https://github.com/Anonim-IT/HackerWeb" target="_blank" title="GitHub">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20C7.59 20 4 16.41 4 12Z"/>
-                    </svg>
-                </a>
-            </div>
-            
-            <div style="margin-bottom: 1rem;">
-                <a href="/privacy" style="color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; margin: 0 1rem;">Конфиденциальность</a>
-                <a href="/terms" style="color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; margin: 0 1rem;">Условия</a>
-                <a href="/cookies" style="color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; margin: 0 1rem;">Cookies</a>
-            </div>
-            <p>&copy; 2025 HW Project. Все права защищены.</p>
-        </div>
-    </footer>
+    </div>
+</div>
 
-    <script>
-        // Инициализация
-        document.addEventListener('DOMContentLoaded', function() {
-            // Плавная прокрутка для якорных ссылок
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
+<script>
+    (function() {
+        // Элементы модального окна
+        const modal = document.getElementById('rulesModal');
+        const openBtns = document.querySelectorAll('#openRulesBtn, #openRulesBtnInline, #footerRuleLink');
+        const closeBtn = document.getElementById('closeModalBtn');
+
+        function openModal() {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        if (openBtns) {
+            openBtns.forEach(btn => {
+                if(btn) btn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                    }
+                    openModal();
                 });
             });
-
-            // Анимация при скролле
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, observerOptions);
-
-            // Наблюдаем за карточками
-            document.querySelectorAll('.detail-card, .feature-item').forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                observer.observe(card);
-            });
+        }
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closeModal);
+        }
+        // Закрытие по клику на оверлей
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
         });
-    </script>
+        // Закрытие по Esc
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // плавное появление карточек (Intersection Observer для эффекта)
+        const cards = document.querySelectorAll('.info-card, .ethics-block');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(18px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.4s ease';
+            observer.observe(card);
+        });
+    })();
+</script>
 </body>
 </html>

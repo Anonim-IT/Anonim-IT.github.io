@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>H|W Portal | Secure Dashboard</title>
-    <!-- Шрифты: JetBrains Mono для кода, Inter для остального -->
+    <title>HW Portal | Secure & Anonymous Dashboard</title>
+    <!-- Шрифты: JetBrains Mono для кода -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -15,7 +15,7 @@
             box-sizing: border-box;
         }
 
-        /* === DARK THEME / HACKER WEB === */
+        /* === DARK THEME / HACKER WEB / ANONYMITY FOCUS === */
         body {
             background: #0a0c10;
             background-image: radial-gradient(circle at 15% 30%, rgba(0, 255, 0, 0.02) 0%, #0a0c10 90%);
@@ -26,10 +26,7 @@
             transition: background 0.2s ease, color 0.2s;
         }
 
-        /* переключатель темы (светлая/тёмная) пока не нужен, но мы делаем единую тёмную хакерскую, без светлой, 
-           но добавим кнопку "светлая тема" по требованию? Заказчик просил смену темы светлую на тёмную. 
-           Реализуем тумблер: по умолчанию тёмная хакерская, при клике — светлая "терминальная бумага". 
-           При этом сохраняем строгость. */
+        /* Light mode (строгий, но с оттенком безопасности) */
         body.light-mode {
             background: #eef2f5;
             background-image: none;
@@ -38,43 +35,29 @@
         body.light-mode .site-card {
             background: rgba(255,255,245,0.96);
             border-color: #cbd5e1;
-            box-shadow: 0 8px 18px rgba(0,0,0,0.05);
         }
         body.light-mode .site-card:hover {
             background: #ffffff;
-            box-shadow: 0 18px 30px rgba(0,0,0,0.1);
-            border-color: #2b7a62;
+            border-color: #1a6e5c;
         }
         body.light-mode .icon-bg {
             background: #e2e8f0;
             color: #1f6e5c;
         }
-        body.light-mode .cat-btn {
-            background: #f8fafc;
-            color: #1f3b4c;
-            border-color: #cbd5e1;
-        }
         body.light-mode .cat-btn.active {
             background: #0f3b2c;
             color: #eef2ff;
-            border-color: #2d6a4f;
         }
-        body.light-mode .search-box, body.light-mode .yandex-search-section {
-            background: #ffffff;
-            border-color: #cbd5e6;
+        body.light-mode .security-badge, 
+        body.light-mode .anon-badge {
+            background: #e9ecef;
+            border-color: #adb5bd;
+            color: #2c3e50;
         }
-        body.light-mode .site-url {
-            background: #eef2f8;
-            color: #2c5a4a;
-        }
-        body.light-mode .footer-note {
-            border-top-color: #cad2db;
-        }
-        /* терминальная подсветка линукс */
-        body.light-mode .hero h1 {
-            background: linear-gradient(135deg, #1f4e6e, #2b7a62);
-            background-clip: text;
-            -webkit-background-clip: text;
+        body.light-mode .modal-content {
+            background: #fefefe;
+            color: #1e2a36;
+            border: 1px solid #2b7a62;
         }
         
         .dashboard {
@@ -82,11 +65,57 @@
             margin: 0 auto;
         }
 
-        /* шапка с хакерским оттенком */
+        /* Badges безопасности и анонимности */
+        .security-header {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        .security-badge, .anon-badge {
+            background: rgba(0, 20, 15, 0.7);
+            backdrop-filter: blur(4px);
+            border: 1px solid #2eff9e;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: #aaffdd;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: 0.5px;
+        }
+        .security-badge i, .anon-badge i {
+            color: #2eff9e;
+            font-size: 0.8rem;
+        }
+        
+        /* Кнопка правил и лицензии */
+        .legal-btn {
+            background: transparent;
+            border: 1px solid #5a6e7c;
+            color: #b3e4d0;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .legal-btn:hover {
+            border-color: #2eff9e;
+            color: #2eff9e;
+            background: rgba(46, 255, 158, 0.1);
+        }
+        
         .hero {
             text-align: center;
-            margin-bottom: 2rem;
-            position: relative;
+            margin-bottom: 1.5rem;
         }
         .hero h1 {
             font-size: 2.6rem;
@@ -102,24 +131,21 @@
             gap: 12px;
         }
         .hero h1 i {
-            background: none;
             color: #3eff9e;
             text-shadow: 0 0 6px #1f9e6e;
         }
         .hero p {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: #7e9ab8;
             font-family: 'JetBrains Mono', monospace;
             margin-top: 0.5rem;
-            letter-spacing: -0.2px;
         }
-        /* переключатель темы */
+        
         .theme-switch-wrapper {
             display: flex;
             justify-content: flex-end;
             margin-bottom: 1rem;
-            position: relative;
-            top: 0;
+            gap: 12px;
         }
         .theme-btn {
             background: #1e2a32;
@@ -130,7 +156,6 @@
             font-size: 0.8rem;
             font-family: 'JetBrains Mono', monospace;
             cursor: pointer;
-            transition: 0.2s;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -138,11 +163,10 @@
         .theme-btn:hover {
             background: #2b4a5e;
             border-color: #5affb0;
-            color: #ffffff;
             box-shadow: 0 0 8px rgba(58,255,120,0.3);
         }
 
-        /* Поиск Яндекс */
+        /* Яндекс Поиск */
         .yandex-search-section {
             background: rgba(20, 28, 34, 0.85);
             backdrop-filter: blur(8px);
@@ -150,7 +174,6 @@
             padding: 0.8rem 1.8rem;
             margin-bottom: 2rem;
             border: 1px solid #2a4a3c;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
             max-width: 720px;
             margin-left: auto;
             margin-right: auto;
@@ -197,20 +220,8 @@
             font-weight: 600;
             font-family: 'JetBrains Mono', monospace;
             cursor: pointer;
-            transition: 0.2s;
         }
-        .yandex-search-btn:hover {
-            background: #1f5e48;
-            box-shadow: 0 0 6px #27ff98;
-        }
-        .note-search {
-            font-size: 0.65rem;
-            text-align: center;
-            opacity: 0.7;
-            margin-top: 8px;
-        }
-
-        /* поиск по сайтам */
+        
         .search-section {
             margin-bottom: 2rem;
             display: flex;
@@ -226,7 +237,6 @@
             width: 100%;
             max-width: 500px;
             border: 1px solid #2e4d3e;
-            transition: 0.2s;
         }
         .search-box input {
             background: transparent;
@@ -241,7 +251,6 @@
             color: #44ffb0;
         }
 
-        /* категории — строгие кнопки */
         .categories {
             display: flex;
             flex-wrap: wrap;
@@ -267,12 +276,7 @@
             color: #f0fff0;
             box-shadow: 0 0 6px #2effa0;
         }
-        .cat-btn:hover:not(.active) {
-            background: #1f3a30;
-            border-color: #6effb5;
-        }
 
-        /* сетка карточек */
         .sites-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -286,8 +290,6 @@
             border: 1px solid #2a5040;
             transition: 0.2s ease;
             cursor: pointer;
-            display: flex;
-            flex-direction: column;
         }
         .site-card:hover {
             transform: translateY(-4px);
@@ -327,14 +329,12 @@
             border-radius: 24px;
             margin-top: 5px;
             color: #a2f0cf;
-            font-family: monospace;
         }
         .site-description {
             font-size: 0.8rem;
             color: #9ab3cc;
             line-height: 1.4;
             margin: 0.5rem 0 0.8rem;
-            flex: 1;
         }
         .site-url {
             font-family: 'JetBrains Mono', monospace;
@@ -357,7 +357,6 @@
             font-family: monospace;
             cursor: pointer;
             width: fit-content;
-            transition: 0.2s;
         }
         .visit-btn:hover {
             background: #2c8268;
@@ -379,11 +378,83 @@
             border-top: 1px solid #2d5543;
             padding-top: 1.5rem;
             color: #6c98b0;
-            font-family: monospace;
+        }
+        
+        /* === МОДАЛЬНОЕ ОКНО (Лицензия DarkNet и правила) === */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.85);
+            backdrop-filter: blur(10px);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #0f1a1f;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 32px;
+            max-width: 700px;
+            width: 90%;
+            border: 1px solid #3effae;
+            box-shadow: 0 0 30px rgba(62,255,174,0.2);
+            font-family: 'JetBrains Mono', monospace;
+            color: #d4f0e8;
+            position: relative;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #2eff9e;
+            padding-bottom: 0.8rem;
+            margin-bottom: 1.2rem;
+        }
+        .modal-header h2 {
+            font-size: 1.4rem;
+            color: #3effae;
+        }
+        .close-modal {
+            font-size: 1.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #8ab3a8;
+        }
+        .close-modal:hover {
+            color: #ff5e5e;
+        }
+        .license-text {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .license-text p {
+            margin: 0.8rem 0;
+        }
+        .license-text ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        .license-text li {
+            margin: 0.4rem 0;
+        }
+        .warning {
+            color: #ffb347;
+            border-left: 3px solid #ffb347;
+            padding-left: 12px;
+            margin: 1rem 0;
         }
         @media (max-width: 600px) {
             body { padding: 1rem; }
             .hero h1 { font-size: 1.8rem; }
+            .modal-content { padding: 1.2rem; }
         }
     </style>
 </head>
@@ -391,13 +462,21 @@
 <div class="dashboard">
     <div class="theme-switch-wrapper">
         <button id="themeToggle" class="theme-btn"><i class="fas fa-skull-crossbones"></i> <span id="themeText">DARK/HACK</span> <i class="fas fa-terminal"></i></button>
+        <button id="legalModalBtn" class="legal-btn"><i class="fas fa-gavel"></i> DarkNet License & Rules</button>
     </div>
+    
+    <div class="security-header">
+        <div class="security-badge"><i class="fas fa-shield-haltered"></i> ZERO-LOGS POLICY</div>
+        <div class="anon-badge"><i class="fas fa-mask"></i> ANONYMITY FIRST | TOR MINDSET</div>
+        <div class="security-badge"><i class="fas fa-lock"></i> ENCRYPTED GATEWAY</div>
+    </div>
+    
     <div class="hero">
-        <h1><i class="fas fa-shield-haltered"></i> H|W PORTAL <i class="fas fa-code"></i></h1>
-        <p>// anonymous gateway | linux core | zero tracking</p>
+        <h1><i class="fas fa-shield-haltered"></i> HW PORTAL <i class="fas fa-code"></i></h1>
+        <p>// anonymous gateway | linux core | zero tracking | cyber resilience</p>
     </div>
 
-    <!-- Яндекс Поиск (стилизован) -->
+    <!-- Яндекс Поиск -->
     <div class="yandex-search-section">
         <div class="yandex-search-title"><i class="fab fa-yandex"></i> Yandex Search :: encrypted query <i class="fas fa-lock"></i></div>
         <form id="yandexSearchForm" action="https://yandex.ru/search/" method="get" target="_blank" class="yandex-search-form">
@@ -417,12 +496,37 @@
     <div class="categories" id="categoryFilters"></div>
     <div id="sitesContainer" class="sites-grid"></div>
     <div class="footer-note">
-        <i class="fas fa-microchip"></i> hardened bookmarks | privacy first | arch linux mindset
+        <i class="fas fa-microchip"></i> hardened bookmarks | privacy first | arch linux mindset | Off-the-record
+    </div>
+</div>
+
+<!-- Модальное окно с лицензией DarkNet, правилами -->
+<div id="licenseModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2><i class="fas fa-skull"></i> DarkNet Compliance & License</h2>
+            <span class="close-modal">&times;</span>
+        </div>
+        <div class="license-text">
+            <p><strong>🔒 HW Portal — Лицензия анонимного доступа v.1.0 (DarkNet Extended)</strong></p>
+            <p>Данный портал создан в духе <strong>кибербезопасности, приватности и свободного обмена знаниями</strong>. Используя ресурсы, вы соглашаетесь с правилами:</p>
+            <ul>
+                <li><i class="fas fa-check-circle"></i> Абсолютная анонимность — никакие логи не сохраняются.</li>
+                <li><i class="fas fa-check-circle"></i> Запрещена любая деятельность, нарушающая законодательство (взлом без согласия, фишинг, распространение вредоносного ПО).</li>
+                <li><i class="fas fa-check-circle"></i> Уважение к сообществу: никаких атак, доксинга или преследования.</li>
+                <li><i class="fas fa-check-circle"></i> Все инструменты и ссылки предназначены для исследований, обучения и повышения цифровой гигиены.</li>
+            </ul>
+            <div class="warning">
+                ⚠️ <strong>Правила пользования (DarkNet overlay):</strong> Вы несёте личную ответственность за свои действия. Администрация портала не отслеживает активность и не хранит метаданные. Любые попытки дестабилизации или атак на ресурсы запрещены. Используйте VPN/Tor по своему усмотрению, но в рамках закона.
+            </div>
+            <p><i class="fas fa-terminal"></i> Лицензия распространяется на все закладки и внешние переходы. By entering you agree to <strong>zero-liability for misuse</strong>. Stay anonymous, stay ethical.</p>
+            <p style="margin-top: 1rem; font-size:0.7rem;">🔐 HW Project | Хакер-культура, продуктивность, опенсорс.</p>
+        </div>
     </div>
 </div>
 
 <script>
-    // ---- ВСЯ БАЗА САЙТОВ (ПОЛНОСТЬЮ СОХРАНЕНА) ----
+    // ---- ПОЛНАЯ БАЗА САЙТОВ + НОВЫЙ DZEN КАНАЛ ----
     const sitesData = [
         { id: 1, name: "GitHub", url: "https://github.com", description: "Репозитории, open-source, совместный код.", category: "Разработка", icon: "fab fa-github" },
         { id: 2, name: "Figma", url: "https://figma.com", description: "Дизайн интерфейсов и прототипирование.", category: "Дизайн", icon: "fab fa-figma" },
@@ -454,7 +558,16 @@
         { id: 28, name: "Яндекс", url: "https://yandex.ru", description: "Портал Яндекса.", category: "Поиск", icon: "fab fa-yandex" },
         { id: 29, name: "Мой Череповец", url: "https://xn--b1afabqrodii5ee.xn--p1ai/", description: "Городской портал.", category: "Города", icon: "fas fa-city" },
         { id: 30, name: "MAX Мессенджер", url: "https://web.max.ru/", description: "Защищённый мессенджер.", category: "Мессенджеры", icon: "fas fa-comment-dots" },
-        { id: 31, name: "Rutube", url: "https://rutube.ru/", description: "Видеоплатформа.", category: "Медиа", icon: "fas fa-video" }
+        { id: 31, name: "Rutube", url: "https://rutube.ru/", description: "Видеоплатформа.", category: "Медиа", icon: "fas fa-video" },
+        // === НОВЫЙ САЙТ: DZEN / Анонимное сообщество ===
+        {
+            id: 32,
+            name: "Dzen | Anonim Community",
+            url: "https://dzen.ru/anonimcommunity?clid=1400",
+            description: "Канал проекта на Dzen: анонимность, хакер-культура, кибербезопасность и новости сообщества.",
+            category: "Сообщества",
+            icon: "fab fa-yandex"
+        }
     ];
 
     let activeCategory = "Все";
@@ -552,7 +665,7 @@
         if (inp) inp.addEventListener("input", (e) => { searchQuery = e.target.value; renderSites(); });
     }
 
-    // ========== СМЕНА ТЕМЫ (светлая/тёмная) сохраняя хакер-стиль ==========
+    // Смена темы
     function initTheme() {
         const saved = localStorage.getItem('hw_theme');
         const body = document.body;
@@ -572,11 +685,29 @@
         });
     }
 
+    // Модальное окно (лицензия и правила)
+    function initModal() {
+        const modal = document.getElementById('licenseModal');
+        const btn = document.getElementById('legalModalBtn');
+        const closeSpan = document.querySelector('.close-modal');
+        
+        btn.onclick = () => {
+            modal.style.display = 'flex';
+        }
+        closeSpan.onclick = () => {
+            modal.style.display = 'none';
+        }
+        window.onclick = (event) => {
+            if (event.target === modal) modal.style.display = 'none';
+        }
+    }
+
     function start() {
         renderCategories();
         renderSites();
         bindSearch();
         initTheme();
+        initModal();
     }
     start();
 </script>
