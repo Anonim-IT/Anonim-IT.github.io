@@ -166,8 +166,8 @@
             box-shadow: 0 0 8px rgba(58,255,120,0.3);
         }
 
-        /* Яндекс Поиск */
-        .yandex-search-section {
+        /* DuckDuckGo Search (анонимный поиск) */
+        .ddg-search-section {
             background: rgba(20, 28, 34, 0.85);
             backdrop-filter: blur(8px);
             border-radius: 28px;
@@ -178,7 +178,7 @@
             margin-left: auto;
             margin-right: auto;
         }
-        .yandex-search-title {
+        .ddg-search-title {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -189,13 +189,13 @@
             font-size: 0.9rem;
             font-family: 'JetBrains Mono', monospace;
         }
-        .yandex-search-form {
+        .ddg-search-form {
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
             justify-content: center;
         }
-        .yandex-search-input {
+        .ddg-search-input {
             flex: 4;
             min-width: 200px;
             padding: 12px 18px;
@@ -207,11 +207,11 @@
             font-size: 0.9rem;
             outline: none;
         }
-        .yandex-search-input:focus {
+        .ddg-search-input:focus {
             border-color: #2eff9e;
             box-shadow: 0 0 8px rgba(46,255,158,0.3);
         }
-        .yandex-search-btn {
+        .ddg-search-btn {
             background: #0f3c2e;
             border: 1px solid #2eff9e;
             color: #b4ffda;
@@ -220,6 +220,16 @@
             font-weight: 600;
             font-family: 'JetBrains Mono', monospace;
             cursor: pointer;
+        }
+        .ddg-search-btn:hover {
+            background: #1f5e48;
+            box-shadow: 0 0 6px #27ff98;
+        }
+        .note-search {
+            font-size: 0.65rem;
+            text-align: center;
+            opacity: 0.7;
+            margin-top: 8px;
         }
         
         .search-section {
@@ -476,14 +486,14 @@
         <p>// anonymous gateway | linux core | zero tracking | cyber resilience</p>
     </div>
 
-    <!-- Яндекс Поиск -->
-    <div class="yandex-search-section">
-        <div class="yandex-search-title"><i class="fab fa-yandex"></i> Yandex Search :: encrypted query <i class="fas fa-lock"></i></div>
-        <form id="yandexSearchForm" action="https://yandex.ru/search/" method="get" target="_blank" class="yandex-search-form">
-            <input type="text" name="text" class="yandex-search-input" placeholder=">_ search or type URL..." required>
-            <button type="submit" class="yandex-search-btn"><i class="fas fa-arrow-right"></i> find</button>
+    <!-- DuckDuckGo Поиск (анонимный, без логирования) -->
+    <div class="ddg-search-section">
+        <div class="ddg-search-title"><i class="fas fa-duck"></i> DuckDuckGo :: private search <i class="fas fa-eye-slash"></i></div>
+        <form id="ddgSearchForm" action="https://duckduckgo.com/" method="get" target="_blank" class="ddg-search-form">
+            <input type="text" name="q" class="ddg-search-input" placeholder=">_ search privately (no logs)..." required>
+            <button type="submit" class="ddg-search-btn"><i class="fas fa-arrow-right"></i> search</button>
         </form>
-        <div class="note-search">[ results in new tab :: no logs ]</div>
+        <div class="note-search">[ no tracking | no logs | open in new tab ]</div>
     </div>
 
     <div class="search-section">
@@ -526,7 +536,7 @@
 </div>
 
 <script>
-    // ---- ПОЛНАЯ БАЗА САЙТОВ + НОВЫЙ DZEN КАНАЛ + Официальный сайт Череповца ----
+    // ---- ПОЛНАЯ БАЗА САЙТОВ (сохранена полностью, Яндекс удалён из поиска, но остался как закладка) ----
     const sitesData = [
         { id: 1, name: "GitHub", url: "https://github.com", description: "Репозитории, open-source, совместный код.", category: "Разработка", icon: "fab fa-github" },
         { id: 2, name: "Figma", url: "https://figma.com", description: "Дизайн интерфейсов и прототипирование.", category: "Дизайн", icon: "fab fa-figma" },
@@ -568,7 +578,7 @@
             category: "Сообщества",
             icon: "fab fa-yandex"
         },
-        // === НОВЫЙ САЙТ: Официальный сайт города Череповца ===
+        // === Официальный сайт города Череповца ===
         {
             id: 33,
             name: "Cherinfo | Официальный сайт Череповца",
