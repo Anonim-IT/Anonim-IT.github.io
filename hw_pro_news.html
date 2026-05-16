@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="HW Pro News — независимый новостной портал о технологиях, кибербезопасности, white hacking и цифровых инновациях. Только проверенная аналитика и обезличенные данные.">
+    <meta name="keywords" content="HW Pro, новости IT, кибербезопасность, white hacking, инновации, анонимность, уязвимости, технологии">
+    <title>HW Pro News | Лента технологических событий</title>
+    
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-deep: #05050f;
+            --bg-surface: #0c0c18;
+            --bg-card: rgba(12, 12, 24, 0.75);
+            --bg-card-solid: #0f0f1c;
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --border-active: rgba(0, 255, 196, 0.4);
+            --accent-cyber: #00ffc4;
+            --accent-red: #ff3a6f;
+            --accent-purple: #b77eff;
+            --accent-blue: #3a86ff;
+            --text-primary: #ededf5;
+            --text-secondary: #8f8fbb;
+            --text-muted: #5f5f8a;
+            --glow-cyan: 0 0 12px rgba(0, 255, 196, 0.3);
+            --glow-pink: 0 0 12px rgba(255, 58, 111, 0.3);
+            --font-mono: 'JetBrains Mono', monospace;
+            --transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #0a0a16, #020208);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* анимированные линии фона */
+        .matrix-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.2;
+            background-image: repeating-linear-gradient(0deg, rgba(0,255,196,0.08) 0px, rgba(0,255,196,0.08) 1px, transparent 1px, transparent 8px);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Хедер */
+        .glass-header {
+            background: rgba(5, 5, 15, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-subtle);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.6rem;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--accent-cyber), var(--accent-purple));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .logo span {
+            background: linear-gradient(130deg, #fff, var(--accent-cyber));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: 0.2s;
+            font-family: var(--font-mono);
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-cyber);
+            text-shadow: 0 0 5px rgba(0,255,196,0.5);
+        }
+
+        .rule-trigger {
+            background: rgba(0, 255, 196, 0.08);
+            border: 1px solid var(--accent-cyber);
+            padding: 8px 20px;
+            border-radius: 60px;
+            font-weight: 500;
+            color: var(--accent-cyber);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .rule-trigger:hover {
+            background: rgba(0, 255, 196, 0.2);
+            box-shadow: var(--glow-cyan);
+        }
+
+        /* Hero новостной */
+        .news-hero {
+            padding: 2.5rem 0 1.5rem;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: 2rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(0, 255, 196, 0.12);
+            border: 1px solid var(--accent-cyber);
+            border-radius: 60px;
+            padding: 0.3rem 1.2rem;
+            font-size: 0.75rem;
+            font-family: var(--font-mono);
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, var(--accent-cyber), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-sub {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 700px;
+        }
+
+        /* сетка новостей */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0 3rem;
+        }
+
+        .news-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 28px;
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-card:hover {
+            border-color: var(--accent-cyber);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.6);
+        }
+
+        .card-tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            background: rgba(0,255,196,0.15);
+            padding: 4px 12px;
+            border-radius: 40px;
+            margin: 1.2rem 1.5rem 0 1.5rem;
+            width: fit-content;
+            color: var(--accent-cyber);
+            letter-spacing: 0.3px;
+        }
+
+        .news-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0.8rem 1.5rem 0.6rem;
+            line-height: 1.3;
+        }
+
+        .news-meta {
+            display: flex;
+            gap: 1rem;
+            margin: 0 1.5rem 0.8rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            align-items: center;
+        }
+
+        .news-excerpt {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0 1.5rem 1rem;
+            line-height: 1.5;
+        }
+
+        .read-more {
+            margin: 0.5rem 1.5rem 1.5rem 1.5rem;
+            background: none;
+            border: none;
+            color: var(--accent-cyber);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+            width: fit-content;
+        }
+
+        .read-more:hover {
+            gap: 12px;
+            text-shadow: 0 0 4px var(--accent-cyber);
+        }
+
+        /* Боковая панель с трендами */
+        .trends-sidebar {
+            background: rgba(8, 8, 18, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            border: 1px solid var(--border-subtle);
+            padding: 1.5rem;
+            margin: 1rem 0 2rem;
+        }
+
+        .trends-header {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .trend-list {
+            list-style: none;
+        }
+
+        .trend-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.05);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+        }
+
+        .trend-list li span:first-child {
+            color: var(--accent-cyber);
+        }
+
+        .anonym-banner {
+            background: rgba(0,0,0,0.5);
+            border-left: 4px solid var(--accent-cyber);
+            padding: 1rem 1.5rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .footer {
+            border-top: 1px solid var(--border-subtle);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* модальное окно для деталей новости */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 2, 8, 0.96);
+            backdrop-filter: blur(16px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.2s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .news-modal {
+            background: #0c0c18;
+            border: 1px solid var(--accent-cyber);
+            border-radius: 32px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+            transform: scale(0.96);
+            transition: transform 0.2s;
+        }
+
+        .modal-overlay.active .news-modal {
+            transform: scale(1);
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .close-modal-btn:hover {
+            color: var(--accent-red);
+        }
+
+        .sandbox-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 255, 196, 0.08);
+            border: 1px solid var(--accent-cyber);
+            border-radius: 60px;
+            padding: 6px 16px;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--accent-cyber);
+        }
+
+        @media (max-width: 760px) {
+            .hero-title { font-size: 2rem; }
+            .news-grid { grid-template-columns: 1fr; }
+            .container { padding: 0 1.2rem; }
+            .header-inner { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+<div class="matrix-lines"></div>
+
+<header class="glass-header">
+    <div class="container header-inner">
+        <a href="/" class="logo">
+            <div class="logo-icon"><span style="color:#000; font-weight:800;">⟁</span></div>
+            <span>HW Pro</span>
+        </a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#">Портал</a></li>
+                <li><a href="#" class="active">Новости</a></li>
+                <li><a href="#">Лаборатория</a></li>
+                <li><a href="#">Исследования</a></li>
+                <li><a href="#">Minecraft Lab</a></li>
+            </ul>
+        </nav>
+        <button class="rule-trigger" id="openRulesBtnNews">📜 Законодательство</button>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <div class="news-hero">
+            <div class="badge">📰 HW PRO // НОВОСТНАЯ ЛЕНТА</div>
+            <h1 class="hero-title">Технологический дайджест</h1>
+            <p class="hero-sub">Актуальные события в мире IT, кибербезопасности, white hacking и анонимных технологий. Только факты и экспертный взгляд.</p>
+            <div class="sandbox-badge" style="margin-top: 1rem;">
+                <span>📡</span> Новостной реестр HW_Sandbox | ID: NW-PRO-2407
+            </div>
+        </div>
+
+        <!-- Блок анонимизации -->
+        <div class="anonym-banner">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <span style="font-size: 2rem;">🕶️</span>
+                <div>
+                    <strong style="color: var(--accent-cyber); font-family: monospace;">Журналистика без следа</strong>
+                    <p style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">Новости собираются и публикуются с полной анонимностью. Никакой персонализации, метрик или слежения. Только знания.</p>
+                </div>
+            </div>
+            <div style="font-size: 0.7rem; font-family: monospace; background: #00000040; padding: 6px 14px; border-radius: 40px;">#no_tracking • #zero_fingerprint</div>
+        </div>
+
+        <!-- Основная сетка новостей + тренды -->
+        <div style="display: grid; grid-template-columns: 1fr 300px; gap: 2rem; align-items: start;">
+            <div>
+                <div class="news-grid" id="newsGrid">
+                    <!-- Динамическая подгрузка через JS -->
+                </div>
+            </div>
+            <div>
+                <div class="trends-sidebar">
+                    <div class="trends-header">
+                        <span>🔥</span> <span style="font-family: monospace; font-weight: 600;">Тренды & Уязвимости</span>
+                    </div>
+                    <ul class="trend-list" id="trendList">
+                        <li><span>#AI_red_team</span><span>+238%</span></li>
+                        <li><span>#постквантовая_крипто</span><span>+156%</span></li>
+                        <li><span>CVE-2025-1128</span><span>критично</span></li>
+                        <li><span>Анонимные mesh-сети</span><span>новый пик</span></li>
+                        <li><span>Minecraft RCE</span><span>патч вышел</span></li>
+                    </ul>
+                    <div style="margin-top: 1rem; font-size: 0.7rem; color: var(--text-muted); text-align: center;">
+                        Данные на основе HW Threat Intel
+                    </div>
+                </div>
+                <div style="background: rgba(0,255,196,0.03); border-radius: 24px; padding: 1.2rem; margin-top: 1.5rem; border: 1px solid rgba(0,255,196,0.2);">
+                    <div style="font-family: monospace; font-size: 0.75rem; color: var(--accent-cyber);">⚡ CYBER BRIEFING</div>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Критическая уязвимость в протоколах IoT: рекомендации по митигации в свежем выпуске HW_Lab.</p>
+                    <div class="read-more" style="margin:0.7rem 0 0 0;">Читать дайджест →</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Блок реестра sandbox -->
+        <div style="background: rgba(0,0,0,0.3); border-radius: 28px; padding: 1.5rem; margin: 2rem 0 1rem;">
+            <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; justify-content: space-between;">
+                <div>
+                    <h3 style="font-size: 1.4rem;">📁 Реестр новостных публикаций HW_Sandbox</h3>
+                    <p style="color: var(--text-secondary); max-width: 550px;">Каждая новость проходит верификацию и фиксируется во внутреннем реестре, гарантирующем достоверность и отсутствие дезинформации.</p>
+                </div>
+                <div><span style="background: #0f0f1c; padding: 0.6rem 1.2rem; border-radius: 60px; font-family: monospace;">реестр: ACTIVE / запись #2407-N</span></div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>© 2025 HW Pro News — Неофициальный новостной проект. Информация предоставлена в ознакомительных целях.<br>
+        Все товарные знаки принадлежат их законным владельцам. Проект не нарушает права и не собирает персональные данные.</p>
+        <div style="margin-top: 1rem;">
+            <a href="#" id="footerRulesLink" style="color: var(--text-muted); text-decoration: none;">Законодательство HW Pro</a> &nbsp;|&nbsp;
+            <span style="color: var(--text-muted);">реестр новостей HW_Sandbox</span>
+        </div>
+    </div>
+</footer>
+
+<!-- Модальное окно правил -->
+<div id="rulesModalNews" class="modal-overlay">
+    <div class="news-modal">
+        <button class="close-modal-btn" id="closeRulesModalNews">&times;</button>
+        <h2 style="color: var(--accent-cyber); margin-bottom: 1rem;">📖 Законодательство HW Pro (новостной портал)</h2>
+        <div style="margin-bottom: 1rem;"><strong>Статья 1.</strong> Публикуемые новости основаны на открытых источниках и не нарушают авторские права. Любая информация носит аналитический характер.</div>
+        <div style="margin-bottom: 1rem;"><strong>Статья 2.</strong> Платформа не хранит логи пользователей, IP-адреса не фиксируются. Полная анонимность читателей гарантирована.</div>
+        <div style="margin-bottom: 1rem;"><strong>Статья 3.</strong> Редакция не несёт ответственности за использование материалов в незаконных целях. White hacking и этичный подход — основа редакционной политики.</div>
+        <div><strong>Статья 4.</strong> Все публикации вносятся в реестр HW_Sandbox с целью сохранения прозрачности и документирования.</div>
+        <div class="legal-stamp" style="margin-top: 1.5rem; font-size: 0.7rem; color: var(--text-muted);">⚡ HW Pro News — этический кодекс v1.0 | Реестр #2407-N</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // Новостные данные (имитация API)
+        const newsData = [
+            {
+                id: 1,
+                tag: "🔓 УЯЗВИМОСТИ",
+                title: "Критическая RCE-уязвимость в популярном фреймворке: детальный анализ",
+                date: "14 мая 2025",
+                author: "HW Research",
+                excerpt: "Обнаружена уязвимость класса RCE в широко используемом middleware. Патч выпущен, но зона поражения оценивается в 40% серверов. White hat рекомендации внутри.",
+                content: "Полное техническое описание: уязвимость CVE-2025-1189 позволяет удаленному злоумышленнику выполнить произвольный код. Эксплуатация возможна при наличии определённых заголовков. Команда HW Pro подготовила сигнатуры для IDS и правила фильтрации. Рекомендуем обновить версии библиотек до последней."
+            },
+            {
+                id: 2,
+                tag: "🤖 AI БЕЗОПАСНОСТЬ",
+                title: "Атаки на LLM: новый метод инъекции промптов",
+                date: "12 мая 2025",
+                author: "AI Red Team",
+                excerpt: "Исследователи продемонстрировали скрытую технику взлома чат-ботов через косвенные запросы. Угроза для корпоративных помощников.",
+                content: "Новая техника 'Prompt Weaver' позволяет обходить ограничения и извлекать системные инструкции. Мы публикуем сценарии защиты и методы санитизации ввода для LLM."
+            },
+            {
+                id: 3,
+                tag: "🕶️ АНОНИМНОСТЬ",
+                title: "Эволюция dark web мониторинга: этичный подход",
+                date: "10 мая 2025",
+                author: "Cyber Intel",
+                excerpt: "Как исследователи безопасности отслеживают утечки без нарушения анонимности. Новые инструменты осведомления.",
+                content: "Платформа HW Pro представляет обзор методов анонимного сбора угроз без сохранения персональных данных. Используется только обезличенная телеметрия."
+            },
+            {
+                id: 4,
+                tag: "⚙️ HW_SANDBOX",
+                title: "Minecraft Lab: новый эмулятор вредоносных модов",
+                date: "8 мая 2025",
+                author: "Sandbox Dev",
+                excerpt: "Запущена изолированная среда для анализа потенциально опасных модификаций Minecraft.",
+                content: "Проект 'Sandcaft' позволяет безопасно исполнять подозрительный код модов и плагинов без риска для реальных систем. Результаты фиксируются в реестре HW_Sandbox."
+            },
+            {
+                id: 5,
+                tag: "📡 КРИПТОГРАФИЯ",
+                title: "Постквантовые алгоритмы: первые внедрения в open source",
+                date: "5 мая 2025",
+                author: "Crypto Unit",
+                excerpt: "Готовы ли современные системы к квантовой угрозе? Обзор библиотек с постквантовой подписью.",
+                content: "Разбираем библиотеки liboqs, практические примеры интеграции в Go и Rust. Рекомендации по миграции."
+            },
+            {
+                id: 6,
+                tag: "🧪 LAB",
+                title: "Анализ вредоносного ПО: reverse engineering нового стилера",
+                date: "2 мая 2025",
+                author: "RE Team",
+                excerpt: "Детальный разбор стилера для Telegram, методы детектирования и индикаторы компрометации.",
+                content: "Предоставляем IoC, сигнатуры YARA и техники противодействия. Малварь маскируется под легитимное обновление."
+            }
+        ];
+
+        const newsGrid = document.getElementById('newsGrid');
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'modal-overlay';
+        modalOverlay.id = 'newsDetailModal';
+        document.body.appendChild(modalOverlay);
+
+        function buildNewsCards() {
+            if(!newsGrid) return;
+            newsGrid.innerHTML = '';
+            newsData.forEach(news => {
+                const card = document.createElement('div');
+                card.className = 'news-card';
+                card.innerHTML = `
+                    <div class="card-tag">${news.tag}</div>
+                    <h3>${news.title}</h3>
+                    <div class="news-meta">
+                        <span>📅 ${news.date}</span>
+                        <span>✍️ ${news.author}</span>
+                    </div>
+                    <div class="news-excerpt">${news.excerpt}</div>
+                    <button class="read-more" data-id="${news.id}">Подробнее →</button>
+                `;
+                newsGrid.appendChild(card);
+            });
+
+            document.querySelectorAll('.read-more').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(btn.getAttribute('data-id'));
+                    const article = newsData.find(n => n.id === id);
+                    if(article) showNewsModal(article);
+                });
+            });
+        }
+
+        function showNewsModal(article) {
+            modalOverlay.innerHTML = `
+                <div class="news-modal">
+                    <button class="close-modal-btn" id="closeDetailModal">&times;</button>
+                    <div class="card-tag" style="margin: 0 0 0.8rem 0; display: inline-block;">${article.tag}</div>
+                    <h2 style="font-size: 1.8rem; margin: 0.5rem 0 0.8rem;">${article.title}</h2>
+                    <div class="news-meta" style="margin: 0 0 1rem 0;"><span>📅 ${article.date}</span><span>✍️ ${article.author}</span></div>
+                    <div style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;">${article.content}</div>
+                    <div style="border-top: 1px solid var(--border-subtle); padding-top: 1rem; font-size: 0.75rem; font-family: monospace;">Источник: HW Pro News / реестр HW_Sandbox</div>
+                </div>
+            `;
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            const closeDetail = document.getElementById('closeDetailModal');
+            if(closeDetail) closeDetail.onclick = () => closeModal();
+            modalOverlay.onclick = (e) => { if(e.target === modalOverlay) closeModal(); };
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Правила модалка
+        const rulesModal = document.getElementById('rulesModalNews');
+        const openRulesBtns = document.querySelectorAll('#openRulesBtnNews, #footerRulesLink');
+        const closeRulesBtn = document.getElementById('closeRulesModalNews');
+
+        function openRules() { rulesModal.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeRules() { rulesModal.classList.remove('active'); document.body.style.overflow = ''; }
+
+        if(openRulesBtns) openRulesBtns.forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); openRules(); }));
+        if(closeRulesBtn) closeRulesBtn.addEventListener('click', closeRules);
+        rulesModal.addEventListener('click', (e) => { if(e.target === rulesModal) closeRules(); });
+        document.addEventListener('keydown', (e) => { if(e.key === 'Escape') { closeModal(); closeRules(); } });
+
+        buildNewsCards();
+
+        // Плавная анимация карточек
+        const cardsObs = document.querySelectorAll('.news-card, .trends-sidebar');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        cardsObs.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.4s ease';
+            observer.observe(card);
+        });
+    })();
+</script>
+</body>
+</html>
