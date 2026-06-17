@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="description" content="HW Pro — неофициальный технологический проект. Информационная платформа в области IT, цифровой безопасности и инноваций.">
-    <meta name="keywords" content="HW Pro, white hacking, информационная безопасность, IT платформа, технологии, анонимность">
+    <meta name="keywords" content="HW Pro, white hacking, информационная безопасность, IT платформа, технологии, анонимность, HWPro_OS, операционная система">
     <title>HW Pro | Вход в технологический портал</title>
     
     <!-- Шрифты и база -->
@@ -201,6 +201,125 @@
             padding: 6px 14px;
             border-radius: 40px;
             margin-top: 1rem;
+        }
+
+        /* ---------- АНОНС ОС HWPro_OS ---------- */
+        .os-announce {
+            background: linear-gradient(145deg, rgba(0, 255, 196, 0.06), rgba(183, 126, 255, 0.04));
+            border: 1px solid var(--accent-cyber);
+            border-radius: 28px;
+            padding: 2rem 2.5rem;
+            margin: 2.5rem 0 2rem;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .os-announce::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(0, 255, 196, 0.03), transparent 60%);
+            pointer-events: none;
+            animation: osGlow 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes osGlow {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(5%, 5%); }
+        }
+
+        .os-announce .os-badge {
+            display: inline-block;
+            background: var(--accent-cyber);
+            color: #000;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 0.7rem;
+            padding: 4px 16px;
+            border-radius: 60px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+        }
+
+        .os-announce h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin: 0.8rem 0 0.5rem;
+            background: linear-gradient(135deg, var(--accent-cyber), #ffffff, var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        .os-announce .os-year {
+            font-size: 4.5rem;
+            font-weight: 900;
+            font-family: var(--font-mono);
+            color: var(--accent-cyber);
+            text-shadow: 0 0 40px rgba(0, 255, 196, 0.3);
+            line-height: 1;
+            margin: 0.2rem 0 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .os-announce .os-desc {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin: 0 auto 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .os-announce .os-features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.2rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .os-announce .os-features span {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-primary);
+        }
+
+        .os-announce .os-features span::before {
+            content: "▸ ";
+            color: var(--accent-cyber);
+        }
+
+        .os-announce .os-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 10px 32px;
+            background: linear-gradient(135deg, var(--accent-cyber), var(--accent-purple));
+            color: #000;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            border-radius: 60px;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 1;
+            border: none;
+            cursor: pointer;
+        }
+
+        .os-announce .os-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(0, 255, 196, 0.4);
         }
 
         /* карточки инфо-секции */
@@ -431,6 +550,15 @@
             .container { padding: 0 1.5rem; }
             .header-inner { flex-direction: column; }
             .nav-links { justify-content: center; gap: 1.2rem; }
+            .os-announce h2 { font-size: 2rem; }
+            .os-announce .os-year { font-size: 3rem; }
+            .os-announce { padding: 1.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            .os-announce h2 { font-size: 1.6rem; }
+            .os-announce .os-year { font-size: 2.4rem; }
+            .os-announce .os-features span { font-size: 0.75rem; }
         }
     </style>
 </head>
@@ -476,6 +604,26 @@
             <div class="sandbox-badge">
                 <span>📦</span> Зарегистрировано в реестре HW_Sandbox | ID: HW-PRO-2406
             </div>
+        </div>
+
+        <!-- ===== АНОНС ОС HWPro_OS ===== -->
+        <div class="os-announce">
+            <span class="os-badge">🚀 Официальный анонс</span>
+            <h2>HWPro_OS</h2>
+            <div class="os-year">2030</div>
+            <p class="os-desc">
+                Мы запустили разработку собственной операционной системы <strong class="accent-text">HWPro_OS</strong> на базе ядра <strong class="accent-text">HWKernel</strong>. 
+                Полностью зашифрованная, анонимная, предназначенная исключительно для задач проекта. 
+                Релиз запланирован на <strong>2030 год</strong>.
+            </p>
+            <div class="os-features">
+                <span>Полное шифрование</span>
+                <span>Нулевая телеметрия</span>
+                <span>Собственное ядро</span>
+                <span>Только консоль</span>
+                <span>Анонимность</span>
+            </div>
+            <a href="/HWPro_OS.html" class="os-link">⟁ Узнать подробнее</a>
         </div>
 
         <!-- БЛОК АНОНИМИЗАЦИИ УЧАСТНИКОВ -->
