@@ -67,6 +67,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            cursor: default;
         }
 
         .taskbar .logo span {
@@ -135,6 +136,13 @@
             flex-direction: column;
             gap: 8px;
             z-index: 2;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+
+        .desktop-icons.hidden {
+            opacity: 0;
+            transform: scale(0.95);
+            pointer-events: none;
         }
 
         .desktop-icon {
@@ -171,7 +179,7 @@
             text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
         }
 
-        /* === ОКНА ПРИЛОЖЕНИЙ === */
+        /* === КОНТЕЙНЕР ОКОН === */
         .window-container {
             flex: 1;
             padding: 12px;
@@ -182,6 +190,7 @@
             z-index: 1;
         }
 
+        /* === ОКНА === */
         .window {
             flex: 1;
             min-width: 0;
@@ -192,7 +201,11 @@
             flex-direction: column;
             overflow: hidden;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, opacity 0.2s, transform 0.2s, flex 0.25s ease;
+        }
+
+        .window.hidden {
+            display: none;
         }
 
         .window:hover {
@@ -215,6 +228,10 @@
             font-weight: 500;
             color: var(--text);
             font-family: var(--font-mono);
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .window-header .win-title .highlight {
@@ -225,21 +242,38 @@
             margin-left: auto;
             display: flex;
             gap: 6px;
+            flex-shrink: 0;
         }
 
         .window-header .win-controls button {
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             border: none;
             cursor: pointer;
-            font-size: 10px;
+            font-size: 11px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: var(--border);
             color: var(--text-dim);
             transition: 0.15s;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .window-header .win-controls button:hover {
+            background: var(--highlight-bg);
+            color: var(--text);
+        }
+
+        .window-header .win-controls .min-btn {
+            background: #1a5a2e;
+            color: #fff;
+        }
+
+        .window-header .win-controls .min-btn:hover {
+            background: #2a7a3e;
         }
 
         .window-header .win-controls .close-btn {
@@ -248,6 +282,7 @@
         }
         .window-header .win-controls .close-btn:hover {
             opacity: 0.8;
+            background: #c0392b;
         }
 
         .window-body {
@@ -435,7 +470,7 @@
             background: var(--accent-red);
         }
 
-        /* === МОДАЛЬНОЕ ОКНО (ПО-ПРЕЖНЕМУ) === */
+        /* === МОДАЛЬНОЕ ОКНО === */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -566,7 +601,15 @@
                 min-height: 200px;
             }
             .desktop-icons {
-                display: none;
+                top: 10px;
+                left: 10px;
+            }
+            .desktop-icon {
+                width: 60px;
+                font-size: 10px;
+            }
+            .desktop-icon .icon {
+                font-size: 24px;
             }
             .modal-window {
                 width: 95vw;
@@ -588,6 +631,9 @@
                 font-size: 9px;
                 gap: 8px;
                 flex-wrap: wrap;
+            }
+            .desktop-icons {
+                display: none;
             }
         }
     </style>
@@ -615,35 +661,34 @@
     <div class="desktop">
 
         <!-- ИКОНКИ ДЕСКТОПА -->
-        <div class="desktop-icons">
-            <button class="desktop-icon" id="icon-readme">
+        <div class="desktop-icons" id="desktop-icons">
+            <button class="desktop-icon" data-window="window-left">
                 <span class="icon">📄</span>
                 <span class="label">HWPro_OS</span>
             </button>
-            <button class="desktop-icon" id="icon-kernel">
+            <button class="desktop-icon" data-window="window-right">
                 <span class="icon">⚡</span>
                 <span class="label">HWKernel</span>
             </button>
-            <button class="desktop-icon" id="icon-console">
+            <button class="desktop-icon" data-modal="console">
                 <span class="icon">⌨️</span>
                 <span class="label">Terminal</span>
             </button>
-            <button class="desktop-icon" id="icon-apply">
+            <button class="desktop-icon" data-modal="apply">
                 <span class="icon">📩</span>
                 <span class="label">Apply</span>
             </button>
         </div>
 
         <!-- ОКНА -->
-        <div class="window-container">
-            <!-- ЛЕВОЕ ОКНО: Терминал с информацией об ОС -->
-            <div class="window window-left">
+        <div class="window-container" id="window-container">
+            <!-- ЛЕВОЕ ОКНО: Терминал -->
+            <div class="window window-left" id="window-left">
                 <div class="window-header">
                     <span class="win-title">⚡ <span class="highlight">HWPro_OS</span> — терминал</span>
                     <div class="win-controls">
-                        <button title="Свернуть">─</button>
-                        <button title="Развернуть">□</button>
-                        <button class="close-btn" title="Закрыть">✕</button>
+                        <button class="min-btn" data-window="window-left" title="Свернуть">─</button>
+                        <button class="close-btn" data-window="window-left" title="Закрыть">✕</button>
                     </div>
                 </div>
                 <div class="window-body">
@@ -669,14 +714,13 @@
                 </div>
             </div>
 
-            <!-- ПРАВОЕ ОКНО: HWKernel / Информация об ОС -->
-            <div class="window window-right">
+            <!-- ПРАВОЕ ОКНО: HWKernel -->
+            <div class="window window-right" id="window-right">
                 <div class="window-header">
                     <span class="win-title">⚡ <span class="highlight">HWKernel</span> — системная информация</span>
                     <div class="win-controls">
-                        <button title="Свернуть">─</button>
-                        <button title="Развернуть">□</button>
-                        <button class="close-btn" title="Закрыть">✕</button>
+                        <button class="min-btn" data-window="window-right" title="Свернуть">─</button>
+                        <button class="close-btn" data-window="window-right" title="Закрыть">✕</button>
                     </div>
                 </div>
                 <div class="window-body">
@@ -750,6 +794,8 @@
 
     <script>
         (function() {
+            'use strict';
+
             // ===== КОНТЕНТ ДЛЯ МОДАЛЬНЫХ ОКОН =====
             const modalContents = {
                 readme: `
@@ -821,12 +867,110 @@
                 `
             };
 
-            // ===== МОДАЛЬНОЕ ОКНО =====
+            // ===== СОСТОЯНИЕ ОКОН =====
+            const windowState = {
+                'window-left': { visible: true, minimized: false },
+                'window-right': { visible: true, minimized: false }
+            };
+
+            // ===== DOM-ЭЛЕМЕНТЫ =====
+            const windows = {
+                left: document.getElementById('window-left'),
+                right: document.getElementById('window-right')
+            };
+            const desktopIcons = document.getElementById('desktop-icons');
             const overlay = document.getElementById('modal-overlay');
             const modalTitle = document.getElementById('modal-title');
             const modalBody = document.getElementById('modal-body');
             const modalClose = document.getElementById('modal-close');
 
+            // ===== ФУНКЦИИ УПРАВЛЕНИЯ ОКНАМИ =====
+            function updateDesktopIcons() {
+                const anyVisible = windowState['window-left'].visible || windowState['window-right'].visible;
+                if (anyVisible) {
+                    desktopIcons.classList.add('hidden');
+                } else {
+                    desktopIcons.classList.remove('hidden');
+                }
+            }
+
+            function toggleWindow(windowId, show) {
+                const win = document.getElementById(windowId);
+                if (!win) return;
+
+                if (show === undefined) {
+                    // переключение
+                    windowState[windowId].visible = !windowState[windowId].visible;
+                } else {
+                    windowState[windowId].visible = show;
+                }
+
+                if (windowState[windowId].visible) {
+                    win.classList.remove('hidden');
+                } else {
+                    win.classList.add('hidden');
+                }
+
+                updateDesktopIcons();
+            }
+
+            function minimizeWindow(windowId) {
+                // Сворачиваем — просто прячем
+                toggleWindow(windowId, false);
+            }
+
+            function closeWindow(windowId) {
+                // Закрываем — тоже прячем, но сбрасываем состояние
+                toggleWindow(windowId, false);
+            }
+
+            function openWindow(windowId) {
+                toggleWindow(windowId, true);
+            }
+
+            // ===== ОБРАБОТЧИКИ КНОПОК ОКОН =====
+            document.querySelectorAll('.min-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const winId = this.dataset.window;
+                    if (winId) minimizeWindow(winId);
+                });
+            });
+
+            document.querySelectorAll('.close-btn').forEach(btn => {
+                // Пропускаем кнопку закрытия модального окна
+                if (btn.id === 'modal-close') return;
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const winId = this.dataset.window;
+                    if (winId) closeWindow(winId);
+                });
+            });
+
+            // ===== ИКОНКИ РАБОЧЕГО СТОЛА =====
+            document.querySelectorAll('.desktop-icon[data-window]').forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const winId = this.dataset.window;
+                    if (winId) {
+                        openWindow(winId);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.desktop-icon[data-modal]').forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const modalId = this.dataset.modal;
+                    if (modalId && modalContents[modalId]) {
+                        const titles = {
+                            console: 'Терминал HWPro_OS',
+                            apply: 'Подача заявки тестировщика'
+                        };
+                        openModal(modalId, titles[modalId] || modalId);
+                    }
+                });
+            });
+
+            // ===== МОДАЛЬНОЕ ОКНО =====
             function openModal(contentId, title) {
                 if (modalContents[contentId]) {
                     modalTitle.textContent = title || 'Информация';
@@ -843,24 +987,21 @@
             overlay.addEventListener('click', function(e) {
                 if (e.target === this) closeModal();
             });
+
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && overlay.classList.contains('active')) {
                     closeModal();
                 }
-            });
-
-            // ===== ИКОНКИ ДЕСКТОПА =====
-            document.getElementById('icon-readme').addEventListener('click', function() {
-                openModal('readme', 'HWPro_OS — Обзор системы');
-            });
-            document.getElementById('icon-kernel').addEventListener('click', function() {
-                openModal('kernel', 'HWKernel 1.0.0 — ядро системы');
-            });
-            document.getElementById('icon-console').addEventListener('click', function() {
-                openModal('console', 'Терминал HWPro_OS');
-            });
-            document.getElementById('icon-apply').addEventListener('click', function() {
-                openModal('apply', 'Подача заявки тестировщика');
+                // Ctrl+Alt+T — открыть терминал (модальное окно)
+                if (e.ctrlKey && e.altKey && e.key === 't') {
+                    e.preventDefault();
+                    openModal('console', 'Терминал HWPro_OS');
+                }
+                // F3 — открыть обзор
+                if (e.key === 'F3') {
+                    e.preventDefault();
+                    openModal('readme', 'HWPro_OS — Обзор системы');
+                }
             });
 
             // ===== ЧАСЫ =====
@@ -880,21 +1021,17 @@
                 });
             });
 
-            // ===== КЛАВИАТУРНЫЙ ШОРТКАТ (Ctrl+Alt+T) =====
-            document.addEventListener('keydown', function(e) {
-                if (e.ctrlKey && e.altKey && e.key === 't') {
-                    e.preventDefault();
-                    openModal('console', 'Терминал HWPro_OS');
-                }
-                if (e.key === 'F3') {
-                    e.preventDefault();
-                    openModal('readme', 'HWPro_OS — Обзор системы');
-                }
-            });
+            // ===== ИНИЦИАЛИЗАЦИЯ =====
+            // Убедимся, что оба окна видны изначально
+            windowState['window-left'].visible = true;
+            windowState['window-right'].visible = true;
+            windows.left.classList.remove('hidden');
+            windows.right.classList.remove('hidden');
+            updateDesktopIcons();
 
             console.log('HWPro_OS — Рабочий стол загружен.');
-            console.log('Система полностью зашифрована. Ядро: HWKernel 1.0.0-rc.');
-            console.log('Используйте иконки на рабочем столе или F3 для просмотра информации.');
+            console.log('Управление окнами: кнопки "─" (свернуть) и "✕" (закрыть).');
+            console.log('Иконки рабочего стола скрываются, когда открыты окна.');
         })();
     </script>
 </body>
