@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HWPro_OS — Рабочий стол</title>
+    <title>HWPro_OS — Российская операционная система</title>
     <style>
         /* === СБРОС И БАЗА === */
         * {
@@ -21,7 +21,8 @@
             --text-dim: #8b949e;
             --accent: #58a6ff;
             --accent-green: #3fb950;
-            --accent-red: #f85149;
+            --accent-red: #d52b1e;
+            --accent-blue: #0039a6;
             --accent-purple: #d2a8ff;
             --highlight-bg: #1f2937;
             --highlight-text: #f0f6fc;
@@ -43,6 +44,26 @@
             flex-direction: column;
             user-select: none;
             -webkit-user-select: none;
+            position: relative;
+        }
+
+        /* Триколор вверху (поверх всего) */
+        .tricolor-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                #ffffff 0%, 
+                #ffffff 33.33%,
+                #0039a6 33.33%,
+                #0039a6 66.66%,
+                #d52b1e 66.66%,
+                #d52b1e 100%
+            );
+            z-index: 1001;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         /* === ВЕРХНЯЯ ПАНЕЛЬ (TASKBAR) === */
@@ -56,6 +77,7 @@
             flex-shrink: 0;
             gap: 12px;
             z-index: 10;
+            margin-top: 4px; /* Компенсируем триколор */
         }
 
         .taskbar .logo {
@@ -72,6 +94,17 @@
 
         .taskbar .logo span {
             color: var(--accent-green);
+        }
+
+        .taskbar .logo .flag-badge {
+            font-size: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-red));
+            color: white;
+            padding: 2px 10px;
+            border-radius: 40px;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-left: 4px;
         }
 
         .taskbar .workspaces {
@@ -118,13 +151,79 @@
             font-size: 14px;
         }
 
-        /* === РАБОЧАЯ ОБЛАСТЬ === */
+        .taskbar .russian-stamp {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(0, 57, 166, 0.15);
+            padding: 2px 12px 2px 8px;
+            border-radius: 40px;
+            font-size: 0.6rem;
+            color: var(--accent);
+            font-weight: 600;
+            border: 1px solid rgba(0, 57, 166, 0.2);
+            margin-left: 8px;
+        }
+
+        /* === РАБОЧАЯ ОБЛАСТЬ С ФЛАГОМ РФ === */
         .desktop {
             flex: 1;
             display: flex;
             min-height: 0;
             position: relative;
-            background: radial-gradient(ellipse at 20% 30%, #0d1a2b, var(--bg) 70%);
+            background: linear-gradient(180deg, 
+                #ffffff 0%, 
+                #ffffff 33.33%,
+                #0039a6 33.33%,
+                #0039a6 66.66%,
+                #d52b1e 66.66%,
+                #d52b1e 100%
+            );
+            background-size: 100% 100%;
+            opacity: 0.9;
+        }
+
+        /* Наложение поверх флага для читаемости иконок */
+        .desktop::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.7) 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Герб России в центре (прозрачный водяной знак) */
+        .desktop .coat-of-arms {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 8rem;
+            opacity: 0.08;
+            z-index: 0;
+            pointer-events: none;
+            text-shadow: 0 0 40px rgba(0,0,0,0.3);
+            line-height: 1;
+        }
+
+        /* Текст "Россия" на фоне */
+        .desktop .russia-text {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--font-mono);
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 8px;
+            color: rgba(255,255,255,0.06);
+            z-index: 0;
+            pointer-events: none;
+            text-transform: uppercase;
         }
 
         /* === ИКОНКИ РАБОЧЕГО СТОЛА === */
@@ -155,15 +254,17 @@
             cursor: pointer;
             transition: background 0.15s;
             text-align: center;
-            background: transparent;
-            border: none;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.05);
             color: var(--text);
             font-family: var(--font-sans);
             font-size: 11px;
         }
 
         .desktop-icon:hover {
-            background: rgba(88, 166, 255, 0.12);
+            background: rgba(0, 57, 166, 0.3);
+            border-color: rgba(255,255,255,0.2);
         }
 
         .desktop-icon .icon {
@@ -175,11 +276,11 @@
         .desktop-icon .label {
             word-break: break-word;
             line-height: 1.3;
-            color: rgba(255, 255, 255, 0.85);
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
         }
 
-        /* === КОНТЕЙНЕР ОКОН === */
+        /* === ОКНА (поверх флага) === */
         .window-container {
             flex: 1;
             padding: 12px;
@@ -190,7 +291,6 @@
             z-index: 1;
         }
 
-        /* === ОКНА === */
         .window {
             flex: 1;
             min-width: 0;
@@ -209,7 +309,7 @@
         }
 
         .window:hover {
-            border-color: var(--accent);
+            border-color: var(--accent-blue);
         }
 
         .window-header {
@@ -236,6 +336,10 @@
 
         .window-header .win-title .highlight {
             color: var(--accent-green);
+        }
+
+        .window-header .win-title .flag-icon {
+            margin-right: 4px;
         }
 
         .window-header .win-controls {
@@ -282,7 +386,7 @@
         }
         .window-header .win-controls .close-btn:hover {
             opacity: 0.8;
-            background: #c0392b;
+            background: #b71c1c;
         }
 
         .window-body {
@@ -347,6 +451,10 @@
 
         .term-line .dim {
             color: var(--text-dim);
+        }
+
+        .term-line .russian-flag {
+            color: var(--accent-blue);
         }
 
         /* === ПРАВОЕ ОКНО — HWKernel === */
@@ -431,6 +539,11 @@
             margin: 2px 0;
         }
 
+        .kernel-info .badge-ru {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
         /* === НИЖНЯЯ ПАНЕЛЬ СТАТУСА === */
         .statusbar {
             height: 28px;
@@ -470,6 +583,10 @@
             background: var(--accent-red);
         }
 
+        .statusbar .status-item .flag-text {
+            color: var(--accent-blue);
+        }
+
         /* === МОДАЛЬНОЕ ОКНО === */
         .modal-overlay {
             display: none;
@@ -495,7 +612,7 @@
             height: 72vh;
             max-height: 680px;
             background: var(--panel-bg);
-            border: 1px solid var(--border);
+            border: 1px solid var(--accent-blue);
             border-radius: 12px;
             display: flex;
             flex-direction: column;
@@ -573,6 +690,11 @@
             font-weight: 600;
         }
 
+        .modal-body .highlight-ru {
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
         .modal-body ul {
             list-style: none;
             padding-left: 0;
@@ -591,6 +713,11 @@
             cursor: pointer;
         }
 
+        .modal-body .ru-flag {
+            display: inline-block;
+            margin-right: 4px;
+        }
+
         /* === АДАПТИВ === */
         @media (max-width: 800px) {
             .window-container {
@@ -607,6 +734,7 @@
             .desktop-icon {
                 width: 60px;
                 font-size: 10px;
+                padding: 6px 2px;
             }
             .desktop-icon .icon {
                 font-size: 24px;
@@ -617,6 +745,17 @@
             }
             .taskbar .workspaces {
                 display: none;
+            }
+            .taskbar .russian-stamp {
+                display: none;
+            }
+            .desktop .coat-of-arms {
+                font-size: 4rem;
+            }
+            .desktop .russia-text {
+                font-size: 1.2rem;
+                letter-spacing: 4px;
+                bottom: 40px;
             }
         }
 
@@ -635,15 +774,31 @@
             .desktop-icons {
                 display: none;
             }
+            .taskbar .logo .flag-badge {
+                font-size: 0.4rem;
+                padding: 1px 6px;
+            }
+            .desktop .coat-of-arms {
+                font-size: 3rem;
+            }
+            .desktop .russia-text {
+                font-size: 0.9rem;
+                letter-spacing: 3px;
+                bottom: 30px;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- Триколор (отдельный элемент, фиксированный) -->
+    <div class="tricolor-bar"></div>
+
     <!-- ===== TASKBAR ===== -->
     <div class="taskbar">
         <div class="logo">
             <span>⟁</span> HW<span>Pro</span>_OS
+            <span class="flag-badge">🇷🇺 Импортозамещение</span>
         </div>
         <div class="workspaces">
             <span class="ws active">❶</span>
@@ -654,11 +809,16 @@
             <span>🔒</span>
             <span>🔐</span>
         </div>
+        <span class="russian-stamp">⚡ Сделано в России</span>
         <div class="clock" id="clock">--:--</div>
     </div>
 
     <!-- ===== РАБОЧИЙ СТОЛ ===== -->
     <div class="desktop">
+
+        <!-- Герб и надпись на фоне -->
+        <div class="coat-of-arms">🦅</div>
+        <div class="russia-text">РОССИЯ</div>
 
         <!-- ИКОНКИ ДЕСКТОПА -->
         <div class="desktop-icons" id="desktop-icons">
@@ -685,7 +845,7 @@
             <!-- ЛЕВОЕ ОКНО: Терминал -->
             <div class="window window-left" id="window-left">
                 <div class="window-header">
-                    <span class="win-title">⚡ <span class="highlight">HWPro_OS</span> — терминал</span>
+                    <span class="win-title"><span class="flag-icon">🇷🇺</span> ⚡ <span class="highlight">HWPro_OS</span> — терминал</span>
                     <div class="win-controls">
                         <button class="min-btn" data-window="window-left" title="Свернуть">─</button>
                         <button class="close-btn" data-window="window-left" title="Закрыть">✕</button>
@@ -693,7 +853,7 @@
                 </div>
                 <div class="window-body">
                     <div class="terminal-output" id="terminal-output">
-                        <div class="term-line"><span class="prompt">[</span><span class="highlight">SYSTEM</span><span class="prompt">]</span> <span class="output">HWPro_OS v0.2.0 (HWKernel 1.0.0-rc)</span></div>
+                        <div class="term-line"><span class="prompt">[</span><span class="highlight">SYSTEM</span><span class="prompt">]</span> <span class="output">HWPro_OS v0.2.0 (HWKernel 1.0.0-rc) 🇷🇺</span></div>
                         <div class="term-line"><span class="prompt">[</span><span class="highlight">ENCRYPTION</span><span class="prompt">]</span> <span class="success">LUKS2 + AES-256-XTS — полное шифрование диска</span></div>
                         <div class="term-line"><span class="prompt">[</span><span class="highlight">BOOT</span><span class="prompt">]</span> <span class="output">Загрузка ядра HWKernel 1.0.0...</span></div>
                         <div class="term-line"><span class="prompt">[</span><span class="highlight">INIT</span><span class="prompt">]</span> <span class="success">Инициализация завершена. Добро пожаловать в HWPro_OS.</span></div>
@@ -704,10 +864,12 @@
                         <div class="term-line"><span class="output">HWKernel 1.0.0-rc</span></div>
                         <div class="term-line"><span class="output">Build: 2026-05-16 22:14 UTC</span></div>
                         <div class="term-line"><span class="output">Среда: зашифрованная, изолированная, для внутреннего использования</span></div>
+                        <div class="term-line"><span class="output">🇷🇺 Российская разработка. Импортозамещение.</span></div>
                         <div class="term-line" style="margin-top:6px;"><span class="prompt">$</span> <span class="cmd">hwctl --status</span></div>
                         <div class="term-line"><span class="success">✅ Все модули загружены. Крипто-стек активен.</span></div>
                         <div class="term-line"><span class="success">✅ Сеть: только локальный loopback (режим разработки).</span></div>
                         <div class="term-line"><span class="success">✅ Анонимность: включена (полная маскировка метаданных).</span></div>
+                        <div class="term-line"><span class="success">✅ 🇷🇺 Российский стек технологий.</span></div>
                         <div class="term-line" style="margin-top:6px;"><span class="prompt">$</span> <span class="cmd">echo "HWPro_OS — операционная система будущего"</span></div>
                         <div class="term-line"><span class="output highlight">HWPro_OS — операционная система будущего</span></div>
                     </div>
@@ -717,7 +879,7 @@
             <!-- ПРАВОЕ ОКНО: HWKernel -->
             <div class="window window-right" id="window-right">
                 <div class="window-header">
-                    <span class="win-title">⚡ <span class="highlight">HWKernel</span> — системная информация</span>
+                    <span class="win-title"><span class="flag-icon">🇷🇺</span> ⚡ <span class="highlight">HWKernel</span> — системная информация</span>
                     <div class="win-controls">
                         <button class="min-btn" data-window="window-right" title="Свернуть">─</button>
                         <button class="close-btn" data-window="window-right" title="Закрыть">✕</button>
@@ -725,11 +887,12 @@
                 </div>
                 <div class="window-body">
                     <div class="kernel-info">
-                        <h2>🖥️ HWKernel 1.0.0-rc</h2>
+                        <h2>🖥️ HWKernel 1.0.0-rc <span style="color:var(--accent-blue);">🇷🇺</span></h2>
                         <p><span class="key">Архитектура:</span> <span class="val">x86_64, ARM64 (в разработке)</span></p>
                         <p><span class="key">Тип:</span> <span class="val">Монолитное ядро с модульной загрузкой</span></p>
                         <p><span class="key">Шифрование по умолчанию:</span> <span class="val">AES-256-XTS + LUKS2</span></p>
                         <p><span class="key">Анонимность:</span> <span class="val">Встроенный стек обфускации метаданных</span></p>
+                        <p><span class="key">Страна разработки:</span> <span class="val" style="color:var(--accent-blue);">🇷🇺 Российская Федерация</span></p>
 
                         <hr class="divider">
 
@@ -739,6 +902,7 @@
                             <li>Сетевая подсистема: только локальный loopback (без внешних соединений)</li>
                             <li>Менеджер памяти с защитой от утечек</li>
                             <li>Драйверы: минимальный набор для Bare-metal</li>
+                            <li>🇷🇺 Полностью отечественная разработка</li>
                         </ul>
 
                         <hr class="divider">
@@ -749,6 +913,7 @@
                             <li>Никаких бэкдоров</li>
                             <li>Никакой идентификации пользователей</li>
                             <li>Полное шифрование всех разделов</li>
+                            <li>🇷🇺 Соответствие требованиям РФ</li>
                         </ul>
 
                         <hr class="divider">
@@ -757,12 +922,13 @@
                             <span class="badge">🔒 LUKS2</span>
                             <span class="badge">🛡️ No-Track</span>
                             <span class="badge">🧩 Модульная</span>
+                            <span class="badge badge-ru">🇷🇺 Российское ПО</span>
                             <span class="badge">⚡ HWPro_OS</span>
                         </div>
 
                         <p style="margin-top:12px; color:var(--text-dim); font-size:11px;">
                             <span class="highlight">HWPro_OS</span> разрабатывается как полностью зашифрованная операционная система 
-                            исключительно для нужд проекта. Доступ к ядру ограничен. Публичные сборки не планируются.
+                            исключительно для нужд проекта. <span style="color:var(--accent-blue);">🇷🇺 Российская разработка в рамках импортозамещения.</span>
                         </p>
                     </div>
                 </div>
@@ -776,6 +942,7 @@
         <span class="status-item">🔐 Шифрование: <span style="color:var(--accent-green);">активно</span></span>
         <span class="status-item">🕶️ Анонимность: <span style="color:var(--accent);">включена</span></span>
         <span class="status-item">📦 Сборка: 2026-05-16</span>
+        <span class="status-item"><span class="flag-text">🇷🇺</span> Импортозамещение</span>
         <span style="margin-left:auto;">⌨️ Ctrl+Alt+T — терминал | F3 — просмотр</span>
     </div>
 
@@ -799,10 +966,11 @@
             // ===== КОНТЕНТ ДЛЯ МОДАЛЬНЫХ ОКОН =====
             const modalContents = {
                 readme: `
-                    <h2>HWPro_OS — Операционная система Проекта HW</h2>
+                    <h2>HWPro_OS — Российская операционная система</h2>
                     <p><span class="highlight">Кодовое имя:</span> HWPro_OS</p>
                     <p><span class="highlight">Ядро:</span> HWKernel 1.0.0-rc</p>
                     <p><span class="highlight">Статус:</span> Активная разработка</p>
+                    <p><span class="highlight-ru">🇷🇺 Страна разработки:</span> Российская Федерация</p>
                     <p><span class="highlight">Целевая среда:</span> Исключительно для нужд проекта HW</p>
 
                     <h2>Что такое HWPro_OS?</h2>
@@ -811,6 +979,7 @@
                         <li>Полное шифрование диска (LUKS2 + AES-256-XTS).</li>
                         <li>Никакой телеметрии, никакого слежения.</li>
                         <li>Изолированная среда для разработки и тестирования.</li>
+                        <li><span class="highlight-ru">🇷🇺 Полностью российская разработка.</span></li>
                     </ul>
 
                     <h2>HWKernel — основа системы</h2>
@@ -819,19 +988,22 @@
                         <li>Минимальная поверхность атаки.</li>
                         <li>Встроенный крипто-стек.</li>
                         <li>Поддержка только необходимых драйверов.</li>
+                        <li><span class="highlight-ru">🇷🇺 Импортозамещение — наш приоритет.</span></li>
                     </ul>
                 `,
                 kernel: `
-                    <h2>HWKernel 1.0.0-rc</h2>
+                    <h2>HWKernel 1.0.0-rc <span style="color:var(--accent-blue);">🇷🇺</span></h2>
                     <p><span class="highlight">Тип:</span> Монолитное ядро</p>
                     <p><span class="highlight">Архитектуры:</span> x86_64, ARM64 (в разработке)</p>
                     <p><span class="highlight">Языки:</span> C, Rust (встраиваемые модули)</p>
+                    <p><span class="highlight-ru">🇷🇺 Разработка:</span> Российская Федерация</p>
 
                     <h2>Особенности</h2>
                     <ul>
                         <li>Встроенная поддержка LUKS2.</li>
                         <li>Стек обфускации метаданных (анонимность).</li>
                         <li>Модульная загрузка драйверов.</li>
+                        <li><span class="highlight-ru">🇷🇺 Полное соответствие стандартам РФ.</span></li>
                     </ul>
 
                     <h2>Текущий статус</h2>
@@ -848,6 +1020,7 @@
                         <li>Нет графического окружения.</li>
                         <li>Нет оконного менеджера.</li>
                         <li>Только текст, команды, шифрование.</li>
+                        <li><span class="highlight-ru">🇷🇺 Российская консольная ОС.</span></li>
                     </ul>
                     <p>Это сознательный выбор. В мире HWPro_OS мы уходим от рабочих столов. Мы работаем напрямую с машиной.</p>
                 `,
@@ -863,6 +1036,7 @@
                         <li>Открытый PGP-ключ (RSA 4096).</li>
                         <li>Опыт работы в консоли.</li>
                         <li>Фраза: «Я принимаю, что HWPro_OS не имеет GUI».</li>
+                        <li><span class="highlight-ru">🇷🇺 Граждане РФ имеют приоритет.</span></li>
                     </ul>
                 `
             };
@@ -899,7 +1073,6 @@
                 if (!win) return;
 
                 if (show === undefined) {
-                    // переключение
                     windowState[windowId].visible = !windowState[windowId].visible;
                 } else {
                     windowState[windowId].visible = show;
@@ -915,12 +1088,10 @@
             }
 
             function minimizeWindow(windowId) {
-                // Сворачиваем — просто прячем
                 toggleWindow(windowId, false);
             }
 
             function closeWindow(windowId) {
-                // Закрываем — тоже прячем, но сбрасываем состояние
                 toggleWindow(windowId, false);
             }
 
@@ -938,7 +1109,6 @@
             });
 
             document.querySelectorAll('.close-btn').forEach(btn => {
-                // Пропускаем кнопку закрытия модального окна
                 if (btn.id === 'modal-close') return;
                 btn.addEventListener('click', function(e) {
                     e.stopPropagation();
@@ -992,12 +1162,10 @@
                 if (e.key === 'Escape' && overlay.classList.contains('active')) {
                     closeModal();
                 }
-                // Ctrl+Alt+T — открыть терминал (модальное окно)
                 if (e.ctrlKey && e.altKey && e.key === 't') {
                     e.preventDefault();
                     openModal('console', 'Терминал HWPro_OS');
                 }
-                // F3 — открыть обзор
                 if (e.key === 'F3') {
                     e.preventDefault();
                     openModal('readme', 'HWPro_OS — Обзор системы');
@@ -1022,16 +1190,16 @@
             });
 
             // ===== ИНИЦИАЛИЗАЦИЯ =====
-            // Убедимся, что оба окна видны изначально
             windowState['window-left'].visible = true;
             windowState['window-right'].visible = true;
             windows.left.classList.remove('hidden');
             windows.right.classList.remove('hidden');
             updateDesktopIcons();
 
-            console.log('HWPro_OS — Рабочий стол загружен.');
+            console.log('HWPro_OS — Российская операционная система загружена.');
+            console.log('🇷🇺 Импортозамещение. Полностью отечественная разработка.');
             console.log('Управление окнами: кнопки "─" (свернуть) и "✕" (закрыть).');
-            console.log('Иконки рабочего стола скрываются, когда открыты окна.');
+            console.log('Фон рабочего стола — флаг Российской Федерации.');
         })();
     </script>
 </body>

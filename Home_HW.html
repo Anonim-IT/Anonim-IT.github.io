@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>HW Portal | Secure & Anonymous Dashboard</title>
+    <title>HW Portal | Российский защищенный портал</title>
     <!-- Шрифты: JetBrains Mono для кода -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- Font Awesome 6 -->
@@ -15,18 +15,39 @@
             box-sizing: border-box;
         }
 
-        /* === DARK THEME / HACKER WEB / ANONYMITY FOCUS === */
+        /* === DARK THEME / РОССИЙСКОЕ ИМПОРТОЗАМЕЩЕНИЕ === */
         body {
             background: #0a0c10;
-            background-image: radial-gradient(circle at 15% 30%, rgba(0, 255, 0, 0.02) 0%, #0a0c10 90%);
+            background-image: radial-gradient(circle at 15% 30%, rgba(0, 57, 166, 0.03) 0%, #0a0c10 90%);
             font-family: 'Inter', 'JetBrains Mono', monospace;
             color: #c3d4e6;
             padding: 2rem 1.5rem;
             min-height: 100vh;
             transition: background 0.2s ease, color 0.2s;
+            position: relative;
         }
 
-        /* Light mode (строгий, но с оттенком безопасности) */
+        /* Триколор вверху */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                #ffffff 0%, 
+                #ffffff 33.33%,
+                #0039a6 33.33%,
+                #0039a6 66.66%,
+                #d52b1e 66.66%,
+                #d52b1e 100%
+            );
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Light mode (российский светлый) */
         body.light-mode {
             background: #eef2f5;
             background-image: none;
@@ -38,26 +59,78 @@
         }
         body.light-mode .site-card:hover {
             background: #ffffff;
-            border-color: #1a6e5c;
+            border-color: #0039a6;
         }
         body.light-mode .icon-bg {
             background: #e2e8f0;
-            color: #1f6e5c;
+            color: #0039a6;
         }
         body.light-mode .cat-btn.active {
-            background: #0f3b2c;
+            background: #0039a6;
             color: #eef2ff;
         }
         body.light-mode .security-badge, 
         body.light-mode .anon-badge {
             background: #e9ecef;
             border-color: #adb5bd;
-            color: #2c3e50;
+            color: #1e3a5f;
         }
         body.light-mode .modal-content {
             background: #fefefe;
             color: #1e2a36;
-            border: 1px solid #2b7a62;
+            border: 1px solid #0039a6;
+        }
+        body.light-mode .ddg-search-section {
+            background: rgba(255,255,245,0.9);
+            border-color: #0039a6;
+        }
+        body.light-mode .ddg-search-input {
+            background: #f0f4f8;
+            color: #1e2a36;
+            border-color: #b0c4de;
+        }
+        body.light-mode .ddg-search-input:focus {
+            border-color: #0039a6;
+            box-shadow: 0 0 8px rgba(0, 57, 166, 0.3);
+        }
+        body.light-mode .ddg-search-btn {
+            background: #0039a6;
+            color: white;
+            border-color: #0039a6;
+        }
+        body.light-mode .ddg-search-btn:hover {
+            background: #1a4fa0;
+        }
+        body.light-mode .legal-btn {
+            color: #1e3a5f;
+            border-color: #6a8fbb;
+        }
+        body.light-mode .legal-btn:hover {
+            border-color: #0039a6;
+            color: #0039a6;
+        }
+        body.light-mode .theme-btn {
+            background: #e2e8f0;
+            border-color: #94a3b8;
+            color: #1e2a36;
+        }
+        body.light-mode .theme-btn:hover {
+            background: #cbd5e1;
+            border-color: #0039a6;
+        }
+        body.light-mode .note-search {
+            color: #4a6a8a;
+        }
+        body.light-mode .footer-note {
+            border-top-color: #cbd5e1;
+            color: #4a6a8a;
+        }
+        body.light-mode .search-box {
+            background: #f0f4f8;
+            border-color: #b0c4de;
+        }
+        body.light-mode .search-box input {
+            color: #1e2a36;
         }
         
         .dashboard {
@@ -65,7 +138,7 @@
             margin: 0 auto;
         }
 
-        /* Badges безопасности и анонимности */
+        /* Badges безопасности и импортозамещения */
         .security-header {
             display: flex;
             justify-content: center;
@@ -76,27 +149,34 @@
         .security-badge, .anon-badge {
             background: rgba(0, 20, 15, 0.7);
             backdrop-filter: blur(4px);
-            border: 1px solid #2eff9e;
+            border: 1px solid #0039a6;
             padding: 6px 16px;
             border-radius: 40px;
             font-size: 0.7rem;
             font-family: 'JetBrains Mono', monospace;
-            color: #aaffdd;
+            color: #aaddff;
             display: inline-flex;
             align-items: center;
             gap: 8px;
             letter-spacing: 0.5px;
         }
         .security-badge i, .anon-badge i {
-            color: #2eff9e;
+            color: #4a8eff;
             font-size: 0.8rem;
+        }
+        .badge-ru {
+            border-color: #d52b1e;
+            color: #ffb3a8;
+        }
+        .badge-ru i {
+            color: #d52b1e;
         }
         
         /* Кнопка правил и лицензии */
         .legal-btn {
             background: transparent;
             border: 1px solid #5a6e7c;
-            color: #b3e4d0;
+            color: #b3d4e4;
             padding: 6px 14px;
             border-radius: 40px;
             font-size: 0.7rem;
@@ -108,9 +188,9 @@
             gap: 6px;
         }
         .legal-btn:hover {
-            border-color: #2eff9e;
-            color: #2eff9e;
-            background: rgba(46, 255, 158, 0.1);
+            border-color: #0039a6;
+            color: #4a8eff;
+            background: rgba(0, 57, 166, 0.1);
         }
         
         .hero {
@@ -121,7 +201,7 @@
             font-size: 2.6rem;
             font-weight: 700;
             font-family: 'JetBrains Mono', monospace;
-            background: linear-gradient(135deg, #8bc6ff, #3eff9e);
+            background: linear-gradient(135deg, #4a8eff, #ffffff, #d52b1e);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
@@ -131,8 +211,8 @@
             gap: 12px;
         }
         .hero h1 i {
-            color: #3eff9e;
-            text-shadow: 0 0 6px #1f9e6e;
+            color: #4a8eff;
+            text-shadow: 0 0 6px rgba(0, 57, 166, 0.3);
         }
         .hero p {
             font-size: 0.9rem;
@@ -140,17 +220,21 @@
             font-family: 'JetBrains Mono', monospace;
             margin-top: 0.5rem;
         }
+        .hero .ru-flag {
+            color: #d52b1e;
+        }
         
         .theme-switch-wrapper {
             display: flex;
             justify-content: flex-end;
             margin-bottom: 1rem;
             gap: 12px;
+            flex-wrap: wrap;
         }
         .theme-btn {
             background: #1e2a32;
             border: 1px solid #2b4a5e;
-            color: #b3f0d0;
+            color: #b3d0f0;
             padding: 6px 14px;
             border-radius: 40px;
             font-size: 0.8rem;
@@ -162,8 +246,8 @@
         }
         .theme-btn:hover {
             background: #2b4a5e;
-            border-color: #5affb0;
-            box-shadow: 0 0 8px rgba(58,255,120,0.3);
+            border-color: #4a8eff;
+            box-shadow: 0 0 8px rgba(0, 57, 166, 0.3);
         }
 
         /* DuckDuckGo Search (анонимный поиск) */
@@ -173,7 +257,7 @@
             border-radius: 28px;
             padding: 0.8rem 1.8rem;
             margin-bottom: 2rem;
-            border: 1px solid #2a4a3c;
+            border: 1px solid #0039a6;
             max-width: 720px;
             margin-left: auto;
             margin-right: auto;
@@ -184,10 +268,13 @@
             justify-content: center;
             gap: 10px;
             font-weight: 600;
-            color: #9effcf;
+            color: #8ab8ff;
             margin-bottom: 14px;
             font-size: 0.9rem;
             font-family: 'JetBrains Mono', monospace;
+        }
+        .ddg-search-title .ru-icon {
+            color: #d52b1e;
         }
         .ddg-search-form {
             display: flex;
@@ -200,21 +287,21 @@
             min-width: 200px;
             padding: 12px 18px;
             border-radius: 40px;
-            border: 1px solid #2f5b4a;
+            border: 1px solid #2f4a6a;
             background: #0f1519;
-            color: #bbf0da;
+            color: #bbddf0;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.9rem;
             outline: none;
         }
         .ddg-search-input:focus {
-            border-color: #2eff9e;
-            box-shadow: 0 0 8px rgba(46,255,158,0.3);
+            border-color: #4a8eff;
+            box-shadow: 0 0 8px rgba(0, 57, 166, 0.3);
         }
         .ddg-search-btn {
-            background: #0f3c2e;
-            border: 1px solid #2eff9e;
-            color: #b4ffda;
+            background: #0039a6;
+            border: 1px solid #4a8eff;
+            color: #ffffff;
             padding: 0 24px;
             border-radius: 40px;
             font-weight: 600;
@@ -222,14 +309,15 @@
             cursor: pointer;
         }
         .ddg-search-btn:hover {
-            background: #1f5e48;
-            box-shadow: 0 0 6px #27ff98;
+            background: #1a4fa0;
+            box-shadow: 0 0 6px rgba(0, 57, 166, 0.4);
         }
         .note-search {
             font-size: 0.65rem;
             text-align: center;
             opacity: 0.7;
             margin-top: 8px;
+            color: #7e9ab8;
         }
         
         .search-section {
@@ -246,19 +334,19 @@
             gap: 12px;
             width: 100%;
             max-width: 500px;
-            border: 1px solid #2e4d3e;
+            border: 1px solid #2e4a6e;
         }
         .search-box input {
             background: transparent;
             border: none;
             width: 100%;
             padding: 12px 0;
-            color: #dcfce8;
+            color: #dcf0f8;
             font-family: 'JetBrains Mono', monospace;
             outline: none;
         }
         .search-box i {
-            color: #44ffb0;
+            color: #4a8eff;
         }
 
         .categories {
@@ -270,21 +358,24 @@
         }
         .cat-btn {
             background: #0f171f;
-            border: 1px solid #2a5543;
+            border: 1px solid #2a4a6a;
             padding: 6px 18px;
             border-radius: 32px;
             font-family: 'JetBrains Mono', monospace;
             font-weight: 500;
             font-size: 0.8rem;
-            color: #b0e6d0;
+            color: #b0d6e6;
             cursor: pointer;
             transition: all 0.2s;
         }
         .cat-btn.active {
-            background: #1a4a3a;
-            border-color: #3effae;
-            color: #f0fff0;
-            box-shadow: 0 0 6px #2effa0;
+            background: #0039a6;
+            border-color: #4a8eff;
+            color: #f0f8ff;
+            box-shadow: 0 0 6px rgba(0, 57, 166, 0.3);
+        }
+        .cat-btn:hover {
+            border-color: #4a8eff;
         }
 
         .sites-grid {
@@ -297,15 +388,15 @@
             backdrop-filter: blur(4px);
             border-radius: 24px;
             padding: 1.2rem;
-            border: 1px solid #2a5040;
+            border: 1px solid #2a4a6a;
             transition: 0.2s ease;
             cursor: pointer;
         }
         .site-card:hover {
             transform: translateY(-4px);
             background: #111e24;
-            border-color: #3effae;
-            box-shadow: 0 12px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(62,255,174,0.2);
+            border-color: #4a8eff;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(0, 57, 166, 0.2);
         }
         .card-header {
             display: flex;
@@ -316,29 +407,29 @@
         .icon-bg {
             width: 48px;
             height: 48px;
-            background: #0f2d24;
+            background: #0f2d44;
             border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.6rem;
-            color: #4effb5;
-            border: 1px solid #3c8268;
+            color: #4a8eff;
+            border: 1px solid #3a6a9a;
         }
         .card-title h3 {
             font-size: 1.25rem;
             font-weight: 600;
             font-family: 'JetBrains Mono', monospace;
-            color: #d2f0e4;
+            color: #d2eaf4;
         }
         .category-tag {
             font-size: 0.65rem;
-            background: #1f3a31;
+            background: #1f3a5a;
             display: inline-block;
             padding: 3px 10px;
             border-radius: 24px;
             margin-top: 5px;
-            color: #a2f0cf;
+            color: #a2d0ef;
         }
         .site-description {
             font-size: 0.8rem;
@@ -352,13 +443,13 @@
             background: #061016;
             padding: 6px 8px;
             border-radius: 12px;
-            color: #9effcf;
+            color: #8ab8ff;
             margin-bottom: 0.8rem;
             word-break: break-all;
         }
         .visit-btn {
             background: none;
-            border: 1px solid #3f8b72;
+            border: 1px solid #3a7a9a;
             color: #bffff0;
             padding: 6px 12px;
             border-radius: 26px;
@@ -369,9 +460,9 @@
             width: fit-content;
         }
         .visit-btn:hover {
-            background: #2c8268;
-            border-color: #aaffdd;
-            color: #000;
+            background: #0039a6;
+            border-color: #4a8eff;
+            color: #fff;
         }
         .empty-state {
             grid-column: 1/-1;
@@ -379,18 +470,24 @@
             padding: 3rem;
             background: #0f171e;
             border-radius: 36px;
-            border: 1px dashed #3b7e66;
+            border: 1px dashed #3a6a9a;
         }
         .footer-note {
             text-align: center;
             margin-top: 3rem;
             font-size: 0.7rem;
-            border-top: 1px solid #2d5543;
+            border-top: 1px solid #2d4a6a;
             padding-top: 1.5rem;
             color: #6c98b0;
         }
+        .footer-note .ru-icon {
+            color: #d52b1e;
+        }
+        .footer-note .blue-icon {
+            color: #4a8eff;
+        }
         
-        /* === МОДАЛЬНОЕ ОКНО (Лицензия DarkNet и правила) === */
+        /* === МОДАЛЬНОЕ ОКНО (Лицензия и правила) === */
         .modal {
             display: none;
             position: fixed;
@@ -412,23 +509,26 @@
             border-radius: 32px;
             max-width: 700px;
             width: 90%;
-            border: 1px solid #3effae;
-            box-shadow: 0 0 30px rgba(62,255,174,0.2);
+            border: 1px solid #4a8eff;
+            box-shadow: 0 0 30px rgba(0, 57, 166, 0.2);
             font-family: 'JetBrains Mono', monospace;
-            color: #d4f0e8;
+            color: #d4e8f0;
             position: relative;
         }
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #2eff9e;
+            border-bottom: 1px solid #4a8eff;
             padding-bottom: 0.8rem;
             margin-bottom: 1.2rem;
         }
         .modal-header h2 {
             font-size: 1.4rem;
-            color: #3effae;
+            color: #4a8eff;
+        }
+        .modal-header h2 .ru-flag {
+            color: #d52b1e;
         }
         .close-modal {
             font-size: 1.8rem;
@@ -438,7 +538,7 @@
             color: #8ab3a8;
         }
         .close-modal:hover {
-            color: #ff5e5e;
+            color: #d52b1e;
         }
         .license-text {
             font-size: 0.85rem;
@@ -461,82 +561,90 @@
             padding-left: 12px;
             margin: 1rem 0;
         }
+        .ru-license {
+            color: #4a8eff;
+            font-weight: 600;
+        }
         @media (max-width: 600px) {
             body { padding: 1rem; }
             .hero h1 { font-size: 1.8rem; }
             .modal-content { padding: 1.2rem; }
+            .security-header { gap: 0.5rem; }
+            .security-badge, .anon-badge { font-size: 0.6rem; padding: 4px 10px; }
         }
     </style>
 </head>
 <body>
 <div class="dashboard">
     <div class="theme-switch-wrapper">
-        <button id="themeToggle" class="theme-btn"><i class="fas fa-skull-crossbones"></i> <span id="themeText">DARK/HACK</span> <i class="fas fa-terminal"></i></button>
-        <button id="legalModalBtn" class="legal-btn"><i class="fas fa-gavel"></i> DarkNet License & Rules</button>
+        <button id="themeToggle" class="theme-btn"><i class="fas fa-sun"></i> <span id="themeText">DARK</span> <i class="fas fa-moon"></i></button>
+        <button id="legalModalBtn" class="legal-btn"><i class="fas fa-gavel"></i> Лицензия & Правила</button>
     </div>
     
     <div class="security-header">
-        <div class="security-badge"><i class="fas fa-shield-haltered"></i> ZERO-LOGS POLICY</div>
-        <div class="anon-badge"><i class="fas fa-mask"></i> ANONYMITY FIRST | TOR MINDSET</div>
-        <div class="security-badge"><i class="fas fa-lock"></i> ENCRYPTED GATEWAY</div>
+        <div class="security-badge"><i class="fas fa-shield-haltered"></i> ПОЛИТИКА НУЛЕВЫХ ЛОГОВ</div>
+        <div class="anon-badge"><i class="fas fa-mask"></i> АНОНИМНОСТЬ | ТОР-МЫШЛЕНИЕ</div>
+        <div class="security-badge"><i class="fas fa-lock"></i> ШИФРОВАННЫЙ ШЛЮЗ</div>
+        <div class="security-badge badge-ru"><i class="fas fa-flag"></i> РОССИЙСКОЕ ПО</div>
     </div>
     
     <div class="hero">
         <h1><i class="fas fa-shield-haltered"></i> HW PORTAL <i class="fas fa-code"></i></h1>
-        <p>// anonymous gateway | linux core | zero tracking | cyber resilience</p>
+        <p>// российский защищенный шлюз | импортозамещение | нулевое слежение | киберустойчивость</p>
     </div>
 
-    <!-- DuckDuckGo Поиск (анонимный, без логирования) -->
+    <!-- DuckDuckGo Поиск (анонимный) -->
     <div class="ddg-search-section">
-        <div class="ddg-search-title"><i class="fas fa-duck"></i> DuckDuckGo :: private search <i class="fas fa-eye-slash"></i></div>
+        <div class="ddg-search-title"><i class="fas fa-duck"></i> DuckDuckGo :: приватный поиск <i class="fas fa-eye-slash"></i> <span class="ru-icon">🇷🇺</span></div>
         <form id="ddgSearchForm" action="https://duckduckgo.com/" method="get" target="_blank" class="ddg-search-form">
-            <input type="text" name="q" class="ddg-search-input" placeholder=">_ search privately (no logs)..." required>
-            <button type="submit" class="ddg-search-btn"><i class="fas fa-arrow-right"></i> search</button>
+            <input type="text" name="q" class="ddg-search-input" placeholder=">_ анонимный поиск (без логов)..." required>
+            <button type="submit" class="ddg-search-btn"><i class="fas fa-arrow-right"></i> искать</button>
         </form>
-        <div class="note-search">[ no tracking | no logs | open in new tab ]</div>
+        <div class="note-search">[ без трекинга | без логов | открывается в новой вкладке ]</div>
     </div>
 
     <div class="search-section">
         <div class="search-box">
             <i class="fas fa-filter"></i>
-            <input type="text" id="searchInput" placeholder="filter bookmarks by name / description...">
+            <input type="text" id="searchInput" placeholder="фильтровать закладки по названию / описанию...">
         </div>
     </div>
 
     <div class="categories" id="categoryFilters"></div>
     <div id="sitesContainer" class="sites-grid"></div>
     <div class="footer-note">
-        <i class="fas fa-microchip"></i> hardened bookmarks | privacy first | arch linux mindset | Off-the-record
+        <i class="fas fa-microchip blue-icon"></i> защищенные закладки | приватность | arch linux | <span class="ru-icon">🇷🇺</span> импортозамещение
     </div>
 </div>
 
-<!-- Модальное окно с лицензией DarkNet, правилами -->
+<!-- Модальное окно с лицензией и правилами -->
 <div id="licenseModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2><i class="fas fa-skull"></i> DarkNet Compliance & License</h2>
+            <h2><i class="fas fa-shield-haltered"></i> <span class="ru-flag">🇷🇺</span> Лицензия HW Portal</h2>
             <span class="close-modal">&times;</span>
         </div>
         <div class="license-text">
-            <p><strong>🔒 HW Portal — Лицензия анонимного доступа v.1.0 (DarkNet Extended)</strong></p>
-            <p>Данный портал создан в духе <strong>кибербезопасности, приватности и свободного обмена знаниями</strong>. Используя ресурсы, вы соглашаетесь с правилами:</p>
+            <p><strong>🔒 HW Portal — Лицензия защищенного доступа v.2.0 (Российский стандарт)</strong></p>
+            <p>Данный портал создан в рамках <span class="ru-license">импортозамещения</span>, кибербезопасности и приватности. Используя ресурсы, вы соглашаетесь с правилами:</p>
             <ul>
-                <li><i class="fas fa-check-circle"></i> Абсолютная анонимность — никакие логи не сохраняются.</li>
-                <li><i class="fas fa-check-circle"></i> Запрещена любая деятельность, нарушающая законодательство (взлом без согласия, фишинг, распространение вредоносного ПО).</li>
-                <li><i class="fas fa-check-circle"></i> Уважение к сообществу: никаких атак, доксинга или преследования.</li>
-                <li><i class="fas fa-check-circle"></i> Все инструменты и ссылки предназначены для исследований, обучения и повышения цифровой гигиены.</li>
+                <li><i class="fas fa-check-circle" style="color:#4a8eff;"></i> Абсолютная анонимность — никакие логи не сохраняются.</li>
+                <li><i class="fas fa-check-circle" style="color:#4a8eff;"></i> Запрещена любая деятельность, нарушающая законодательство РФ (взлом без согласия, фишинг, распространение вредоносного ПО).</li>
+                <li><i class="fas fa-check-circle" style="color:#4a8eff;"></i> Уважение к сообществу: никаких атак, доксинга или преследования.</li>
+                <li><i class="fas fa-check-circle" style="color:#4a8eff;"></i> Все инструменты и ссылки предназначены для исследований, обучения и повышения цифровой гигиены.</li>
+                <li><i class="fas fa-check-circle" style="color:#d52b1e;"></i> <strong>🇷🇺 Российская разработка.</strong> Проект реализует политику импортозамещения в IT-сфере.</li>
             </ul>
             <div class="warning">
-                ⚠️ <strong>Правила пользования (DarkNet overlay):</strong> Вы несёте личную ответственность за свои действия. Администрация портала не отслеживает активность и не хранит метаданные. Любые попытки дестабилизации или атак на ресурсы запрещены. Используйте VPN/Tor по своему усмотрению, но в рамках закона.
+                ⚠️ <strong>Правила пользования:</strong> Вы несёте личную ответственность за свои действия. Администрация портала не отслеживает активность и не хранит метаданные. Любые попытки дестабилизации или атак на ресурсы запрещены. Используйте VPN/Tor по своему усмотрению, но в рамках закона РФ.
             </div>
-            <p><i class="fas fa-terminal"></i> Лицензия распространяется на все закладки и внешние переходы. By entering you agree to <strong>zero-liability for misuse</strong>. Stay anonymous, stay ethical.</p>
-            <p style="margin-top: 1rem; font-size:0.7rem;">🔐 HW Project | Хакер-культура, продуктивность, опенсорс.</p>
+            <p><i class="fas fa-terminal"></i> Лицензия распространяется на все закладки и внешние переходы. Используя портал, вы соглашаетесь с <strong>нулевой ответственностью за неправомерное использование</strong>. Оставайтесь анонимными, оставайтесь этичными.</p>
+            <p style="margin-top: 1rem; font-size:0.7rem;">🔐 HW Project | Российское ПО | Импортозамещение | Хакер-культура</p>
         </div>
     </div>
 </div>
 
 <script>
-    // ---- ПОЛНАЯ БАЗА САЙТОВ (сохранена полностью, Яндекс удалён из поиска, но остался как закладка) ----
+    // ---- ПОЛНАЯ БАЗА САЙТОВ ----
     const sitesData = [
         { id: 1, name: "GitHub", url: "https://github.com", description: "Репозитории, open-source, совместный код.", category: "Разработка", icon: "fab fa-github" },
         { id: 2, name: "Figma", url: "https://figma.com", description: "Дизайн интерфейсов и прототипирование.", category: "Дизайн", icon: "fab fa-figma" },
@@ -569,7 +677,6 @@
         { id: 29, name: "Мой Череповец", url: "https://xn--b1afabqrodii5ee.xn--p1ai/", description: "Городской портал Череповца.", category: "Города", icon: "fas fa-city" },
         { id: 30, name: "MAX Мессенджер", url: "https://web.max.ru/", description: "Защищённый мессенджер.", category: "Мессенджеры", icon: "fas fa-comment-dots" },
         { id: 31, name: "Rutube", url: "https://rutube.ru/", description: "Видеоплатформа.", category: "Медиа", icon: "fas fa-video" },
-        // === КАНАЛ DZEN ===
         {
             id: 32,
             name: "Dzen | Anonim Community",
@@ -578,7 +685,6 @@
             category: "Сообщества",
             icon: "fab fa-yandex"
         },
-        // === Официальный сайт города Череповца ===
         {
             id: 33,
             name: "Cherinfo | Официальный сайт Череповца",
@@ -637,7 +743,7 @@
         if (!container) return;
         const filtered = getFilteredSites();
         if (filtered.length === 0) {
-            container.innerHTML = `<div class="empty-state"><i class="fas fa-skull"></i> <p>no portals found // check your query</p></div>`;
+            container.innerHTML = `<div class="empty-state"><i class="fas fa-skull"></i> <p>порталы не найдены // проверьте запрос</p></div>`;
             return;
         }
         let cards = "";
@@ -658,7 +764,7 @@
                     </div>
                     <div class="site-description">${safeDesc}</div>
                     <div class="site-url"><i class="fas fa-link"></i> ${safeUrl}</div>
-                    <div class="card-footer"><button class="visit-btn" data-url="${safeUrl}">ENTER <i class="fas fa-arrow-right"></i></button></div>
+                    <div class="card-footer"><button class="visit-btn" data-url="${safeUrl}">ВОЙТИ <i class="fas fa-arrow-right"></i></button></div>
                 </div>
             `;
         });
@@ -690,17 +796,17 @@
         const body = document.body;
         if (saved === 'light') {
             body.classList.add('light-mode');
-            document.getElementById('themeText').innerHTML = 'LIGHT MODE';
+            document.getElementById('themeText').innerHTML = 'СВЕТЛАЯ';
         } else {
             body.classList.remove('light-mode');
-            document.getElementById('themeText').innerHTML = 'DARK/HACK';
+            document.getElementById('themeText').innerHTML = 'ТЁМНАЯ';
         }
         const toggle = document.getElementById('themeToggle');
         toggle.addEventListener('click', () => {
             body.classList.toggle('light-mode');
             const isLight = body.classList.contains('light-mode');
             localStorage.setItem('hw_theme', isLight ? 'light' : 'dark');
-            document.getElementById('themeText').innerHTML = isLight ? 'LIGHT MODE' : 'DARK/HACK';
+            document.getElementById('themeText').innerHTML = isLight ? 'СВЕТЛАЯ' : 'ТЁМНАЯ';
         });
     }
 
