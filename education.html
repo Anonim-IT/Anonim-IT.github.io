@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="HW School — расписание занятий. Интерактивное расписание с управлением через JSON.">
+    <title>HW School | Расписание занятий (JSON)</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-deep: #05050a;
+            --bg-surface: #0a0a12;
+            --bg-card: rgba(8, 8, 18, 0.8);
+            --border-subtle: rgba(255, 0, 0, 0.06);
+            --border-active: rgba(255, 0, 0, 0.4);
+            --accent-red: #ff0000;
+            --accent-red-dark: #cc0000;
+            --accent-cyber: #00ff41;
+            --accent-purple: #a855f7;
+            --text-primary: #e8e8f0;
+            --text-secondary: #8a8aaa;
+            --text-muted: #4a4a6a;
+            --glow-red: 0 0 30px rgba(255, 0, 0, 0.1);
+            --font-mono: 'JetBrains Mono', monospace;
+            --transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #0a0a12, #05050a);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.06;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .glass-header {
+            background: rgba(5, 5, 10, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.6rem;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-red-dark));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--glow-red);
+        }
+
+        .logo-icon span {
+            color: #000;
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #ffffff, var(--accent-red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: 0.2s;
+            font-family: var(--font-mono);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-red);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-red);
+        }
+
+        .json-trigger {
+            background: rgba(168, 85, 247, 0.06);
+            border: 1px solid var(--accent-purple);
+            padding: 8px 20px;
+            border-radius: 60px;
+            font-weight: 500;
+            color: var(--accent-purple);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .json-trigger:hover {
+            background: rgba(168, 85, 247, 0.12);
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.2);
+        }
+
+        .hero-section {
+            padding: 2.5rem 0 1.5rem;
+            border-bottom: 1px solid rgba(255, 0, 0, 0.04);
+            margin-bottom: 2rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 0, 0, 0.06);
+            border: 1px solid rgba(255, 0, 0, 0.15);
+            border-radius: 60px;
+            padding: 0.3rem 1.2rem;
+            font-size: 0.75rem;
+            font-family: var(--font-mono);
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            color: var(--accent-red);
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, var(--accent-red), var(--accent-cyber));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-sub {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 700px;
+        }
+
+        /* Расписание */
+        .schedule-container {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 2rem;
+            margin: 2rem 0 3rem;
+        }
+
+        .schedule-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .day-section {
+            background: var(--bg-card);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 0, 0, 0.04);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .day-section:hover {
+            border-color: var(--accent-red);
+            box-shadow: var(--glow-red);
+        }
+
+        .day-header {
+            padding: 1rem 1.5rem;
+            background: rgba(255, 0, 0, 0.04);
+            border-bottom: 1px solid rgba(255, 0, 0, 0.04);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-header .day-name {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--accent-red);
+        }
+
+        .day-header .day-date {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-family: var(--font-mono);
+        }
+
+        .lesson-list {
+            padding: 0.5rem 0;
+        }
+
+        .lesson-item {
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            transition: var(--transition);
+        }
+
+        .lesson-item:last-child {
+            border-bottom: none;
+        }
+
+        .lesson-item:hover {
+            background: rgba(255, 0, 0, 0.02);
+        }
+
+        .lesson-time {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent-cyber);
+            min-width: 80px;
+        }
+
+        .lesson-info {
+            flex: 1;
+        }
+
+        .lesson-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .lesson-teacher {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        .lesson-room {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            background: rgba(255, 0, 0, 0.04);
+            padding: 2px 10px;
+            border-radius: 40px;
+        }
+
+        .empty-lesson {
+            padding: 0.8rem 1.5rem;
+            color: var(--text-muted);
+            font-style: italic;
+            font-size: 0.85rem;
+        }
+
+        /* Боковая панель */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .info-widget {
+            background: var(--bg-card);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 0, 0, 0.04);
+            border-radius: 24px;
+            padding: 1.5rem;
+        }
+
+        .info-widget h4 {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--accent-red);
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 0, 0, 0.04);
+            padding-bottom: 0.5rem;
+        }
+
+        .info-widget ul {
+            list-style: none;
+        }
+
+        .info-widget ul li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .info-widget ul li:last-child {
+            border-bottom: none;
+        }
+
+        .info-widget ul li .label {
+            color: var(--text-muted);
+        }
+
+        .info-widget ul li .value {
+            color: var(--accent-cyber);
+            font-family: var(--font-mono);
+        }
+
+        .info-widget .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            color: var(--accent-red);
+            display: block;
+            text-align: center;
+            margin: 0.5rem 0;
+        }
+
+        .anonym-banner {
+            background: rgba(0,0,0,0.4);
+            border-left: 4px solid var(--accent-red);
+            padding: 1rem 1.5rem;
+            border-radius: 20px;
+            margin: 1rem 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .footer {
+            border-top: 1px solid rgba(255, 0, 0, 0.04);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Модальное окно */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 2, 8, 0.96);
+            backdrop-filter: blur(16px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.2s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .json-editor-modal {
+            background: #0a0a12;
+            border: 1px solid var(--accent-red);
+            border-radius: 32px;
+            max-width: 900px;
+            width: 95%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+            transform: scale(0.96);
+            transition: transform 0.2s;
+        }
+
+        .modal-overlay.active .json-editor-modal {
+            transform: scale(1);
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .close-modal-btn:hover {
+            color: var(--accent-red);
+        }
+
+        .json-editor textarea {
+            width: 100%;
+            background: #05050a;
+            border: 1px solid rgba(255, 0, 0, 0.06);
+            border-radius: 16px;
+            padding: 1rem;
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            margin: 1rem 0;
+            resize: vertical;
+            min-height: 400px;
+        }
+
+        .json-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-red-dark));
+            border: none;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            cursor: pointer;
+            color: #000;
+        }
+
+        .btn-reset {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-family: var(--font-mono);
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .status-msg {
+            font-size: 0.8rem;
+            color: var(--accent-cyber);
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+
+        @media (max-width: 900px) {
+            .schedule-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .hero-title { font-size: 2rem; }
+            .container { padding: 0 1.2rem; }
+            .header-inner { flex-direction: column; }
+            .lesson-item { flex-wrap: wrap; gap: 0.3rem; }
+            .lesson-time { min-width: 60px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== КАНВАС ДЛЯ МАТРИЦЫ ===== -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <header class="glass-header">
+        <div class="container header-inner">
+            <a href="/" class="logo">
+                <div class="logo-icon"><span>⟁</span></div>
+                <span>HW School</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/index.html">Портал</a></li>
+                    <li><a href="/HWschool.html">О школе</a></li>
+                    <li><a href="#" class="active">Расписание</a></li>
+                    <li><a href="/news.html">Новости</a></li>
+                </ul>
+            </nav>
+            <button class="json-trigger" id="openJsonEditor">📝 Редактировать JSON</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="hero-section">
+                <div class="badge">📚 HW SCHOOL // РАСПИСАНИЕ (JSON)</div>
+                <h1 class="hero-title">Расписание занятий</h1>
+                <p class="hero-sub">Интерактивное расписание HW School. Управление через JSON-файл — добавляйте, меняйте, удаляйте занятия в реальном времени.</p>
+            </div>
+
+            <div class="anonym-banner">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 2rem;">🕶️</span>
+                    <div>
+                        <strong style="color: var(--accent-red); font-family: monospace;">JSON + Анонимность</strong>
+                        <p style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">Редактируйте файл schedule.json — добавляйте, меняйте, удаляйте занятия. Данные загружаются напрямую из JSON файла.</p>
+                    </div>
+                </div>
+                <div style="font-size: 0.7rem; font-family: monospace; background: rgba(255,0,0,0.04); padding: 6px 14px; border-radius: 40px; border: 1px solid rgba(255,0,0,0.06);">#edit_json • #dynamic_schedule</div>
+            </div>
+
+            <div class="schedule-container">
+                <div class="schedule-grid" id="scheduleGrid">
+                    <div style="text-align: center; padding: 3rem; color: var(--text-muted);">📡 Загрузка расписания из schedule.json...</div>
+                </div>
+
+                <div class="sidebar">
+                    <div class="info-widget">
+                        <h4>📊 Статистика</h4>
+                        <span class="stat-number" id="totalLessons">0</span>
+                        <p style="text-align: center; color: var(--text-muted); font-size: 0.8rem;">всего занятий</p>
+                        <ul>
+                            <li><span class="label">Дней</span><span class="value" id="totalDays">0</span></li>
+                            <li><span class="label">Преподавателей</span><span class="value" id="totalTeachers">0</span></li>
+                            <li><span class="label">Аудиторий</span><span class="value" id="totalRooms">0</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="info-widget">
+                        <h4>📅 Текущая неделя</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; text-align: center;" id="currentWeek">Загрузка...</p>
+                    </div>
+
+                    <div class="info-widget">
+                        <h4>⚡ Быстрые действия</h4>
+                        <button class="json-trigger" id="openJsonEditorSmall" style="width: 100%; text-align: center; justify-content: center;">
+                            📝 Редактировать JSON
+                        </button>
+                        <button class="json-trigger" id="downloadJsonBtn" style="width: 100%; text-align: center; justify-content: center; margin-top: 8px; border-color: var(--accent-cyber); color: var(--accent-cyber);">
+                            ⬇️ Скачать schedule.json
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 HW School — Расписание с управлением через JSON. Редактируйте файл <strong style="color: var(--accent-red);">schedule.json</strong> или используйте встроенный редактор.</p>
+            <div style="margin-top: 1rem; color: var(--text-muted); font-size: 0.7rem;">JSON конфигурация v2.0</div>
+        </div>
+    </footer>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО JSON РЕДАКТОРА ===== -->
+    <div id="jsonEditorModal" class="modal-overlay">
+        <div class="json-editor-modal">
+            <button class="close-modal-btn" id="closeJsonModal">&times;</button>
+            <h2 style="color: var(--accent-red); margin-bottom: 0.5rem;">✏️ Редактор расписания (JSON)</h2>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">Редактируйте JSON расписание. После сохранения данные будут загружены из обновлённого schedule.json.</p>
+            <div class="json-editor">
+                <textarea id="jsonEditorTextarea" rows="20"></textarea>
+                <div class="json-actions">
+                    <button class="btn-reset" id="resetJsonBtn">Сбросить к примеру</button>
+                    <button class="btn-save" id="saveJsonBtn">💾 Сохранить в schedule.json</button>
+                </div>
+                <div id="jsonStatus" class="status-msg"></div>
+            </div>
+            <div style="margin-top: 1rem; font-size: 0.7rem; color: var(--text-muted); border-top: 1px solid rgba(255, 0, 0, 0.04); padding-top: 1rem;">
+                📌 Формат: объект с полем "schedule" — массив дней с полями: day, date, lessons (массив с time, name, teacher, room).
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // МАТРИЦА — ЖИВЫЕ ОБОИ
+        // ============================================================
+        (function() {
+            const canvas = document.getElementById('matrix-canvas');
+            const ctx = canvas.getContext('2d');
+
+            let width, height;
+            let columns = [];
+            let mouseX = 0;
+            let mouseY = 0;
+            const FONT_SIZE = 16;
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+
+                const colCount = Math.floor(width / FONT_SIZE);
+                columns = [];
+                for (let i = 0; i < colCount; i++) {
+                    columns.push({
+                        x: i * FONT_SIZE,
+                        y: Math.random() * height,
+                        speed: 0.5 + Math.random() * 1.2,
+                        chars: '0123456789ABCDEF',
+                        length: 5 + Math.floor(Math.random() * 10),
+                    });
+                }
+            }
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function drawMatrix() {
+                ctx.fillStyle = 'rgba(5, 5, 10, 0.04)';
+                ctx.fillRect(0, 0, width, height);
+
+                ctx.font = `${FONT_SIZE}px 'JetBrains Mono', monospace`;
+                ctx.textAlign = 'center';
+
+                columns.forEach(col => {
+                    const dx = mouseX - col.x;
+                    const dy = mouseY - col.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const maxDist = 180;
+
+                    if (dist < maxDist && dist > 0) {
+                        const force = (1 - dist / maxDist) * 2.5;
+                        col.speed = 0.8 + force * 2;
+                    }
+
+                    col.y += col.speed;
+
+                    if (col.y > height) {
+                        col.y = -col.length * FONT_SIZE;
+                        col.speed = 0.5 + Math.random() * 1.2;
+                    }
+
+                    const charLen = col.length;
+                    for (let i = 0; i < charLen; i++) {
+                        const yPos = col.y - i * FONT_SIZE;
+                        if (yPos < 0 || yPos > height) continue;
+
+                        const char = col.chars[Math.floor(Math.random() * col.chars.length)];
+                        const brightness = 1 - (i / charLen);
+                        const alpha = 0.3 + brightness * 0.7;
+
+                        const red = Math.floor(150 + 105 * brightness);
+                        ctx.fillStyle = `rgba(${red}, ${Math.floor(10 * brightness)}, ${Math.floor(10 * brightness)}, ${alpha})`;
+                        ctx.fillText(char, col.x, yPos);
+                    }
+
+                    const headY = col.y;
+                    if (headY > 0 && headY < height) {
+                        const headChar = col.chars[Math.floor(Math.random() * col.chars.length)];
+                        ctx.fillStyle = `rgba(255, 50, 50, 0.9)`;
+                        ctx.shadowColor = 'rgba(255, 0, 0, 0.3)';
+                        ctx.shadowBlur = 8;
+                        ctx.fillText(headChar, col.x, headY);
+                        ctx.shadowBlur = 0;
+                    }
+                });
+
+                requestAnimationFrame(drawMatrix);
+            }
+
+            window.addEventListener('resize', resize);
+            resize();
+            drawMatrix();
+        })();
+
+        // ============================================================
+        // ОСНОВНОЙ JS
+        // ============================================================
+
+        // ДЕФОЛТНЫЙ JSON (пример структуры)
+        const DEFAULT_SCHEDULE_JSON = {
+            "schedule": [
+                {
+                    "day": "Понедельник",
+                    "date": "23 июня 2026",
+                    "lessons": [
+                        { "time": "10:00 - 11:30", "name": "Основы кибербезопасности", "teacher": "А.И. Петров", "room": "А-101" },
+                        { "time": "12:00 - 13:30", "name": "Программирование на Python", "teacher": "М.В. Смирнова", "room": "Б-204" },
+                        { "time": "14:00 - 15:30", "name": "Криптография", "teacher": "Д.А. Иванов", "room": "А-305" }
+                    ]
+                },
+                {
+                    "day": "Вторник",
+                    "date": "24 июня 2026",
+                    "lessons": [
+                        { "time": "10:00 - 11:30", "name": "Этичный хакинг", "teacher": "С.Н. Козлов", "room": "В-112" },
+                        { "time": "12:00 - 13:30", "name": "Сетевые технологии", "teacher": "Е.А. Новикова", "room": "А-203" }
+                    ]
+                },
+                {
+                    "day": "Среда",
+                    "date": "25 июня 2026",
+                    "lessons": [
+                        { "time": "10:00 - 11:30", "name": "Анализ вредоносного ПО", "teacher": "П.И. Морозов", "room": "Б-308" },
+                        { "time": "14:00 - 15:30", "name": "Практикум по пентесту", "teacher": "А.И. Петров", "room": "Лаб-1" }
+                    ]
+                },
+                {
+                    "day": "Четверг",
+                    "date": "26 июня 2026",
+                    "lessons": [
+                        { "time": "12:00 - 13:30", "name": "Web-безопасность", "teacher": "М.В. Смирнова", "room": "А-101" },
+                        { "time": "14:00 - 15:30", "name": "Linux и скриптинг", "teacher": "Д.А. Иванов", "room": "В-112" }
+                    ]
+                },
+                {
+                    "day": "Пятница",
+                    "date": "27 июня 2026",
+                    "lessons": [
+                        { "time": "10:00 - 11:30", "name": "Киберкриминалистика", "teacher": "С.Н. Козлов", "room": "Б-204" },
+                        { "time": "12:00 - 13:30", "name": "Защита данных", "teacher": "Е.А. Новикова", "room": "А-305" },
+                        { "time": "14:00 - 15:30", "name": "CTF-практика", "teacher": "П.И. Морозов", "room": "Лаб-1" }
+                    ]
+                }
+            ]
+        };
+
+        let currentSchedule = null;
+
+        // Загрузка расписания из schedule.json
+        async function loadScheduleFromFile() {
+            const grid = document.getElementById('scheduleGrid');
+            grid.innerHTML = '<div style="text-align: center; padding: 3rem; color: var(--text-muted);">📡 Загрузка расписания из schedule.json...</div>';
+            
+            try {
+                const response = await fetch(`schedule.json?t=${Date.now()}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status} - файл schedule.json не найден`);
+                }
+                const data = await response.json();
+                
+                if (!data.schedule || !Array.isArray(data.schedule)) {
+                    throw new Error('Неверный формат JSON. Ожидается объект с полем "schedule"');
+                }
+                
+                if (data.schedule.length === 0) {
+                    grid.innerHTML = '<div style="text-align: center; padding: 3rem; color: var(--text-muted);">📭 Расписание пусто. Добавьте занятия через JSON редактор.</div>';
+                    return;
+                }
+                
+                currentSchedule = data.schedule;
+                renderSchedule();
+            } catch (error) {
+                console.error('Ошибка загрузки schedule.json:', error);
+                grid.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; background: rgba(0,0,0,0.5); border-radius: 28px;">
+                        <span style="font-size: 3rem;">⚠️</span>
+                        <h3 style="color: var(--accent-red); margin: 1rem 0;">Не удалось загрузить schedule.json</h3>
+                        <p style="color: var(--text-secondary);">Убедитесь, что файл <strong style="color: var(--accent-red);">schedule.json</strong> находится в той же папке, что и education.html</p>
+                        <p style="color: var(--text-muted); margin-top: 1rem; font-family: monospace;">Ошибка: ${error.message}</p>
+                        <button class="json-trigger" id="createExampleJson" style="margin-top: 1.5rem;">📄 Создать пример schedule.json</button>
+                    </div>
+                `;
+                const createBtn = document.getElementById('createExampleJson');
+                if (createBtn) {
+                    createBtn.addEventListener('click', downloadExampleJson);
+                }
+            }
+        }
+
+        // Скачать пример JSON файла
+        function downloadExampleJson() {
+            const blob = new Blob([JSON.stringify(DEFAULT_SCHEDULE_JSON, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'schedule.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            const statusDiv = document.getElementById('jsonStatus');
+            if (statusDiv) {
+                statusDiv.innerHTML = '✅ Пример файла schedule.json скачан. Поместите его в папку с сайтом и обновите страницу.';
+                statusDiv.style.color = 'var(--accent-cyber)';
+                setTimeout(() => { statusDiv.innerHTML = ''; }, 5000);
+            }
+        }
+
+        // Отображение расписания
+        function renderSchedule() {
+            const grid = document.getElementById('scheduleGrid');
+            if (!grid || !currentSchedule) return;
+
+            let html = '';
+            let totalLessons = 0;
+            const teachers = new Set();
+            const rooms = new Set();
+
+            currentSchedule.forEach(day => {
+                const lessons = day.lessons || [];
+                totalLessons += lessons.length;
+                lessons.forEach(l => {
+                    if (l.teacher) teachers.add(l.teacher);
+                    if (l.room) rooms.add(l.room);
+                });
+
+                html += `
+                    <div class="day-section">
+                        <div class="day-header">
+                            <span class="day-name">${escapeHtml(day.day)}</span>
+                            <span class="day-date">${escapeHtml(day.date || '')}</span>
+                        </div>
+                        <div class="lesson-list">
+                `;
+
+                if (lessons.length === 0) {
+                    html += `<div class="empty-lesson">Нет занятий</div>`;
+                } else {
+                    lessons.forEach(lesson => {
+                        html += `
+                            <div class="lesson-item">
+                                <span class="lesson-time">${escapeHtml(lesson.time || '')}</span>
+                                <div class="lesson-info">
+                                    <div class="lesson-name">${escapeHtml(lesson.name || 'Без названия')}</div>
+                                    <div class="lesson-teacher">${escapeHtml(lesson.teacher || '')}</div>
+                                </div>
+                                <span class="lesson-room">${escapeHtml(lesson.room || '')}</span>
+                            </div>
+                        `;
+                    });
+                }
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+
+            // Обновляем статистику
+            document.getElementById('totalLessons').textContent = totalLessons;
+            document.getElementById('totalDays').textContent = currentSchedule.length;
+            document.getElementById('totalTeachers').textContent = teachers.size;
+            document.getElementById('totalRooms').textContent = rooms.size;
+
+            // Текущая неделя
+            const now = new Date();
+            const weekStart = new Date(now);
+            weekStart.setDate(now.getDate() - now.getDay() + 1);
+            const weekEnd = new Date(weekStart);
+            weekEnd.setDate(weekStart.getDate() + 4);
+            document.getElementById('currentWeek').textContent = 
+                `${weekStart.toLocaleDateString('ru-RU')} — ${weekEnd.toLocaleDateString('ru-RU')}`;
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        // ============================================================
+        // JSON РЕДАКТОР
+        // ============================================================
+        const jsonModal = document.getElementById('jsonEditorModal');
+        const jsonTextarea = document.getElementById('jsonEditorTextarea');
+        const openJsonBtns = document.querySelectorAll('#openJsonEditor, #openJsonEditorSmall');
+        const closeJsonBtn = document.getElementById('closeJsonModal');
+        const saveJsonBtn = document.getElementById('saveJsonBtn');
+        const resetJsonBtn = document.getElementById('resetJsonBtn');
+        const downloadJsonBtn = document.getElementById('downloadJsonBtn');
+        const statusDiv = document.getElementById('jsonStatus');
+
+        function openJsonEditor() {
+            const dataToShow = currentSchedule ? { schedule: currentSchedule } : DEFAULT_SCHEDULE_JSON;
+            jsonTextarea.value = JSON.stringify(dataToShow, null, 2);
+            jsonModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            if (statusDiv) statusDiv.innerHTML = '';
+        }
+
+        function closeJsonEditor() {
+            jsonModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function saveJsonAndReload() {
+            try {
+                const parsed = JSON.parse(jsonTextarea.value);
+                if (!parsed.schedule || !Array.isArray(parsed.schedule)) {
+                    throw new Error('Данные должны быть объектом с полем "schedule" (массив)');
+                }
+                
+                const blob = new Blob([JSON.stringify(parsed, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'schedule.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                if (statusDiv) {
+                    statusDiv.innerHTML = '✅ JSON файл сохранен! Замените им schedule.json и обновите страницу (F5).';
+                    statusDiv.style.color = 'var(--accent-cyber)';
+                }
+                
+                setTimeout(() => {
+                    closeJsonEditor();
+                    if (statusDiv) statusDiv.innerHTML = '';
+                }, 2000);
+            } catch(e) {
+                if (statusDiv) {
+                    statusDiv.innerHTML = `❌ Ошибка: ${e.message}`;
+                    statusDiv.style.color = 'var(--accent-red)';
+                    setTimeout(() => { if (statusDiv) statusDiv.innerHTML = ''; }, 4000);
+                }
+            }
+        }
+
+        function resetToDefault() {
+            jsonTextarea.value = JSON.stringify(DEFAULT_SCHEDULE_JSON, null, 2);
+            if (statusDiv) {
+                statusDiv.innerHTML = '📄 Загружен пример. Нажмите "Сохранить в schedule.json" для скачивания.';
+                statusDiv.style.color = 'var(--accent-cyber)';
+            }
+        }
+
+        function downloadScheduleJson() {
+            const data = currentSchedule ? { schedule: currentSchedule } : DEFAULT_SCHEDULE_JSON;
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'schedule.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        openJsonBtns.forEach(btn => btn.addEventListener('click', openJsonEditor));
+        closeJsonBtn.addEventListener('click', closeJsonEditor);
+        saveJsonBtn.addEventListener('click', saveJsonAndReload);
+        resetJsonBtn.addEventListener('click', resetToDefault);
+        downloadJsonBtn.addEventListener('click', downloadScheduleJson);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeJsonEditor(); });
+        jsonModal.addEventListener('click', (e) => { if (e.target === jsonModal) closeJsonEditor(); });
+
+        // Инициализация
+        loadScheduleFromFile();
+        setInterval(loadScheduleFromFile, 30000);
+    </script>
+</body>
+</html>
