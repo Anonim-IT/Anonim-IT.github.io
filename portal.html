@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="HW Pro — хакерский проект. Вход в портал. Информация о проекте, миссия, правила и контакты.">
+    <title>HW Pro | Вход в портал</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* --- ОБЩИЕ СТИЛИ (адаптированы под хакерскую тему) --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-deep: #05050a;
+            --bg-surface: #0a0a12;
+            --bg-card: rgba(8, 8, 18, 0.75);
+            --border-subtle: rgba(255, 0, 0, 0.08);
+            --border-active: rgba(255, 0, 0, 0.4);
+            --accent-red: #ff0000;
+            --accent-red-dark: #cc0000;
+            --text-primary: #e8e8f0;
+            --text-secondary: #8a8aaa;
+            --text-muted: #4a4a6a;
+            --glow-red: 0 0 30px rgba(255, 0, 0, 0.15);
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Фоновый слой с градиентом */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 20% 50%, rgba(255, 0, 0, 0.04), transparent 60%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* --- ХЕДЕР (как на главной) --- */
+        .glass-header {
+            background: rgba(5, 5, 10, 0.9);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 0, 0, 0.08);
+            padding: 0.8rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.4rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: 0.3s;
+        }
+        .logo:hover {
+            transform: scale(1.02);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-red-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--glow-red);
+        }
+        .logo-icon span {
+            color: #000;
+            font-weight: 900;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-red-dark));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .badge-hack {
+            font-size: 0.5rem;
+            background: var(--accent-red);
+            color: #000;
+            padding: 2px 10px;
+            border-radius: 40px;
+            font-weight: 700;
+            margin-left: 4px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            list-style: none;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
+            transition: 0.3s;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-red);
+            transition: width 0.3s;
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent-red);
+        }
+
+        /* --- ГЕРОЙ СЕКЦИЯ ПОРТАЛА --- */
+        .portal-hero {
+            padding: 4rem 0 2.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 0, 0, 0.05);
+        }
+
+        .portal-hero .badge {
+            display: inline-block;
+            background: rgba(255, 0, 0, 0.06);
+            border: 1px solid rgba(255, 0, 0, 0.15);
+            border-radius: 60px;
+            padding: 0.3rem 1.8rem;
+            font-size: 0.7rem;
+            font-family: var(--font-mono);
+            color: var(--accent-red);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 1.5rem;
+        }
+
+        .portal-hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, var(--accent-red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .portal-hero .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 0.5rem;
+        }
+        .portal-hero .status-badge {
+            display: inline-block;
+            margin-top: 1.5rem;
+            background: rgba(255, 0, 0, 0.08);
+            border: 1px solid var(--accent-red);
+            padding: 8px 24px;
+            border-radius: 60px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent-red);
+            animation: pulse-badge 2s infinite;
+        }
+        @keyframes pulse-badge {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.98); }
+        }
+
+        /* --- СЕКЦИЯ "О ПРОЕКТЕ" --- */
+        .section {
+            padding: 3rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+        .section:last-of-type {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-title .red {
+            color: var(--accent-red);
+        }
+        .section-title .line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent-red), transparent);
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .info-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 0, 0, 0.04);
+            border-radius: 20px;
+            padding: 1.8rem;
+            transition: 0.3s;
+        }
+        .info-card:hover {
+            border-color: var(--accent-red);
+            transform: translateY(-4px);
+            box-shadow: var(--glow-red);
+        }
+        .info-card .icon {
+            font-size: 2.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--accent-red);
+        }
+        .info-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .info-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* --- ИСТОРИЯ РАЗВИТИЯ (таймлайн) --- */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+        .timeline-item {
+            display: flex;
+            gap: 1.2rem;
+            padding: 0.8rem 1.2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border-left: 3px solid var(--accent-red);
+        }
+        .timeline-item .year {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: var(--accent-red);
+            min-width: 70px;
+        }
+        .timeline-item .desc {
+            color: var(--text-secondary);
+        }
+
+        /* --- ПРАВИЛА --- */
+        .rules-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .rule-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1rem 1.2rem;
+            border-radius: 12px;
+            border-left: 2px solid var(--accent-red);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .rule-item i {
+            color: var(--accent-red);
+            margin-top: 3px;
+        }
+        .rule-item span {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* --- КОНТАКТЫ --- */
+        .contact-block {
+            text-align: center;
+            background: var(--bg-card);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 0, 0, 0.06);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-top: 1.5rem;
+        }
+        .contact-block .big-icon {
+            font-size: 3rem;
+            color: var(--accent-red);
+            margin-bottom: 1rem;
+        }
+        .contact-block h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .contact-block p {
+            color: var(--text-secondary);
+            max-width: 550px;
+            margin: 0 auto 1.5rem;
+        }
+        .btn-vk {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-red-dark));
+            color: #000;
+            padding: 12px 32px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            text-decoration: none;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-vk:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
+        }
+
+        /* --- ФУТЕР --- */
+        .footer {
+            border-top: 1px solid rgba(255, 0, 0, 0.04);
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 2rem;
+        }
+        .footer .links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+        .footer .links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            transition: 0.3s;
+        }
+        .footer .links a:hover {
+            color: var(--accent-red);
+        }
+
+        /* --- АДАПТИВ --- */
+        @media (max-width: 768px) {
+            .portal-hero h1 { font-size: 2.4rem; }
+            .header-inner { flex-direction: column; align-items: center; }
+            .nav-links { justify-content: center; gap: 1.2rem; }
+            .section-title { font-size: 1.6rem; }
+            .timeline-item { flex-direction: column; gap: 0.3rem; }
+            .contact-block { padding: 1.5rem; }
+        }
+        @media (max-width: 480px) {
+            .portal-hero h1 { font-size: 2rem; }
+            .grid-2col { grid-template-columns: 1fr; }
+            .rules-list { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== ХЕДЕР ===== -->
+    <header class="glass-header">
+        <div class="container header-inner">
+            <a href="/" class="logo">
+                <div class="logo-icon"><span>⟁</span></div>
+                <span class="logo-text">HW Pro</span>
+                <span class="badge-hack">⚡ HACK</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/portal.html" class="active">Портал</a></li>
+                    <li><a href="/HWPro_OS.html">HWPro_OS</a></li>
+                    <li><a href="/HWschool.html">Школа</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== ГЕРОЙ ПОРТАЛА ===== -->
+    <section class="portal-hero">
+        <div class="container">
+            <div class="badge"><i class="fas fa-terminal"></i> Добро пожаловать в HW Pro</div>
+            <h1>Вход в портал</h1>
+            <p class="subtitle">
+                Здесь вы найдете всё о нашем проекте: миссию, историю, правила и то, как стать частью сообщества.
+            </p>
+            <div class="status-badge">
+                <i class="fas fa-code"></i> Проект в активной фазе создания
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== О ПРОЕКТЕ ===== -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <span class="red">#</span> О проекте <span class="line"></span>
+            </div>
+            <div class="grid-2col">
+                <div class="info-card">
+                    <div class="icon">🛡️</div>
+                    <h3>White Hat Only</h3>
+                    <p>Мы работаем строго в правовом поле. Наша цель — находить уязвимости, чтобы помочь, а не навредить. Этичный хакинг — наш главный принцип.</p>
+                </div>
+                <div class="info-card">
+                    <div class="icon">🔐</div>
+                    <h3>Образование и практика</h3>
+                    <p>Делимся знаниями о веб-безопасности, методах тестирования на проникновение (Penetration Testing) и способах защиты цифровых активов.</p>
+                </div>
+                <div class="info-card">
+                    <div class="icon">💻</div>
+                    <h3>Инструменты и исследования</h3>
+                    <p>Представляем легитимные инструменты для анализа безопасности, учебные стенды (CTF, лабы) и разбор реальных кейсов (с разрешения).</p>
+                </div>
+                <div class="info-card">
+                    <div class="icon">🤝</div>
+                    <h3>Комьюнити</h3>
+                    <p>Место для объединения энтузиастов, начинающих специалистов и профессионалов в области кибербезопасности.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ИСТОРИЯ РАЗВИТИЯ ===== -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <span class="red">⌛</span> История развития <span class="line"></span>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="year">2024</div>
+                    <div class="desc"><strong>Зарождение идеи.</strong> Формирование концепции проекта, определение миссии и ключевых направлений деятельности.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">2025</div>
+                    <div class="desc"><strong>Активная разработка.</strong> Запуск первых учебных материалов, создание сообщества в VK, начало работы над HWPro_OS.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">2026</div>
+                    <div class="desc"><strong>Текущий этап.</strong> Проект находится в стадии активного развития. Мы создаем инфраструктуру, пишем код, формируем команду.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">2030</div>
+                    <div class="desc"><strong>Плановый релиз HWPro_OS.</strong> Целевая дата выхода собственной операционной системы на ядре HWKernel.</div>
+                </div>
+            </div>
+            <p style="margin-top: 1.5rem; color: var(--text-muted); font-style: italic; text-align: center;">
+                <i class="fas fa-code"></i> Проект сейчас находится в <strong style="color: var(--accent-red);">активной фазе создания</strong>. Мы постоянно развиваемся и ищем единомышленников.
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== ПРАВИЛА ===== -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <span class="red">📜</span> Правила сообщества <span class="line"></span>
+            </div>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                Проект функционирует на принципах этичного хакинга и действующего законодательства. Мы за ответственное раскрытие уязвимостей (Responsible Disclosure).
+            </p>
+            <div class="rules-list">
+                <div class="rule-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span><strong>Этичный хакинг:</strong> Мы работаем только в рамках закона и с разрешения владельцев систем.</span>
+                </div>
+                <div class="rule-item">
+                    <i class="fas fa-user-secret"></i>
+                    <span><strong>Анонимность:</strong> Участники могут оставаться анонимными. Деанонимизация других запрещена.</span>
+                </div>
+                <div class="rule-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span><strong>Образовательная цель:</strong> Все материалы предоставляются для обучения и повышения квалификации.</span>
+                </div>
+                <div class="rule-item">
+                    <i class="fas fa-handshake"></i>
+                    <span><strong>Уважение:</strong> Запрещены любые формы агрессии, токсичности и преследования.</span>
+                </div>
+                <div class="rule-item">
+                    <i class="fas fa-lock"></i>
+                    <span><strong>Zero-Logs:</strong> Мы не храним логи пользователей. Ваша приватность защищена.</span>
+                </div>
+                <div class="rule-item">
+                    <i class="fas fa-shield-haltered"></i>
+                    <span><strong>Безопасность:</strong> Мы против использования знаний во вред. Все действия должны быть законными.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== КОНТАКТЫ ===== -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <span class="red">📬</span> Контакты <span class="line"></span>
+            </div>
+            <div class="contact-block">
+                <div class="big-icon">💬</div>
+                <h3>Официальное сообщество VK</h3>
+                <p>
+                    По всем вопросам, предложениям и для связи с командой проекта обращайтесь в наше официальное сообщество ВКонтакте.
+                    Мы всегда рады новым участникам и идеям!
+                </p>
+                <a href="https://vk.com/hw_protection" target="_blank" class="btn-vk">
+                    <i class="fab fa-vk"></i> Перейти в сообщество
+                </a>
+                <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted);">
+                    <i class="fas fa-info-circle"></i> Проект в стадии активной разработки. Присоединяйтесь, чтобы быть в курсе!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ФУТЕР ===== -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 HW Pro — Хакерский проект. Анонимность и защита данных.</p>
+            <div class="links">
+                <a href="/">Главная</a>
+                <a href="/portal.html">Портал</a>
+                <a href="https://vk.com/hw_protection" target="_blank">VK</a>
+                <a href="#" id="footerRuleLink">Законодательство</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО (ЗАКОНОДАТЕЛЬСТВО) ===== -->
+    <div id="rulesModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>📖 Законодательство HW Pro</h2>
+                <button class="close-modal" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="rule-article">
+                    <h4>Статья 1. Статус проекта</h4>
+                    <p>1.1. HW Pro — неофициальный, некоммерческий технологический проект. Все материалы публикуются в ознакомительных целях.</p>
+                    <p>1.2. Проект ставит во главу угла анонимность и защиту данных пользователей.</p>
+                    <p>1.3. Проект внесён в реестр HW_Sandbox (ID: HW-PRO-2406).</p>
+                </div>
+                <div class="rule-article">
+                    <h4>Статья 2. Принципы анонимности</h4>
+                    <p>2.1. Платформа не собирает cookies без согласия, не использует метрики слежения.</p>
+                    <p>2.2. Логирование сведений о пользователях сведено к абсолютному минимуму.</p>
+                    <p>2.3. Участники сообщества не вправе деанонимизировать других пользователей.</p>
+                </div>
+                <div class="rule-article">
+                    <h4>Статья 3. Белый хакинг</h4>
+                    <p>3.1. Участники обязуются использовать знания в рамках закона.</p>
+                    <p>3.2. Запрещены любые действия, направленные на кражу данных или нарушение приватности.</p>
+                </div>
+                <div class="legal-stamp">
+                    🕶️ HW Pro — анонимность и защита · Основано на принципах цифровой безопасности<br>
+                    📦 Зарегистрировано в HW_Sandbox (ID: HW-PRO-2406)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Стили для модального окна (добавлены в общий стиль) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 2, 8, 0.95);
+            backdrop-filter: blur(16px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s ease;
+            font-family: var(--font-mono);
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-container {
+            background: #0a0a12;
+            border: 1px solid var(--accent-red);
+            border-radius: 32px;
+            max-width: 750px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            transform: scale(0.95);
+            transition: transform 0.3s;
+        }
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+        .modal-container::-webkit-scrollbar {
+            width: 4px;
+        }
+        .modal-container::-webkit-scrollbar-thumb {
+            background: var(--accent-red);
+            border-radius: 2px;
+        }
+        .modal-header {
+            padding: 1.5rem 2rem 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 0, 0, 0.06);
+        }
+        .modal-header h2 {
+            font-size: 1.5rem;
+            color: var(--accent-red);
+        }
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            padding: 0 8px;
+        }
+        .close-modal:hover {
+            color: var(--accent-red);
+            transform: rotate(90deg);
+        }
+        .modal-body {
+            padding: 1.5rem 2rem 2rem;
+        }
+        .rule-article {
+            margin-bottom: 1.5rem;
+            border-left: 2px solid var(--accent-red);
+            padding-left: 1rem;
+        }
+        .rule-article h4 {
+            font-size: 1.1rem;
+            color: var(--accent-red);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .rule-article p, .rule-article li {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin-bottom: 0.3rem;
+        }
+        .legal-stamp {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            text-align: center;
+            font-size: 0.7rem;
+            border-top: 1px dashed rgba(255, 0, 0, 0.06);
+            color: var(--text-muted);
+        }
+    </style>
+
+    <script>
+        // ===== МОДАЛЬНОЕ ОКНО (ЗАКОНОДАТЕЛЬСТВО) =====
+        (function() {
+            const modal = document.getElementById('rulesModal');
+            const openBtn = document.getElementById('footerRuleLink');
+            const closeBtn = document.getElementById('closeModalBtn');
+
+            if (openBtn) {
+                openBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        })();
+    </script>
+
+</body>
+</html>

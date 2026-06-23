@@ -2,27 +2,28 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HW School | Анонимная школа кибербезопасности</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>HW School | Хакерская школа кибербезопасности</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #0039a6;
-            --primary-dark: #002a7a;
-            --primary-light: #1a4fa0;
+            --primary: #990000;
+            --primary-dark: #660000;
+            --primary-light: #cc0000;
             --secondary: #64748b;
-            --dark: #0a0e17;
+            --dark: #05050a;
             --light: #f8fafc;
-            --surface: #111827;
-            --surface-light: #1a2332;
+            --surface: #0a0505;
+            --surface-light: #1a0a0a;
             --success: #22c55e;
             --warning: #f59e0b;
-            --error: #d52b1e;
-            --accent: #8b5cf6;
+            --error: #ff0000;
+            --accent: #ff0000;
             --white: #ffffff;
-            --red: #d52b1e;
-            --blue: #0039a6;
-            --cyan: #00ffc4;
+            --red: #ff0000;
+            --blue: #cc0000;
+            --cyan: #00ff41;
+            --glow-red: 0 0 30px rgba(255, 0, 0, 0.1);
         }
         
         body {
@@ -32,38 +33,20 @@
             margin: 0;
             padding: 0;
             line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        /* Триколор вверху */
-        body::before {
-            content: '';
+        /* Канвас для матрицы */
+        #matrix-canvas {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, 
-                #ffffff 0%, 
-                #ffffff 33.33%,
-                #0039a6 33.33%,
-                #0039a6 66.66%,
-                #d52b1e 66.66%,
-                #d52b1e 100%
-            );
-            z-index: 1000;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Триколор как водяной знак */
-        body::after {
-            content: '🇷🇺';
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            font-size: 3rem;
-            opacity: 0.05;
+            width: 100%;
+            height: 100%;
             z-index: 0;
             pointer-events: none;
+            opacity: 0.1;
         }
         
         .container {
@@ -78,9 +61,9 @@
         .header {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             padding: 1rem 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
             position: sticky;
-            top: 5px;
+            top: 0;
             z-index: 100;
             border-bottom: 2px solid var(--cyan);
         }
@@ -108,15 +91,21 @@
             color: var(--cyan);
         }
         
-        .logo .badge-rf {
+        .logo .badge-hack {
             font-size: 0.5rem;
             background: var(--red);
-            color: white;
+            color: #000;
             padding: 2px 10px;
             border-radius: 40px;
             letter-spacing: 0.5px;
-            font-weight: 600;
+            font-weight: 700;
             margin-left: 4px;
+            animation: pulse-badge 2s infinite;
+        }
+
+        @keyframes pulse-badge {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.95); }
         }
 
         .header-buttons {
@@ -127,26 +116,26 @@
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(10, 14, 23, 0.92), rgba(10, 14, 23, 0.92)), 
+            background: linear-gradient(rgba(5, 5, 10, 0.92), rgba(5, 5, 10, 0.92)), 
                         url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
             background-position: center;
             padding: 5rem 0;
             text-align: center;
-            border-bottom: 1px solid rgba(0, 255, 196, 0.2);
+            border-bottom: 1px solid rgba(255, 0, 0, 0.15);
         }
         
         .hero-badge {
             display: inline-block;
-            background: rgba(0, 255, 196, 0.12);
-            border: 1px solid var(--cyan);
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid var(--red);
             border-radius: 60px;
             padding: 0.3rem 1.5rem;
             font-size: 0.75rem;
             font-weight: 600;
             letter-spacing: 1px;
             margin-bottom: 1.5rem;
-            color: var(--cyan);
+            color: var(--red);
             text-transform: uppercase;
         }
         
@@ -154,7 +143,7 @@
             font-size: 3.5rem;
             margin-bottom: 1rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #ffffff, var(--blue), var(--cyan));
+            background: linear-gradient(135deg, #ffffff, var(--red), var(--cyan));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -177,8 +166,8 @@
             font-weight: 600;
         }
 
-        .blue-text {
-            color: var(--blue);
+        .red-text {
+            color: var(--red);
         }
         
         /* Cards */
@@ -194,24 +183,24 @@
             border-radius: 16px;
             padding: 2rem;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(0, 255, 196, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.08);
         }
         
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 255, 196, 0.1);
-            border-color: var(--cyan);
+            box-shadow: var(--glow-red);
+            border-color: var(--red);
         }
         
         .card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: var(--cyan);
+            color: var(--red);
         }
         
         .card h3 i {
             margin-right: 10px;
-            color: var(--blue);
+            color: var(--cyan);
         }
         
         .card ul {
@@ -233,9 +222,9 @@
         }
         
         .section-alt {
-            background: rgba(0, 255, 196, 0.02);
-            border-top: 1px solid rgba(0, 255, 196, 0.08);
-            border-bottom: 1px solid rgba(0, 255, 196, 0.08);
+            background: rgba(255, 0, 0, 0.02);
+            border-top: 1px solid rgba(255, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(255, 0, 0, 0.05);
         }
         
         .section-title {
@@ -250,7 +239,7 @@
             display: block;
             width: 80px;
             height: 4px;
-            background: linear-gradient(90deg, var(--blue), var(--cyan));
+            background: linear-gradient(90deg, var(--red), var(--cyan));
             margin: 1rem auto;
             border-radius: 2px;
         }
@@ -270,35 +259,25 @@
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, var(--blue), var(--primary-dark));
-            color: white;
+            background: linear-gradient(135deg, var(--red), var(--primary-dark));
+            color: #fff;
         }
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 57, 166, 0.4);
+            box-shadow: var(--glow-red);
         }
         
         .btn-secondary {
             background: var(--surface);
             color: white;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
         
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
             transform: translateY(-2px);
-            border-color: var(--cyan);
-        }
-        
-        .btn-red {
-            background: linear-gradient(135deg, var(--red), #b71c1c);
-            color: white;
-        }
-        
-        .btn-red:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(213, 43, 30, 0.4);
+            border-color: var(--red);
         }
         
         .btn i {
@@ -312,8 +291,8 @@
             background: var(--surface);
             border-radius: 16px;
             padding: 2rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(0, 255, 196, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 0, 0, 0.08);
         }
         
         /* Footer */
@@ -323,22 +302,20 @@
             text-align: center;
             margin-top: 3rem;
             border-top: 3px solid;
-            border-image: linear-gradient(90deg, #ffffff, var(--blue), var(--red)) 1;
+            border-image: linear-gradient(90deg, var(--red), var(--cyan), var(--red)) 1;
         }
         
         .footer p {
             margin-bottom: 1rem;
         }
         
-        .footer .flag-row {
+        .footer .icon-row {
             display: flex;
             justify-content: center;
-            gap: 8px;
+            gap: 12px;
             margin-bottom: 0.5rem;
-        }
-        
-        .footer .flag-row span {
             font-size: 1.2rem;
+            opacity: 0.3;
         }
         
         .hashtags {
@@ -352,8 +329,8 @@
         
         /* Anonymity Banner */
         .anon-banner {
-            background: linear-gradient(135deg, rgba(0, 255, 196, 0.06), rgba(0, 57, 166, 0.04));
-            border: 1px solid rgba(0, 255, 196, 0.15);
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 65, 0.02));
+            border: 1px solid rgba(255, 0, 0, 0.08);
             border-radius: 16px;
             padding: 1.5rem 2rem;
             margin: 2rem 0;
@@ -386,7 +363,7 @@
         }
 
         .anon-banner .anon-badge-lg {
-            background: linear-gradient(135deg, var(--cyan), var(--blue));
+            background: linear-gradient(135deg, var(--red), var(--cyan));
             color: #000;
             padding: 8px 24px;
             border-radius: 60px;
@@ -396,18 +373,18 @@
             font-family: 'Inter', sans-serif;
         }
 
-        /* Russian Stamp */
-        .russian-stamp {
+        /* Hack Stamp */
+        .hack-stamp {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: rgba(0, 255, 196, 0.08);
+            background: rgba(255, 0, 0, 0.06);
             padding: 4px 14px 4px 10px;
             border-radius: 40px;
             font-size: 0.65rem;
-            color: var(--cyan);
+            color: var(--red);
             font-weight: 600;
-            border: 1px solid rgba(0, 255, 196, 0.2);
+            border: 1px solid rgba(255, 0, 0, 0.12);
         }
 
         .course-level {
@@ -432,9 +409,9 @@
         }
 
         .level-advanced {
-            background: rgba(213, 43, 30, 0.15);
+            background: rgba(255, 0, 0, 0.15);
             color: var(--red);
-            border: 1px solid rgba(213, 43, 30, 0.2);
+            border: 1px solid rgba(255, 0, 0, 0.2);
         }
         
         /* Responsive */
@@ -493,16 +470,20 @@
     </style>
 </head>
 <body>
+
+    <!-- ===== КАНВАС ДЛЯ МАТРИЦЫ ===== -->
+    <canvas id="matrix-canvas"></canvas>
+
     <!-- Header -->
     <header class="header">
         <div class="container header-content">
             <a href="#" class="logo">
                 <i class="fas fa-lock"></i>
                 <span>HW School</span>
-                <span class="badge-rf">🇷🇺 Анонимность</span>
+                <span class="badge-hack">⚡ HACK</span>
             </a>
             <div class="header-buttons">
-                <span class="russian-stamp">🛡️ Zero-Logs</span>
+                <span class="hack-stamp">🛡️ Zero-Logs</span>
                 <a href="https://t.me/hacker_school_25" target="_blank" class="btn btn-secondary">
                     <i class="fab fa-telegram"></i> Telegram
                 </a>
@@ -513,7 +494,7 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <div class="hero-badge">🇷🇺 Анонимная школа кибербезопасности</div>
+            <div class="hero-badge">⚡ Хакерская школа кибербезопасности</div>
             <h1 class="hero-title">HW School</h1>
             <p class="hero-subtitle">Современная <span class="highlight">анонимная</span> школа кибербезопасности и программирования нового поколения</p>
             <p>Открытие школы: <span class="highlight">1 Июля 2025 в 14:00 (МСК)</span></p>
@@ -545,7 +526,7 @@
                     <ul>
                         <li>Практический курс от основ до продвинутых техник</li>
                         <li>Работа с реальными кейсами (Pentest, Bug Hunting)</li>
-                        <li>Разбор правовых аспектов (152-ФЗ, УК РФ)</li>
+                        <li>Разбор правовых аспектов</li>
                         <li>Возможность попасть в команду после успешного окончания</li>
                         <li><span class="highlight">🕶️ Полная анонимность участников</span></li>
                     </ul>
@@ -567,7 +548,7 @@
                         <li>Обучение <span class="highlight">БЕСПЛАТНОЕ</span></li>
                         <li>Официальные заявки начнутся за 2 дня до старта</li>
                         <li>Регистрация ТОЛЬКО через официальный сайт</li>
-                        <li><span class="highlight">🇷🇺 Российская программа обучения</span></li>
+                        <li><span class="highlight">⚡ Полностью анонимная программа</span></li>
                         <li><span class="highlight">🕶️ Никаких логов и слежения</span></li>
                     </ul>
                 </div>
@@ -655,14 +636,15 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="flag-row">
-                <span>🇷🇺</span>
-                <span>🇷🇺</span>
-                <span>🇷🇺</span>
+            <div class="icon-row">
+                <span>⟁</span>
+                <span>🛡️</span>
+                <span>🔐</span>
+                <span>⚡</span>
             </div>
-            <p>HW School © 2025 | Анонимная школа кибербезопасности</p>
+            <p>HW School © 2025 | Хакерская школа кибербезопасности</p>
             <p style="font-size: 0.8rem; color: var(--secondary);">
-                🕶️ Полная анонимность. Zero-Logs. Защита данных. Подготовка кадров для цифровой экономики РФ.
+                🕶️ Полная анонимность. Zero-Logs. Защита данных. Подготовка кадров для цифровой безопасности.
             </p>
             <div class="hashtags">
                 <span>#WhiteHat</span>
@@ -670,9 +652,104 @@
                 <span>#БесплатноеОбучение</span>
                 <span>#Анонимность</span>
                 <span>#ZeroLogs</span>
-                <span>#Россия</span>
+                <span>#Хакинг</span>
             </div>
         </div>
     </footer>
+
+    <script>
+        // ============================================================
+        // МАТРИЦА — ЖИВЫЕ ОБОИ
+        // ============================================================
+        (function() {
+            const canvas = document.getElementById('matrix-canvas');
+            const ctx = canvas.getContext('2d');
+
+            let width, height;
+            let columns = [];
+            let mouseX = 0;
+            let mouseY = 0;
+            const FONT_SIZE = 16;
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+
+                const colCount = Math.floor(width / FONT_SIZE);
+                columns = [];
+                for (let i = 0; i < colCount; i++) {
+                    columns.push({
+                        x: i * FONT_SIZE,
+                        y: Math.random() * height,
+                        speed: 0.5 + Math.random() * 1.2,
+                        chars: '0123456789ABCDEF',
+                        length: 5 + Math.floor(Math.random() * 10),
+                    });
+                }
+            }
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function drawMatrix() {
+                ctx.fillStyle = 'rgba(5, 5, 10, 0.04)';
+                ctx.fillRect(0, 0, width, height);
+
+                ctx.font = `${FONT_SIZE}px 'JetBrains Mono', monospace`;
+                ctx.textAlign = 'center';
+
+                columns.forEach(col => {
+                    const dx = mouseX - col.x;
+                    const dy = mouseY - col.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const maxDist = 180;
+
+                    if (dist < maxDist && dist > 0) {
+                        const force = (1 - dist / maxDist) * 2.5;
+                        col.speed = 0.8 + force * 2;
+                    }
+
+                    col.y += col.speed;
+
+                    if (col.y > height) {
+                        col.y = -col.length * FONT_SIZE;
+                        col.speed = 0.5 + Math.random() * 1.2;
+                    }
+
+                    const charLen = col.length;
+                    for (let i = 0; i < charLen; i++) {
+                        const yPos = col.y - i * FONT_SIZE;
+                        if (yPos < 0 || yPos > height) continue;
+
+                        const char = col.chars[Math.floor(Math.random() * col.chars.length)];
+                        const brightness = 1 - (i / charLen);
+                        const alpha = 0.3 + brightness * 0.7;
+
+                        const red = Math.floor(150 + 105 * brightness);
+                        ctx.fillStyle = `rgba(${red}, ${Math.floor(10 * brightness)}, ${Math.floor(10 * brightness)}, ${alpha})`;
+                        ctx.fillText(char, col.x, yPos);
+                    }
+
+                    const headY = col.y;
+                    if (headY > 0 && headY < height) {
+                        const headChar = col.chars[Math.floor(Math.random() * col.chars.length)];
+                        ctx.fillStyle = `rgba(255, 50, 50, 0.9)`;
+                        ctx.shadowColor = 'rgba(255, 0, 0, 0.3)';
+                        ctx.shadowBlur = 8;
+                        ctx.fillText(headChar, col.x, headY);
+                        ctx.shadowBlur = 0;
+                    }
+                });
+
+                requestAnimationFrame(drawMatrix);
+            }
+
+            window.addEventListener('resize', resize);
+            resize();
+            drawMatrix();
+        })();
+    </script>
 </body>
 </html>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>HW Portal | Анонимный защищенный портал</title>
+    <title>HW Portal | Хакерский защищенный портал</title>
     <!-- Шрифты: JetBrains Mono для кода -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- Font Awesome 6 -->
@@ -15,36 +15,29 @@
             box-sizing: border-box;
         }
 
-        /* === DARK THEME / АНОНИМНОСТЬ И ЗАЩИТА === */
+        /* === DARK THEME / ХАКЕРСКИЙ СТИЛЬ === */
         body {
-            background: #0a0c10;
-            background-image: radial-gradient(circle at 15% 30%, rgba(0, 57, 166, 0.03) 0%, #0a0c10 90%);
+            background: #05050a;
+            background-image: radial-gradient(circle at 15% 30%, rgba(255, 0, 0, 0.03) 0%, #05050a 90%);
             font-family: 'Inter', 'JetBrains Mono', monospace;
             color: #c3d4e6;
             padding: 2rem 1.5rem;
             min-height: 100vh;
             transition: background 0.2s ease, color 0.2s;
             position: relative;
+            overflow-x: hidden;
         }
 
-        /* Триколор вверху */
-        body::before {
-            content: '';
+        /* Канвас для матрицы */
+        #matrix-canvas {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, 
-                #ffffff 0%, 
-                #ffffff 33.33%,
-                #0039a6 33.33%,
-                #0039a6 66.66%,
-                #d52b1e 66.66%,
-                #d52b1e 100%
-            );
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.12;
         }
 
         /* Light mode */
@@ -59,30 +52,30 @@
         }
         body.light-mode .site-card:hover {
             background: #ffffff;
-            border-color: #0039a6;
+            border-color: #cc0000;
         }
         body.light-mode .icon-bg {
             background: #e2e8f0;
-            color: #0039a6;
+            color: #cc0000;
         }
         body.light-mode .cat-btn.active {
-            background: #0039a6;
+            background: #cc0000;
             color: #eef2ff;
         }
         body.light-mode .security-badge, 
         body.light-mode .anon-badge {
             background: #e9ecef;
             border-color: #adb5bd;
-            color: #1e3a5f;
+            color: #2a1a1a;
         }
         body.light-mode .modal-content {
             background: #fefefe;
             color: #1e2a36;
-            border: 1px solid #0039a6;
+            border: 1px solid #cc0000;
         }
         body.light-mode .ddg-search-section {
             background: rgba(255,255,245,0.9);
-            border-color: #0039a6;
+            border-color: #cc0000;
         }
         body.light-mode .ddg-search-input {
             background: #f0f4f8;
@@ -90,24 +83,24 @@
             border-color: #b0c4de;
         }
         body.light-mode .ddg-search-input:focus {
-            border-color: #0039a6;
-            box-shadow: 0 0 8px rgba(0, 57, 166, 0.3);
+            border-color: #cc0000;
+            box-shadow: 0 0 8px rgba(204, 0, 0, 0.3);
         }
         body.light-mode .ddg-search-btn {
-            background: #0039a6;
+            background: #cc0000;
             color: white;
-            border-color: #0039a6;
+            border-color: #cc0000;
         }
         body.light-mode .ddg-search-btn:hover {
-            background: #1a4fa0;
+            background: #990000;
         }
         body.light-mode .legal-btn {
             color: #1e3a5f;
             border-color: #6a8fbb;
         }
         body.light-mode .legal-btn:hover {
-            border-color: #0039a6;
-            color: #0039a6;
+            border-color: #cc0000;
+            color: #cc0000;
         }
         body.light-mode .theme-btn {
             background: #e2e8f0;
@@ -116,7 +109,7 @@
         }
         body.light-mode .theme-btn:hover {
             background: #cbd5e1;
-            border-color: #0039a6;
+            border-color: #cc0000;
         }
         body.light-mode .note-search {
             color: #4a6a8a;
@@ -136,9 +129,11 @@
         .dashboard {
             max-width: 1400px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Badges анонимности и защиты */
+        /* Badges */
         .security-header {
             display: flex;
             justify-content: center;
@@ -147,39 +142,32 @@
             margin-bottom: 1.5rem;
         }
         .security-badge, .anon-badge {
-            background: rgba(0, 20, 15, 0.7);
+            background: rgba(10, 0, 0, 0.7);
             backdrop-filter: blur(4px);
-            border: 1px solid #0039a6;
+            border: 1px solid #cc0000;
             padding: 6px 16px;
             border-radius: 40px;
             font-size: 0.7rem;
             font-family: 'JetBrains Mono', monospace;
-            color: #aaddff;
+            color: #ff6a6a;
             display: inline-flex;
             align-items: center;
             gap: 8px;
             letter-spacing: 0.5px;
         }
         .security-badge i, .anon-badge i {
-            color: #4a8eff;
+            color: #ff0000;
             font-size: 0.8rem;
         }
-        .badge-ru {
-            border-color: #d52b1e;
-            color: #ffb3a8;
+        .badge-hack {
+            border-color: #00ff41;
+            color: #00ff41;
         }
-        .badge-ru i {
-            color: #d52b1e;
-        }
-        .badge-anon {
-            border-color: #00ffc4;
-            color: #00ffc4;
-        }
-        .badge-anon i {
-            color: #00ffc4;
+        .badge-hack i {
+            color: #00ff41;
         }
         
-        /* Кнопка правил и лицензии */
+        /* Кнопка правил */
         .legal-btn {
             background: transparent;
             border: 1px solid #5a6e7c;
@@ -195,9 +183,9 @@
             gap: 6px;
         }
         .legal-btn:hover {
-            border-color: #00ffc4;
-            color: #00ffc4;
-            background: rgba(0, 255, 196, 0.1);
+            border-color: #ff0000;
+            color: #ff0000;
+            background: rgba(255, 0, 0, 0.1);
         }
         
         .hero {
@@ -208,7 +196,7 @@
             font-size: 2.6rem;
             font-weight: 700;
             font-family: 'JetBrains Mono', monospace;
-            background: linear-gradient(135deg, #00ffc4, #ffffff, #4a8eff);
+            background: linear-gradient(135deg, #ff0000, #ffffff, #00ff41);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
@@ -218,17 +206,14 @@
             gap: 12px;
         }
         .hero h1 i {
-            color: #00ffc4;
-            text-shadow: 0 0 6px rgba(0, 255, 196, 0.3);
+            color: #ff0000;
+            text-shadow: 0 0 6px rgba(255, 0, 0, 0.3);
         }
         .hero p {
             font-size: 0.9rem;
             color: #7e9ab8;
             font-family: 'JetBrains Mono', monospace;
             margin-top: 0.5rem;
-        }
-        .hero .ru-flag {
-            color: #d52b1e;
         }
         
         .theme-switch-wrapper {
@@ -253,18 +238,18 @@
         }
         .theme-btn:hover {
             background: #2b4a5e;
-            border-color: #00ffc4;
-            box-shadow: 0 0 8px rgba(0, 255, 196, 0.3);
+            border-color: #ff0000;
+            box-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
         }
 
-        /* DuckDuckGo Search (анонимный поиск) */
+        /* DuckDuckGo Search */
         .ddg-search-section {
-            background: rgba(20, 28, 34, 0.85);
+            background: rgba(10, 5, 5, 0.85);
             backdrop-filter: blur(8px);
             border-radius: 28px;
             padding: 0.8rem 1.8rem;
             margin-bottom: 2rem;
-            border: 1px solid #00ffc4;
+            border: 1px solid #cc0000;
             max-width: 720px;
             margin-left: auto;
             margin-right: auto;
@@ -275,13 +260,10 @@
             justify-content: center;
             gap: 10px;
             font-weight: 600;
-            color: #00ffc4;
+            color: #ff6a6a;
             margin-bottom: 14px;
             font-size: 0.9rem;
             font-family: 'JetBrains Mono', monospace;
-        }
-        .ddg-search-title .ru-icon {
-            color: #d52b1e;
         }
         .ddg-search-form {
             display: flex;
@@ -294,20 +276,20 @@
             min-width: 200px;
             padding: 12px 18px;
             border-radius: 40px;
-            border: 1px solid #2f4a6a;
-            background: #0f1519;
+            border: 1px solid #2a1a1a;
+            background: #0a0505;
             color: #bbddf0;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.9rem;
             outline: none;
         }
         .ddg-search-input:focus {
-            border-color: #00ffc4;
-            box-shadow: 0 0 8px rgba(0, 255, 196, 0.3);
+            border-color: #ff0000;
+            box-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
         }
         .ddg-search-btn {
-            background: #0039a6;
-            border: 1px solid #00ffc4;
+            background: #990000;
+            border: 1px solid #ff0000;
             color: #ffffff;
             padding: 0 24px;
             border-radius: 40px;
@@ -316,8 +298,8 @@
             cursor: pointer;
         }
         .ddg-search-btn:hover {
-            background: #1a4fa0;
-            box-shadow: 0 0 6px rgba(0, 255, 196, 0.4);
+            background: #cc0000;
+            box-shadow: 0 0 6px rgba(255, 0, 0, 0.4);
         }
         .note-search {
             font-size: 0.65rem;
@@ -333,7 +315,7 @@
             justify-content: center;
         }
         .search-box {
-            background: #11181f;
+            background: #0a0505;
             border-radius: 48px;
             padding: 0.5rem 1.2rem;
             display: flex;
@@ -341,7 +323,7 @@
             gap: 12px;
             width: 100%;
             max-width: 500px;
-            border: 1px solid #2e4a6e;
+            border: 1px solid #2a1a1a;
         }
         .search-box input {
             background: transparent;
@@ -353,7 +335,7 @@
             outline: none;
         }
         .search-box i {
-            color: #00ffc4;
+            color: #ff0000;
         }
 
         .categories {
@@ -364,8 +346,8 @@
             margin-bottom: 2rem;
         }
         .cat-btn {
-            background: #0f171f;
-            border: 1px solid #2a4a6a;
+            background: #0a0505;
+            border: 1px solid #2a1a1a;
             padding: 6px 18px;
             border-radius: 32px;
             font-family: 'JetBrains Mono', monospace;
@@ -376,13 +358,13 @@
             transition: all 0.2s;
         }
         .cat-btn.active {
-            background: #0039a6;
-            border-color: #00ffc4;
+            background: #990000;
+            border-color: #ff0000;
             color: #f0f8ff;
-            box-shadow: 0 0 6px rgba(0, 255, 196, 0.3);
+            box-shadow: 0 0 6px rgba(255, 0, 0, 0.3);
         }
         .cat-btn:hover {
-            border-color: #00ffc4;
+            border-color: #ff0000;
         }
 
         .sites-grid {
@@ -391,19 +373,19 @@
             gap: 1.5rem;
         }
         .site-card {
-            background: rgba(15, 25, 30, 0.85);
+            background: rgba(10, 5, 5, 0.85);
             backdrop-filter: blur(4px);
             border-radius: 24px;
             padding: 1.2rem;
-            border: 1px solid #2a4a6a;
+            border: 1px solid #2a1a1a;
             transition: 0.2s ease;
             cursor: pointer;
         }
         .site-card:hover {
             transform: translateY(-4px);
-            background: #111e24;
-            border-color: #00ffc4;
-            box-shadow: 0 12px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(0, 255, 196, 0.2);
+            background: #1a0a0a;
+            border-color: #ff0000;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(255, 0, 0, 0.2);
         }
         .card-header {
             display: flex;
@@ -414,14 +396,14 @@
         .icon-bg {
             width: 48px;
             height: 48px;
-            background: #0f2d44;
+            background: #1a0a0a;
             border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.6rem;
-            color: #00ffc4;
-            border: 1px solid #3a6a9a;
+            color: #ff0000;
+            border: 1px solid #3a1a1a;
         }
         .card-title h3 {
             font-size: 1.25rem;
@@ -431,7 +413,7 @@
         }
         .category-tag {
             font-size: 0.65rem;
-            background: #1f3a5a;
+            background: #1a0a0a;
             display: inline-block;
             padding: 3px 10px;
             border-radius: 24px;
@@ -447,7 +429,7 @@
         .site-url {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.7rem;
-            background: #061016;
+            background: #050505;
             padding: 6px 8px;
             border-radius: 12px;
             color: #8ab8ff;
@@ -456,7 +438,7 @@
         }
         .visit-btn {
             background: none;
-            border: 1px solid #3a7a9a;
+            border: 1px solid #3a1a1a;
             color: #bffff0;
             padding: 6px 12px;
             border-radius: 26px;
@@ -467,34 +449,34 @@
             width: fit-content;
         }
         .visit-btn:hover {
-            background: #0039a6;
-            border-color: #00ffc4;
+            background: #990000;
+            border-color: #ff0000;
             color: #fff;
         }
         .empty-state {
             grid-column: 1/-1;
             text-align: center;
             padding: 3rem;
-            background: #0f171e;
+            background: #0a0505;
             border-radius: 36px;
-            border: 1px dashed #3a6a9a;
+            border: 1px dashed #3a1a1a;
         }
         .footer-note {
             text-align: center;
             margin-top: 3rem;
             font-size: 0.7rem;
-            border-top: 1px solid #2d4a6a;
+            border-top: 1px solid #2a1a1a;
             padding-top: 1.5rem;
             color: #6c98b0;
         }
-        .footer-note .ru-icon {
-            color: #d52b1e;
+        .footer-note .hack-icon {
+            color: #ff0000;
         }
-        .footer-note .cyan-icon {
-            color: #00ffc4;
+        .footer-note .green-icon {
+            color: #00ff41;
         }
         
-        /* === МОДАЛЬНОЕ ОКНО (Лицензия и правила) === */
+        /* === МОДАЛЬНОЕ ОКНО === */
         .modal {
             display: none;
             position: fixed;
@@ -504,20 +486,20 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.85);
+            background-color: rgba(0,0,0,0.9);
             backdrop-filter: blur(10px);
             justify-content: center;
             align-items: center;
         }
         .modal-content {
-            background: #0f1a1f;
+            background: #0a0505;
             margin: 5% auto;
             padding: 2rem;
             border-radius: 32px;
             max-width: 700px;
             width: 90%;
-            border: 1px solid #00ffc4;
-            box-shadow: 0 0 30px rgba(0, 255, 196, 0.2);
+            border: 1px solid #ff0000;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.15);
             font-family: 'JetBrains Mono', monospace;
             color: #d4e8f0;
             position: relative;
@@ -526,16 +508,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #00ffc4;
+            border-bottom: 1px solid #ff0000;
             padding-bottom: 0.8rem;
             margin-bottom: 1.2rem;
         }
         .modal-header h2 {
             font-size: 1.4rem;
-            color: #00ffc4;
-        }
-        .modal-header h2 .ru-flag {
-            color: #d52b1e;
+            color: #ff0000;
         }
         .close-modal {
             font-size: 1.8rem;
@@ -545,7 +524,7 @@
             color: #8ab3a8;
         }
         .close-modal:hover {
-            color: #d52b1e;
+            color: #ff0000;
         }
         .license-text {
             font-size: 0.85rem;
@@ -568,8 +547,8 @@
             padding-left: 12px;
             margin: 1rem 0;
         }
-        .ru-license {
-            color: #00ffc4;
+        .hack-license {
+            color: #ff0000;
             font-weight: 600;
         }
         @media (max-width: 600px) {
@@ -582,266 +561,366 @@
     </style>
 </head>
 <body>
-<div class="dashboard">
-    <div class="theme-switch-wrapper">
-        <button id="themeToggle" class="theme-btn"><i class="fas fa-sun"></i> <span id="themeText">DARK</span> <i class="fas fa-moon"></i></button>
-        <button id="legalModalBtn" class="legal-btn"><i class="fas fa-gavel"></i> Лицензия & Правила</button>
-    </div>
-    
-    <div class="security-header">
-        <div class="security-badge"><i class="fas fa-shield-haltered"></i> ПОЛИТИКА НУЛЕВЫХ ЛОГОВ</div>
-        <div class="anon-badge badge-anon"><i class="fas fa-mask"></i> ПОЛНАЯ АНОНИМНОСТЬ</div>
-        <div class="security-badge"><i class="fas fa-lock"></i> ШИФРОВАННЫЙ ШЛЮЗ</div>
-        <div class="security-badge badge-ru"><i class="fas fa-flag"></i> РОССИЙСКОЕ ПО</div>
-    </div>
-    
-    <div class="hero">
-        <h1><i class="fas fa-shield-haltered"></i> HW PORTAL <i class="fas fa-code"></i></h1>
-        <p>// российский анонимный шлюз | zero-logs | полная защита | киберустойчивость</p>
-    </div>
 
-    <!-- DuckDuckGo Поиск (анонимный) -->
-    <div class="ddg-search-section">
-        <div class="ddg-search-title"><i class="fas fa-duck"></i> DuckDuckGo :: приватный поиск <i class="fas fa-eye-slash"></i> <span class="ru-icon">🇷🇺</span></div>
-        <form id="ddgSearchForm" action="https://duckduckgo.com/" method="get" target="_blank" class="ddg-search-form">
-            <input type="text" name="q" class="ddg-search-input" placeholder=">_ анонимный поиск (без логов)..." required>
-            <button type="submit" class="ddg-search-btn"><i class="fas fa-arrow-right"></i> искать</button>
-        </form>
-        <div class="note-search">[ без трекинга | без логов | открывается в новой вкладке ]</div>
-    </div>
+    <!-- ===== КАНВАС ДЛЯ МАТРИЦЫ ===== -->
+    <canvas id="matrix-canvas"></canvas>
 
-    <div class="search-section">
-        <div class="search-box">
-            <i class="fas fa-filter"></i>
-            <input type="text" id="searchInput" placeholder="фильтровать закладки по названию / описанию...">
+    <div class="dashboard">
+        <div class="theme-switch-wrapper">
+            <button id="themeToggle" class="theme-btn"><i class="fas fa-sun"></i> <span id="themeText">DARK</span> <i class="fas fa-moon"></i></button>
+            <button id="legalModalBtn" class="legal-btn"><i class="fas fa-gavel"></i> Лицензия & Правила</button>
         </div>
-    </div>
-
-    <div class="categories" id="categoryFilters"></div>
-    <div id="sitesContainer" class="sites-grid"></div>
-    <div class="footer-note">
-        <i class="fas fa-microchip cyan-icon"></i> защищенные закладки | приватность | arch linux | <span class="ru-icon">🇷🇺</span> zero-logs
-    </div>
-</div>
-
-<!-- Модальное окно с лицензией и правилами -->
-<div id="licenseModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2><i class="fas fa-shield-haltered"></i> <span class="ru-flag">🇷🇺</span> Лицензия HW Portal</h2>
-            <span class="close-modal">&times;</span>
-        </div>
-        <div class="license-text">
-            <p><strong>🔒 HW Portal — Лицензия анонимного доступа v.3.0 (Российский стандарт)</strong></p>
-            <p>Данный портал создан для обеспечения <span class="ru-license">полной анонимности</span> и защиты данных. Используя ресурсы, вы соглашаетесь с правилами:</p>
-            <ul>
-                <li><i class="fas fa-check-circle" style="color:#00ffc4;"></i> Абсолютная анонимность — никакие логи не сохраняются (Zero-Logs).</li>
-                <li><i class="fas fa-check-circle" style="color:#00ffc4;"></i> Запрещена любая деятельность, нарушающая законодательство РФ.</li>
-                <li><i class="fas fa-check-circle" style="color:#00ffc4;"></i> Уважение к сообществу: никаких атак, доксинга или преследования.</li>
-                <li><i class="fas fa-check-circle" style="color:#00ffc4;"></i> Все инструменты и ссылки предназначены для исследований и обучения.</li>
-                <li><i class="fas fa-check-circle" style="color:#d52b1e;"></i> <strong>🇷🇺 Российская разработка.</strong> Полная защита приватности.</li>
-            </ul>
-            <div class="warning">
-                ⚠️ <strong>Правила пользования:</strong> Вы несёте личную ответственность за свои действия. Администрация портала не отслеживает активность и не хранит метаданные. Используйте VPN/Tor по своему усмотрению, но в рамках закона РФ.
-            </div>
-            <p><i class="fas fa-terminal"></i> Лицензия распространяется на все закладки и внешние переходы. Используя портал, вы соглашаетесь с <strong>нулевой ответственностью за неправомерное использование</strong>. Оставайтесь анонимными, оставайтесь этичными.</p>
-            <p style="margin-top: 1rem; font-size:0.7rem;">🔐 HW Project | Российское ПО | Zero-Logs | Анонимность | Хакер-культура</p>
-        </div>
-    </div>
-</div>
-
-<script>
-    // ---- ПОЛНАЯ БАЗА САЙТОВ ----
-    const sitesData = [
-        { id: 1, name: "GitHub", url: "https://github.com", description: "Репозитории, open-source, совместный код.", category: "Разработка", icon: "fab fa-github" },
-        { id: 2, name: "Figma", url: "https://figma.com", description: "Дизайн интерфейсов и прототипирование.", category: "Дизайн", icon: "fab fa-figma" },
-        { id: 3, name: "Notion", url: "https://notion.so", description: "База знаний, документация, планирование.", category: "Продуктивность", icon: "fas fa-brain" },
-        { id: 4, name: "YouTube", url: "https://youtube.com", description: "Видео-контент, уроки, развлечения.", category: "Медиа", icon: "fab fa-youtube" },
-        { id: 5, name: "Stack Overflow", url: "https://stackoverflow.com", description: "Решение проблем кода.", category: "Разработка", icon: "fab fa-stack-overflow" },
-        { id: 6, name: "Dribbble", url: "https://dribbble.com", description: "Вдохновение и UI/UX.", category: "Дизайн", icon: "fab fa-dribbble" },
-        { id: 7, name: "Trello", url: "https://trello.com", description: "Канбан-доски и задачи.", category: "Продуктивность", icon: "fab fa-trello" },
-        { id: 8, name: "Spotify", url: "https://spotify.com", description: "Музыка, подкасты, фон.", category: "Медиа", icon: "fab fa-spotify" },
-        { id: 9, name: "MDN Web Docs", url: "https://developer.mozilla.org", description: "Документация веб-технологий.", category: "Разработка", icon: "fab fa-firefox" },
-        { id: 10, name: "Canva", url: "https://canva.com", description: "Графический редактор.", category: "Дизайн", icon: "fas fa-palette" },
-        { id: 11, name: "Gmail", url: "https://mail.google.com", description: "Почта и календарь.", category: "Продуктивность", icon: "fas fa-envelope" },
-        { id: 12, name: "Netflix", url: "https://netflix.com", description: "Кино и сериалы.", category: "Медиа", icon: "fab fa-netflix" },
-        { id: 13, name: "ChatGPT", url: "https://chat.openai.com", description: "AI-помощник.", category: "Инструменты", icon: "fas fa-robot" },
-        { id: 14, name: "Figma Community", url: "https://figma.com/community", description: "Ресурсы для дизайна.", category: "Дизайн", icon: "fas fa-shapes" },
-        { id: 15, name: "Linear", url: "https://linear.app", description: "Трекинг задач.", category: "Продуктивность", icon: "fas fa-chart-line" },
-        { id: 16, name: "HW Protection VK", url: "https://vk.com/hw_protection", description: "Сообщество VK, посвящённое HW Protection.", category: "Сообщества", icon: "fab fa-vk" },
-        { id: 17, name: "HWHellBlock", url: "https://anonim-it.github.io/HWHellBlock.html", description: "Страница проекта HWHellBlock.", category: "Инструменты", icon: "fas fa-shield-haltered" },
-        { id: 18, name: "Anonim-IT Hub", url: "https://anonim-it.github.io/", description: "Хаб Anonim-IT.", category: "Разработка", icon: "fab fa-github-alt" },
-        { id: 19, name: "HWPro OS", url: "https://anonim-it.github.io/HWPro_OS.html", description: "HWPro OS страница.", category: "Инструменты", icon: "fas fa-microchip" },
-        { id: 20, name: "Reddit HW Hell Block", url: "https://www.reddit.com/r/HW_Hell_Block/", description: "Сабреддит.", category: "Сообщества", icon: "fab fa-reddit-alien" },
-        { id: 21, name: "Twitch HW_RS", url: "https://www.twitch.tv/hw_rs", description: "Стримы.", category: "Медиа", icon: "fab fa-twitch" },
-        { id: 22, name: "Timeweb Cloud", url: "https://timeweb.cloud/my/projects/2255557", description: "Панель хостинга.", category: "Хостинг", icon: "fas fa-cloud-upload-alt" },
-        { id: 23, name: "Google Sheets (HW)", url: "https://docs.google.com/spreadsheets/d/1_9d6mV9sQcAZmm6YisB22h12hYO7qOU0aY3t0J79bUY/edit", description: "Таблица проектов.", category: "Продуктивность", icon: "fas fa-table" },
-        { id: 24, name: "DeepSeek Chat", url: "https://chat.deepseek.com/", description: "AI ассистент.", category: "Инструменты", icon: "fas fa-comments" },
-        { id: 25, name: "Google Translate", url: "https://translate.google.ru/", description: "Переводчик.", category: "Инструменты", icon: "fas fa-language" },
-        { id: 26, name: "Ozon", url: "https://www.ozon.ru/", description: "Маркетплейс.", category: "Покупки", icon: "fas fa-shopping-bag" },
-        { id: 27, name: "Карта Мира", url: "https://map.cmirit.ru/portal-gorod/", description: "Интерактивная карта.", category: "Карты", icon: "fas fa-map-marked-alt" },
-        { id: 28, name: "Яндекс", url: "https://yandex.ru", description: "Портал Яндекса.", category: "Поиск", icon: "fab fa-yandex" },
-        { id: 29, name: "Мой Череповец", url: "https://xn--b1afabqrodii5ee.xn--p1ai/", description: "Городской портал Череповца.", category: "Города", icon: "fas fa-city" },
-        { id: 30, name: "MAX Мессенджер", url: "https://web.max.ru/", description: "Защищённый мессенджер.", category: "Мессенджеры", icon: "fas fa-comment-dots" },
-        { id: 31, name: "Rutube", url: "https://rutube.ru/", description: "Видеоплатформа.", category: "Медиа", icon: "fas fa-video" },
-        {
-            id: 32,
-            name: "Dzen | Anonim Community",
-            url: "https://dzen.ru/anonimcommunity?clid=1400",
-            description: "Канал проекта на Dzen: анонимность, хакер-культура, кибербезопасность и новости сообщества.",
-            category: "Сообщества",
-            icon: "fab fa-yandex"
-        },
-        {
-            id: 33,
-            name: "Cherinfo | Официальный сайт Череповца",
-            url: "https://cherinfo.ru/",
-            description: "Официальный портал города Череповца: новости, афиша, городские сервисы, администрация и справочная информация.",
-            category: "Города",
-            icon: "fas fa-landmark"
-        }
-    ];
-
-    let activeCategory = "Все";
-    let searchQuery = "";
-
-    function getUniqueCategories() {
-        const catsSet = new Set(sitesData.map(s => s.category));
-        return Array.from(catsSet).sort((a,b) => a.localeCompare(b));
-    }
-
-    function escapeHtml(str) {
-        return str.replace(/[&<>]/g, m => (m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;')));
-    }
-
-    function renderCategories() {
-        const cats = getUniqueCategories();
-        const container = document.getElementById("categoryFilters");
-        if (!container) return;
-        let html = `<button class="cat-btn active" data-category="Все"><i class="fas fa-globe"></i> Все</button>`;
-        cats.forEach(c => {
-            html += `<button class="cat-btn" data-category="${escapeHtml(c)}"><i class="fas fa-tag"></i> ${escapeHtml(c)}</button>`;
-        });
-        container.innerHTML = html;
-        document.querySelectorAll(".cat-btn").forEach(btn => {
-            btn.addEventListener("click", () => {
-                const cat = btn.getAttribute("data-category");
-                if (!cat) return;
-                document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
-                btn.classList.add("active");
-                activeCategory = cat;
-                renderSites();
-            });
-        });
-    }
-
-    function getFilteredSites() {
-        let res = [...sitesData];
-        if (activeCategory !== "Все") res = res.filter(s => s.category === activeCategory);
-        if (searchQuery.trim()) {
-            const q = searchQuery.trim().toLowerCase();
-            res = res.filter(s => s.name.toLowerCase().includes(q) || s.description.toLowerCase().includes(q));
-        }
-        return res;
-    }
-
-    function renderSites() {
-        const container = document.getElementById("sitesContainer");
-        if (!container) return;
-        const filtered = getFilteredSites();
-        if (filtered.length === 0) {
-            container.innerHTML = `<div class="empty-state"><i class="fas fa-skull"></i> <p>порталы не найдены // проверьте запрос</p></div>`;
-            return;
-        }
-        let cards = "";
-        filtered.forEach(site => {
-            const safeName = escapeHtml(site.name);
-            const safeDesc = escapeHtml(site.description);
-            const safeUrl = escapeHtml(site.url);
-            const safeCat = escapeHtml(site.category);
-            const iconClass = site.icon || "fas fa-link";
-            cards += `
-                <div class="site-card" data-url="${safeUrl}">
-                    <div class="card-header">
-                        <div class="icon-bg"><i class="${iconClass}"></i></div>
-                        <div class="card-title">
-                            <h3>${safeName}</h3>
-                            <span class="category-tag"><i class="fas fa-folder-open"></i> ${safeCat}</span>
-                        </div>
-                    </div>
-                    <div class="site-description">${safeDesc}</div>
-                    <div class="site-url"><i class="fas fa-link"></i> ${safeUrl}</div>
-                    <div class="card-footer"><button class="visit-btn" data-url="${safeUrl}">ВОЙТИ <i class="fas fa-arrow-right"></i></button></div>
-                </div>
-            `;
-        });
-        container.innerHTML = cards;
-        document.querySelectorAll(".visit-btn").forEach(btn => {
-            btn.addEventListener("click", (e) => {
-                e.stopPropagation();
-                const url = btn.getAttribute("data-url");
-                if (url) window.open(url, "_blank", "noopener,noreferrer");
-            });
-        });
-        document.querySelectorAll(".site-card").forEach(card => {
-            card.addEventListener("click", (e) => {
-                if (e.target.closest('.visit-btn')) return;
-                const url = card.getAttribute("data-url");
-                if (url) window.open(url, "_blank", "noopener,noreferrer");
-            });
-        });
-    }
-
-    function bindSearch() {
-        const inp = document.getElementById("searchInput");
-        if (inp) inp.addEventListener("input", (e) => { searchQuery = e.target.value; renderSites(); });
-    }
-
-    // Смена темы
-    function initTheme() {
-        const saved = localStorage.getItem('hw_theme');
-        const body = document.body;
-        if (saved === 'light') {
-            body.classList.add('light-mode');
-            document.getElementById('themeText').innerHTML = 'СВЕТЛАЯ';
-        } else {
-            body.classList.remove('light-mode');
-            document.getElementById('themeText').innerHTML = 'ТЁМНАЯ';
-        }
-        const toggle = document.getElementById('themeToggle');
-        toggle.addEventListener('click', () => {
-            body.classList.toggle('light-mode');
-            const isLight = body.classList.contains('light-mode');
-            localStorage.setItem('hw_theme', isLight ? 'light' : 'dark');
-            document.getElementById('themeText').innerHTML = isLight ? 'СВЕТЛАЯ' : 'ТЁМНАЯ';
-        });
-    }
-
-    // Модальное окно (лицензия и правила)
-    function initModal() {
-        const modal = document.getElementById('licenseModal');
-        const btn = document.getElementById('legalModalBtn');
-        const closeSpan = document.querySelector('.close-modal');
         
-        btn.onclick = () => {
-            modal.style.display = 'flex';
-        }
-        closeSpan.onclick = () => {
-            modal.style.display = 'none';
-        }
-        window.onclick = (event) => {
-            if (event.target === modal) modal.style.display = 'none';
-        }
-    }
+        <div class="security-header">
+            <div class="security-badge"><i class="fas fa-shield-haltered"></i> ПОЛИТИКА НУЛЕВЫХ ЛОГОВ</div>
+            <div class="anon-badge badge-hack"><i class="fas fa-mask"></i> ПОЛНАЯ АНОНИМНОСТЬ</div>
+            <div class="security-badge"><i class="fas fa-lock"></i> ШИФРОВАННЫЙ ШЛЮЗ</div>
+            <div class="security-badge"><i class="fas fa-skull"></i> ZERO-LOGS</div>
+        </div>
+        
+        <div class="hero">
+            <h1><i class="fas fa-shield-haltered"></i> HW PORTAL <i class="fas fa-code"></i></h1>
+            <p>// хакерский анонимный шлюз | zero-logs | полная защита | киберустойчивость</p>
+        </div>
 
-    function start() {
-        renderCategories();
-        renderSites();
-        bindSearch();
-        initTheme();
-        initModal();
-    }
-    start();
-</script>
+        <!-- DuckDuckGo Поиск -->
+        <div class="ddg-search-section">
+            <div class="ddg-search-title"><i class="fas fa-duck"></i> DuckDuckGo :: приватный поиск <i class="fas fa-eye-slash"></i> <i class="fas fa-skull" style="color:#ff0000;"></i></div>
+            <form id="ddgSearchForm" action="https://duckduckgo.com/" method="get" target="_blank" class="ddg-search-form">
+                <input type="text" name="q" class="ddg-search-input" placeholder=">_ анонимный поиск (без логов)..." required>
+                <button type="submit" class="ddg-search-btn"><i class="fas fa-arrow-right"></i> искать</button>
+            </form>
+            <div class="note-search">[ без трекинга | без логов | открывается в новой вкладке ]</div>
+        </div>
+
+        <div class="search-section">
+            <div class="search-box">
+                <i class="fas fa-filter"></i>
+                <input type="text" id="searchInput" placeholder="фильтровать закладки по названию / описанию...">
+            </div>
+        </div>
+
+        <div class="categories" id="categoryFilters"></div>
+        <div id="sitesContainer" class="sites-grid"></div>
+        <div class="footer-note">
+            <i class="fas fa-microchip hack-icon"></i> защищенные закладки | приватность | arch linux | <span class="green-icon">⚡</span> zero-logs
+        </div>
+    </div>
+
+    <!-- Модальное окно -->
+    <div id="licenseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-shield-haltered"></i> Лицензия HW Portal</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="license-text">
+                <p><strong>🔒 HW Portal — Лицензия анонимного доступа v.3.0 (Хакерский стандарт)</strong></p>
+                <p>Данный портал создан для обеспечения <span class="hack-license">полной анонимности</span> и защиты данных. Используя ресурсы, вы соглашаетесь с правилами:</p>
+                <ul>
+                    <li><i class="fas fa-check-circle" style="color:#ff0000;"></i> Абсолютная анонимность — никакие логи не сохраняются (Zero-Logs).</li>
+                    <li><i class="fas fa-check-circle" style="color:#ff0000;"></i> Запрещена любая деятельность, нарушающая законодательство.</li>
+                    <li><i class="fas fa-check-circle" style="color:#ff0000;"></i> Уважение к сообществу: никаких атак, доксинга или преследования.</li>
+                    <li><i class="fas fa-check-circle" style="color:#ff0000;"></i> Все инструменты и ссылки предназначены для исследований и обучения.</li>
+                    <li><i class="fas fa-check-circle" style="color:#00ff41;"></i> <strong>⚡ Полная защита приватности. Zero-Logs.</strong></li>
+                </ul>
+                <div class="warning">
+                    ⚠️ <strong>Правила пользования:</strong> Вы несёте личную ответственность за свои действия. Администрация портала не отслеживает активность и не хранит метаданные.
+                </div>
+                <p><i class="fas fa-terminal"></i> Лицензия распространяется на все закладки и внешние переходы. Оставайтесь анонимными, оставайтесь этичными.</p>
+                <p style="margin-top: 1rem; font-size:0.7rem;">🔐 HW Project | Zero-Logs | Анонимность | Хакер-культура</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // 1. МАТРИЦА — ЖИВЫЕ ОБОИ
+        // ============================================================
+        (function() {
+            const canvas = document.getElementById('matrix-canvas');
+            const ctx = canvas.getContext('2d');
+
+            let width, height;
+            let columns = [];
+            let mouseX = 0;
+            let mouseY = 0;
+            const FONT_SIZE = 16;
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+
+                const colCount = Math.floor(width / FONT_SIZE);
+                columns = [];
+                for (let i = 0; i < colCount; i++) {
+                    columns.push({
+                        x: i * FONT_SIZE,
+                        y: Math.random() * height,
+                        speed: 0.5 + Math.random() * 1.2,
+                        chars: '0123456789ABCDEF',
+                        length: 5 + Math.floor(Math.random() * 10),
+                    });
+                }
+            }
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function drawMatrix() {
+                ctx.fillStyle = 'rgba(5, 5, 10, 0.04)';
+                ctx.fillRect(0, 0, width, height);
+
+                ctx.font = `${FONT_SIZE}px 'JetBrains Mono', monospace`;
+                ctx.textAlign = 'center';
+
+                columns.forEach(col => {
+                    const dx = mouseX - col.x;
+                    const dy = mouseY - col.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const maxDist = 180;
+
+                    if (dist < maxDist && dist > 0) {
+                        const force = (1 - dist / maxDist) * 2.5;
+                        col.speed = 0.8 + force * 2;
+                    }
+
+                    col.y += col.speed;
+
+                    if (col.y > height) {
+                        col.y = -col.length * FONT_SIZE;
+                        col.speed = 0.5 + Math.random() * 1.2;
+                    }
+
+                    const charLen = col.length;
+                    for (let i = 0; i < charLen; i++) {
+                        const yPos = col.y - i * FONT_SIZE;
+                        if (yPos < 0 || yPos > height) continue;
+
+                        const char = col.chars[Math.floor(Math.random() * col.chars.length)];
+                        const brightness = 1 - (i / charLen);
+                        const alpha = 0.3 + brightness * 0.7;
+
+                        const red = Math.floor(150 + 105 * brightness);
+                        ctx.fillStyle = `rgba(${red}, ${Math.floor(10 * brightness)}, ${Math.floor(10 * brightness)}, ${alpha})`;
+                        ctx.fillText(char, col.x, yPos);
+                    }
+
+                    const headY = col.y;
+                    if (headY > 0 && headY < height) {
+                        const headChar = col.chars[Math.floor(Math.random() * col.chars.length)];
+                        ctx.fillStyle = `rgba(255, 50, 50, 0.9)`;
+                        ctx.shadowColor = 'rgba(255, 0, 0, 0.3)';
+                        ctx.shadowBlur = 8;
+                        ctx.fillText(headChar, col.x, headY);
+                        ctx.shadowBlur = 0;
+                    }
+                });
+
+                requestAnimationFrame(drawMatrix);
+            }
+
+            window.addEventListener('resize', resize);
+            resize();
+            drawMatrix();
+        })();
+
+        // ============================================================
+        // 2. ОСНОВНОЙ JS
+        // ============================================================
+        // ---- БАЗА САЙТОВ ----
+        const sitesData = [
+            { id: 1, name: "GitHub", url: "https://github.com", description: "Репозитории, open-source, совместный код.", category: "Разработка", icon: "fab fa-github" },
+            { id: 2, name: "Figma", url: "https://figma.com", description: "Дизайн интерфейсов и прототипирование.", category: "Дизайн", icon: "fab fa-figma" },
+            { id: 3, name: "Notion", url: "https://notion.so", description: "База знаний, документация, планирование.", category: "Продуктивность", icon: "fas fa-brain" },
+            { id: 4, name: "YouTube", url: "https://youtube.com", description: "Видео-контент, уроки, развлечения.", category: "Медиа", icon: "fab fa-youtube" },
+            { id: 5, name: "Stack Overflow", url: "https://stackoverflow.com", description: "Решение проблем кода.", category: "Разработка", icon: "fab fa-stack-overflow" },
+            { id: 6, name: "Dribbble", url: "https://dribbble.com", description: "Вдохновение и UI/UX.", category: "Дизайн", icon: "fab fa-dribbble" },
+            { id: 7, name: "Trello", url: "https://trello.com", description: "Канбан-доски и задачи.", category: "Продуктивность", icon: "fab fa-trello" },
+            { id: 8, name: "Spotify", url: "https://spotify.com", description: "Музыка, подкасты, фон.", category: "Медиа", icon: "fab fa-spotify" },
+            { id: 9, name: "MDN Web Docs", url: "https://developer.mozilla.org", description: "Документация веб-технологий.", category: "Разработка", icon: "fab fa-firefox" },
+            { id: 10, name: "Canva", url: "https://canva.com", description: "Графический редактор.", category: "Дизайн", icon: "fas fa-palette" },
+            { id: 11, name: "Gmail", url: "https://mail.google.com", description: "Почта и календарь.", category: "Продуктивность", icon: "fas fa-envelope" },
+            { id: 12, name: "Netflix", url: "https://netflix.com", description: "Кино и сериалы.", category: "Медиа", icon: "fab fa-netflix" },
+            { id: 13, name: "ChatGPT", url: "https://chat.openai.com", description: "AI-помощник.", category: "Инструменты", icon: "fas fa-robot" },
+            { id: 14, name: "Figma Community", url: "https://figma.com/community", description: "Ресурсы для дизайна.", category: "Дизайн", icon: "fas fa-shapes" },
+            { id: 15, name: "Linear", url: "https://linear.app", description: "Трекинг задач.", category: "Продуктивность", icon: "fas fa-chart-line" },
+            { id: 16, name: "HW Protection VK", url: "https://vk.com/hw_protection", description: "Сообщество VK, посвящённое HW Protection.", category: "Сообщества", icon: "fab fa-vk" },
+            { id: 17, name: "HWHellBlock", url: "https://anonim-it.github.io/HWHellBlock.html", description: "Страница проекта HWHellBlock.", category: "Инструменты", icon: "fas fa-shield-haltered" },
+            { id: 18, name: "Anonim-IT Hub", url: "https://anonim-it.github.io/", description: "Хаб Anonim-IT.", category: "Разработка", icon: "fab fa-github-alt" },
+            { id: 19, name: "HWPro OS", url: "https://anonim-it.github.io/HWPro_OS.html", description: "HWPro OS страница.", category: "Инструменты", icon: "fas fa-microchip" },
+            { id: 20, name: "Reddit HW Hell Block", url: "https://www.reddit.com/r/HW_Hell_Block/", description: "Сабреддит.", category: "Сообщества", icon: "fab fa-reddit-alien" },
+            { id: 21, name: "Twitch HW_RS", url: "https://www.twitch.tv/hw_rs", description: "Стримы.", category: "Медиа", icon: "fab fa-twitch" },
+            { id: 22, name: "Timeweb Cloud", url: "https://timeweb.cloud/my/projects/2255557", description: "Панель хостинга.", category: "Хостинг", icon: "fas fa-cloud-upload-alt" },
+            { id: 23, name: "Google Sheets (HW)", url: "https://docs.google.com/spreadsheets/d/1_9d6mV9sQcAZmm6YisB22h12hYO7qOU0aY3t0J79bUY/edit", description: "Таблица проектов.", category: "Продуктивность", icon: "fas fa-table" },
+            { id: 24, name: "DeepSeek Chat", url: "https://chat.deepseek.com/", description: "AI ассистент.", category: "Инструменты", icon: "fas fa-comments" },
+            { id: 25, name: "Google Translate", url: "https://translate.google.ru/", description: "Переводчик.", category: "Инструменты", icon: "fas fa-language" },
+            { id: 26, name: "Ozon", url: "https://www.ozon.ru/", description: "Маркетплейс.", category: "Покупки", icon: "fas fa-shopping-bag" },
+            { id: 27, name: "Карта Мира", url: "https://map.cmirit.ru/portal-gorod/", description: "Интерактивная карта.", category: "Карты", icon: "fas fa-map-marked-alt" },
+            { id: 28, name: "Яндекс", url: "https://yandex.ru", description: "Портал Яндекса.", category: "Поиск", icon: "fab fa-yandex" },
+            { id: 29, name: "Мой Череповец", url: "https://xn--b1afabqrodii5ee.xn--p1ai/", description: "Городской портал Череповца.", category: "Города", icon: "fas fa-city" },
+            { id: 30, name: "MAX Мессенджер", url: "https://web.max.ru/", description: "Защищённый мессенджер.", category: "Мессенджеры", icon: "fas fa-comment-dots" },
+            { id: 31, name: "Rutube", url: "https://rutube.ru/", description: "Видеоплатформа.", category: "Медиа", icon: "fas fa-video" },
+            {
+                id: 32,
+                name: "Dzen | Anonim Community",
+                url: "https://dzen.ru/anonimcommunity?clid=1400",
+                description: "Канал проекта на Dzen: анонимность, хакер-культура, кибербезопасность и новости сообщества.",
+                category: "Сообщества",
+                icon: "fab fa-yandex"
+            },
+            {
+                id: 33,
+                name: "Cherinfo | Официальный сайт Череповца",
+                url: "https://cherinfo.ru/",
+                description: "Официальный портал города Череповца: новости, афиша, городские сервисы, администрация и справочная информация.",
+                category: "Города",
+                icon: "fas fa-landmark"
+            }
+        ];
+
+        let activeCategory = "Все";
+        let searchQuery = "";
+
+        function getUniqueCategories() {
+            const catsSet = new Set(sitesData.map(s => s.category));
+            return Array.from(catsSet).sort((a,b) => a.localeCompare(b));
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/[&<>]/g, m => (m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;')));
+        }
+
+        function renderCategories() {
+            const cats = getUniqueCategories();
+            const container = document.getElementById("categoryFilters");
+            if (!container) return;
+            let html = `<button class="cat-btn active" data-category="Все"><i class="fas fa-globe"></i> Все</button>`;
+            cats.forEach(c => {
+                html += `<button class="cat-btn" data-category="${escapeHtml(c)}"><i class="fas fa-tag"></i> ${escapeHtml(c)}</button>`;
+            });
+            container.innerHTML = html;
+            document.querySelectorAll(".cat-btn").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const cat = btn.getAttribute("data-category");
+                    if (!cat) return;
+                    document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+                    btn.classList.add("active");
+                    activeCategory = cat;
+                    renderSites();
+                });
+            });
+        }
+
+        function getFilteredSites() {
+            let res = [...sitesData];
+            if (activeCategory !== "Все") res = res.filter(s => s.category === activeCategory);
+            if (searchQuery.trim()) {
+                const q = searchQuery.trim().toLowerCase();
+                res = res.filter(s => s.name.toLowerCase().includes(q) || s.description.toLowerCase().includes(q));
+            }
+            return res;
+        }
+
+        function renderSites() {
+            const container = document.getElementById("sitesContainer");
+            if (!container) return;
+            const filtered = getFilteredSites();
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="empty-state"><i class="fas fa-skull"></i> <p>порталы не найдены // проверьте запрос</p></div>`;
+                return;
+            }
+            let cards = "";
+            filtered.forEach(site => {
+                const safeName = escapeHtml(site.name);
+                const safeDesc = escapeHtml(site.description);
+                const safeUrl = escapeHtml(site.url);
+                const safeCat = escapeHtml(site.category);
+                const iconClass = site.icon || "fas fa-link";
+                cards += `
+                    <div class="site-card" data-url="${safeUrl}">
+                        <div class="card-header">
+                            <div class="icon-bg"><i class="${iconClass}"></i></div>
+                            <div class="card-title">
+                                <h3>${safeName}</h3>
+                                <span class="category-tag"><i class="fas fa-folder-open"></i> ${safeCat}</span>
+                            </div>
+                        </div>
+                        <div class="site-description">${safeDesc}</div>
+                        <div class="site-url"><i class="fas fa-link"></i> ${safeUrl}</div>
+                        <div class="card-footer"><button class="visit-btn" data-url="${safeUrl}">ВОЙТИ <i class="fas fa-arrow-right"></i></button></div>
+                    </div>
+                `;
+            });
+            container.innerHTML = cards;
+            document.querySelectorAll(".visit-btn").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    const url = btn.getAttribute("data-url");
+                    if (url) window.open(url, "_blank", "noopener,noreferrer");
+                });
+            });
+            document.querySelectorAll(".site-card").forEach(card => {
+                card.addEventListener("click", (e) => {
+                    if (e.target.closest('.visit-btn')) return;
+                    const url = card.getAttribute("data-url");
+                    if (url) window.open(url, "_blank", "noopener,noreferrer");
+                });
+            });
+        }
+
+        function bindSearch() {
+            const inp = document.getElementById("searchInput");
+            if (inp) inp.addEventListener("input", (e) => { searchQuery = e.target.value; renderSites(); });
+        }
+
+        // Смена темы
+        function initTheme() {
+            const saved = localStorage.getItem('hw_theme');
+            const body = document.body;
+            if (saved === 'light') {
+                body.classList.add('light-mode');
+                document.getElementById('themeText').innerHTML = 'СВЕТЛАЯ';
+            } else {
+                body.classList.remove('light-mode');
+                document.getElementById('themeText').innerHTML = 'ТЁМНАЯ';
+            }
+            const toggle = document.getElementById('themeToggle');
+            toggle.addEventListener('click', () => {
+                body.classList.toggle('light-mode');
+                const isLight = body.classList.contains('light-mode');
+                localStorage.setItem('hw_theme', isLight ? 'light' : 'dark');
+                document.getElementById('themeText').innerHTML = isLight ? 'СВЕТЛАЯ' : 'ТЁМНАЯ';
+            });
+        }
+
+        // Модальное окно
+        function initModal() {
+            const modal = document.getElementById('licenseModal');
+            const btn = document.getElementById('legalModalBtn');
+            const closeSpan = document.querySelector('.close-modal');
+            
+            btn.onclick = () => {
+                modal.style.display = 'flex';
+            }
+            closeSpan.onclick = () => {
+                modal.style.display = 'none';
+            }
+            window.onclick = (event) => {
+                if (event.target === modal) modal.style.display = 'none';
+            }
+        }
+
+        function start() {
+            renderCategories();
+            renderSites();
+            bindSearch();
+            initTheme();
+            initModal();
+        }
+        start();
+    </script>
 </body>
 </html>

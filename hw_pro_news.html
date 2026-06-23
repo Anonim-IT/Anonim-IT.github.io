@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="description" content="HW Pro News — независимый новостной портал о технологиях, кибербезопасности, white hacking и цифровых инновациях. Управление новостями через JSON.">
     <meta name="keywords" content="HW Pro, новости IT, кибербезопасность, white hacking, инновации, JSON новости">
-    <title>HW Pro News | Новостной портал с JSON управлением</title>
+    <title>HW Pro News | Хакерский новостной портал</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,43 +19,45 @@
         }
 
         :root {
-            --bg-deep: #05050f;
-            --bg-surface: #0c0c18;
-            --bg-card: rgba(12, 12, 24, 0.75);
-            --bg-card-solid: #0f0f1c;
-            --border-subtle: rgba(255, 255, 255, 0.06);
-            --border-active: rgba(0, 255, 196, 0.4);
-            --accent-cyber: #00ffc4;
-            --accent-red: #ff3a6f;
-            --accent-purple: #b77eff;
-            --accent-blue: #3a86ff;
-            --text-primary: #ededf5;
-            --text-secondary: #8f8fbb;
-            --text-muted: #5f5f8a;
-            --glow-cyan: 0 0 12px rgba(0, 255, 196, 0.3);
+            --bg-deep: #05050a;
+            --bg-surface: #0a0a12;
+            --bg-card: rgba(8, 8, 18, 0.8);
+            --bg-card-solid: #0a0a12;
+            --border-subtle: rgba(255, 0, 0, 0.06);
+            --border-active: rgba(255, 0, 0, 0.4);
+            --accent-cyber: #00ff41;
+            --accent-red: #ff0000;
+            --accent-red-dark: #cc0000;
+            --accent-purple: #a855f7;
+            --accent-blue: #3b82f6;
+            --text-primary: #e8e8f0;
+            --text-secondary: #8a8aaa;
+            --text-muted: #4a4a6a;
+            --glow-red: 0 0 30px rgba(255, 0, 0, 0.1);
             --font-mono: 'JetBrains Mono', monospace;
             --transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
         body {
-            background: radial-gradient(circle at 10% 20%, #0a0a16, #020208);
+            background: radial-gradient(circle at 10% 20%, #0a0a12, #05050a);
             font-family: 'Inter', sans-serif;
             color: var(--text-primary);
             min-height: 100vh;
             line-height: 1.5;
             overflow-x: hidden;
+            position: relative;
         }
 
-        .matrix-lines {
+        /* Канвас для матрицы */
+        #matrix-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
             z-index: 0;
-            opacity: 0.2;
-            background-image: repeating-linear-gradient(0deg, rgba(0,255,196,0.08) 0px, rgba(0,255,196,0.08) 1px, transparent 1px, transparent 8px);
+            pointer-events: none;
+            opacity: 0.08;
         }
 
         .container {
@@ -67,9 +69,9 @@
         }
 
         .glass-header {
-            background: rgba(5, 5, 15, 0.85);
+            background: rgba(5, 5, 10, 0.92);
             backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border-subtle);
+            border-bottom: 1px solid rgba(255, 0, 0, 0.06);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -98,16 +100,22 @@
         .logo-icon {
             width: 38px;
             height: 38px;
-            background: linear-gradient(135deg, var(--accent-cyber), var(--accent-purple));
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-red-dark));
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: var(--glow-cyan);
+            box-shadow: var(--glow-red);
+        }
+
+        .logo-icon span {
+            color: #000;
+            font-weight: 800;
+            font-size: 1.2rem;
         }
 
         .logo span {
-            background: linear-gradient(130deg, #fff, var(--accent-cyber));
+            background: linear-gradient(135deg, #ffffff, var(--accent-red));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -127,59 +135,81 @@
             font-weight: 500;
             transition: 0.2s;
             font-family: var(--font-mono);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-red);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
         }
 
         .nav-links a:hover, .nav-links a.active {
-            color: var(--accent-cyber);
-            text-shadow: 0 0 5px rgba(0,255,196,0.5);
+            color: var(--accent-red);
         }
 
         .rule-trigger, .json-trigger {
-            background: rgba(0, 255, 196, 0.08);
-            border: 1px solid var(--accent-cyber);
+            background: rgba(255, 0, 0, 0.06);
+            border: 1px solid var(--accent-red);
             padding: 8px 20px;
             border-radius: 60px;
             font-weight: 500;
-            color: var(--accent-cyber);
+            color: var(--accent-red);
             font-family: var(--font-mono);
             font-size: 0.8rem;
             cursor: pointer;
             transition: var(--transition);
         }
 
+        .rule-trigger:hover {
+            background: rgba(255, 0, 0, 0.12);
+            box-shadow: var(--glow-red);
+        }
+
         .json-trigger {
-            background: rgba(183, 126, 255, 0.1);
+            background: rgba(168, 85, 247, 0.06);
             border-color: var(--accent-purple);
             color: var(--accent-purple);
         }
 
         .json-trigger:hover {
-            background: rgba(183, 126, 255, 0.2);
-            box-shadow: 0 0 12px rgba(183, 126, 255, 0.3);
+            background: rgba(168, 85, 247, 0.12);
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.2);
         }
 
         .news-hero {
             padding: 2.5rem 0 1.5rem;
-            border-bottom: 1px solid var(--border-subtle);
+            border-bottom: 1px solid rgba(255, 0, 0, 0.04);
             margin-bottom: 2rem;
         }
 
         .badge {
             display: inline-block;
-            background: rgba(0, 255, 196, 0.12);
-            border: 1px solid var(--accent-cyber);
+            background: rgba(255, 0, 0, 0.06);
+            border: 1px solid rgba(255, 0, 0, 0.15);
             border-radius: 60px;
             padding: 0.3rem 1.2rem;
             font-size: 0.75rem;
             font-family: var(--font-mono);
             letter-spacing: 1px;
             margin-bottom: 1rem;
+            color: var(--accent-red);
         }
 
         .hero-title {
             font-size: 3rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #ffffff, var(--accent-cyber), var(--accent-purple));
+            background: linear-gradient(135deg, #ffffff, var(--accent-red), var(--accent-cyber));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -202,7 +232,7 @@
         .news-card {
             background: var(--bg-card);
             backdrop-filter: blur(8px);
-            border: 1px solid var(--border-subtle);
+            border: 1px solid rgba(255, 0, 0, 0.04);
             border-radius: 28px;
             overflow: hidden;
             transition: var(--transition);
@@ -211,21 +241,21 @@
         }
 
         .news-card:hover {
-            border-color: var(--accent-cyber);
+            border-color: var(--accent-red);
             transform: translateY(-6px);
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.6);
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,0,0,0.05);
         }
 
         .card-tag {
             display: inline-block;
             font-family: var(--font-mono);
             font-size: 0.7rem;
-            background: rgba(0,255,196,0.15);
+            background: rgba(255, 0, 0, 0.08);
             padding: 4px 12px;
             border-radius: 40px;
             margin: 1.2rem 1.5rem 0 1.5rem;
             width: fit-content;
-            color: var(--accent-cyber);
+            color: var(--accent-red);
         }
 
         .news-card h3 {
@@ -256,7 +286,7 @@
             margin: 0.5rem 1.5rem 1.5rem 1.5rem;
             background: none;
             border: none;
-            color: var(--accent-cyber);
+            color: var(--accent-red);
             font-family: var(--font-mono);
             font-size: 0.8rem;
             text-align: left;
@@ -270,21 +300,51 @@
 
         .read-more:hover {
             gap: 12px;
-            text-shadow: 0 0 4px var(--accent-cyber);
+            text-shadow: 0 0 4px rgba(255, 0, 0, 0.3);
         }
 
         .trends-sidebar {
             background: rgba(8, 8, 18, 0.7);
             backdrop-filter: blur(12px);
             border-radius: 32px;
-            border: 1px solid var(--border-subtle);
+            border: 1px solid rgba(255, 0, 0, 0.04);
             padding: 1.5rem;
             margin: 1rem 0 2rem;
         }
 
+        .trends-header {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 0, 0, 0.04);
+            padding-bottom: 1rem;
+            color: var(--accent-red);
+        }
+
+        .trend-list {
+            list-style: none;
+        }
+
+        .trend-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .trend-list li:last-child {
+            border-bottom: none;
+        }
+
+        .trend-list li span:last-child {
+            color: var(--accent-cyber);
+        }
+
         .anonym-banner {
-            background: rgba(0,0,0,0.5);
-            border-left: 4px solid var(--accent-cyber);
+            background: rgba(0,0,0,0.4);
+            border-left: 4px solid var(--accent-red);
             padding: 1rem 1.5rem;
             border-radius: 20px;
             margin: 2rem 0;
@@ -296,7 +356,7 @@
         }
 
         .footer {
-            border-top: 1px solid var(--border-subtle);
+            border-top: 1px solid rgba(255, 0, 0, 0.04);
             padding: 2rem 0;
             margin-top: 3rem;
             text-align: center;
@@ -327,8 +387,8 @@
         }
 
         .news-modal, .json-editor-modal {
-            background: #0c0c18;
-            border: 1px solid var(--accent-cyber);
+            background: #0a0a12;
+            border: 1px solid var(--accent-red);
             border-radius: 32px;
             max-width: 700px;
             width: 90%;
@@ -369,19 +429,19 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(0, 255, 196, 0.08);
-            border: 1px solid var(--accent-cyber);
+            background: rgba(255, 0, 0, 0.04);
+            border: 1px solid rgba(255, 0, 0, 0.08);
             border-radius: 60px;
             padding: 6px 16px;
             font-family: var(--font-mono);
             font-size: 0.7rem;
-            color: var(--accent-cyber);
+            color: var(--accent-red);
         }
 
         .json-editor textarea {
             width: 100%;
-            background: #05050f;
-            border: 1px solid var(--border-subtle);
+            background: #05050a;
+            border: 1px solid rgba(255, 0, 0, 0.06);
             border-radius: 16px;
             padding: 1rem;
             color: var(--text-primary);
@@ -399,19 +459,19 @@
         }
 
         .btn-save {
-            background: var(--accent-cyber);
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-red-dark));
             border: none;
             padding: 10px 24px;
             border-radius: 40px;
             font-family: var(--font-mono);
             font-weight: 600;
             cursor: pointer;
-            color: #05050f;
+            color: #000;
         }
 
         .btn-reset {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid var(--border-subtle);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255, 255, 255, 0.04);
             padding: 10px 24px;
             border-radius: 40px;
             font-family: var(--font-mono);
@@ -421,7 +481,7 @@
 
         .status-msg {
             font-size: 0.8rem;
-            color: var(--accent-cyber);
+            color: var(--accent-red);
             margin-top: 0.5rem;
             text-align: center;
         }
@@ -435,340 +495,314 @@
     </style>
 </head>
 <body>
-<div class="matrix-lines"></div>
 
-<header class="glass-header">
-    <div class="container header-inner">
-        <a href="/" class="logo">
-            <div class="logo-icon"><span style="color:#000; font-weight:800;">⟁</span></div>
-            <span>HW Pro</span>
-        </a>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="/index.html">Портал</a></li>
-                <li><a href="#" class="active">Новости</a></li>
-                <li><a href="#">Лаборатория</a></li>
-                <li><a href="#">Исследования</a></li>
-                <li><a href="#">Minecraft Lab</a></li>
-            </ul>
-        </nav>
-        <div style="display: flex; gap: 12px;">
-            <button class="json-trigger" id="openJsonEditor">📝 Редактировать JSON</button>
-            <button class="rule-trigger" id="openRulesBtnNews">📜 Законодательство</button>
-        </div>
-    </div>
-</header>
+    <!-- ===== КАНВАС ДЛЯ МАТРИЦЫ ===== -->
+    <canvas id="matrix-canvas"></canvas>
 
-<main>
-    <div class="container">
-        <div class="news-hero">
-            <div class="badge">📰 HW PRO // НОВОСТНАЯ ЛЕНТА (JSON)</div>
-            <h1 class="hero-title">Технологический дайджест</h1>
-            <p class="hero-sub">Актуальные события в мире IT, кибербезопасности, white hacking. <strong style="color: var(--accent-cyber);">Управление новостями через JSON-файл</strong> — редактируйте контент в реальном времени.</p>
-            <div class="sandbox-badge" style="margin-top: 1rem;">
-                <span>📡</span> Новостной реестр HW_Sandbox | Редактируемый JSON
+    <header class="glass-header">
+        <div class="container header-inner">
+            <a href="/" class="logo">
+                <div class="logo-icon"><span>⟁</span></div>
+                <span>HW Pro</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/index.html">Портал</a></li>
+                    <li><a href="#" class="active">Новости</a></li>
+                    <li><a href="#">Лаборатория</a></li>
+                    <li><a href="#">Исследования</a></li>
+                    <li><a href="#">Minecraft Lab</a></li>
+                </ul>
+            </nav>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <button class="json-trigger" id="openJsonEditor">📝 Редактировать JSON</button>
+                <button class="rule-trigger" id="openRulesBtnNews">📜 Законодательство</button>
             </div>
         </div>
+    </header>
 
-        <div class="anonym-banner">
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <span style="font-size: 2rem;">🕶️</span>
-                <div>
-                    <strong style="color: var(--accent-cyber); font-family: monospace;">JSON + Анонимность</strong>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">Редактируйте файл news.json — добавляйте, меняйте, удаляйте новости. Данные загружаются напрямую из JSON файла.</p>
+    <main>
+        <div class="container">
+            <div class="news-hero">
+                <div class="badge">📰 HW PRO // НОВОСТНАЯ ЛЕНТА (JSON)</div>
+                <h1 class="hero-title">Хакерский дайджест</h1>
+                <p class="hero-sub">Актуальные события в мире IT, кибербезопасности, white hacking. <strong style="color: var(--accent-red);">Управление новостями через JSON-файл</strong> — редактируйте контент в реальном времени.</p>
+                <div class="sandbox-badge" style="margin-top: 1rem;">
+                    <span>📡</span> Новостной реестр HW_Sandbox | Редактируемый JSON
                 </div>
             </div>
-            <div style="font-size: 0.7rem; font-family: monospace; background: #00000040; padding: 6px 14px; border-radius: 40px;">#edit_json • #dynamic_news</div>
-        </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 300px; gap: 2rem; align-items: start;">
-            <div>
-                <div class="news-grid" id="newsGrid">
-                    <div style="text-align: center; padding: 3rem;">Загрузка новостей из news.json...</div>
-                </div>
-            </div>
-            <div>
-                <div class="trends-sidebar">
-                    <div class="trends-header" style="display: flex; gap: 12px; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 1rem;">
-                        <span>🔥</span> <span style="font-family: monospace; font-weight: 600;">Тренды & Уязвимости</span>
+            <div class="anonym-banner">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 2rem;">🕶️</span>
+                    <div>
+                        <strong style="color: var(--accent-red); font-family: monospace;">JSON + Анонимность</strong>
+                        <p style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">Редактируйте файл news.json — добавляйте, меняйте, удаляйте новости. Данные загружаются напрямую из JSON файла.</p>
                     </div>
-                    <ul class="trend-list" style="list-style: none;">
-                        <li style="display: flex; justify-content: space-between; padding: 0.8rem 0;"><span>#AI_red_team</span><span>+238%</span></li>
-                        <li style="display: flex; justify-content: space-between; padding: 0.8rem 0;"><span>#постквантовая_крипто</span><span>+156%</span></li>
-                        <li style="display: flex; justify-content: space-between; padding: 0.8rem 0;"><span>CVE-2025-1128</span><span>критично</span></li>
-                        <li style="display: flex; justify-content: space-between; padding: 0.8rem 0;"><span>Анонимные mesh-сети</span><span>новый пик</span></li>
-                        <li style="display: flex; justify-content: space-between; padding: 0.8rem 0;"><span>Minecraft RCE</span><span>патч вышел</span></li>
-                    </ul>
-                    <div style="margin-top: 1rem; font-size: 0.7rem; color: var(--text-muted); text-align: center;">Данные на основе HW Threat Intel</div>
+                </div>
+                <div style="font-size: 0.7rem; font-family: monospace; background: rgba(255,0,0,0.04); padding: 6px 14px; border-radius: 40px; border: 1px solid rgba(255,0,0,0.06);">#edit_json • #dynamic_news</div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 300px; gap: 2rem; align-items: start;">
+                <div>
+                    <div class="news-grid" id="newsGrid">
+                        <div style="text-align: center; padding: 3rem; color: var(--text-muted);">📡 Загрузка новостей из news.json...</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="trends-sidebar">
+                        <div class="trends-header">
+                            <span>🔥</span> <span style="font-family: monospace; font-weight: 600;">Тренды & Уязвимости</span>
+                        </div>
+                        <ul class="trend-list">
+                            <li><span>#AI_red_team</span><span>+238%</span></li>
+                            <li><span>#постквантовая_крипто</span><span>+156%</span></li>
+                            <li><span>CVE-2025-1128</span><span>критично</span></li>
+                            <li><span>Анонимные mesh-сети</span><span>новый пик</span></li>
+                            <li><span>Minecraft RCE</span><span>патч вышел</span></li>
+                        </ul>
+                        <div style="margin-top: 1rem; font-size: 0.7rem; color: var(--text-muted); text-align: center;">Данные на основе HW Threat Intel</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
 
-<footer class="footer">
-    <div class="container">
-        <p>© 2025 HW Pro News — Новостной портал с управлением через JSON. Редактируйте файл <strong style="color: var(--accent-cyber);">news.json</strong> или используйте встроенный редактор.</p>
-        <div style="margin-top: 1rem;">
-            <a href="#" id="footerRulesLink" style="color: var(--text-muted); text-decoration: none;">Законодательство HW Pro</a> &nbsp;|&nbsp;
-            <span style="color: var(--text-muted);">JSON конфигурация v3.0</span>
-        </div>
-    </div>
-</footer>
-
-<!-- Модальное окно JSON редактора -->
-<div id="jsonEditorModal" class="modal-overlay">
-    <div class="json-editor-modal">
-        <button class="close-modal-btn" id="closeJsonModal">&times;</button>
-        <h2 style="color: var(--accent-cyber); margin-bottom: 0.5rem;">✏️ Редактор новостей (JSON)</h2>
-        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">Редактируйте JSON массив новостей. После сохранения данные будут загружены из обновлённого news.json.</p>
-        <div class="json-editor">
-            <textarea id="jsonEditorTextarea" rows="18" style="width: 100%;"></textarea>
-            <div class="json-actions">
-                <button class="btn-reset" id="resetJsonBtn">Сбросить к примеру</button>
-                <button class="btn-save" id="saveJsonBtn">💾 Сохранить в news.json</button>
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 HW Pro News — Новостной портал с управлением через JSON. Редактируйте файл <strong style="color: var(--accent-red);">news.json</strong> или используйте встроенный редактор.</p>
+            <div style="margin-top: 1rem;">
+                <a href="#" id="footerRulesLink" style="color: var(--text-muted); text-decoration: none;">Законодательство HW Pro</a> &nbsp;|&nbsp;
+                <span style="color: var(--text-muted);">JSON конфигурация v3.0</span>
             </div>
-            <div id="jsonStatus" class="status-msg"></div>
         </div>
-        <div style="margin-top: 1rem; font-size: 0.7rem; color: var(--text-muted); border-top: 1px solid var(--border-subtle); padding-top: 1rem;">
-            📌 Формат: массив объектов с полями: id, tag, title, date, author, excerpt, content.
-        </div>
-    </div>
-</div>
+    </footer>
 
-<!-- Модальное окно правил -->
-<div id="rulesModalNews" class="modal-overlay">
-    <div class="news-modal">
-        <button class="close-modal-btn" id="closeRulesModalNews">&times;</button>
-        <h2 style="color: var(--accent-cyber); margin-bottom: 1rem;">📖 Законодательство HW Pro (JSON версия)</h2>
-        <div style="margin-bottom: 1rem;"><strong>Статья 1.</strong> Новости хранятся в файле news.json и могут быть изменены администратором.</div>
-        <div style="margin-bottom: 1rem;"><strong>Статья 2.</strong> Платформа не собирает логи. Анонимность гарантирована.</div>
-        <div style="margin-bottom: 1rem;"><strong>Статья 3.</strong> Все публикации носят образовательный характер.</div>
-        <div><strong>Статья 4.</strong> Редактирование JSON доступно через интерфейс или напрямую в файле.</div>
-        <div class="legal-stamp" style="margin-top: 1.5rem; font-size: 0.7rem; color: var(--text-muted);">⚡ HW Pro News — динамический JSON-портал</div>
-    </div>
-</div>
-
-<!-- Модальное окно просмотра новости -->
-<div id="newsDetailModal" class="modal-overlay"></div>
-
-<script>
-    // ДЕФОЛТНЫЙ JSON (пример структуры для скачивания/сброса)
-    const DEFAULT_NEWS_JSON = [
-        {
-            "id": 1,
-            "tag": "🔓 УЯЗВИМОСТИ",
-            "title": "Критическая RCE-уязвимость в популярном фреймворке",
-            "date": "14 мая 2025",
-            "author": "HW Research",
-            "excerpt": "Обнаружена уязвимость класса RCE в широко используемом middleware. Патч выпущен, зона поражения 40% серверов.",
-            "content": "Полное техническое описание: уязвимость CVE-2025-1189 позволяет удаленному злоумышленнику выполнить произвольный код. Команда HW Pro подготовила сигнатуры для IDS и правила фильтрации. Рекомендуем обновить версии библиотек до последней."
-        },
-        {
-            "id": 2,
-            "tag": "🤖 AI БЕЗОПАСНОСТЬ",
-            "title": "Атаки на LLM: новый метод инъекции промптов",
-            "date": "12 мая 2025",
-            "author": "AI Red Team",
-            "excerpt": "Исследователи продемонстрировали скрытую технику взлома чат-ботов через косвенные запросы.",
-            "content": "Новая техника 'Prompt Weaver' позволяет обходить ограничения и извлекать системные инструкции. Мы публикуем сценарии защиты и методы санитизации ввода для LLM."
-        },
-        {
-            "id": 3,
-            "tag": "🕶️ АНОНИМНОСТЬ",
-            "title": "Эволюция dark web мониторинга: этичный подход",
-            "date": "10 мая 2025",
-            "author": "Cyber Intel",
-            "excerpt": "Как исследователи безопасности отслеживают утечки без нарушения анонимности.",
-            "content": "Платформа HW Pro представляет обзор методов анонимного сбора угроз без сохранения персональных данных. Используется только обезличенная телеметрия."
-        },
-        {
-            "id": 4,
-            "tag": "⚙️ HW_SANDBOX",
-            "title": "Minecraft Lab: новый эмулятор вредоносных модов",
-            "date": "8 мая 2025",
-            "author": "Sandbox Dev",
-            "excerpt": "Изолированная среда для анализа потенциально опасных модификаций Minecraft.",
-            "content": "Проект 'Sandcaft' позволяет безопасно исполнять подозрительный код модов и плагинов без риска для реальных систем. Результаты фиксируются в реестре HW_Sandbox."
-        }
-    ];
-
-    let currentNewsData = [];
-
-    // Загрузка новостей из news.json файла
-    async function loadNewsFromFile() {
-        const grid = document.getElementById('newsGrid');
-        grid.innerHTML = '<div style="text-align: center; padding: 3rem;">📡 Загрузка новостей из news.json...</div>';
-        
-        try {
-            // Добавляем timestamp чтобы избежать кэширования
-            const response = await fetch(`news.json?t=${Date.now()}`);
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status} - файл news.json не найден`);
-            }
-            const data = await response.json();
-            
-            // Поддерживаем два формата: прямой массив или объект с ключом "news"
-            let newsArray;
-            if (Array.isArray(data)) {
-                newsArray = data;
-            } else if (data.news && Array.isArray(data.news)) {
-                newsArray = data.news;
-            } else {
-                throw new Error('Неверный формат JSON. Ожидается массив или объект с полем "news"');
-            }
-            
-            if (newsArray.length === 0) {
-                grid.innerHTML = '<div style="text-align: center; padding: 3rem; color: var(--text-muted);">📭 Новостей пока нет. Добавьте их в news.json</div>';
-                return;
-            }
-            
-            currentNewsData = newsArray;
-            renderNewsGrid();
-        } catch (error) {
-            console.error('Ошибка загрузки news.json:', error);
-            grid.innerHTML = `
-                <div style="grid-column: 1/-1; text-align: center; padding: 3rem; background: rgba(0,0,0,0.5); border-radius: 28px;">
-                    <span style="font-size: 3rem;">⚠️</span>
-                    <h3 style="color: var(--accent-red); margin: 1rem 0;">Не удалось загрузить news.json</h3>
-                    <p style="color: var(--text-secondary);">Убедитесь, что файл <strong style="color: var(--accent-cyber);">news.json</strong> находится в той же папке, что и index.html</p>
-                    <p style="color: var(--text-muted); margin-top: 1rem; font-family: monospace;">Ошибка: ${error.message}</p>
-                    <button class="rule-trigger" id="createExampleJson" style="margin-top: 1.5rem;">📄 Создать пример news.json</button>
+    <!-- Модальное окно JSON редактора -->
+    <div id="jsonEditorModal" class="modal-overlay">
+        <div class="json-editor-modal">
+            <button class="close-modal-btn" id="closeJsonModal">&times;</button>
+            <h2 style="color: var(--accent-red); margin-bottom: 0.5rem;">✏️ Редактор новостей (JSON)</h2>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">Редактируйте JSON массив новостей. После сохранения данные будут загружены из обновлённого news.json.</p>
+            <div class="json-editor">
+                <textarea id="jsonEditorTextarea" rows="18" style="width: 100%;"></textarea>
+                <div class="json-actions">
+                    <button class="btn-reset" id="resetJsonBtn">Сбросить к примеру</button>
+                    <button class="btn-save" id="saveJsonBtn">💾 Сохранить в news.json</button>
                 </div>
-            `;
-            const createBtn = document.getElementById('createExampleJson');
-            if (createBtn) {
-                createBtn.addEventListener('click', downloadExampleJson);
-            }
-        }
-    }
-
-    // Скачать пример JSON файла
-    function downloadExampleJson() {
-        const exampleData = DEFAULT_NEWS_JSON;
-        const blob = new Blob([JSON.stringify(exampleData, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'news.json';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        
-        const statusDiv = document.getElementById('jsonStatus');
-        if (statusDiv) {
-            statusDiv.innerHTML = '✅ Пример файла news.json скачан. Поместите его в папку с сайтом и обновите страницу.';
-            statusDiv.style.color = 'var(--accent-cyber)';
-            setTimeout(() => { statusDiv.innerHTML = ''; }, 5000);
-        }
-    }
-
-    function renderNewsGrid() {
-        const grid = document.getElementById('newsGrid');
-        if (!grid) return;
-        if (!currentNewsData || currentNewsData.length === 0) {
-            grid.innerHTML = '<div style="text-align: center; padding: 3rem; color: var(--text-muted);">Нет новостей. Добавьте их через JSON редактор.</div>';
-            return;
-        }
-        
-        grid.innerHTML = '';
-        currentNewsData.forEach(news => {
-            const card = document.createElement('div');
-            card.className = 'news-card';
-            card.innerHTML = `
-                <div class="card-tag">${escapeHtml(news.tag)}</div>
-                <h3>${escapeHtml(news.title)}</h3>
-                <div class="news-meta">
-                    <span>📅 ${escapeHtml(news.date)}</span>
-                    <span>✍️ ${escapeHtml(news.author)}</span>
-                </div>
-                <div class="news-excerpt">${escapeHtml(news.excerpt)}</div>
-                <button class="read-more" data-id="${news.id}">Подробнее →</button>
-            `;
-            grid.appendChild(card);
-        });
-
-        document.querySelectorAll('.read-more').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const id = parseInt(btn.getAttribute('data-id'));
-                const article = currentNewsData.find(n => n.id === id);
-                if (article) showNewsModal(article);
-            });
-        });
-    }
-
-    function showNewsModal(article) {
-        const modalContainer = document.getElementById('newsDetailModal');
-        modalContainer.innerHTML = `
-            <div class="news-modal">
-                <button class="close-modal-btn" id="closeDetailModal">&times;</button>
-                <div class="card-tag" style="margin: 0 0 0.8rem 0; display: inline-block;">${escapeHtml(article.tag)}</div>
-                <h2 style="font-size: 1.8rem; margin: 0.5rem 0 0.8rem;">${escapeHtml(article.title)}</h2>
-                <div class="news-meta" style="margin: 0 0 1rem 0;"><span>📅 ${escapeHtml(article.date)}</span><span>✍️ ${escapeHtml(article.author)}</span></div>
-                <div style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem; white-space: pre-wrap;">${escapeHtml(article.content)}</div>
-                <div style="border-top: 1px solid var(--border-subtle); padding-top: 1rem; font-size: 0.75rem; font-family: monospace;">Источник: HW Pro News / news.json</div>
+                <div id="jsonStatus" class="status-msg"></div>
             </div>
-        `;
-        modalContainer.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        const closeBtn = document.getElementById('closeDetailModal');
-        if (closeBtn) closeBtn.onclick = () => closeNewsModal();
-        modalContainer.onclick = (e) => { if (e.target === modalContainer) closeNewsModal(); };
-    }
+            <div style="margin-top: 1rem; font-size: 0.7rem; color: var(--text-muted); border-top: 1px solid rgba(255, 0, 0, 0.04); padding-top: 1rem;">
+                📌 Формат: массив объектов с полями: id, tag, title, date, author, excerpt, content.
+            </div>
+        </div>
+    </div>
 
-    function closeNewsModal() {
-        const modal = document.getElementById('newsDetailModal');
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
+    <!-- Модальное окно правил -->
+    <div id="rulesModalNews" class="modal-overlay">
+        <div class="news-modal">
+            <button class="close-modal-btn" id="closeRulesModalNews">&times;</button>
+            <h2 style="color: var(--accent-red); margin-bottom: 1rem;">📖 Законодательство HW Pro (JSON версия)</h2>
+            <div style="margin-bottom: 1rem;"><strong>Статья 1.</strong> Новости хранятся в файле news.json и могут быть изменены администратором.</div>
+            <div style="margin-bottom: 1rem;"><strong>Статья 2.</strong> Платформа не собирает логи. Анонимность гарантирована.</div>
+            <div style="margin-bottom: 1rem;"><strong>Статья 3.</strong> Все публикации носят образовательный характер.</div>
+            <div><strong>Статья 4.</strong> Редактирование JSON доступно через интерфейс или напрямую в файле.</div>
+            <div class="legal-stamp" style="margin-top: 1.5rem; font-size: 0.7rem; color: var(--text-muted);">⚡ HW Pro News — динамический JSON-портал</div>
+        </div>
+    </div>
 
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
-    }
+    <!-- Модальное окно просмотра новости -->
+    <div id="newsDetailModal" class="modal-overlay"></div>
 
-    // JSON редактор - скачивание обновлённого файла
-    const jsonModal = document.getElementById('jsonEditorModal');
-    const jsonTextarea = document.getElementById('jsonEditorTextarea');
-    const openJsonBtn = document.getElementById('openJsonEditor');
-    const closeJsonBtn = document.getElementById('closeJsonModal');
-    const saveJsonBtn = document.getElementById('saveJsonBtn');
-    const resetJsonBtn = document.getElementById('resetJsonBtn');
-    const statusDiv = document.getElementById('jsonStatus');
+    <script>
+        // ============================================================
+        // МАТРИЦА — ЖИВЫЕ ОБОИ
+        // ============================================================
+        (function() {
+            const canvas = document.getElementById('matrix-canvas');
+            const ctx = canvas.getContext('2d');
 
-    function openJsonEditor() {
-        // Показываем текущие данные из currentNewsData или DEFAULT
-        const dataToShow = currentNewsData.length > 0 ? currentNewsData : DEFAULT_NEWS_JSON;
-        jsonTextarea.value = JSON.stringify(dataToShow, null, 2);
-        jsonModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        if (statusDiv) statusDiv.innerHTML = '';
-    }
+            let width, height;
+            let columns = [];
+            let mouseX = 0;
+            let mouseY = 0;
+            const FONT_SIZE = 16;
 
-    function closeJsonEditor() {
-        jsonModal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
 
-    function saveJsonAndReload() {
-        try {
-            const parsed = JSON.parse(jsonTextarea.value);
-            if (!Array.isArray(parsed)) throw new Error('Данные должны быть массивом');
-            for (let i = 0; i < parsed.length; i++) {
-                const item = parsed[i];
-                if (!item.id || !item.title || !item.tag) {
-                    throw new Error(`Новость ${i+1}: обязательны поля id, title, tag`);
+                const colCount = Math.floor(width / FONT_SIZE);
+                columns = [];
+                for (let i = 0; i < colCount; i++) {
+                    columns.push({
+                        x: i * FONT_SIZE,
+                        y: Math.random() * height,
+                        speed: 0.5 + Math.random() * 1.2,
+                        chars: '0123456789ABCDEF',
+                        length: 5 + Math.floor(Math.random() * 10),
+                    });
                 }
             }
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function drawMatrix() {
+                ctx.fillStyle = 'rgba(5, 5, 10, 0.04)';
+                ctx.fillRect(0, 0, width, height);
+
+                ctx.font = `${FONT_SIZE}px 'JetBrains Mono', monospace`;
+                ctx.textAlign = 'center';
+
+                columns.forEach(col => {
+                    const dx = mouseX - col.x;
+                    const dy = mouseY - col.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const maxDist = 180;
+
+                    if (dist < maxDist && dist > 0) {
+                        const force = (1 - dist / maxDist) * 2.5;
+                        col.speed = 0.8 + force * 2;
+                    }
+
+                    col.y += col.speed;
+
+                    if (col.y > height) {
+                        col.y = -col.length * FONT_SIZE;
+                        col.speed = 0.5 + Math.random() * 1.2;
+                    }
+
+                    const charLen = col.length;
+                    for (let i = 0; i < charLen; i++) {
+                        const yPos = col.y - i * FONT_SIZE;
+                        if (yPos < 0 || yPos > height) continue;
+
+                        const char = col.chars[Math.floor(Math.random() * col.chars.length)];
+                        const brightness = 1 - (i / charLen);
+                        const alpha = 0.3 + brightness * 0.7;
+
+                        const red = Math.floor(150 + 105 * brightness);
+                        ctx.fillStyle = `rgba(${red}, ${Math.floor(10 * brightness)}, ${Math.floor(10 * brightness)}, ${alpha})`;
+                        ctx.fillText(char, col.x, yPos);
+                    }
+
+                    const headY = col.y;
+                    if (headY > 0 && headY < height) {
+                        const headChar = col.chars[Math.floor(Math.random() * col.chars.length)];
+                        ctx.fillStyle = `rgba(255, 50, 50, 0.9)`;
+                        ctx.shadowColor = 'rgba(255, 0, 0, 0.3)';
+                        ctx.shadowBlur = 8;
+                        ctx.fillText(headChar, col.x, headY);
+                        ctx.shadowBlur = 0;
+                    }
+                });
+
+                requestAnimationFrame(drawMatrix);
+            }
+
+            window.addEventListener('resize', resize);
+            resize();
+            drawMatrix();
+        })();
+
+        // ============================================================
+        // ОСНОВНОЙ JS
+        // ============================================================
+        // ДЕФОЛТНЫЙ JSON (пример структуры для скачивания/сброса)
+        const DEFAULT_NEWS_JSON = [
+            {
+                "id": 1,
+                "tag": "🔓 УЯЗВИМОСТИ",
+                "title": "Критическая RCE-уязвимость в популярном фреймворке",
+                "date": "14 мая 2025",
+                "author": "HW Research",
+                "excerpt": "Обнаружена уязвимость класса RCE в широко используемом middleware. Патч выпущен, зона поражения 40% серверов.",
+                "content": "Полное техническое описание: уязвимость CVE-2025-1189 позволяет удаленному злоумышленнику выполнить произвольный код. Команда HW Pro подготовила сигнатуры для IDS и правила фильтрации. Рекомендуем обновить версии библиотек до последней."
+            },
+            {
+                "id": 2,
+                "tag": "🤖 AI БЕЗОПАСНОСТЬ",
+                "title": "Атаки на LLM: новый метод инъекции промптов",
+                "date": "12 мая 2025",
+                "author": "AI Red Team",
+                "excerpt": "Исследователи продемонстрировали скрытую технику взлома чат-ботов через косвенные запросы.",
+                "content": "Новая техника 'Prompt Weaver' позволяет обходить ограничения и извлекать системные инструкции. Мы публикуем сценарии защиты и методы санитизации ввода для LLM."
+            },
+            {
+                "id": 3,
+                "tag": "🕶️ АНОНИМНОСТЬ",
+                "title": "Эволюция dark web мониторинга: этичный подход",
+                "date": "10 мая 2025",
+                "author": "Cyber Intel",
+                "excerpt": "Как исследователи безопасности отслеживают утечки без нарушения анонимности.",
+                "content": "Платформа HW Pro представляет обзор методов анонимного сбора угроз без сохранения персональных данных. Используется только обезличенная телеметрия."
+            },
+            {
+                "id": 4,
+                "tag": "⚙️ HW_SANDBOX",
+                "title": "Minecraft Lab: новый эмулятор вредоносных модов",
+                "date": "8 мая 2025",
+                "author": "Sandbox Dev",
+                "excerpt": "Изолированная среда для анализа потенциально опасных модификаций Minecraft.",
+                "content": "Проект 'Sandcaft' позволяет безопасно исполнять подозрительный код модов и плагинов без риска для реальных систем. Результаты фиксируются в реестре HW_Sandbox."
+            }
+        ];
+
+        let currentNewsData = [];
+
+        // Загрузка новостей из news.json файла
+        async function loadNewsFromFile() {
+            const grid = document.getElementById('newsGrid');
+            grid.innerHTML = '<div style="text-align: center; padding: 3rem; color: var(--text-muted);">📡 Загрузка новостей из news.json...</div>';
             
-            // Скачиваем обновленный JSON файл
-            const blob = new Blob([JSON.stringify(parsed, null, 2)], { type: 'application/json' });
+            try {
+                const response = await fetch(`news.json?t=${Date.now()}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status} - файл news.json не найден`);
+                }
+                const data = await response.json();
+                
+                let newsArray;
+                if (Array.isArray(data)) {
+                    newsArray = data;
+                } else if (data.news && Array.isArray(data.news)) {
+                    newsArray = data.news;
+                } else {
+                    throw new Error('Неверный формат JSON. Ожидается массив или объект с полем "news"');
+                }
+                
+                if (newsArray.length === 0) {
+                    grid.innerHTML = '<div style="text-align: center; padding: 3rem; color: var(--text-muted);">📭 Новостей пока нет. Добавьте их в news.json</div>';
+                    return;
+                }
+                
+                currentNewsData = newsArray;
+                renderNewsGrid();
+            } catch (error) {
+                console.error('Ошибка загрузки news.json:', error);
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 3rem; background: rgba(0,0,0,0.5); border-radius: 28px;">
+                        <span style="font-size: 3rem;">⚠️</span>
+                        <h3 style="color: var(--accent-red); margin: 1rem 0;">Не удалось загрузить news.json</h3>
+                        <p style="color: var(--text-secondary);">Убедитесь, что файл <strong style="color: var(--accent-red);">news.json</strong> находится в той же папке, что и index.html</p>
+                        <p style="color: var(--text-muted); margin-top: 1rem; font-family: monospace;">Ошибка: ${error.message}</p>
+                        <button class="rule-trigger" id="createExampleJson" style="margin-top: 1.5rem;">📄 Создать пример news.json</button>
+                    </div>
+                `;
+                const createBtn = document.getElementById('createExampleJson');
+                if (createBtn) {
+                    createBtn.addEventListener('click', downloadExampleJson);
+                }
+            }
+        }
+
+        // Скачать пример JSON файла
+        function downloadExampleJson() {
+            const exampleData = DEFAULT_NEWS_JSON;
+            const blob = new Blob([JSON.stringify(exampleData, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -778,53 +812,171 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
             
+            const statusDiv = document.getElementById('jsonStatus');
             if (statusDiv) {
-                statusDiv.innerHTML = '✅ JSON файл сохранен! Замените им news.json и обновите страницу (F5).';
+                statusDiv.innerHTML = '✅ Пример файла news.json скачан. Поместите его в папку с сайтом и обновите страницу.';
                 statusDiv.style.color = 'var(--accent-cyber)';
+                setTimeout(() => { statusDiv.innerHTML = ''; }, 5000);
+            }
+        }
+
+        function renderNewsGrid() {
+            const grid = document.getElementById('newsGrid');
+            if (!grid) return;
+            if (!currentNewsData || currentNewsData.length === 0) {
+                grid.innerHTML = '<div style="text-align: center; padding: 3rem; color: var(--text-muted);">Нет новостей. Добавьте их через JSON редактор.</div>';
+                return;
             }
             
-            setTimeout(() => {
-                closeJsonEditor();
-                if (statusDiv) statusDiv.innerHTML = '';
-            }, 2000);
-        } catch(e) {
-            if (statusDiv) {
-                statusDiv.innerHTML = `❌ Ошибка: ${e.message}`;
-                statusDiv.style.color = 'var(--accent-red)';
-                setTimeout(() => { if (statusDiv) statusDiv.innerHTML = ''; }, 4000);
+            grid.innerHTML = '';
+            currentNewsData.forEach(news => {
+                const card = document.createElement('div');
+                card.className = 'news-card';
+                card.innerHTML = `
+                    <div class="card-tag">${escapeHtml(news.tag)}</div>
+                    <h3>${escapeHtml(news.title)}</h3>
+                    <div class="news-meta">
+                        <span>📅 ${escapeHtml(news.date)}</span>
+                        <span>✍️ ${escapeHtml(news.author)}</span>
+                    </div>
+                    <div class="news-excerpt">${escapeHtml(news.excerpt)}</div>
+                    <button class="read-more" data-id="${news.id}">Подробнее →</button>
+                `;
+                grid.appendChild(card);
+            });
+
+            document.querySelectorAll('.read-more').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(btn.getAttribute('data-id'));
+                    const article = currentNewsData.find(n => n.id === id);
+                    if (article) showNewsModal(article);
+                });
+            });
+        }
+
+        function showNewsModal(article) {
+            const modalContainer = document.getElementById('newsDetailModal');
+            modalContainer.innerHTML = `
+                <div class="news-modal">
+                    <button class="close-modal-btn" id="closeDetailModal">&times;</button>
+                    <div class="card-tag" style="margin: 0 0 0.8rem 0; display: inline-block;">${escapeHtml(article.tag)}</div>
+                    <h2 style="font-size: 1.8rem; margin: 0.5rem 0 0.8rem;">${escapeHtml(article.title)}</h2>
+                    <div class="news-meta" style="margin: 0 0 1rem 0;"><span>📅 ${escapeHtml(article.date)}</span><span>✍️ ${escapeHtml(article.author)}</span></div>
+                    <div style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem; white-space: pre-wrap;">${escapeHtml(article.content)}</div>
+                    <div style="border-top: 1px solid rgba(255, 0, 0, 0.04); padding-top: 1rem; font-size: 0.75rem; font-family: monospace; color: var(--text-muted);">Источник: HW Pro News / news.json</div>
+                </div>
+            `;
+            modalContainer.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            const closeBtn = document.getElementById('closeDetailModal');
+            if (closeBtn) closeBtn.onclick = () => closeNewsModal();
+            modalContainer.onclick = (e) => { if (e.target === modalContainer) closeNewsModal(); };
+        }
+
+        function closeNewsModal() {
+            const modal = document.getElementById('newsDetailModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        // JSON редактор
+        const jsonModal = document.getElementById('jsonEditorModal');
+        const jsonTextarea = document.getElementById('jsonEditorTextarea');
+        const openJsonBtn = document.getElementById('openJsonEditor');
+        const closeJsonBtn = document.getElementById('closeJsonModal');
+        const saveJsonBtn = document.getElementById('saveJsonBtn');
+        const resetJsonBtn = document.getElementById('resetJsonBtn');
+        const statusDiv = document.getElementById('jsonStatus');
+
+        function openJsonEditor() {
+            const dataToShow = currentNewsData.length > 0 ? currentNewsData : DEFAULT_NEWS_JSON;
+            jsonTextarea.value = JSON.stringify(dataToShow, null, 2);
+            jsonModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            if (statusDiv) statusDiv.innerHTML = '';
+        }
+
+        function closeJsonEditor() {
+            jsonModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function saveJsonAndReload() {
+            try {
+                const parsed = JSON.parse(jsonTextarea.value);
+                if (!Array.isArray(parsed)) throw new Error('Данные должны быть массивом');
+                for (let i = 0; i < parsed.length; i++) {
+                    const item = parsed[i];
+                    if (!item.id || !item.title || !item.tag) {
+                        throw new Error(`Новость ${i+1}: обязательны поля id, title, tag`);
+                    }
+                }
+                
+                const blob = new Blob([JSON.stringify(parsed, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'news.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                if (statusDiv) {
+                    statusDiv.innerHTML = '✅ JSON файл сохранен! Замените им news.json и обновите страницу (F5).';
+                    statusDiv.style.color = 'var(--accent-cyber)';
+                }
+                
+                setTimeout(() => {
+                    closeJsonEditor();
+                    if (statusDiv) statusDiv.innerHTML = '';
+                }, 2000);
+            } catch(e) {
+                if (statusDiv) {
+                    statusDiv.innerHTML = `❌ Ошибка: ${e.message}`;
+                    statusDiv.style.color = 'var(--accent-red)';
+                    setTimeout(() => { if (statusDiv) statusDiv.innerHTML = ''; }, 4000);
+                }
             }
         }
-    }
 
-    function resetToDefault() {
-        jsonTextarea.value = JSON.stringify(DEFAULT_NEWS_JSON, null, 2);
-        if (statusDiv) {
-            statusDiv.innerHTML = '📄 Загружен пример. Нажмите "Сохранить в news.json" для скачивания.';
-            statusDiv.style.color = 'var(--accent-cyber)';
+        function resetToDefault() {
+            jsonTextarea.value = JSON.stringify(DEFAULT_NEWS_JSON, null, 2);
+            if (statusDiv) {
+                statusDiv.innerHTML = '📄 Загружен пример. Нажмите "Сохранить в news.json" для скачивания.';
+                statusDiv.style.color = 'var(--accent-cyber)';
+            }
         }
-    }
 
-    // Правила модалка
-    const rulesModal = document.getElementById('rulesModalNews');
-    const openRulesBtns = document.querySelectorAll('#openRulesBtnNews, #footerRulesLink');
-    const closeRulesBtn = document.getElementById('closeRulesModalNews');
-    function openRules() { rulesModal.classList.add('active'); document.body.style.overflow = 'hidden'; }
-    function closeRules() { rulesModal.classList.remove('active'); document.body.style.overflow = ''; }
+        // Правила
+        const rulesModal = document.getElementById('rulesModalNews');
+        const openRulesBtns = document.querySelectorAll('#openRulesBtnNews, #footerRulesLink');
+        const closeRulesBtn = document.getElementById('closeRulesModalNews');
+        function openRules() { rulesModal.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeRules() { rulesModal.classList.remove('active'); document.body.style.overflow = ''; }
 
-    if (openRulesBtns) openRulesBtns.forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); openRules(); }));
-    if (closeRulesBtn) closeRulesBtn.addEventListener('click', closeRules);
-    rulesModal.addEventListener('click', (e) => { if (e.target === rulesModal) closeRules(); });
-    if (openJsonBtn) openJsonBtn.addEventListener('click', openJsonEditor);
-    if (closeJsonBtn) closeJsonBtn.addEventListener('click', closeJsonEditor);
-    if (saveJsonBtn) saveJsonBtn.addEventListener('click', saveJsonAndReload);
-    if (resetJsonBtn) resetJsonBtn.addEventListener('click', resetToDefault);
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeNewsModal(); closeJsonEditor(); closeRules(); } });
+        if (openRulesBtns) openRulesBtns.forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); openRules(); }));
+        if (closeRulesBtn) closeRulesBtn.addEventListener('click', closeRules);
+        rulesModal.addEventListener('click', (e) => { if (e.target === rulesModal) closeRules(); });
+        if (openJsonBtn) openJsonBtn.addEventListener('click', openJsonEditor);
+        if (closeJsonBtn) closeJsonBtn.addEventListener('click', closeJsonEditor);
+        if (saveJsonBtn) saveJsonBtn.addEventListener('click', saveJsonAndReload);
+        if (resetJsonBtn) resetJsonBtn.addEventListener('click', resetToDefault);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeNewsModal(); closeJsonEditor(); closeRules(); } });
 
-    // Инициализация - загружаем из файла
-    loadNewsFromFile();
-    
-    // Автообновление каждые 30 секунд
-    setInterval(loadNewsFromFile, 30000);
-</script>
+        // Инициализация
+        loadNewsFromFile();
+        setInterval(loadNewsFromFile, 30000);
+    </script>
 </body>
 </html>
