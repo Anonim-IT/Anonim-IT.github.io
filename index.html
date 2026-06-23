@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta name="description" content="HW Pro — российский технологический проект. Импортозамещение, цифровая безопасность и инновации.">
-    <meta name="keywords" content="HW Pro, импортозамещение, Россия, технологии, кибербезопасность, IT платформа, анонимность, HWPro_OS">
-    <title>HW Pro | Импортозамещение — Технологический портал</title>
+    <meta name="description" content="HW Pro — российский технологический проект. Анонимность, кибербезопасность и цифровая защита.">
+    <meta name="keywords" content="HW Pro, анонимность, безопасность, Россия, технологии, кибербезопасность, IT платформа, защита данных">
+    <title>HW Pro | Анонимность и Защита</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -153,9 +153,9 @@
             color: transparent;
         }
 
-        .logo .import-badge {
+        .logo .badge-rf {
             font-size: 0.5rem;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-red));
+            background: var(--accent-red);
             color: white;
             padding: 2px 10px;
             border-radius: 40px;
@@ -262,7 +262,7 @@
             border: 1px solid rgba(0, 57, 166, 0.2);
         }
 
-        /* ---------- АНОНС ОС HWPro_OS с триколором ---------- */
+        /* ---------- АНОНС ОС HWPro_OS ---------- */
         .os-announce {
             background: linear-gradient(145deg, rgba(0, 57, 166, 0.08), rgba(213, 43, 30, 0.04));
             border: 1px solid rgba(0, 57, 166, 0.3);
@@ -399,9 +399,9 @@
             box-shadow: 0 0 30px rgba(0, 57, 166, 0.4);
         }
 
-        /* Импортозамещающий баннер */
-        .import-banner {
-            background: linear-gradient(135deg, rgba(0, 57, 166, 0.1), rgba(213, 43, 30, 0.05));
+        /* Баннер анонимности и защиты */
+        .security-banner {
+            background: linear-gradient(135deg, rgba(0, 57, 166, 0.1), rgba(0, 255, 196, 0.05));
             border: 1px solid rgba(0, 57, 166, 0.2);
             border-radius: 20px;
             padding: 1.5rem 2rem;
@@ -413,28 +413,28 @@
             gap: 1rem;
         }
 
-        .import-banner .import-text {
+        .security-banner .security-text {
             display: flex;
             align-items: center;
             gap: 14px;
         }
 
-        .import-banner .import-text .icon {
+        .security-banner .security-text .icon {
             font-size: 2.2rem;
         }
 
-        .import-banner .import-text h4 {
+        .security-banner .security-text h4 {
             color: var(--text-primary);
             font-size: 1.2rem;
         }
 
-        .import-banner .import-text p {
+        .security-banner .security-text p {
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
 
-        .import-banner .import-badge-lg {
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-red));
+        .security-banner .security-badge-lg {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyber));
             color: #fff;
             padding: 8px 24px;
             border-radius: 60px;
@@ -462,9 +462,9 @@
         }
 
         .info-card:hover {
-            border-color: var(--accent-blue);
+            border-color: var(--accent-cyber);
             transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 57, 166, 0.15);
+            box-shadow: 0 15px 35px rgba(0, 255, 196, 0.1);
         }
 
         .card-icon {
@@ -483,6 +483,10 @@
             color: var(--accent-blue);
         }
 
+        .info-card h3 .cyan {
+            color: var(--accent-cyber);
+        }
+
         .info-card p {
             color: var(--text-secondary);
             font-size: 0.95rem;
@@ -499,7 +503,7 @@
 
         /* политика анонимности */
         .ethics-block {
-            background: linear-gradient(115deg, rgba(0, 57, 166, 0.05), rgba(213, 43, 30, 0.02));
+            background: linear-gradient(115deg, rgba(0, 57, 166, 0.05), rgba(0, 255, 196, 0.02));
             border-radius: 36px;
             padding: 2rem;
             margin: 3rem 0;
@@ -530,7 +534,7 @@
             border-radius: 60px;
             font-size: 0.8rem;
             font-family: var(--font-mono);
-            border-left: 2px solid var(--accent-blue);
+            border-left: 2px solid var(--accent-cyber);
         }
 
         /* футер */
@@ -630,7 +634,7 @@
 
         .rule-article {
             margin-bottom: 1.8rem;
-            border-left: 2px solid var(--accent-blue);
+            border-left: 2px solid var(--accent-cyber);
             padding-left: 1rem;
         }
 
@@ -678,7 +682,7 @@
 
         .anonym-banner {
             background: rgba(0,0,0,0.6);
-            border-left: 4px solid var(--accent-blue);
+            border-left: 4px solid var(--accent-cyber);
             padding: 1rem 1.5rem;
             border-radius: 20px;
             margin: 2rem 0;
@@ -697,8 +701,8 @@
             .os-announce h2 { font-size: 2rem; }
             .os-announce .os-year { font-size: 3rem; }
             .os-announce { padding: 1.5rem; }
-            .import-banner { flex-direction: column; text-align: center; }
-            .import-banner .import-text { flex-direction: column; text-align: center; }
+            .security-banner { flex-direction: column; text-align: center; }
+            .security-banner .security-text { flex-direction: column; text-align: center; }
         }
 
         @media (max-width: 480px) {
@@ -719,7 +723,7 @@
                 <span>⟁</span>
             </div>
             <span>HW Pro</span>
-            <span class="import-badge">🇷🇺 Импортозамещение</span>
+            <span class="badge-rf">🇷🇺</span>
         </a>
         <nav>
             <ul class="nav-links">
@@ -729,9 +733,10 @@
                 <li><a href="#">Ресурсы</a></li>
                 <li><a href="#">Исследования</a></li>
                 <li><a href="#">Minecraft Lab</a></li>
+                <li><a href="/portal.html">HW Portal</a></li>
             </ul>
         </nav>
-        <button class="rule-trigger" id="openRulesBtn">📜 Законодательство проекта</button>
+        <button class="rule-trigger" id="openRulesBtn">📜 Законодательство</button>
     </div>
 </header>
 
@@ -739,33 +744,33 @@
     <div class="container">
         <div class="hero-section">
             <div class="badge">
-                <span class="flag">🇷🇺</span> РОССИЙСКОЕ ИМПОРТОЗАМЕЩЕНИЕ // WHITE HACKING
+                <span class="flag">🇷🇺</span> АНОНИМНОСТЬ // КИБЕРБЕЗОПАСНОСТЬ
             </div>
-            <h1 class="hero-title">HW Pro<br>цифровой суверенитет</h1>
+            <h1 class="hero-title">HW Pro<br>цифровая защита</h1>
             <p class="hero-desc">
                 Российская технологическая платформа. Развитие отечественного ПО, 
-                кибербезопасности и инноваций. Проект реализует политику <strong class="accent-text">импортозамещения</strong> 
-                в IT-сфере.
+                кибербезопасности и инноваций. Проект ставит во главу угла <strong class="accent-text">анонимность</strong> 
+                и <strong class="accent-text">защиту данных</strong>.
             </p>
             <div class="legal-note">
-                🇷🇺 Проект разработан в рамках стратегии цифрового суверенитета Российской Федерации. 
-                Все решения — отечественная разработка.
+                🇷🇺 Проект разработан в рамках стратегии цифровой безопасности Российской Федерации. 
+                Все решения направлены на защиту пользователей.
             </div>
             <div class="sandbox-badge">
                 <span>📦</span> Зарегистрировано в реестре HW_Sandbox | ID: HW-PRO-2406-RU
             </div>
         </div>
 
-        <!-- ===== БАННЕР ИМПОРТОЗАМЕЩЕНИЯ ===== -->
-        <div class="import-banner">
-            <div class="import-text">
-                <span class="icon">🇷🇺</span>
+        <!-- ===== БАННЕР АНОНИМНОСТИ И ЗАЩИТЫ ===== -->
+        <div class="security-banner">
+            <div class="security-text">
+                <span class="icon">🛡️</span>
                 <div>
-                    <h4>Импортозамещение — наш приоритет</h4>
-                    <p>Разрабатываем собственное ПО, операционные системы и технологии. Полная независимость от зарубежных решений.</p>
+                    <h4>Анонимность и защита данных</h4>
+                    <p>Полная конфиденциальность. Никаких логов, трекеров и идентификации. Ваша безопасность — наш приоритет.</p>
                 </div>
             </div>
-            <span class="import-badge-lg">⚡ Сделано в России</span>
+            <span class="security-badge-lg">🔒 Zero-Logs Policy</span>
         </div>
 
         <!-- ===== АНОНС ОС HWPro_OS ===== -->
@@ -776,7 +781,7 @@
             <p class="os-desc">
                 Мы запустили разработку <span class="highlight">российской операционной системы</span> <strong class="accent-text">HWPro_OS</strong> 
                 на базе собственного ядра <strong class="accent-text">HWKernel</strong>. 
-                Полностью зашифрованная, анонимная, созданная для задач цифрового суверенитета. 
+                Полностью зашифрованная, анонимная, созданная для задач цифровой безопасности. 
                 Релиз запланирован на <strong>2030 год</strong>.
             </p>
             <div class="os-features">
@@ -795,11 +800,11 @@
             <div style="display: flex; align-items: center; gap: 12px;">
                 <span style="font-size: 2rem;">🕶️</span>
                 <div style="text-align: left;">
-                    <strong style="color: var(--accent-blue); font-family: monospace;">Анонимизация участников</strong>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">Проект разработан для полной анонимизации участников. Никаких логинов, метрик, слежения. Только чистое знание и обезличенный опыт.</p>
+                    <strong style="color: var(--accent-cyber); font-family: monospace;">Полная анонимизация</strong>
+                    <p style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">Никаких логинов, метрик, слежения. Только чистое знание и обезличенный опыт. Ваша цифровая тень не покинет этого портала.</p>
                 </div>
             </div>
-            <div style="font-size: 0.7rem; font-family: monospace; background: #00000040; padding: 6px 14px; border-radius: 40px; border: 1px solid var(--accent-blue);">
+            <div style="font-size: 0.7rem; font-family: monospace; background: #00000040; padding: 6px 14px; border-radius: 40px; border: 1px solid var(--accent-cyber);">
                 #no_track • #zero_fingerprint
             </div>
         </div>
@@ -808,18 +813,18 @@
         <div class="grid-info">
             <div class="info-card">
                 <div class="card-icon">🛡️</div>
-                <h3>Цифровой <span class="blue">суверенитет</span></h3>
-                <p>Развитие отечественных технологий. Полная независимость от зарубежного ПО. Собственные решения для безопасности данных.</p>
+                <h3>Анонимность <span class="cyan">+</span></h3>
+                <p>Мы не собираем персональные данные. Все взаимодействия анонимны. Никаких трекеров — только чистая информация. Проект создан для защиты цифрового следа участников.</p>
             </div>
             <div class="info-card">
-                <div class="card-icon">🧠</div>
-                <h3>White <span class="blue">Hack</span></h3>
-                <p>Этичный код, исследования уязвимостей на согласованных полигонах. Распространение культуры безопасной разработки в России.</p>
+                <div class="card-icon">🔐</div>
+                <h3>Шифрование <span class="blue">данных</span></h3>
+                <p>Сквозное шифрование всех коммуникаций. Современные криптографические алгоритмы. Полная защита от перехвата и несанкционированного доступа.</p>
             </div>
             <div class="info-card">
                 <div class="card-icon">⚙️</div>
-                <h3>HW <span class="blue">Sandbox</span></h3>
-                <p>Экспериментальная среда: IT-решения, архитектуры, технологии. Все проекты фиксируются в реестре HW_Sandbox — базе отечественных разработок.</p>
+                <h3>Zero-<span class="cyan">Trust</span></h3>
+                <p>Модель нулевого доверия ко всем компонентам. Минимальные привилегии, постоянная верификация. Никаких исключений и бэкдоров.</p>
             </div>
         </div>
 
@@ -831,10 +836,10 @@
             <div class="badge-list">
                 <span>🇷🇺 Российское ПО</span>
                 <span>🔐 Нулевое доверие к трекерам</span>
-                <span>🧾 Прозрачность</span>
+                <span>🕶️ Полная анонимность</span>
                 <span>⚖️ Не навреди</span>
                 <span>📚 Образовательная цель</span>
-                <span>🕶️ Полная анонимность</span>
+                <span>🧾 Прозрачность</span>
             </div>
             <button id="openRulesBtnInline" class="rule-trigger" style="margin-top: 20px;">Подробные правила →</button>
         </div>
@@ -847,7 +852,7 @@
                     <p style="color: var(--text-secondary); max-width: 550px;">Каждый наш проект вносится в единую базу HW_Sandbox. Текущая страница — официальная запись № HW-PRO-2406-RU. Реестр предназначен для внутренней фиксации всех разработок и инициатив сообщества.</p>
                 </div>
                 <div>
-                    <span style="background: #0f0f1c; padding: 0.8rem 1.6rem; border-radius: 80px; font-family: monospace; border: 1px solid var(--accent-blue); color: var(--accent-cyber);">реестр: ACTIVE</span>
+                    <span style="background: #0f0f1c; padding: 0.8rem 1.6rem; border-radius: 80px; font-family: monospace; border: 1px solid var(--accent-cyber); color: var(--accent-cyber);">реестр: ACTIVE</span>
                 </div>
             </div>
         </div>
@@ -861,8 +866,8 @@
             <span>🇷🇺</span>
             <span>🇷🇺</span>
         </div>
-        <p>© 2025 HW Pro — Российский технологический проект. Развитие импортозамещения в IT-сфере.<br>
-        Все решения — отечественная разработка. Проект реализует стратегию цифрового суверенитета РФ.</p>
+        <p>© 2025 HW Pro — Российский технологический проект. Анонимность и защита данных.<br>
+        Все решения направлены на обеспечение цифровой безопасности пользователей.</p>
         <div style="margin-top: 1rem; font-size: 0.7rem;">
             <a href="#" style="color: var(--text-muted); text-decoration: none;">Политика анонимности</a> &nbsp;|&nbsp;
             <a href="#" id="footerRuleLink" style="color: var(--text-muted); text-decoration: none;">Законодательство HW Pro</a> &nbsp;|&nbsp;
@@ -882,21 +887,22 @@
             <div class="rule-article">
                 <h4>Статья 1. Статус проекта</h4>
                 <p>1.1. HW Pro является российским неофициальным, некоммерческим информационно-технологическим проектом. Все материалы публикуются в ознакомительных и образовательных целях.</p>
-                <p>1.2. Проект реализует политику импортозамещения и цифрового суверенитета Российской Федерации.</p>
+                <p>1.2. Проект ставит во главу угла анонимность и защиту данных пользователей.</p>
                 <p>1.3. Проект внесён в реестр HW_Sandbox (ID: HW-PRO-2406-RU).</p>
             </div>
             <div class="rule-article">
-                <h4>Статья 2. Принципы белого хакинга и анонимизации</h4>
-                <p>2.1. Участники обязуются не наносить ущерб системам РФ и использовать знания в рамках закона.</p>
-                <p>2.2. Проект разработан для полной анонимизации участников.</p>
+                <h4>Статья 2. Принципы анонимности и защиты</h4>
+                <p>2.1. Платформа не собирает cookies без согласия, не использует метрики слежения.</p>
+                <p>2.2. Логирование сведений о пользователях сведено к абсолютному минимуму.</p>
+                <p>2.3. Участники сообщества не вправе деанонимизировать других пользователей.</p>
             </div>
             <div class="rule-article">
-                <h4>Статья 3. Импортозамещение</h4>
-                <p>3.1. Все разработки проекта являются отечественными и направлены на замещение зарубежных решений.</p>
-                <p>3.2. Приоритет — создание собственного ПО, операционных систем и технологий.</p>
+                <h4>Статья 3. Белый хакинг</h4>
+                <p>3.1. Участники обязуются не наносить ущерб системам РФ и использовать знания в рамках закона.</p>
+                <p>3.2. Запрещены любые действия, направленные на кражу данных или нарушение приватности.</p>
             </div>
             <div class="legal-stamp">
-                🇷🇺 HW Pro — российский проект импортозамещения | Основано на принципах цифрового суверенитета<br>
+                🕶️ HW Pro — анонимность и защита | Основано на принципах цифровой безопасности<br>
                 📦 Зарегистрировано в HW_Sandbox (ID: HW-PRO-2406-RU)
             </div>
         </div>

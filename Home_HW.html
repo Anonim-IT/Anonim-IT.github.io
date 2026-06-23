@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>HW Portal | Российский защищенный портал</title>
+    <title>HW Portal | Анонимный защищенный портал</title>
     <!-- Шрифты: JetBrains Mono для кода -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- Font Awesome 6 -->
@@ -15,7 +15,7 @@
             box-sizing: border-box;
         }
 
-        /* === DARK THEME / РОССИЙСКОЕ ИМПОРТОЗАМЕЩЕНИЕ === */
+        /* === DARK THEME / АНОНИМНОСТЬ И ЗАЩИТА === */
         body {
             background: #0a0c10;
             background-image: radial-gradient(circle at 15% 30%, rgba(0, 57, 166, 0.03) 0%, #0a0c10 90%);
@@ -47,7 +47,7 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
-        /* Light mode (российский светлый) */
+        /* Light mode */
         body.light-mode {
             background: #eef2f5;
             background-image: none;
@@ -138,7 +138,7 @@
             margin: 0 auto;
         }
 
-        /* Badges безопасности и импортозамещения */
+        /* Badges анонимности и защиты */
         .security-header {
             display: flex;
             justify-content: center;
@@ -171,6 +171,13 @@
         .badge-ru i {
             color: #d52b1e;
         }
+        .badge-anon {
+            border-color: #00ffc4;
+            color: #00ffc4;
+        }
+        .badge-anon i {
+            color: #00ffc4;
+        }
         
         /* Кнопка правил и лицензии */
         .legal-btn {
@@ -188,9 +195,9 @@
             gap: 6px;
         }
         .legal-btn:hover {
-            border-color: #0039a6;
-            color: #4a8eff;
-            background: rgba(0, 57, 166, 0.1);
+            border-color: #00ffc4;
+            color: #00ffc4;
+            background: rgba(0, 255, 196, 0.1);
         }
         
         .hero {
@@ -201,7 +208,7 @@
             font-size: 2.6rem;
             font-weight: 700;
             font-family: 'JetBrains Mono', monospace;
-            background: linear-gradient(135deg, #4a8eff, #ffffff, #d52b1e);
+            background: linear-gradient(135deg, #00ffc4, #ffffff, #4a8eff);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
@@ -211,8 +218,8 @@
             gap: 12px;
         }
         .hero h1 i {
-            color: #4a8eff;
-            text-shadow: 0 0 6px rgba(0, 57, 166, 0.3);
+            color: #00ffc4;
+            text-shadow: 0 0 6px rgba(0, 255, 196, 0.3);
         }
         .hero p {
             font-size: 0.9rem;
@@ -246,8 +253,8 @@
         }
         .theme-btn:hover {
             background: #2b4a5e;
-            border-color: #4a8eff;
-            box-shadow: 0 0 8px rgba(0, 57, 166, 0.3);
+            border-color: #00ffc4;
+            box-shadow: 0 0 8px rgba(0, 255, 196, 0.3);
         }
 
         /* DuckDuckGo Search (анонимный поиск) */
@@ -257,7 +264,7 @@
             border-radius: 28px;
             padding: 0.8rem 1.8rem;
             margin-bottom: 2rem;
-            border: 1px solid #0039a6;
+            border: 1px solid #00ffc4;
             max-width: 720px;
             margin-left: auto;
             margin-right: auto;
@@ -268,7 +275,7 @@
             justify-content: center;
             gap: 10px;
             font-weight: 600;
-            color: #8ab8ff;
+            color: #00ffc4;
             margin-bottom: 14px;
             font-size: 0.9rem;
             font-family: 'JetBrains Mono', monospace;
@@ -295,12 +302,12 @@
             outline: none;
         }
         .ddg-search-input:focus {
-            border-color: #4a8eff;
-            box-shadow: 0 0 8px rgba(0, 57, 166, 0.3);
+            border-color: #00ffc4;
+            box-shadow: 0 0 8px rgba(0, 255, 196, 0.3);
         }
         .ddg-search-btn {
             background: #0039a6;
-            border: 1px solid #4a8eff;
+            border: 1px solid #00ffc4;
             color: #ffffff;
             padding: 0 24px;
             border-radius: 40px;
@@ -310,7 +317,7 @@
         }
         .ddg-search-btn:hover {
             background: #1a4fa0;
-            box-shadow: 0 0 6px rgba(0, 57, 166, 0.4);
+            box-shadow: 0 0 6px rgba(0, 255, 196, 0.4);
         }
         .note-search {
             font-size: 0.65rem;
@@ -346,7 +353,7 @@
             outline: none;
         }
         .search-box i {
-            color: #4a8eff;
+            color: #00ffc4;
         }
 
         .categories {
@@ -370,12 +377,12 @@
         }
         .cat-btn.active {
             background: #0039a6;
-            border-color: #4a8eff;
+            border-color: #00ffc4;
             color: #f0f8ff;
-            box-shadow: 0 0 6px rgba(0, 57, 166, 0.3);
+            box-shadow: 0 0 6px rgba(0, 255, 196, 0.3);
         }
         .cat-btn:hover {
-            border-color: #4a8eff;
+            border-color: #00ffc4;
         }
 
         .sites-grid {
@@ -395,8 +402,8 @@
         .site-card:hover {
             transform: translateY(-4px);
             background: #111e24;
-            border-color: #4a8eff;
-            box-shadow: 0 12px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(0, 57, 166, 0.2);
+            border-color: #00ffc4;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(0, 255, 196, 0.2);
         }
         .card-header {
             display: flex;
@@ -413,7 +420,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.6rem;
-            color: #4a8eff;
+            color: #00ffc4;
             border: 1px solid #3a6a9a;
         }
         .card-title h3 {
@@ -461,7 +468,7 @@
         }
         .visit-btn:hover {
             background: #0039a6;
-            border-color: #4a8eff;
+            border-color: #00ffc4;
             color: #fff;
         }
         .empty-state {
@@ -483,8 +490,8 @@
         .footer-note .ru-icon {
             color: #d52b1e;
         }
-        .footer-note .blue-icon {
-            color: #4a8eff;
+        .footer-note .cyan-icon {
+            color: #00ffc4;
         }
         
         /* === МОДАЛЬНОЕ ОКНО (Лицензия и правила) === */
@@ -509,8 +516,8 @@
             border-radius: 32px;
             max-width: 700px;
             width: 90%;
-            border: 1px solid #4a8eff;
-            box-shadow: 0 0 30px rgba(0, 57, 166, 0.2);
+            border: 1px solid #00ffc4;
+            box-shadow: 0 0 30px rgba(0, 255, 196, 0.2);
             font-family: 'JetBrains Mono', monospace;
             color: #d4e8f0;
             position: relative;
@@ -519,13 +526,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #4a8eff;
+            border-bottom: 1px solid #00ffc4;
             padding-bottom: 0.8rem;
             margin-bottom: 1.2rem;
         }
         .modal-header h2 {
             font-size: 1.4rem;
-            color: #4a8eff;
+            color: #00ffc4;
         }
         .modal-header h2 .ru-flag {
             color: #d52b1e;
@@ -562,7 +569,7 @@
             margin: 1rem 0;
         }
         .ru-license {
-            color: #4a8eff;
+            color: #00ffc4;
             font-weight: 600;
         }
         @media (max-width: 600px) {
@@ -583,14 +590,14 @@
     
     <div class="security-header">
         <div class="security-badge"><i class="fas fa-shield-haltered"></i> ПОЛИТИКА НУЛЕВЫХ ЛОГОВ</div>
-        <div class="anon-badge"><i class="fas fa-mask"></i> АНОНИМНОСТЬ | ТОР-МЫШЛЕНИЕ</div>
+        <div class="anon-badge badge-anon"><i class="fas fa-mask"></i> ПОЛНАЯ АНОНИМНОСТЬ</div>
         <div class="security-badge"><i class="fas fa-lock"></i> ШИФРОВАННЫЙ ШЛЮЗ</div>
         <div class="security-badge badge-ru"><i class="fas fa-flag"></i> РОССИЙСКОЕ ПО</div>
     </div>
     
     <div class="hero">
         <h1><i class="fas fa-shield-haltered"></i> HW PORTAL <i class="fas fa-code"></i></h1>
-        <p>// российский защищенный шлюз | импортозамещение | нулевое слежение | киберустойчивость</p>
+        <p>// российский анонимный шлюз | zero-logs | полная защита | киберустойчивость</p>
     </div>
 
     <!-- DuckDuckGo Поиск (анонимный) -->
@@ -613,7 +620,7 @@
     <div class="categories" id="categoryFilters"></div>
     <div id="sitesContainer" class="sites-grid"></div>
     <div class="footer-note">
-        <i class="fas fa-microchip blue-icon"></i> защищенные закладки | приватность | arch linux | <span class="ru-icon">🇷🇺</span> импортозамещение
+        <i class="fas fa-microchip cyan-icon"></i> защищенные закладки | приватность | arch linux | <span class="ru-icon">🇷🇺</span> zero-logs
     </div>
 </div>
 
@@ -625,20 +632,20 @@
             <span class="close-modal">&times;</span>
         </div>
         <div class="license-text">
-            <p><strong>🔒 HW Portal — Лицензия защищенного доступа v.2.0 (Российский стандарт)</strong></p>
-            <p>Данный портал создан в рамках <span class="ru-license">импортозамещения</span>, кибербезопасности и приватности. Используя ресурсы, вы соглашаетесь с правилами:</p>
+            <p><strong>🔒 HW Portal — Лицензия анонимного доступа v.3.0 (Российский стандарт)</strong></p>
+            <p>Данный портал создан для обеспечения <span class="ru-license">полной анонимности</span> и защиты данных. Используя ресурсы, вы соглашаетесь с правилами:</p>
             <ul>
-                <li><i class="fas fa-check-circle" style="color:#4a8eff;"></i> Абсолютная анонимность — никакие логи не сохраняются.</li>
-                <li><i class="fas fa-check-circle" style="color:#4a8eff;"></i> Запрещена любая деятельность, нарушающая законодательство РФ (взлом без согласия, фишинг, распространение вредоносного ПО).</li>
-                <li><i class="fas fa-check-circle" style="color:#4a8eff;"></i> Уважение к сообществу: никаких атак, доксинга или преследования.</li>
-                <li><i class="fas fa-check-circle" style="color:#4a8eff;"></i> Все инструменты и ссылки предназначены для исследований, обучения и повышения цифровой гигиены.</li>
-                <li><i class="fas fa-check-circle" style="color:#d52b1e;"></i> <strong>🇷🇺 Российская разработка.</strong> Проект реализует политику импортозамещения в IT-сфере.</li>
+                <li><i class="fas fa-check-circle" style="color:#00ffc4;"></i> Абсолютная анонимность — никакие логи не сохраняются (Zero-Logs).</li>
+                <li><i class="fas fa-check-circle" style="color:#00ffc4;"></i> Запрещена любая деятельность, нарушающая законодательство РФ.</li>
+                <li><i class="fas fa-check-circle" style="color:#00ffc4;"></i> Уважение к сообществу: никаких атак, доксинга или преследования.</li>
+                <li><i class="fas fa-check-circle" style="color:#00ffc4;"></i> Все инструменты и ссылки предназначены для исследований и обучения.</li>
+                <li><i class="fas fa-check-circle" style="color:#d52b1e;"></i> <strong>🇷🇺 Российская разработка.</strong> Полная защита приватности.</li>
             </ul>
             <div class="warning">
-                ⚠️ <strong>Правила пользования:</strong> Вы несёте личную ответственность за свои действия. Администрация портала не отслеживает активность и не хранит метаданные. Любые попытки дестабилизации или атак на ресурсы запрещены. Используйте VPN/Tor по своему усмотрению, но в рамках закона РФ.
+                ⚠️ <strong>Правила пользования:</strong> Вы несёте личную ответственность за свои действия. Администрация портала не отслеживает активность и не хранит метаданные. Используйте VPN/Tor по своему усмотрению, но в рамках закона РФ.
             </div>
             <p><i class="fas fa-terminal"></i> Лицензия распространяется на все закладки и внешние переходы. Используя портал, вы соглашаетесь с <strong>нулевой ответственностью за неправомерное использование</strong>. Оставайтесь анонимными, оставайтесь этичными.</p>
-            <p style="margin-top: 1rem; font-size:0.7rem;">🔐 HW Project | Российское ПО | Импортозамещение | Хакер-культура</p>
+            <p style="margin-top: 1rem; font-size:0.7rem;">🔐 HW Project | Российское ПО | Zero-Logs | Анонимность | Хакер-культура</p>
         </div>
     </div>
 </div>

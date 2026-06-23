@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HWPro_OS — Российская операционная система</title>
+    <title>HWPro_OS — Анонимная операционная система</title>
     <style>
         /* === СБРОС И БАЗА === */
         * {
@@ -77,7 +77,7 @@
             flex-shrink: 0;
             gap: 12px;
             z-index: 10;
-            margin-top: 4px; /* Компенсируем триколор */
+            margin-top: 4px;
         }
 
         .taskbar .logo {
@@ -98,7 +98,7 @@
 
         .taskbar .logo .flag-badge {
             font-size: 0.5rem;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-red));
+            background: var(--accent-red);
             color: white;
             padding: 2px 10px;
             border-radius: 40px;
@@ -183,7 +183,6 @@
             opacity: 0.9;
         }
 
-        /* Наложение поверх флага для читаемости иконок */
         .desktop::after {
             content: '';
             position: absolute;
@@ -196,7 +195,6 @@
             pointer-events: none;
         }
 
-        /* Герб России в центре (прозрачный водяной знак) */
         .desktop .coat-of-arms {
             position: absolute;
             top: 50%;
@@ -210,7 +208,6 @@
             line-height: 1;
         }
 
-        /* Текст "Россия" на фоне */
         .desktop .russia-text {
             position: absolute;
             bottom: 60px;
@@ -280,7 +277,7 @@
             text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
         }
 
-        /* === ОКНА (поверх флага) === */
+        /* === ОКНА === */
         .window-container {
             flex: 1;
             padding: 12px;
@@ -400,7 +397,7 @@
             background: var(--bg);
         }
 
-        /* === ТЕРМИНАЛЬНЫЙ ВИД В ОКНЕ === */
+        /* === ТЕРМИНАЛ === */
         .terminal-output {
             height: 100%;
             overflow-y: auto;
@@ -544,7 +541,7 @@
             color: var(--accent-blue);
         }
 
-        /* === НИЖНЯЯ ПАНЕЛЬ СТАТУСА === */
+        /* === СТАТУСБАР === */
         .statusbar {
             height: 28px;
             background: var(--surface);
@@ -798,7 +795,7 @@
     <div class="taskbar">
         <div class="logo">
             <span>⟁</span> HW<span>Pro</span>_OS
-            <span class="flag-badge">🇷🇺 Импортозамещение</span>
+            <span class="flag-badge">🇷🇺 Анонимность</span>
         </div>
         <div class="workspaces">
             <span class="ws active">❶</span>
@@ -809,7 +806,7 @@
             <span>🔒</span>
             <span>🔐</span>
         </div>
-        <span class="russian-stamp">⚡ Сделано в России</span>
+        <span class="russian-stamp">🛡️ Zero-Logs</span>
         <div class="clock" id="clock">--:--</div>
     </div>
 
@@ -864,14 +861,14 @@
                         <div class="term-line"><span class="output">HWKernel 1.0.0-rc</span></div>
                         <div class="term-line"><span class="output">Build: 2026-05-16 22:14 UTC</span></div>
                         <div class="term-line"><span class="output">Среда: зашифрованная, изолированная, для внутреннего использования</span></div>
-                        <div class="term-line"><span class="output">🇷🇺 Российская разработка. Импортозамещение.</span></div>
+                        <div class="term-line"><span class="output">🇷🇺 Российская разработка. Полная анонимность.</span></div>
                         <div class="term-line" style="margin-top:6px;"><span class="prompt">$</span> <span class="cmd">hwctl --status</span></div>
                         <div class="term-line"><span class="success">✅ Все модули загружены. Крипто-стек активен.</span></div>
                         <div class="term-line"><span class="success">✅ Сеть: только локальный loopback (режим разработки).</span></div>
                         <div class="term-line"><span class="success">✅ Анонимность: включена (полная маскировка метаданных).</span></div>
-                        <div class="term-line"><span class="success">✅ 🇷🇺 Российский стек технологий.</span></div>
-                        <div class="term-line" style="margin-top:6px;"><span class="prompt">$</span> <span class="cmd">echo "HWPro_OS — операционная система будущего"</span></div>
-                        <div class="term-line"><span class="output highlight">HWPro_OS — операционная система будущего</span></div>
+                        <div class="term-line"><span class="success">✅ 🇷🇺 Российский стек технологий. Zero-Logs.</span></div>
+                        <div class="term-line" style="margin-top:6px;"><span class="prompt">$</span> <span class="cmd">echo "HWPro_OS — анонимная операционная система"</span></div>
+                        <div class="term-line"><span class="output highlight">HWPro_OS — анонимная операционная система</span></div>
                     </div>
                 </div>
             </div>
@@ -907,12 +904,13 @@
 
                         <hr class="divider">
 
-                        <h2>🔐 Политика безопасности</h2>
+                        <h2>🔐 Политика анонимности и безопасности</h2>
                         <ul>
                             <li>Никакой телеметрии</li>
                             <li>Никаких бэкдоров</li>
                             <li>Никакой идентификации пользователей</li>
                             <li>Полное шифрование всех разделов</li>
+                            <li>🕶️ Zero-Logs — логи не сохраняются</li>
                             <li>🇷🇺 Соответствие требованиям РФ</li>
                         </ul>
 
@@ -924,11 +922,12 @@
                             <span class="badge">🧩 Модульная</span>
                             <span class="badge badge-ru">🇷🇺 Российское ПО</span>
                             <span class="badge">⚡ HWPro_OS</span>
+                            <span class="badge">🕶️ Zero-Logs</span>
                         </div>
 
                         <p style="margin-top:12px; color:var(--text-dim); font-size:11px;">
-                            <span class="highlight">HWPro_OS</span> разрабатывается как полностью зашифрованная операционная система 
-                            исключительно для нужд проекта. <span style="color:var(--accent-blue);">🇷🇺 Российская разработка в рамках импортозамещения.</span>
+                            <span class="highlight">HWPro_OS</span> разрабатывается как полностью зашифрованная и анонимная операционная система 
+                            исключительно для нужд проекта. <span style="color:var(--accent-blue);">🇷🇺 Российская разработка, ориентированная на защиту приватности.</span>
                         </p>
                     </div>
                 </div>
@@ -941,8 +940,8 @@
         <span class="status-item"><span class="dot"></span> HWKernel 1.0.0</span>
         <span class="status-item">🔐 Шифрование: <span style="color:var(--accent-green);">активно</span></span>
         <span class="status-item">🕶️ Анонимность: <span style="color:var(--accent);">включена</span></span>
-        <span class="status-item">📦 Сборка: 2026-05-16</span>
-        <span class="status-item"><span class="flag-text">🇷🇺</span> Импортозамещение</span>
+        <span class="status-item">📦 Сборка: 2026-06-23</span>
+        <span class="status-item"><span class="flag-text">🇷🇺</span> Zero-Logs</span>
         <span style="margin-left:auto;">⌨️ Ctrl+Alt+T — терминал | F3 — просмотр</span>
     </div>
 
@@ -966,7 +965,7 @@
             // ===== КОНТЕНТ ДЛЯ МОДАЛЬНЫХ ОКОН =====
             const modalContents = {
                 readme: `
-                    <h2>HWPro_OS — Российская операционная система</h2>
+                    <h2>HWPro_OS — Анонимная операционная система</h2>
                     <p><span class="highlight">Кодовое имя:</span> HWPro_OS</p>
                     <p><span class="highlight">Ядро:</span> HWKernel 1.0.0-rc</p>
                     <p><span class="highlight">Статус:</span> Активная разработка</p>
@@ -974,10 +973,11 @@
                     <p><span class="highlight">Целевая среда:</span> Исключительно для нужд проекта HW</p>
 
                     <h2>Что такое HWPro_OS?</h2>
-                    <p>Полностью зашифрованная операционная система, построенная на собственном ядре <span class="highlight">HWKernel</span>.</p>
+                    <p>Полностью зашифрованная и анонимная операционная система, построенная на собственном ядре <span class="highlight">HWKernel</span>.</p>
                     <ul>
                         <li>Полное шифрование диска (LUKS2 + AES-256-XTS).</li>
                         <li>Никакой телеметрии, никакого слежения.</li>
+                        <li>Zero-Logs — логи не сохраняются.</li>
                         <li>Изолированная среда для разработки и тестирования.</li>
                         <li><span class="highlight-ru">🇷🇺 Полностью российская разработка.</span></li>
                     </ul>
@@ -988,7 +988,7 @@
                         <li>Минимальная поверхность атаки.</li>
                         <li>Встроенный крипто-стек.</li>
                         <li>Поддержка только необходимых драйверов.</li>
-                        <li><span class="highlight-ru">🇷🇺 Импортозамещение — наш приоритет.</span></li>
+                        <li><span class="highlight-ru">🇷🇺 Анонимность и защита данных — наш приоритет.</span></li>
                     </ul>
                 `,
                 kernel: `
@@ -1003,6 +1003,7 @@
                         <li>Встроенная поддержка LUKS2.</li>
                         <li>Стек обфускации метаданных (анонимность).</li>
                         <li>Модульная загрузка драйверов.</li>
+                        <li>Zero-Logs — полное отсутствие логирования.</li>
                         <li><span class="highlight-ru">🇷🇺 Полное соответствие стандартам РФ.</span></li>
                     </ul>
 
@@ -1020,9 +1021,9 @@
                         <li>Нет графического окружения.</li>
                         <li>Нет оконного менеджера.</li>
                         <li>Только текст, команды, шифрование.</li>
-                        <li><span class="highlight-ru">🇷🇺 Российская консольная ОС.</span></li>
+                        <li><span class="highlight-ru">🇷🇺 Российская анонимная ОС.</span></li>
                     </ul>
-                    <p>Это сознательный выбор. В мире HWPro_OS мы уходим от рабочих столов. Мы работаем напрямую с машиной.</p>
+                    <p>Это сознательный выбор. В мире HWPro_OS мы уходим от рабочих столов. Мы работаем напрямую с машиной, сохраняя полную анонимность.</p>
                 `,
                 apply: `
                     <h2>Подача заявки тестировщика</h2>
@@ -1196,8 +1197,8 @@
             windows.right.classList.remove('hidden');
             updateDesktopIcons();
 
-            console.log('HWPro_OS — Российская операционная система загружена.');
-            console.log('🇷🇺 Импортозамещение. Полностью отечественная разработка.');
+            console.log('HWPro_OS — Анонимная операционная система загружена.');
+            console.log('🇷🇺 Zero-Logs. Полная анонимность. Защита данных.');
             console.log('Управление окнами: кнопки "─" (свернуть) и "✕" (закрыть).');
             console.log('Фон рабочего стола — флаг Российской Федерации.');
         })();

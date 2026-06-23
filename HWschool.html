@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HW School | Российская школа кибербезопасности</title>
+    <title>HW School | Анонимная школа кибербезопасности</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -22,6 +22,7 @@
             --white: #ffffff;
             --red: #d52b1e;
             --blue: #0039a6;
+            --cyan: #00ffc4;
         }
         
         body {
@@ -81,7 +82,7 @@
             position: sticky;
             top: 5px;
             z-index: 100;
-            border-bottom: 2px solid var(--red);
+            border-bottom: 2px solid var(--cyan);
         }
         
         .header-content {
@@ -104,10 +105,10 @@
         
         .logo i {
             font-size: 1.8rem;
-            color: #fff;
+            color: var(--cyan);
         }
         
-        .logo .import-badge {
+        .logo .badge-rf {
             font-size: 0.5rem;
             background: var(--red);
             color: white;
@@ -132,20 +133,20 @@
             background-position: center;
             padding: 5rem 0;
             text-align: center;
-            border-bottom: 1px solid rgba(0, 57, 166, 0.2);
+            border-bottom: 1px solid rgba(0, 255, 196, 0.2);
         }
         
         .hero-badge {
             display: inline-block;
-            background: rgba(213, 43, 30, 0.15);
-            border: 1px solid var(--red);
+            background: rgba(0, 255, 196, 0.12);
+            border: 1px solid var(--cyan);
             border-radius: 60px;
             padding: 0.3rem 1.5rem;
             font-size: 0.75rem;
             font-weight: 600;
             letter-spacing: 1px;
             margin-bottom: 1.5rem;
-            color: var(--red);
+            color: var(--cyan);
             text-transform: uppercase;
         }
         
@@ -153,7 +154,7 @@
             font-size: 3.5rem;
             margin-bottom: 1rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #ffffff, var(--blue), #00ffc4);
+            background: linear-gradient(135deg, #ffffff, var(--blue), var(--cyan));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -167,7 +168,7 @@
         }
         
         .highlight {
-            color: #00ffc4;
+            color: var(--cyan);
             font-weight: 600;
         }
         
@@ -193,19 +194,19 @@
             border-radius: 16px;
             padding: 2rem;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(0, 57, 166, 0.15);
+            border: 1px solid rgba(0, 255, 196, 0.1);
         }
         
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 57, 166, 0.15);
-            border-color: var(--blue);
+            box-shadow: 0 10px 25px rgba(0, 255, 196, 0.1);
+            border-color: var(--cyan);
         }
         
         .card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: #00ffc4;
+            color: var(--cyan);
         }
         
         .card h3 i {
@@ -223,7 +224,7 @@
         }
 
         .card li .highlight {
-            color: #00ffc4;
+            color: var(--cyan);
         }
         
         /* Sections */
@@ -232,9 +233,9 @@
         }
         
         .section-alt {
-            background: rgba(0, 57, 166, 0.03);
-            border-top: 1px solid rgba(0, 57, 166, 0.1);
-            border-bottom: 1px solid rgba(0, 57, 166, 0.1);
+            background: rgba(0, 255, 196, 0.02);
+            border-top: 1px solid rgba(0, 255, 196, 0.08);
+            border-bottom: 1px solid rgba(0, 255, 196, 0.08);
         }
         
         .section-title {
@@ -249,7 +250,7 @@
             display: block;
             width: 80px;
             height: 4px;
-            background: linear-gradient(90deg, var(--blue), var(--red));
+            background: linear-gradient(90deg, var(--blue), var(--cyan));
             margin: 1rem auto;
             border-radius: 2px;
         }
@@ -287,7 +288,7 @@
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.05);
             transform: translateY(-2px);
-            border-color: var(--blue);
+            border-color: var(--cyan);
         }
         
         .btn-red {
@@ -312,7 +313,7 @@
             border-radius: 16px;
             padding: 2rem;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(0, 57, 166, 0.1);
+            border: 1px solid rgba(0, 255, 196, 0.1);
         }
         
         /* Footer */
@@ -349,10 +350,10 @@
             margin: 0 8px;
         }
         
-        /* Import Banner */
-        .import-banner {
-            background: linear-gradient(135deg, rgba(0, 57, 166, 0.08), rgba(213, 43, 30, 0.04));
-            border: 1px solid rgba(0, 57, 166, 0.15);
+        /* Anonymity Banner */
+        .anon-banner {
+            background: linear-gradient(135deg, rgba(0, 255, 196, 0.06), rgba(0, 57, 166, 0.04));
+            border: 1px solid rgba(0, 255, 196, 0.15);
             border-radius: 16px;
             padding: 1.5rem 2rem;
             margin: 2rem 0;
@@ -363,30 +364,30 @@
             gap: 1rem;
         }
 
-        .import-banner .import-text {
+        .anon-banner .anon-text {
             display: flex;
             align-items: center;
             gap: 14px;
         }
 
-        .import-banner .import-text .icon {
+        .anon-banner .anon-text .icon {
             font-size: 2rem;
         }
 
-        .import-banner .import-text h4 {
+        .anon-banner .anon-text h4 {
             color: var(--light);
             font-size: 1.1rem;
         }
 
-        .import-banner .import-text p {
+        .anon-banner .anon-text p {
             color: var(--secondary);
             font-size: 0.9rem;
             margin: 0;
         }
 
-        .import-banner .import-badge-lg {
-            background: linear-gradient(135deg, var(--blue), var(--red));
-            color: #fff;
+        .anon-banner .anon-badge-lg {
+            background: linear-gradient(135deg, var(--cyan), var(--blue));
+            color: #000;
             padding: 8px 24px;
             border-radius: 60px;
             font-weight: 700;
@@ -400,13 +401,13 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: rgba(0, 57, 166, 0.1);
+            background: rgba(0, 255, 196, 0.08);
             padding: 4px 14px 4px 10px;
             border-radius: 40px;
             font-size: 0.65rem;
-            color: #00ffc4;
+            color: var(--cyan);
             font-weight: 600;
-            border: 1px solid rgba(0, 57, 166, 0.2);
+            border: 1px solid rgba(0, 255, 196, 0.2);
         }
 
         .course-level {
@@ -454,12 +455,12 @@
                 grid-template-columns: 1fr;
             }
 
-            .import-banner {
+            .anon-banner {
                 flex-direction: column;
                 text-align: center;
             }
 
-            .import-banner .import-text {
+            .anon-banner .anon-text {
                 flex-direction: column;
                 text-align: center;
             }
@@ -498,10 +499,10 @@
             <a href="#" class="logo">
                 <i class="fas fa-lock"></i>
                 <span>HW School</span>
-                <span class="import-badge">🇷🇺 Импортозамещение</span>
+                <span class="badge-rf">🇷🇺 Анонимность</span>
             </a>
             <div class="header-buttons">
-                <span class="russian-stamp">⚡ Сделано в России</span>
+                <span class="russian-stamp">🛡️ Zero-Logs</span>
                 <a href="https://t.me/hacker_school_25" target="_blank" class="btn btn-secondary">
                     <i class="fab fa-telegram"></i> Telegram
                 </a>
@@ -512,24 +513,24 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <div class="hero-badge">🇷🇺 Российская школа кибербезопасности</div>
+            <div class="hero-badge">🇷🇺 Анонимная школа кибербезопасности</div>
             <h1 class="hero-title">HW School</h1>
-            <p class="hero-subtitle">Современная <span class="highlight">российская</span> школа кибербезопасности и программирования нового поколения</p>
+            <p class="hero-subtitle">Современная <span class="highlight">анонимная</span> школа кибербезопасности и программирования нового поколения</p>
             <p>Открытие школы: <span class="highlight">1 Июля 2025 в 14:00 (МСК)</span></p>
         </div>
     </section>
 
-    <!-- Import Banner -->
+    <!-- Anonymity Banner -->
     <div class="container">
-        <div class="import-banner">
-            <div class="import-text">
-                <span class="icon">🇷🇺</span>
+        <div class="anon-banner">
+            <div class="anon-text">
+                <span class="icon">🕶️</span>
                 <div>
-                    <h4>Импортозамещение в образовании</h4>
-                    <p>Разрабатываем собственные программы обучения, используем отечественное ПО и технологии.</p>
+                    <h4>Полная анонимность</h4>
+                    <p>Обучение без слежки. Никаких логов, трекеров и идентификации. Ваша приватность — наш приоритет.</p>
                 </div>
             </div>
-            <span class="import-badge-lg">⚡ Российский стандарт</span>
+            <span class="anon-badge-lg">🔒 Zero-Logs Policy</span>
         </div>
     </div>
 
@@ -546,6 +547,7 @@
                         <li>Работа с реальными кейсами (Pentest, Bug Hunting)</li>
                         <li>Разбор правовых аспектов (152-ФЗ, УК РФ)</li>
                         <li>Возможность попасть в команду после успешного окончания</li>
+                        <li><span class="highlight">🕶️ Полная анонимность участников</span></li>
                     </ul>
                 </div>
                 
@@ -555,6 +557,7 @@
                         <li>Для начинающих с нуля</li>
                         <li>IT-специалистов, желающих сменить специализацию</li>
                         <li>Всех, кто хочет легально зарабатывать на хакинге</li>
+                        <li>Тех, кто ценит <span class="highlight">анонимность и защиту данных</span></li>
                     </ul>
                 </div>
                 
@@ -565,6 +568,7 @@
                         <li>Официальные заявки начнутся за 2 дня до старта</li>
                         <li>Регистрация ТОЛЬКО через официальный сайт</li>
                         <li><span class="highlight">🇷🇺 Российская программа обучения</span></li>
+                        <li><span class="highlight">🕶️ Никаких логов и слежения</span></li>
                     </ul>
                 </div>
             </div>
@@ -584,6 +588,7 @@
                         <li>Основные угрозы и уязвимости</li>
                         <li>Длительность: <span class="highlight">2 месяца</span></li>
                         <li><span class="course-level level-beginner">Начинающий</span></li>
+                        <li>🕶️ Анонимный формат</li>
                     </ul>
                 </div>
                 
@@ -594,6 +599,7 @@
                         <li>Поиск и эксплуатация уязвимостей</li>
                         <li>Длительность: <span class="highlight">4 месяца</span></li>
                         <li><span class="course-level level-advanced">Продвинутый</span></li>
+                        <li>🕶️ Полная конфиденциальность</li>
                     </ul>
                 </div>
                 
@@ -604,6 +610,7 @@
                         <li>Анализ цифровых улик</li>
                         <li>Длительность: <span class="highlight">3 месяца</span></li>
                         <li><span class="course-level level-intermediate">Средний</span></li>
+                        <li>🕶️ Безопасная среда</li>
                     </ul>
                 </div>
 
@@ -614,30 +621,12 @@
                         <li>Учим на современном уровне</li>
                         <li>Длительность: <span class="highlight">5 месяцев</span></li>
                         <li><span class="course-level level-advanced">Продвинутый</span></li>
+                        <li>🕶️ Анонимная разработка</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Registration Section 
-    <section class="section">
-        <div class="container">
-            <h2 class="section-title">Форма регистрации</h2>
-            <p style="text-align: center; color: var(--secondary); margin-bottom: 2rem;">
-                <i class="fas fa-lock" style="color: var(--blue);"></i> 
-                Все данные защищены. Регистрация только для граждан РФ.
-            </p>
-            <div class="form-container">
-                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdHywV9QCz4p6mUfgQ96-aDkrrcN4X2_1_pN-9IPjtNFrq4aQ/viewform?embedded=true" 
-                        width="100%" 
-                        height="520" 
-                        frameborder="0" 
-                        marginheight="0" 
-                        marginwidth="0">Загрузка…</iframe>
-            </div>
-        </div>
-    </section>-->
 
     <!-- CTA Section -->
     <section class="section section-alt" style="text-align: center;">
@@ -671,15 +660,16 @@
                 <span>🇷🇺</span>
                 <span>🇷🇺</span>
             </div>
-            <p>HW School © 2025 | Российская школа кибербезопасности</p>
+            <p>HW School © 2025 | Анонимная школа кибербезопасности</p>
             <p style="font-size: 0.8rem; color: var(--secondary);">
-                Развитие импортозамещения в IT-образовании. Подготовка кадров для цифровой экономики РФ.
+                🕶️ Полная анонимность. Zero-Logs. Защита данных. Подготовка кадров для цифровой экономики РФ.
             </p>
             <div class="hashtags">
                 <span>#WhiteHat</span>
                 <span>#Кибербезопасность</span>
                 <span>#БесплатноеОбучение</span>
-                <span>#Импортозамещение</span>
+                <span>#Анонимность</span>
+                <span>#ZeroLogs</span>
                 <span>#Россия</span>
             </div>
         </div>
