@@ -8,7 +8,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <style>
@@ -19,33 +19,59 @@
         }
 
         :root {
-            --bg-deep: #05050a;
-            --bg-surface: #0a0a12;
-            --bg-card: rgba(8, 8, 18, 0.7);
-            --border-subtle: rgba(255, 0, 0, 0.06);
-            --accent-red: #ff0000;
-            --accent-red-dark: #cc0000;
-            --accent-cyber: #00ff41;
-            --accent-purple: #a855f7;
-            --text-primary: #e8e8f0;
-            --text-secondary: #8a8aaa;
-            --text-muted: #4a4a6a;
+            --bg-deep: #0a0a0a;
+            --bg-surface: #0f0f0f;
+            --bg-card: #0d0d0d;
+            --accent-red: #ff0033;
+            --accent-green: #00ff41;
+            --accent-cyan: #00ffff;
+            --text-primary: #c0c0c0;
+            --text-secondary: #6a6a6a;
+            --text-muted: #3a3a3a;
+            --border-subtle: #1a1a1a;
+            --glow-red: 0 0 30px rgba(255, 0, 51, 0.08);
+            --glow-green: 0 0 30px rgba(0, 255, 65, 0.05);
             --font-mono: 'JetBrains Mono', monospace;
-            --glow-red: 0 0 40px rgba(255, 0, 0, 0.08);
         }
 
         body {
-            background: radial-gradient(circle at 10% 20%, #0a0a12, #05050a);
-            font-family: 'Inter', sans-serif;
+            background: var(--bg-deep);
+            font-family: var(--font-mono);
             color: var(--text-primary);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
             position: relative;
+            font-size: 14px;
         }
 
-        /* Матрица */
+        /* ===== ЭФФЕКТ СКАНИРОВАНИЯ ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.03) 0px,
+                rgba(0, 0, 0, 0.03) 2px,
+                transparent 2px,
+                transparent 4px
+            );
+            pointer-events: none;
+            z-index: 9999;
+            animation: scanline 0.1s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(4px); }
+        }
+
+        /* ===== МАТРИЦА ===== */
         #matrix-canvas {
             position: fixed;
             top: 0;
@@ -54,23 +80,23 @@
             height: 100%;
             z-index: 0;
             pointer-events: none;
-            opacity: 0.08;
+            opacity: 0.06;
         }
 
         .glass-header {
-            background: rgba(5, 5, 10, 0.92);
+            background: rgba(10, 10, 10, 0.95);
             backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 0, 0, 0.06);
+            border-bottom: 1px solid rgba(255, 0, 51, 0.04);
             position: sticky;
             top: 0;
             z-index: 100;
-            padding: 0.8rem 0;
+            padding: 0.6rem 0;
         }
 
         .container {
             max-width: 1280px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 20px;
             position: relative;
             z-index: 2;
         }
@@ -80,79 +106,90 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             font-family: var(--font-mono);
             font-weight: 700;
-            font-size: 1.6rem;
-            letter-spacing: -0.5px;
+            font-size: 1.3rem;
             text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
         }
 
         .logo-icon {
-            width: 38px;
-            height: 38px;
-            background: linear-gradient(135deg, var(--accent-red), var(--accent-red-dark));
-            border-radius: 10px;
+            width: 34px;
+            height: 34px;
+            background: var(--accent-red);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: var(--glow-red);
+            box-shadow: 0 0 20px rgba(255, 0, 51, 0.08);
+            border: 1px solid rgba(255, 0, 51, 0.15);
         }
 
         .logo-icon span {
             color: #000;
-            font-weight: 800;
-            font-size: 1.2rem;
+            font-weight: 900;
+            font-size: 1rem;
         }
 
-        .logo span {
-            background: linear-gradient(135deg, #ffffff, var(--accent-red));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        .logo-text {
+            color: var(--accent-red);
+            letter-spacing: -0.5px;
+        }
+
+        .logo .badge-dev {
+            font-size: 0.4rem;
+            background: rgba(255, 0, 51, 0.08);
+            border: 1px solid rgba(255, 0, 51, 0.1);
+            color: var(--accent-red);
+            padding: 2px 8px;
+            border-radius: 40px;
+            font-weight: 600;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
             list-style: none;
             flex-wrap: wrap;
+            align-items: center;
         }
 
         .nav-links a {
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.7rem;
             font-weight: 500;
-            transition: 0.2s;
+            transition: 0.3s;
             font-family: var(--font-mono);
             position: relative;
         }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-red);
-            transition: width 0.3s;
+        .nav-links a::before {
+            content: '>';
+            color: var(--accent-green);
+            opacity: 0;
+            transition: opacity 0.3s;
+            margin-right: 4px;
         }
 
-        .nav-links a:hover::after,
-        .nav-links a.active::after {
-            width: 100%;
+        .nav-links a:hover::before,
+        .nav-links a.active::before {
+            opacity: 1;
         }
 
         .nav-links a:hover, .nav-links a.active {
-            color: var(--accent-red);
+            color: var(--accent-green);
         }
 
         /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
@@ -166,28 +203,31 @@
             z-index: 2;
         }
 
-        .coming-soon {
-            max-width: 780px;
+        .terminal-box {
+            max-width: 800px;
             width: 100%;
-            text-align: center;
             background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 0, 0, 0.04);
-            border-radius: 32px;
-            padding: 3.5rem 2.5rem;
-            transition: var(--transition);
+            border: 1px solid rgba(255, 0, 51, 0.04);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
             position: relative;
             overflow: hidden;
+            transition: all 0.4s ease;
         }
 
-        .coming-soon::before {
+        .terminal-box:hover {
+            border-color: rgba(255, 0, 51, 0.06);
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .terminal-box::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-red), var(--accent-cyber), var(--accent-red));
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-green), var(--accent-red));
             background-size: 200% 100%;
             animation: shimmer 3s infinite;
         }
@@ -197,146 +237,271 @@
             100% { background-position: 200% 0; }
         }
 
-        .coming-soon:hover {
-            border-color: var(--accent-red);
-            box-shadow: var(--glow-red);
-            transform: translateY(-4px);
+        /* Терминальные точки */
+        .terminal-dots {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1.8rem;
         }
 
-        .status-badge {
-            display: inline-block;
-            background: rgba(255, 0, 0, 0.08);
-            border: 1px solid rgba(255, 0, 0, 0.15);
-            border-radius: 60px;
-            padding: 0.3rem 1.5rem;
-            font-size: 0.7rem;
+        .terminal-dots .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .terminal-dots .dot-red {
+            background: var(--accent-red);
+            box-shadow: 0 0 10px rgba(255, 0, 51, 0.15);
+        }
+        .terminal-dots .dot-yellow {
+            background: #ffaa00;
+            box-shadow: 0 0 10px rgba(255, 170, 0, 0.1);
+        }
+        .terminal-dots .dot-green {
+            background: var(--accent-green);
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
+        }
+
+        .terminal-box .prompt-line {
             font-family: var(--font-mono);
-            letter-spacing: 1.5px;
-            color: var(--accent-red);
-            text-transform: uppercase;
-            margin-bottom: 1.5rem;
-        }
-
-        .coming-soon .icon-big {
-            font-size: 4.5rem;
-            color: var(--accent-red);
-            margin-bottom: 1rem;
-            display: block;
-            animation: pulse-icon 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse-icon {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.95); }
-        }
-
-        .coming-soon h1 {
-            font-size: 3.2rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #ffffff, var(--accent-red), var(--accent-cyber));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 0.5rem;
-            line-height: 1.1;
-        }
-
-        .coming-soon .subtitle {
-            font-size: 1.2rem;
+            font-size: 0.8rem;
             color: var(--text-secondary);
             margin-bottom: 0.5rem;
         }
 
-        .coming-soon .description {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            max-width: 500px;
-            margin: 0 auto 2rem;
-            line-height: 1.6;
+        .terminal-box .prompt-line .prompt-symbol {
+            color: var(--accent-green);
         }
 
-        .construction-line {
+        .terminal-box .prompt-line .command {
+            color: var(--text-primary);
+        }
+
+        .terminal-box .prompt-line .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1rem;
+            background: var(--accent-green);
+            animation: blink-cursor 1s step-end infinite;
+            vertical-align: text-bottom;
+        }
+
+        @keyframes blink-cursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .terminal-box .status-badge {
+            display: inline-block;
+            background: rgba(255, 0, 51, 0.04);
+            border: 1px solid rgba(255, 0, 51, 0.08);
+            border-radius: 60px;
+            padding: 0.3rem 1.2rem;
+            font-size: 0.6rem;
+            font-family: var(--font-mono);
+            letter-spacing: 1.5px;
+            color: var(--accent-red);
+            text-transform: uppercase;
+            margin: 1rem 0;
+        }
+
+        .terminal-box .icon-big {
+            font-size: 3.5rem;
+            color: var(--accent-red);
+            margin: 0.5rem 0;
+            display: block;
+            animation: pulse-icon 2.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 0, 51, 0.05));
+        }
+
+        @keyframes pulse-icon {
+            0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+            50% { opacity: 0.4; transform: scale(0.95) rotate(3deg); }
+        }
+
+        .terminal-box h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            background: linear-gradient(135deg, #ffffff, var(--accent-red), var(--accent-green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.3rem;
+            line-height: 1.1;
+        }
+
+        .terminal-box .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.3rem;
+            font-family: var(--font-mono);
+        }
+
+        .terminal-box .subtitle .highlight {
+            color: var(--accent-green);
+        }
+
+        .terminal-box .description {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            max-width: 500px;
+            margin: 0.8rem auto 1.5rem;
+            line-height: 1.6;
+            font-family: var(--font-mono);
+        }
+
+        /* Прогресс-бар */
+        .progress-section {
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+
+        .progress-section .progress-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+
+        .progress-section .progress-label .percent {
+            color: var(--accent-green);
+        }
+
+        .progress-section .progress-bar {
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-section .progress-bar .fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-green));
+            animation: progress-anim 4s ease-in-out infinite alternate;
+            border-radius: 2px;
+        }
+
+        @keyframes progress-anim {
+            0% { width: 5%; }
+            30% { width: 25%; }
+            60% { width: 55%; }
+            85% { width: 80%; }
+            100% { width: 95%; }
+        }
+
+        .construction-lines {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.8rem;
-            margin: 1.5rem 0;
+            margin: 1rem 0;
             font-family: var(--font-mono);
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             color: var(--text-muted);
         }
 
-        .construction-line .bar {
-            width: 60px;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent-red), var(--accent-cyber));
-            border-radius: 2px;
+        .construction-lines .bar {
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-green));
             animation: bar-pulse 2s ease-in-out infinite;
         }
 
         @keyframes bar-pulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.8; }
         }
 
         .btn-group {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             justify-content: center;
             flex-wrap: wrap;
             margin-top: 1.5rem;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--accent-red), var(--accent-red-dark));
+            background: var(--accent-red);
             color: #000;
-            padding: 12px 32px;
+            padding: 10px 28px;
             border-radius: 60px;
             font-weight: 700;
             font-family: var(--font-mono);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             text-decoration: none;
-            transition: var(--transition);
+            transition: all 0.3s;
             border: none;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(255, 0, 51, 0.15);
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
             color: var(--text-secondary);
-            padding: 12px 32px;
+            padding: 10px 28px;
             border-radius: 60px;
             font-weight: 600;
             font-family: var(--font-mono);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             text-decoration: none;
-            transition: var(--transition);
+            transition: all 0.3s;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--accent-red);
-            color: var(--accent-red);
-            transform: translateY(-3px);
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+            transform: translateY(-2px);
         }
 
+        .terminal-box .footer-info {
+            margin-top: 1.5rem;
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            padding-top: 1rem;
+        }
+
+        .terminal-box .footer-info .info-row {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .terminal-box .footer-info .info-row span {
+            opacity: 0.5;
+        }
+
+        .terminal-box .footer-info .info-row .accent {
+            color: var(--accent-green);
+            opacity: 1;
+        }
+
+        /* ===== ФУТЕР ===== */
         .footer {
-            border-top: 1px solid rgba(255, 0, 0, 0.04);
-            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 0, 51, 0.02);
+            padding: 1.2rem 0;
             text-align: center;
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
             position: relative;
             z-index: 2;
@@ -345,21 +510,30 @@
         .footer .icon-row {
             display: flex;
             justify-content: center;
-            gap: 16px;
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-            opacity: 0.2;
+            gap: 14px;
+            margin-bottom: 0.4rem;
+            font-size: 0.9rem;
+            opacity: 0.1;
         }
 
+        .footer .icon-row span {
+            transition: opacity 0.3s;
+        }
+
+        .footer .icon-row span:hover {
+            opacity: 0.5;
+        }
+
+        /* ===== АДАПТИВ ===== */
         @media (max-width: 768px) {
-            .coming-soon {
+            .terminal-box {
                 padding: 2rem 1.5rem;
             }
-            .coming-soon h1 {
+            .terminal-box h1 {
                 font-size: 2.2rem;
             }
-            .coming-soon .icon-big {
-                font-size: 3.5rem;
+            .terminal-box .icon-big {
+                font-size: 3rem;
             }
             .header-inner {
                 flex-direction: column;
@@ -367,7 +541,7 @@
             }
             .nav-links {
                 justify-content: center;
-                gap: 1.2rem;
+                gap: 1rem;
             }
             .btn-group {
                 flex-direction: column;
@@ -375,17 +549,28 @@
             }
             .btn-primary, .btn-secondary {
                 width: 100%;
-                max-width: 280px;
+                max-width: 260px;
                 justify-content: center;
+            }
+            .terminal-box .footer-info .info-row {
+                flex-direction: column;
+                gap: 0.3rem;
             }
         }
 
         @media (max-width: 480px) {
-            .coming-soon h1 {
+            .terminal-box h1 {
                 font-size: 1.8rem;
             }
-            .coming-soon .subtitle {
-                font-size: 1rem;
+            .terminal-box .subtitle {
+                font-size: 0.95rem;
+            }
+            .terminal-box .description {
+                font-size: 0.8rem;
+            }
+            .terminal-dots .dot {
+                width: 10px;
+                height: 10px;
             }
         }
     </style>
@@ -400,12 +585,13 @@
         <div class="container header-inner">
             <a href="/" class="logo">
                 <div class="logo-icon"><span>⟁</span></div>
-                <span>HW Pro</span>
+                <span class="logo-text">HW Pro</span>
+                <span class="badge-dev">DEV</span>
             </a>
             <nav>
                 <ul class="nav-links">
                     <li><a href="/index.html">Портал</a></li>
-                    <li><a href="#">Лаборатория</a></li>
+                    <li><a href="#" class="active">Лаборатория</a></li>
                     <li><a href="#">Исследования</a></li>
                     <li><a href="#">Minecraft Lab</a></li>
                 </ul>
@@ -416,15 +602,29 @@
     <!-- ===== ОСНОВНОЙ КОНТЕНТ ===== -->
     <main class="main-content">
         <div class="container">
-            <div class="coming-soon">
+            <div class="terminal-box">
+                <!-- Терминальные точки -->
+                <div class="terminal-dots">
+                    <span class="dot dot-red"></span>
+                    <span class="dot dot-yellow"></span>
+                    <span class="dot dot-green"></span>
+                </div>
+
+                <!-- Терминальная строка -->
+                <div class="prompt-line">
+                    <span class="prompt-symbol">root@hw_lab:~$</span>
+                    <span class="command"> ./build --status</span>
+                    <span class="cursor"></span>
+                </div>
+
                 <span class="status-badge">⏳ В РАЗРАБОТКЕ</span>
                 
                 <span class="icon-big">🚧</span>
                 
                 <h1>Страница создаётся</h1>
-                <p class="subtitle">Мы работаем над этим разделом</p>
+                <p class="subtitle">Мы работаем над этим разделом <span class="highlight">HW Lab</span></p>
                 
-                <div class="construction-line">
+                <div class="construction-lines">
                     <span>⚡</span>
                     <span class="bar"></span>
                     <span>🔧</span>
@@ -437,21 +637,37 @@
                     Скоро здесь появится полезный контент. 
                     Следите за обновлениями в наших каналах.
                 </p>
+
+                <!-- Прогресс -->
+                <div class="progress-section">
+                    <div class="progress-label">
+                        <span>Разработка</span>
+                        <span class="percent">76%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="fill"></div>
+                    </div>
+                </div>
                 
                 <div class="btn-group">
                     <a href="/index.html" class="btn-primary">
                         <i class="fas fa-arrow-left"></i> На главную
                     </a>
                     <a href="https://vk.com/hw_protection" target="_blank" class="btn-secondary">
-                        <i class="fab fa-vk"></i> Сообщество VK
+                        <i class="fab fa-vk"></i> VK
                     </a>
                     <a href="https://t.me/hw_protection" target="_blank" class="btn-secondary">
                         <i class="fab fa-telegram"></i> Telegram
                     </a>
                 </div>
 
-                <div style="margin-top: 1.5rem; font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono);">
-                    <span id="currentDate"></span> &nbsp;•&nbsp; <span id="currentTime"></span>
+                <div class="footer-info">
+                    <div class="info-row">
+                        <span>📅 <span id="currentDate"></span></span>
+                        <span>⏰ <span id="currentTime"></span></span>
+                        <span class="accent">⚡ HW Pro v.3.0</span>
+                        <span>🔒 <span id="connectionStatus">Анонимный режим</span></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -467,13 +683,13 @@
                 <span>🔐</span>
             </div>
             <p>© 2025 HW Pro — Хакерский проект. Анонимность и защита данных.</p>
-            <p style="font-size: 0.65rem; margin-top: 0.2rem; color: var(--text-muted);">Страница временно недоступна. Ведутся технические работы.</p>
+            <p style="font-size: 0.55rem; margin-top: 0.2rem; color: var(--text-muted);">Страница временно недоступна. Ведутся технические работы.</p>
         </div>
     </footer>
 
     <script>
         // ============================================================
-        // МАТРИЦА — ЖИВЫЕ ОБОИ
+        // МАТРИЦА
         // ============================================================
         (function() {
             const canvas = document.getElementById('matrix-canvas');
@@ -488,7 +704,6 @@
             function resize() {
                 width = canvas.width = window.innerWidth;
                 height = canvas.height = window.innerHeight;
-
                 const colCount = Math.floor(width / FONT_SIZE);
                 columns = [];
                 for (let i = 0; i < colCount; i++) {
@@ -508,7 +723,7 @@
             });
 
             function drawMatrix() {
-                ctx.fillStyle = 'rgba(5, 5, 10, 0.04)';
+                ctx.fillStyle = 'rgba(10, 10, 10, 0.04)';
                 ctx.fillRect(0, 0, width, height);
 
                 ctx.font = `${FONT_SIZE}px 'JetBrains Mono', monospace`;
@@ -539,18 +754,18 @@
 
                         const char = col.chars[Math.floor(Math.random() * col.chars.length)];
                         const brightness = 1 - (i / charLen);
-                        const alpha = 0.3 + brightness * 0.7;
+                        const alpha = 0.2 + brightness * 0.6;
 
-                        const red = Math.floor(150 + 105 * brightness);
-                        ctx.fillStyle = `rgba(${red}, ${Math.floor(10 * brightness)}, ${Math.floor(10 * brightness)}, ${alpha})`;
+                        const green = Math.floor(160 + 95 * brightness);
+                        ctx.fillStyle = `rgba(0, ${green}, ${Math.floor(20 * brightness)}, ${alpha})`;
                         ctx.fillText(char, col.x, yPos);
                     }
 
                     const headY = col.y;
                     if (headY > 0 && headY < height) {
                         const headChar = col.chars[Math.floor(Math.random() * col.chars.length)];
-                        ctx.fillStyle = `rgba(255, 50, 50, 0.9)`;
-                        ctx.shadowColor = 'rgba(255, 0, 0, 0.3)';
+                        ctx.fillStyle = `rgba(0, 255, 65, 0.8)`;
+                        ctx.shadowColor = 'rgba(0, 255, 65, 0.15)';
                         ctx.shadowBlur = 8;
                         ctx.fillText(headChar, col.x, headY);
                         ctx.shadowBlur = 0;
@@ -566,7 +781,7 @@
         })();
 
         // ============================================================
-        // ЧАСЫ
+        // ЧАСЫ И СТАТУС
         // ============================================================
         function updateDateTime() {
             const now = new Date();
@@ -582,8 +797,24 @@
             });
         }
 
+        function updateConnectionStatus() {
+            const statuses = [
+                'Анонимный режим',
+                'Zero-Logs активен',
+                'Шифрование: 256 бит',
+                'Трафик: скрыт',
+                'Безопасное соединение'
+            ];
+            let index = 0;
+            setInterval(() => {
+                document.getElementById('connectionStatus').textContent = statuses[index % statuses.length];
+                index++;
+            }, 3000);
+        }
+
         updateDateTime();
         setInterval(updateDateTime, 1000);
+        updateConnectionStatus();
     </script>
 </body>
 </html>

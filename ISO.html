@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="HW Pro — хакерский технологический проект. Стандарты качества, безопасности и анонимности.">
     <title>Стандарты качества | HW Pro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* ===== ГЛОБАЛЬНЫЕ СТИЛИ ===== */
         * {
             margin: 0;
             padding: 0;
@@ -15,35 +14,58 @@
         }
 
         :root {
-            --bg-deep: #05050a;
-            --bg-surface: #0a0a12;
-            --bg-card: rgba(8, 8, 18, 0.8);
-            --border-subtle: rgba(255, 0, 0, 0.06);
-            --border-active: rgba(255, 0, 0, 0.4);
-            --accent-cyber: #00ff41;
-            --accent-red: #ff0000;
-            --accent-red-dark: #cc0000;
-            --accent-white: #ffffff;
-            --text-primary: #e8e8f0;
-            --text-secondary: #8a8aaa;
-            --text-muted: #4a4a6a;
-            --glow-red: 0 0 30px rgba(255, 0, 0, 0.12);
-            --glow-green: 0 0 30px rgba(0, 255, 65, 0.08);
+            --bg-deep: #0a0a0a;
+            --bg-surface: #0f0f0f;
+            --bg-card: #0d0d0d;
+            --accent-red: #ff0033;
+            --accent-green: #00ff41;
+            --accent-cyan: #00ffff;
+            --text-primary: #c0c0c0;
+            --text-secondary: #6a6a6a;
+            --text-muted: #3a3a3a;
+            --border-subtle: #1a1a1a;
+            --glow-red: 0 0 30px rgba(255, 0, 51, 0.06);
+            --glow-green: 0 0 30px rgba(0, 255, 65, 0.04);
             --font-mono: 'JetBrains Mono', monospace;
-            --font-sans: 'Inter', sans-serif;
         }
 
         body {
             background: var(--bg-deep);
-            font-family: var(--font-sans);
+            font-family: var(--font-mono);
             color: var(--text-primary);
             min-height: 100vh;
-            line-height: 1.6;
+            line-height: 1.5;
             overflow-x: hidden;
             position: relative;
+            font-size: 14px;
         }
 
-        /* Канвас для матрицы */
+        /* ===== ЭФФЕКТ СКАНИРОВАНИЯ ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.03) 0px,
+                rgba(0, 0, 0, 0.03) 2px,
+                transparent 2px,
+                transparent 4px
+            );
+            pointer-events: none;
+            z-index: 9999;
+            animation: scanline 0.1s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(4px); }
+        }
+
+        /* ===== МАТРИЦА ===== */
         #matrix-canvas {
             position: fixed;
             top: 0;
@@ -52,26 +74,26 @@
             height: 100%;
             z-index: 0;
             pointer-events: none;
-            opacity: 0.12;
+            opacity: 0.06;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 20px;
             position: relative;
             z-index: 2;
         }
 
         /* ===== ХЕДЕР ===== */
         .main-header {
-            background: rgba(5, 5, 10, 0.95);
+            background: rgba(10, 10, 10, 0.95);
             backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 0, 0, 0.08);
+            border-bottom: 1px solid rgba(255, 0, 51, 0.04);
             position: sticky;
             top: 0;
             z-index: 100;
-            padding: 0.8rem 0;
+            padding: 0.6rem 0;
         }
 
         .main-header .container {
@@ -79,136 +101,132 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             font-family: var(--font-mono);
             font-weight: 700;
-            font-size: 1.4rem;
-            letter-spacing: -0.5px;
+            font-size: 1.3rem;
             text-decoration: none;
-            color: var(--accent-red);
+            transition: all 0.3s;
         }
 
-        .logo svg {
-            width: 36px;
-            height: 36px;
-            color: var(--accent-red);
+        .logo:hover {
+            transform: scale(1.02);
         }
 
-        .logo .hack-badge {
-            font-size: 0.5rem;
+        .logo-icon {
+            width: 34px;
+            height: 34px;
             background: var(--accent-red);
-            color: #000;
-            padding: 2px 10px;
-            border-radius: 40px;
-            letter-spacing: 0.5px;
-            font-weight: 700;
-            margin-left: 4px;
-            animation: pulse-badge 2s infinite;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(255, 0, 51, 0.06);
+            border: 1px solid rgba(255, 0, 51, 0.12);
         }
 
-        @keyframes pulse-badge {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(0.95); }
+        .logo-icon span {
+            color: #000;
+            font-weight: 900;
+            font-size: 1rem;
+        }
+
+        .logo-text {
+            color: var(--accent-red);
+            letter-spacing: -0.5px;
+        }
+
+        .logo .badge-std {
+            font-size: 0.4rem;
+            background: rgba(0, 255, 65, 0.06);
+            border: 1px solid rgba(0, 255, 65, 0.08);
+            color: var(--accent-green);
+            padding: 2px 8px;
+            border-radius: 40px;
+            font-weight: 600;
         }
 
         .nav-list {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
             list-style: none;
             flex-wrap: wrap;
+            align-items: center;
         }
 
         .nav-list a {
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.7rem;
             font-weight: 500;
-            transition: 0.2s;
+            transition: 0.3s;
             font-family: var(--font-mono);
             position: relative;
         }
 
-        .nav-list a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-red);
-            transition: width 0.3s;
+        .nav-list a::before {
+            content: '>';
+            color: var(--accent-green);
+            opacity: 0;
+            transition: opacity 0.3s;
+            margin-right: 4px;
         }
 
-        .nav-list a:hover::after,
-        .nav-list a.active::after {
-            width: 100%;
+        .nav-list a:hover::before,
+        .nav-list a.active::before {
+            opacity: 1;
         }
 
         .nav-list a:hover, .nav-list a.active {
-            color: var(--accent-red);
+            color: var(--accent-green);
         }
 
-        /* ===== ГЕРО СЕКЦИЯ ===== */
+        /* ===== ГЕРО ===== */
         .standards-header {
-            background: linear-gradient(145deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 65, 0.02));
-            padding: 4rem 0;
+            padding: 3rem 0 2.5rem;
             text-align: center;
-            border-bottom: 1px solid rgba(255, 0, 0, 0.06);
+            border-bottom: 1px solid rgba(255, 0, 51, 0.02);
             position: relative;
-            overflow: hidden;
-        }
-
-        .standards-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 50%, rgba(255, 0, 0, 0.03), transparent 60%);
-            pointer-events: none;
         }
 
         .compliance-badge {
-            background: linear-gradient(135deg, var(--accent-red), var(--accent-red-dark));
-            color: #000;
-            padding: 0.5rem 1.8rem;
-            border-radius: 40px;
+            background: rgba(255, 0, 51, 0.04);
+            border: 1px solid rgba(255, 0, 51, 0.06);
+            color: var(--accent-red);
+            padding: 0.3rem 1.5rem;
+            border-radius: 60px;
             display: inline-block;
             font-weight: 700;
-            margin-bottom: 1.5rem;
-            font-size: 0.8rem;
+            font-size: 0.6rem;
             font-family: var(--font-mono);
-            letter-spacing: 1px;
-            position: relative;
-            z-index: 1;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
         }
 
         .standards-header h1 {
             font-size: 3rem;
             font-weight: 800;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #ffffff, var(--accent-red), var(--accent-cyber));
+            font-family: var(--font-mono);
+            background: linear-gradient(135deg, #ffffff, var(--accent-red), var(--accent-green));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            position: relative;
-            z-index: 1;
+            margin-bottom: 0.5rem;
         }
 
         .standards-header .lead {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: var(--text-secondary);
-            max-width: 700px;
+            max-width: 650px;
             margin: 0 auto;
-            position: relative;
-            z-index: 1;
+            font-family: var(--font-mono);
         }
 
         .standards-header .lead .highlight {
@@ -216,88 +234,153 @@
             font-weight: 600;
         }
 
-        /* ===== СЕКЦИЯ СТАНДАРТОВ ===== */
-        .content-section {
-            padding: 4rem 0;
+        .standards-header .lead .green {
+            color: var(--accent-green);
         }
 
-        .content-section h2 {
-            font-size: 2.2rem;
+        /* ===== ТЕРМИНАЛЬНЫЙ БАННЕР ===== */
+        .terminal-banner {
+            background: var(--bg-surface);
+            border: 1px solid rgba(0, 255, 65, 0.02);
+            border-radius: 12px;
+            padding: 1rem 1.8rem;
+            margin: 2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            font-family: var(--font-mono);
+        }
+
+        .terminal-banner .term-text {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .terminal-banner .term-text .prompt {
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .terminal-banner .term-text .cmd {
+            color: var(--text-secondary);
+        }
+
+        .terminal-banner .term-text .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1rem;
+            background: var(--accent-green);
+            animation: blink-cursor 1s step-end infinite;
+            vertical-align: text-bottom;
+        }
+
+        @keyframes blink-cursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .terminal-badge {
+            background: rgba(0, 255, 65, 0.02);
+            border: 1px solid rgba(0, 255, 65, 0.04);
+            padding: 4px 16px;
+            border-radius: 60px;
+            font-size: 0.6rem;
+            color: var(--accent-green);
+            font-family: var(--font-mono);
+        }
+
+        /* ===== СЕКЦИЯ ===== */
+        .content-section {
+            padding: 2.5rem 0;
+        }
+
+        .content-section .section-title {
+            font-size: 1.8rem;
             font-weight: 700;
-            margin-bottom: 1rem;
+            font-family: var(--font-mono);
+            margin-bottom: 0.5rem;
             position: relative;
         }
 
-        .content-section h2::after {
+        .content-section .section-title .red {
+            color: var(--accent-red);
+        }
+
+        .content-section .section-title .green {
+            color: var(--accent-green);
+        }
+
+        .content-section .section-title::after {
             content: '';
             display: block;
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent-red), var(--accent-cyber));
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-green));
             margin-top: 0.5rem;
             border-radius: 2px;
         }
 
-        .content-section > p {
+        .content-section > .desc {
             color: var(--text-secondary);
-            font-size: 1.05rem;
-            max-width: 700px;
-            margin-bottom: 2.5rem;
+            font-size: 0.9rem;
+            max-width: 650px;
+            margin-bottom: 2rem;
+            font-family: var(--font-mono);
         }
 
+        /* ===== ГРИД КАРТОЧЕК ===== */
         .standards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2.5rem 0;
         }
 
         .standard-card {
             background: var(--bg-card);
-            backdrop-filter: blur(8px);
-            border-radius: 20px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 0, 0, 0.04);
-            border-left: 4px solid var(--accent-red);
+            border: 1px solid rgba(255, 0, 51, 0.02);
+            border-radius: 12px;
+            padding: 1.8rem;
+            border-left: 3px solid var(--accent-red);
             transition: all 0.3s ease;
         }
 
         .standard-card:hover {
-            transform: translateY(-5px);
             border-color: var(--accent-red);
-            box-shadow: var(--glow-red);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
 
-        .standard-card .standard-icon {
-            width: 52px;
-            height: 52px;
-            background: rgba(255, 0, 0, 0.08);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-            border: 1px solid rgba(255, 0, 0, 0.1);
+        .standard-card .card-number {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            margin-bottom: 0.5rem;
         }
 
-        .standard-card .standard-icon svg {
-            width: 28px;
-            height: 28px;
-            fill: var(--accent-red);
+        .standard-card .card-icon {
+            font-size: 2rem;
+            margin-bottom: 0.6rem;
+            display: block;
         }
 
         .standard-card h3 {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 700;
+            font-family: var(--font-mono);
             margin-bottom: 0.5rem;
             color: var(--accent-red);
-            font-family: var(--font-mono);
         }
 
         .standard-card p {
             color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+            font-family: var(--font-mono);
         }
 
         .standard-features {
@@ -307,30 +390,31 @@
 
         .standard-features li {
             color: var(--text-secondary);
-            font-size: 0.85rem;
-            padding: 4px 0;
+            font-size: 0.75rem;
+            padding: 3px 0;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
+            font-family: var(--font-mono);
         }
 
         .standard-features li::before {
-            content: "▸";
-            color: var(--accent-red);
+            content: ">";
+            color: var(--accent-green);
             font-weight: 700;
         }
 
-        /* Карточка с хакерскими стандартами */
+        /* ===== ХАКЕРСКИЕ СТАНДАРТЫ ===== */
         .hacker-standards {
-            background: linear-gradient(145deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 65, 0.02));
-            border: 1px solid rgba(255, 0, 0, 0.08);
-            border-radius: 20px;
-            padding: 2rem;
+            background: var(--bg-surface);
+            border: 1px solid rgba(255, 0, 51, 0.02);
+            border-radius: 12px;
+            padding: 1.8rem;
             margin: 2rem 0;
         }
 
         .hacker-standards h3 {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             color: var(--accent-red);
             font-family: var(--font-mono);
             margin-bottom: 1rem;
@@ -343,47 +427,49 @@
             list-style: none;
             padding: 0;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 0.8rem;
         }
 
         .hacker-standards ul li {
             color: var(--text-secondary);
-            padding: 8px 12px;
+            padding: 6px 12px;
             background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            border-left: 3px solid var(--accent-red);
-            font-size: 0.9rem;
+            border-radius: 8px;
+            border-left: 2px solid var(--accent-red);
+            font-size: 0.75rem;
+            font-family: var(--font-mono);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .hacker-standards ul li::before {
             content: "⚡";
-            font-size: 1rem;
+            font-size: 0.8rem;
         }
 
         /* ===== ПРОЦЕСС СЕРТИФИКАЦИИ ===== */
         .certification-process {
-            background: var(--bg-card);
-            backdrop-filter: blur(8px);
-            border-radius: 20px;
-            padding: 2.5rem 3rem;
-            margin: 3rem 0;
-            border: 1px solid rgba(255, 0, 0, 0.04);
+            background: var(--bg-surface);
+            border: 1px solid rgba(0, 255, 65, 0.02);
+            border-radius: 12px;
+            padding: 2rem 2.5rem;
+            margin: 2rem 0;
         }
 
         .certification-process h3 {
-            font-size: 1.6rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--accent-red);
             font-family: var(--font-mono);
+            margin-bottom: 0.5rem;
+            color: var(--accent-green);
         }
 
         .certification-process > p {
             color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
             margin-bottom: 1.5rem;
         }
 
@@ -395,11 +481,12 @@
 
         .certification-process ol li {
             counter-increment: step;
-            padding: 12px 16px 12px 56px;
+            padding: 10px 14px 10px 50px;
             position: relative;
-            border-bottom: 1px solid rgba(255, 0, 0, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
             transition: background 0.2s;
         }
 
@@ -410,33 +497,32 @@
         .certification-process ol li::before {
             content: counter(step);
             position: absolute;
-            left: 12px;
+            left: 10px;
             top: 50%;
             transform: translateY(-50%);
-            width: 30px;
-            height: 30px;
-            background: linear-gradient(135deg, var(--accent-red), var(--accent-red-dark));
+            width: 26px;
+            height: 26px;
+            background: var(--accent-red);
             color: #000;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-family: var(--font-mono);
         }
 
         .certification-process ol li strong {
             color: var(--text-primary);
-            font-weight: 600;
         }
 
         /* ===== БАННЕР ===== */
         .security-banner {
-            background: linear-gradient(135deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 65, 0.02));
-            border: 1px solid rgba(255, 0, 0, 0.06);
-            border-radius: 16px;
-            padding: 1.5rem 2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 3px solid var(--accent-green);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
             margin: 2rem 0;
             display: flex;
             flex-wrap: wrap;
@@ -448,7 +534,7 @@
         .security-banner .security-text {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
         }
 
         .security-banner .security-text .icon {
@@ -457,47 +543,49 @@
 
         .security-banner .security-text h4 {
             color: var(--text-primary);
-            font-size: 1.1rem;
+            font-size: 1rem;
+            font-family: var(--font-mono);
         }
 
         .security-banner .security-text p {
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             margin: 0;
+            font-family: var(--font-mono);
         }
 
         .security-badge-lg {
-            background: linear-gradient(135deg, var(--accent-red), var(--accent-red-dark));
+            background: var(--accent-green);
             color: #000;
-            padding: 8px 24px;
+            padding: 6px 20px;
             border-radius: 60px;
             font-weight: 700;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             white-space: nowrap;
             font-family: var(--font-mono);
         }
 
         /* ===== ФУТЕР ===== */
         .main-footer {
-            border-top: 1px solid rgba(255, 0, 0, 0.04);
-            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            padding: 1.5rem 0;
             margin-top: 2rem;
             text-align: center;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
         }
 
         .main-footer .icon-row {
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 14px;
             margin-bottom: 0.5rem;
-            font-size: 1.2rem;
-            opacity: 0.3;
+            font-size: 1rem;
+            opacity: 0.1;
         }
 
         .main-footer .footer-links {
-            margin-top: 0.8rem;
+            margin-top: 0.6rem;
             display: flex;
             justify-content: center;
             gap: 1.5rem;
@@ -507,30 +595,32 @@
         .main-footer .footer-links a {
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.75rem;
-            transition: color 0.2s;
+            font-size: 0.65rem;
             font-family: var(--font-mono);
+            transition: color 0.2s;
         }
 
         .main-footer .footer-links a:hover {
-            color: var(--accent-red);
+            color: var(--accent-green);
         }
 
         /* ===== АДАПТИВ ===== */
         @media (max-width: 768px) {
             .standards-header h1 { font-size: 2.2rem; }
             .main-header .container { flex-direction: column; align-items: center; }
-            .nav-list { justify-content: center; gap: 1.2rem; }
+            .nav-list { justify-content: center; gap: 1rem; }
             .certification-process { padding: 1.5rem; }
             .security-banner { flex-direction: column; text-align: center; }
             .security-banner .security-text { flex-direction: column; text-align: center; }
             .hacker-standards ul { grid-template-columns: 1fr; }
+            .terminal-banner { flex-direction: column; text-align: center; }
+            .terminal-banner .term-text { flex-direction: column; text-align: center; }
         }
 
         @media (max-width: 480px) {
             .standards-header h1 { font-size: 1.8rem; }
-            .standards-header .lead { font-size: 1rem; }
-            .content-section h2 { font-size: 1.6rem; }
+            .standards-header .lead { font-size: 0.9rem; }
+            .content-section .section-title { font-size: 1.4rem; }
         }
     </style>
 </head>
@@ -544,33 +634,31 @@
     <header class="main-header">
         <div class="container">
             <a href="/" class="logo">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 0C8.96 0 0 8.96 0 20C0 31.04 8.96 40 20 40C31.04 40 40 31.04 40 20C40 8.96 31.04 0 20 0ZM16 30H12V16H16V30ZM28 30H24V16H28V30Z" fill="currentColor"/>
-                </svg>
-                <span>HW Pro</span>
-                <span class="hack-badge">⚡ HACK</span>
+                <div class="logo-icon"><span>⟁</span></div>
+                <span class="logo-text">HW Pro</span>
+                <span class="badge-std">⚡ STD</span>
             </a>
-            <nav class="main-nav">
+            <nav>
                 <ul class="nav-list">
                     <li><a href="/">Главная</a></li>
                     <li><a href="/close.html">HW Школа</a></li>
-                    <li><a href="/ISO.html" class="active">Стандарты</a></li>
-                    <li><a href="#">Документация</a></li>
+                    <li><a href="#" class="active">Стандарты</a></li>
+                    <!-- <li><a href="#">Документация</a></li> -->
                     <li><a href="/portal.html">Портал</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- ===== ГЕРО СЕКЦИЯ ===== -->
+    <!-- ===== ГЕРО ===== -->
     <section class="standards-header">
         <div class="container">
-            <span class="compliance-badge">⚡ Хакерский стандарт качества</span>
-            <h1>Стандарты HW Pro</h1>
+            <span class="compliance-badge">⚡ СТАНДАРТЫ КАЧЕСТВА</span>
+            <h1>HW Pro Standards</h1>
             <p class="lead">
                 <span class="highlight">HW Pro</span> — технологический проект, разработанный в соответствии с 
-                международными требованиями к безопасности, анонимности и производительности.
-                <strong style="color: var(--accent-red);">Анонимность и защита — наш приоритет.</strong>
+                требованиями к <span class="green">безопасности</span>, <span class="green">анонимности</span> 
+                и <span class="green">производительности</span>.
             </p>
         </div>
     </section>
@@ -579,31 +667,38 @@
     <main>
         <div class="container">
 
-            <!-- Баннер -->
+            <!-- Терминальный баннер -->
+            <div class="terminal-banner">
+                <div class="term-text">
+                    <span class="prompt">root@hw_pro:~$</span>
+                    <span class="cmd">./check --standards --verbose</span>
+                    <span class="cursor"></span>
+                </div>
+                <span class="terminal-badge">✅ Все стандарты соблюдены</span>
+            </div>
+
+            <!-- Баннер безопасности -->
             <div class="security-banner">
                 <div class="security-text">
                     <span class="icon">🛡️</span>
                     <div>
                         <h4>Zero-Logs & Анонимность</h4>
-                        <p>Мы не храним логи. Полная конфиденциальность. Никаких трекеров и идентификации.</p>
+                        <p>Мы не храним логи. Полная конфиденциальность. Никаких трекеров.</p>
                     </div>
                 </div>
                 <span class="security-badge-lg">🔒 Zero-Logs Policy</span>
             </div>
 
             <section class="content-section">
-                <h2>Наши сертификации</h2>
-                <p>Мы проходим регулярные аудиты независимых организаций, чтобы гарантировать соответствие всем требованиям:</p>
+                <h2 class="section-title"><span class="red">Сертификации</span> <span class="green">HW Pro</span></h2>
+                <p class="desc">Регулярные аудиты независимых организаций гарантируют соответствие всем требованиям:</p>
 
                 <div class="standards-grid">
                     <article class="standard-card">
-                        <div class="standard-icon">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" fill="var(--accent-red)"/>
-                            </svg>
-                        </div>
+                        <div class="card-number">[01]</div>
+                        <span class="card-icon">🔐</span>
                         <h3>ISO 27001:2022</h3>
-                        <p>Международный стандарт управления информационной безопасностью</p>
+                        <p>Управление информационной безопасностью</p>
                         <ul class="standard-features">
                             <li>Защита данных пользователей</li>
                             <li>Управление рисками</li>
@@ -612,13 +707,10 @@
                     </article>
 
                     <article class="standard-card">
-                        <div class="standard-icon">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" fill="var(--accent-red)"/>
-                            </svg>
-                        </div>
+                        <div class="card-number">[02]</div>
+                        <span class="card-icon">🛡️</span>
                         <h3>OWASP Top 10</h3>
-                        <p>Стандарт безопасности веб-приложений</p>
+                        <p>Безопасность веб-приложений</p>
                         <ul class="standard-features">
                             <li>Защита от инъекций</li>
                             <li>Безопасная аутентификация</li>
@@ -627,13 +719,10 @@
                     </article>
 
                     <article class="standard-card">
-                        <div class="standard-icon">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" fill="var(--accent-red)"/>
-                            </svg>
-                        </div>
+                        <div class="card-number">[03]</div>
+                        <span class="card-icon">📜</span>
                         <h3>GDPR Compliance</h3>
-                        <p>Общий регламент по защите данных</p>
+                        <p>Защита персональных данных</p>
                         <ul class="standard-features">
                             <li>Права пользователей</li>
                             <li>Безопасное хранение</li>
@@ -646,20 +735,20 @@
                 <div class="hacker-standards">
                     <h3>⚡ Хакерские стандарты и практики</h3>
                     <ul>
-                        <li>Responsible Disclosure — ответственное раскрытие уязвимостей</li>
+                        <li>Responsible Disclosure — ответственное раскрытие</li>
                         <li>Zero-Logs — полное отсутствие логирования</li>
                         <li>End-to-End Encryption — сквозное шифрование</li>
-                        <li>Penetration Testing — регулярные тесты на проникновение</li>
+                        <li>Penetration Testing — регулярные пентесты</li>
                         <li>Bug Bounty Program — программа по поиску уязвимостей</li>
                     </ul>
                 </div>
 
                 <!-- Процесс сертификации -->
                 <div class="certification-process">
-                    <h3>Процесс сертификации</h3>
-                    <p>Мы проходим регулярные аудиты по следующим направлениям:</p>
+                    <h3>📋 Процесс сертификации</h3>
+                    <p>Регулярные аудиты по ключевым направлениям:</p>
                     <ol>
-                        <li><strong>Анализ архитектуры</strong> — проверка соответствия стандартам безопасности</li>
+                        <li><strong>Анализ архитектуры</strong> — проверка соответствия стандартам</li>
                         <li><strong>Тестирование безопасности</strong> — пентест и анализ уязвимостей</li>
                         <li><strong>Проверка анонимности</strong> — аудит политик конфиденциальности</li>
                         <li><strong>Оценка процессов</strong> — анализ системы управления качеством</li>
@@ -679,7 +768,7 @@
                 <span>⚡</span>
             </div>
             <p>© 2025 HW Pro — Хакерский проект. Анонимность и защита данных.</p>
-            <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem;">
+            <p style="font-size: 0.6rem; color: var(--text-muted); margin-top: 0.2rem;">
                 Zero-Logs. Полная конфиденциальность. Безопасность.
             </p>
             <div class="footer-links">
@@ -693,7 +782,7 @@
 
     <script>
         // ============================================================
-        // МАТРИЦА — ЖИВЫЕ ОБОИ
+        // МАТРИЦА
         // ============================================================
         (function() {
             const canvas = document.getElementById('matrix-canvas');
@@ -708,7 +797,6 @@
             function resize() {
                 width = canvas.width = window.innerWidth;
                 height = canvas.height = window.innerHeight;
-
                 const colCount = Math.floor(width / FONT_SIZE);
                 columns = [];
                 for (let i = 0; i < colCount; i++) {
@@ -728,7 +816,7 @@
             });
 
             function drawMatrix() {
-                ctx.fillStyle = 'rgba(5, 5, 10, 0.04)';
+                ctx.fillStyle = 'rgba(10, 10, 10, 0.04)';
                 ctx.fillRect(0, 0, width, height);
 
                 ctx.font = `${FONT_SIZE}px 'JetBrains Mono', monospace`;
@@ -759,18 +847,18 @@
 
                         const char = col.chars[Math.floor(Math.random() * col.chars.length)];
                         const brightness = 1 - (i / charLen);
-                        const alpha = 0.3 + brightness * 0.7;
+                        const alpha = 0.2 + brightness * 0.6;
 
-                        const red = Math.floor(150 + 105 * brightness);
-                        ctx.fillStyle = `rgba(${red}, ${Math.floor(20 * brightness)}, ${Math.floor(20 * brightness)}, ${alpha})`;
+                        const green = Math.floor(160 + 95 * brightness);
+                        ctx.fillStyle = `rgba(0, ${green}, ${Math.floor(20 * brightness)}, ${alpha})`;
                         ctx.fillText(char, col.x, yPos);
                     }
 
                     const headY = col.y;
                     if (headY > 0 && headY < height) {
                         const headChar = col.chars[Math.floor(Math.random() * col.chars.length)];
-                        ctx.fillStyle = `rgba(255, 50, 50, 0.9)`;
-                        ctx.shadowColor = 'rgba(255, 0, 0, 0.3)';
+                        ctx.fillStyle = `rgba(0, 255, 65, 0.8)`;
+                        ctx.shadowColor = 'rgba(0, 255, 65, 0.15)';
                         ctx.shadowBlur = 8;
                         ctx.fillText(headChar, col.x, headY);
                         ctx.shadowBlur = 0;
@@ -784,7 +872,29 @@
             resize();
             drawMatrix();
         })();
-    </script>
 
+        // ============================================================
+        // АНИМАЦИЯ КАРТОЧЕК
+        // ============================================================
+        (function() {
+            const cards = document.querySelectorAll('.standard-card, .hacker-standards, .certification-process, .terminal-banner, .security-banner');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.05 });
+
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        })();
+    </script>
 </body>
 </html>

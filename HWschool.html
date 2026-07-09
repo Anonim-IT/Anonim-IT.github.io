@@ -3,41 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>HW School | Хакерская школа кибербезопасности</title>
+    <title>HW Pro | Набор в школу кибербезопасности</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #990000;
-            --primary-dark: #660000;
-            --primary-light: #cc0000;
-            --secondary: #64748b;
-            --dark: #05050a;
-            --light: #f8fafc;
-            --surface: #0a0505;
-            --surface-light: #1a0a0a;
-            --success: #22c55e;
-            --warning: #f59e0b;
-            --error: #ff0000;
-            --accent: #ff0000;
-            --white: #ffffff;
-            --red: #ff0000;
-            --blue: #cc0000;
-            --cyan: #00ff41;
-            --glow-red: 0 0 30px rgba(255, 0, 0, 0.1);
+            --primary: #0a0c10;
+            --primary-dark: #05070a;
+            --primary-light: #1a1f2a;
+            --accent: #00ff41;
+            --accent-dim: rgba(0, 255, 65, 0.08);
+            --red: #ff0044;
+            --red-dim: rgba(255, 0, 68, 0.08);
+            --secondary: #8899bb;
+            --dark: #0a0c10;
+            --light: #e8edf5;
+            --surface: #11161f;
+            --surface-light: #1a2230;
+            --success: #00ff41;
+            --warning: #ffaa00;
+            --error: #ff0044;
+            --cyan: #00d4ff;
+            --glow-green: 0 0 40px rgba(0, 255, 65, 0.06);
+            --glow-red: 0 0 40px rgba(255, 0, 68, 0.06);
+            --border-glow: rgba(0, 255, 65, 0.12);
         }
         
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--dark);
             color: var(--light);
-            margin: 0;
-            padding: 0;
             line-height: 1.6;
             position: relative;
             overflow-x: hidden;
         }
 
-        /* Канвас для матрицы */
+        /* Канвас для матрицы (улучшенный) */
         #matrix-canvas {
             position: fixed;
             top: 0;
@@ -46,7 +52,7 @@
             height: 100%;
             z-index: 0;
             pointer-events: none;
-            opacity: 0.1;
+            opacity: 0.15;
         }
         
         .container {
@@ -57,15 +63,16 @@
             z-index: 1;
         }
         
-        /* Header */
+        /* Header — стиль HW Pro */
         .header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            padding: 1rem 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            background: rgba(10, 12, 16, 0.92);
+            backdrop-filter: blur(12px);
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border-glow);
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 2px solid var(--cyan);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
         }
         
         .header-content {
@@ -79,393 +86,436 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 1.5rem;
+            gap: 12px;
+            font-size: 1.4rem;
             font-weight: 700;
-            color: white;
+            color: var(--light);
             text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
         }
         
         .logo i {
-            font-size: 1.8rem;
-            color: var(--cyan);
+            font-size: 1.6rem;
+            color: var(--accent);
         }
         
-        .logo .badge-hack {
-            font-size: 0.5rem;
-            background: var(--red);
-            color: #000;
-            padding: 2px 10px;
+        .logo .badge-pro {
+            font-size: 0.55rem;
+            background: var(--accent);
+            color: var(--dark);
+            padding: 2px 12px;
             border-radius: 40px;
             letter-spacing: 0.5px;
             font-weight: 700;
-            margin-left: 4px;
             animation: pulse-badge 2s infinite;
         }
 
         @keyframes pulse-badge {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(0.95); }
+            50% { opacity: 0.7; transform: scale(0.95); }
         }
 
         .header-buttons {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .status-online {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.7rem;
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .status-online .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse-dot 1.5s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
         }
         
-        /* Hero Section */
+        /* Hero Section — акцент на набор */
         .hero {
-            background: linear-gradient(rgba(5, 5, 10, 0.92), rgba(5, 5, 10, 0.92)), 
-                        url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            padding: 5rem 0;
+            background: linear-gradient(180deg, rgba(10, 12, 16, 0.95) 0%, rgba(10, 12, 16, 0.85) 100%), 
+                        radial-gradient(circle at 20% 30%, rgba(0, 255, 65, 0.03) 0%, transparent 60%);
+            padding: 4rem 0 3rem;
             text-align: center;
-            border-bottom: 1px solid rgba(255, 0, 0, 0.15);
+            border-bottom: 1px solid var(--border-glow);
         }
         
         .hero-badge {
             display: inline-block;
-            background: rgba(255, 0, 0, 0.1);
-            border: 1px solid var(--red);
+            background: var(--accent-dim);
+            border: 1px solid var(--accent);
             border-radius: 60px;
             padding: 0.3rem 1.5rem;
             font-size: 0.75rem;
             font-weight: 600;
             letter-spacing: 1px;
             margin-bottom: 1.5rem;
-            color: var(--red);
+            color: var(--accent);
             text-transform: uppercase;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .hero-badge .blink {
+            animation: blink-text 1.2s infinite;
+        }
+        @keyframes blink-text {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
         }
         
         .hero-title {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
+            font-size: 3.8rem;
+            margin-bottom: 0.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #ffffff, var(--red), var(--cyan));
+            font-family: 'JetBrains Mono', monospace;
+            background: linear-gradient(135deg, #ffffff, var(--accent), var(--cyan));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
         
+        .hero-title .slash {
+            color: var(--red);
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+        }
+        
         .hero-subtitle {
-            font-size: 1.25rem;
-            max-width: 800px;
-            margin: 0 auto 2rem;
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
             color: var(--secondary);
+            font-family: 'JetBrains Mono', monospace;
         }
         
-        .highlight {
-            color: var(--cyan);
+        .hero .highlight {
+            color: var(--accent);
             font-weight: 600;
         }
-        
-        .warning {
+        .hero .warning {
             color: var(--red);
             font-weight: 600;
         }
 
-        .red-text {
-            color: var(--red);
-        }
-        
-        /* Cards */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-        
-        .card {
-            background: var(--surface);
-            border-radius: 16px;
-            padding: 2rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(255, 0, 0, 0.08);
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--glow-red);
-            border-color: var(--red);
-        }
-        
-        .card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--red);
-        }
-        
-        .card h3 i {
-            margin-right: 10px;
-            color: var(--cyan);
-        }
-        
-        .card ul {
-            padding-left: 1.5rem;
-        }
-        
-        .card li {
-            margin-bottom: 0.5rem;
-            color: var(--secondary);
-        }
-
-        .card li .highlight {
-            color: var(--cyan);
-        }
-        
-        /* Sections */
-        .section {
-            padding: 4rem 0;
-        }
-        
-        .section-alt {
-            background: rgba(255, 0, 0, 0.02);
-            border-top: 1px solid rgba(255, 0, 0, 0.05);
-            border-bottom: 1px solid rgba(255, 0, 0, 0.05);
-        }
-        
-        .section-title {
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-        
-        .section-title:after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--red), var(--cyan));
-            margin: 1rem auto;
-            border-radius: 2px;
-        }
-        
-        /* Buttons */
-        .btn {
+        .hero .date-block {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            margin: 0.5rem 0;
-            gap: 8px;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--red), var(--primary-dark));
-            color: #fff;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--glow-red);
-        }
-        
-        .btn-secondary {
-            background: var(--surface);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.03);
-            transform: translateY(-2px);
-            border-color: var(--red);
-        }
-        
-        .btn i {
-            margin-right: 4px;
-        }
-        
-        /* Form */
-        .form-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: var(--surface);
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 0, 0, 0.08);
-        }
-        
-        /* Footer */
-        .footer {
-            background: var(--surface);
-            padding: 2rem 0;
-            text-align: center;
-            margin-top: 3rem;
-            border-top: 3px solid;
-            border-image: linear-gradient(90deg, var(--red), var(--cyan), var(--red)) 1;
-        }
-        
-        .footer p {
-            margin-bottom: 1rem;
-        }
-        
-        .footer .icon-row {
-            display: flex;
-            justify-content: center;
             gap: 12px;
-            margin-bottom: 0.5rem;
-            font-size: 1.2rem;
-            opacity: 0.3;
-        }
-        
-        .hashtags {
-            color: var(--secondary);
+            background: var(--surface);
+            border: 1px solid var(--border-glow);
+            border-radius: 60px;
+            padding: 0.6rem 1.8rem;
+            margin-top: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 0.9rem;
         }
-
-        .hashtags span {
-            margin: 0 8px;
+        .hero .date-block i {
+            color: var(--accent);
         }
-        
-        /* Anonymity Banner */
-        .anon-banner {
-            background: linear-gradient(135deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 65, 0.02));
-            border: 1px solid rgba(255, 0, 0, 0.08);
+        .hero .date-block .countdown {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* Recruitment Banner */
+        .recruitment-banner {
+            background: linear-gradient(135deg, var(--accent-dim), rgba(255, 0, 68, 0.04));
+            border: 1px solid var(--accent);
             border-radius: 16px;
             padding: 1.5rem 2rem;
-            margin: 2rem 0;
+            margin: 1.5rem 0 2rem;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
             gap: 1rem;
+            box-shadow: 0 0 40px rgba(0, 255, 65, 0.04);
         }
-
-        .anon-banner .anon-text {
+        .recruitment-banner .left {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 16px;
         }
-
-        .anon-banner .anon-text .icon {
-            font-size: 2rem;
+        .recruitment-banner .left .icon {
+            font-size: 2.5rem;
         }
-
-        .anon-banner .anon-text h4 {
+        .recruitment-banner .left h4 {
             color: var(--light);
             font-size: 1.1rem;
+            font-family: 'JetBrains Mono', monospace;
         }
-
-        .anon-banner .anon-text p {
+        .recruitment-banner .left p {
             color: var(--secondary);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             margin: 0;
         }
-
-        .anon-banner .anon-badge-lg {
-            background: linear-gradient(135deg, var(--red), var(--cyan));
-            color: #000;
-            padding: 8px 24px;
-            border-radius: 60px;
+        .recruitment-banner .right {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .recruitment-banner .slots {
+            background: var(--surface);
+            border: 1px solid var(--border-glow);
+            border-radius: 40px;
+            padding: 6px 18px;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--secondary);
+        }
+        .recruitment-banner .slots span {
+            color: var(--accent);
             font-weight: 700;
-            font-size: 0.8rem;
-            white-space: nowrap;
-            font-family: 'Inter', sans-serif;
-        }
-
-        /* Hack Stamp */
-        .hack-stamp {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(255, 0, 0, 0.06);
-            padding: 4px 14px 4px 10px;
-            border-radius: 40px;
-            font-size: 0.65rem;
-            color: var(--red);
-            font-weight: 600;
-            border: 1px solid rgba(255, 0, 0, 0.12);
-        }
-
-        .course-level {
-            display: inline-block;
-            padding: 2px 12px;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            margin-top: 4px;
-        }
-
-        .level-beginner {
-            background: rgba(34, 197, 94, 0.15);
-            color: var(--success);
-            border: 1px solid rgba(34, 197, 94, 0.2);
-        }
-
-        .level-intermediate {
-            background: rgba(245, 158, 11, 0.15);
-            color: var(--warning);
-            border: 1px solid rgba(245, 158, 11, 0.2);
-        }
-
-        .level-advanced {
-            background: rgba(255, 0, 0, 0.15);
-            color: var(--red);
-            border: 1px solid rgba(255, 0, 0, 0.2);
         }
         
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.2rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1rem;
-            }
-            
-            .section-title {
-                font-size: 1.8rem;
-            }
-            
-            .card-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .anon-banner {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .anon-banner .anon-text {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .header-content {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-
-            .header-buttons {
-                justify-content: center;
-            }
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
         }
-
+        
+        .card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 1.8rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 255, 65, 0.04);
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: var(--glow-green);
+        }
+        
+        .card .card-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 0.8rem;
+        }
+        
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--light);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .card ul {
+            padding-left: 1.2rem;
+            list-style: none;
+        }
+        
+        .card li {
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+            font-size: 0.9rem;
+            position: relative;
+            padding-left: 1.2rem;
+        }
+        .card li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .card li .highlight {
+            color: var(--accent);
+        }
+        
+        /* Form */
+        .form-container {
+            max-width: 700px;
+            margin: 2rem auto;
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 2.5rem;
+            border: 1px solid var(--border-glow);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .form-container h3 {
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+        .form-container .form-sub {
+            text-align: center;
+            color: var(--secondary);
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 4px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 65, 0.1);
+            background: var(--primary-dark);
+            color: var(--light);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.05);
+        }
+        .form-group .hint {
+            font-size: 0.7rem;
+            color: var(--secondary);
+            margin-top: 4px;
+            opacity: 0.7;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.8rem;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            gap: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: var(--dark);
+            width: 100%;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(0, 255, 65, 0.2);
+        }
+        
+        .btn-secondary {
+            background: var(--surface-light);
+            color: var(--light);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+        .btn-outline:hover {
+            background: var(--accent);
+            color: var(--dark);
+        }
+        
+        /* Sections */
+        .section {
+            padding: 3rem 0;
+        }
+        .section-alt {
+            background: rgba(0, 255, 65, 0.01);
+            border-top: 1px solid var(--border-glow);
+            border-bottom: 1px solid var(--border-glow);
+        }
+        .section-title {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            position: relative;
+        }
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            margin: 0.8rem auto;
+            border-radius: 2px;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--primary-dark);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border-glow);
+        }
+        .footer p {
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+            font-size: 0.85rem;
+        }
+        .footer .icon-row {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+            opacity: 0.3;
+        }
+        .footer .hashtags {
+            color: var(--secondary);
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .footer .hashtags span {
+            margin: 0 6px;
+            opacity: 0.5;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.4rem; }
+            .hero-subtitle { font-size: 1rem; }
+            .section-title { font-size: 1.8rem; }
+            .card-grid { grid-template-columns: 1fr; }
+            .recruitment-banner { flex-direction: column; text-align: center; }
+            .recruitment-banner .left { flex-direction: column; text-align: center; }
+            .header-content { flex-direction: column; align-items: center; text-align: center; }
+            .header-buttons { justify-content: center; }
+            .form-container { padding: 1.5rem; }
+            .hero .date-block { flex-wrap: wrap; justify-content: center; padding: 0.6rem 1rem; }
+        }
         @media (max-width: 480px) {
-            .hero-title {
-                font-size: 1.8rem;
-            }
-            
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .header-buttons {
-                width: 100%;
-            }
+            .hero-title { font-size: 1.8rem; }
+            .btn { width: 100%; justify-content: center; }
+            .header-buttons { width: 100%; }
         }
     </style>
 </head>
@@ -478,14 +528,14 @@
     <header class="header">
         <div class="container header-content">
             <a href="#" class="logo">
-                <i class="fas fa-lock"></i>
-                <span>HW School</span>
-                <span class="badge-hack">⚡ HACK</span>
+                <i class="fas fa-shield-haltered"></i>
+                <span>HW Pro</span>
+                <span class="badge-pro">⚡ RECRUIT</span>
             </a>
             <div class="header-buttons">
-                <span class="hack-stamp">🛡️ Zero-Logs</span>
-                <a href="https://t.me/hacker_school_25" target="_blank" class="btn btn-secondary">
-                    <i class="fab fa-telegram"></i> Telegram
+                <span class="status-online"><span class="dot"></span> Набор открыт</span>
+                <a href="#form" class="btn btn-secondary" style="padding:0.4rem 1.2rem;font-size:0.75rem;">
+                    <i class="fas fa-pen"></i> Подать заявку
                 </a>
             </div>
         </div>
@@ -494,62 +544,77 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <div class="hero-badge">⚡ Хакерская школа кибербезопасности</div>
-            <h1 class="hero-title">HW School</h1>
-            <p class="hero-subtitle">Современная <span class="highlight">анонимная</span> школа кибербезопасности и программирования нового поколения</p>
-            <p>Открытие школы: <span class="highlight">1 Июля 2025 в 14:00 (МСК)</span></p>
+            <div class="hero-badge"><span class="blink">●</span> ИДЁТ НАБОР В ШКОЛУ HW PRO</div>
+            <h1 class="hero-title">HW <span class="slash">/</span> PRO SCHOOL</h1>
+            <p class="hero-subtitle">Элитная школа <span class="highlight">кибербезопасности</span> и <span class="highlight">программирования</span> нового поколения</p>
+            <div class="date-block">
+                <i class="fas fa-calendar-day"></i>
+                Старт набора: <span class="countdown">1 Июля 2025</span>
+                <span style="color:var(--secondary);font-size:0.7rem;">|</span>
+                <i class="fas fa-users"></i>
+                <span class="countdown">15 свободных мест</span>
+            </div>
         </div>
     </section>
 
-    <!-- Anonymity Banner -->
+    <!-- Recruitment Banner -->
     <div class="container">
-        <div class="anon-banner">
-            <div class="anon-text">
+        <div class="recruitment-banner">
+            <div class="left">
                 <span class="icon">🕶️</span>
                 <div>
-                    <h4>Полная анонимность</h4>
-                    <p>Обучение без слежки. Никаких логов, трекеров и идентификации. Ваша приватность — наш приоритет.</p>
+                    <h4>Мы ищем таланты</h4>
+                    <p>Присоединяйся к команде HW Pro. Полная анонимность, реальные проекты, менторство от экспертов.</p>
                 </div>
             </div>
-            <span class="anon-badge-lg">🔒 Zero-Logs Policy</span>
+            <div class="right">
+                <span class="slots"><i class="fas fa-user-plus"></i> Мест: <span>15</span></span>
+                <a href="#form" class="btn btn-primary" style="padding:0.5rem 1.5rem;font-size:0.8rem;width:auto;">
+                    <i class="fas fa-rocket"></i> Подать заявку
+                </a>
+            </div>
         </div>
     </div>
 
     <!-- About Section -->
     <section class="section">
         <div class="container">
-            <h2 class="section-title">HW School</h2>
+            <h2 class="section-title">О школе</h2>
             
             <div class="card-grid">
                 <div class="card">
-                    <h3><i class="fas fa-question-circle"></i> Что тебя ждет?</h3>
+                    <div class="card-icon"><i class="fas fa-bolt"></i></div>
+                    <h3>Что тебя ждёт?</h3>
                     <ul>
-                        <li>Практический курс от основ до продвинутых техник</li>
-                        <li>Работа с реальными кейсами (Pentest, Bug Hunting)</li>
-                        <li>Разбор правовых аспектов</li>
-                        <li>Возможность попасть в команду после успешного окончания</li>
-                        <li><span class="highlight">🕶️ Полная анонимность участников</span></li>
+                        <li>Практический курс от <span class="highlight">нуля до PRO</span></li>
+                        <li>Реальные кейсы: Pentest, Bug Bounty, OSINT</li>
+                        <li>Работа с современными инструментами</li>
+                        <li><span class="highlight">🕶️ Полная анонимность</span></li>
+                        <li>Трудоустройство в команду HW Pro</li>
                     </ul>
                 </div>
                 
                 <div class="card">
-                    <h3><i class="fas fa-user-tie"></i> Для кого это?</h3>
+                    <div class="card-icon"><i class="fas fa-user-astronaut"></i></div>
+                    <h3>Для кого?</h3>
                     <ul>
-                        <li>Для начинающих с нуля</li>
-                        <li>IT-специалистов, желающих сменить специализацию</li>
-                        <li>Всех, кто хочет легально зарабатывать на хакинге</li>
-                        <li>Тех, кто ценит <span class="highlight">анонимность и защиту данных</span></li>
+                        <li>Новички с <span class="highlight">нулевым опытом</span></li>
+                        <li>IT-специалисты для смены профиля</li>
+                        <li>Те, кто ценит <span class="highlight">анонимность</span></li>
+                        <li>Будущие White Hat хакеры</li>
+                        <li>Разработчики и исследователи</li>
                     </ul>
                 </div>
                 
                 <div class="card">
-                    <h3><i class="fas fa-exclamation-triangle"></i> Важно!</h3>
+                    <div class="card-icon"><i class="fas fa-shield-haltered"></i></div>
+                    <h3>Важно знать</h3>
                     <ul>
                         <li>Обучение <span class="highlight">БЕСПЛАТНОЕ</span></li>
-                        <li>Официальные заявки начнутся за 2 дня до старта</li>
-                        <li>Регистрация ТОЛЬКО через официальный сайт</li>
-                        <li><span class="highlight">⚡ Полностью анонимная программа</span></li>
-                        <li><span class="highlight">🕶️ Никаких логов и слежения</span></li>
+                        <li>Набор ограничен — <span class="highlight">15 мест</span></li>
+                        <li>Регистрация через <span class="highlight">официальный сайт</span></li>
+                        <li>Zero-Logs политика</li>
+                        <li>Старт: <span class="highlight">1 июля 2025</span></li>
                     </ul>
                 </div>
             </div>
@@ -559,76 +624,94 @@
     <!-- Courses Section -->
     <section class="section section-alt">
         <div class="container">
-            <h2 class="section-title">Наши курсы</h2>
+            <h2 class="section-title">Программа обучения</h2>
             
             <div class="card-grid">
                 <div class="card">
-                    <h3><i class="fas fa-shield-alt"></i> Основы кибербезопасности</h3>
+                    <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Основы кибербезопасности</h3>
                     <ul>
-                        <li>Базовые принципы защиты информации</li>
-                        <li>Основные угрозы и уязвимости</li>
+                        <li>Базовые принципы защиты</li>
+                        <li>Типы угроз и уязвимостей</li>
                         <li>Длительность: <span class="highlight">2 месяца</span></li>
-                        <li><span class="course-level level-beginner">Начинающий</span></li>
-                        <li>🕶️ Анонимный формат</li>
+                        <li><span style="display:inline-block;background:rgba(0,255,65,0.12);color:var(--accent);padding:2px 12px;border-radius:40px;font-size:0.7rem;font-weight:600;">Начинающий</span></li>
                     </ul>
                 </div>
                 
                 <div class="card">
-                    <h3><i class="fas fa-user-secret"></i> Этичный хакинг</h3>
+                    <div class="card-icon"><i class="fas fa-user-secret"></i></div>
+                    <h3>Этичный хакинг</h3>
                     <ul>
                         <li>Тестирование на проникновение</li>
-                        <li>Поиск и эксплуатация уязвимостей</li>
+                        <li>Эксплуатация уязвимостей</li>
                         <li>Длительность: <span class="highlight">4 месяца</span></li>
-                        <li><span class="course-level level-advanced">Продвинутый</span></li>
-                        <li>🕶️ Полная конфиденциальность</li>
+                        <li><span style="display:inline-block;background:rgba(255,0,68,0.12);color:var(--red);padding:2px 12px;border-radius:40px;font-size:0.7rem;font-weight:600;">Продвинутый</span></li>
                     </ul>
                 </div>
                 
                 <div class="card">
-                    <h3><i class="fas fa-search"></i> Киберкриминалистика</h3>
+                    <div class="card-icon"><i class="fas fa-code"></i></div>
+                    <h3>Программирование для безопасности</h3>
                     <ul>
-                        <li>Методы расследования киберпреступлений</li>
-                        <li>Анализ цифровых улик</li>
-                        <li>Длительность: <span class="highlight">3 месяца</span></li>
-                        <li><span class="course-level level-intermediate">Средний</span></li>
-                        <li>🕶️ Безопасная среда</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h3><i class="fas fa-code"></i> Программирование</h3>
-                    <ul>
-                        <li>Пишем коды на таких языках как Python, C#, C++, Асемблер</li>
-                        <li>Учим на современном уровне</li>
+                        <li>Python, C++, Assembler</li>
+                        <li>Написание эксплойтов</li>
                         <li>Длительность: <span class="highlight">5 месяцев</span></li>
-                        <li><span class="course-level level-advanced">Продвинутый</span></li>
-                        <li>🕶️ Анонимная разработка</li>
+                        <li><span style="display:inline-block;background:rgba(255,170,0,0.12);color:var(--warning);padding:2px 12px;border-radius:40px;font-size:0.7rem;font-weight:600;">Средний</span></li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="section section-alt" style="text-align: center;">
+    <!-- Form Section -->
+    <section class="section" id="form">
         <div class="container">
-            <h2 class="section-title">Готовы начать?</h2>
-            <p>Количество мест ограничено! Регистрация откроется <span class="warning">30 мая 2025</span>.</p>
-            <p>Следите за нашими обновлениями:</p>
+            <h2 class="section-title">Подать заявку</h2>
             
-            <div style="margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
-                <a href="https://t.me/hacker_school_25" target="_blank" class="btn btn-primary">
-                    <i class="fab fa-telegram"></i> Telegram канал
-                </a>
-                <a href="https://github.com/Anonim-IT/HackerWeb" target="_blank" class="btn btn-secondary">
-                    <i class="fab fa-github"></i> GitHub
-                </a>
-                <a href="education.html" class="btn btn-secondary">
-                    <i class="fas fa-calendar-day"></i> Расписание Занятий
-                </a>
-                <a href="index.html" class="btn btn-secondary">
-                    <i class="fas fa-home"></i> На главную
-                </a>
+            <div class="form-container">
+                <h3>⚡ Вступить в HW Pro</h3>
+                <p class="form-sub">Заполните форму, и мы свяжемся с вами в течение 24 часов</p>
+                
+                <form id="applicationForm" onsubmit="event.preventDefault(); alert('✅ Заявка принята! Мы свяжемся с вами в ближайшее время.')">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Псевдоним / Никнейм</label>
+                        <input type="text" placeholder="Введите ваш псевдоним" required>
+                        <div class="hint">🕶️ Анонимность гарантирована</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Контакт (Telegram / Email)</label>
+                        <input type="text" placeholder="@username или email" required>
+                        <div class="hint">🔒 Данные используются только для связи</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-tag"></i> Уровень подготовки</label>
+                        <select>
+                            <option value="">Выберите ваш уровень</option>
+                            <option value="beginner">Начинающий (с нуля)</option>
+                            <option value="intermediate">Средний (базовые знания)</option>
+                            <option value="advanced">Продвинутый (опыт в IT)</option>
+                            <option value="expert">Эксперт (профессионал)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-rocket"></i> Интересующие направления</label>
+                        <select>
+                            <option value="">Выберите направление</option>
+                            <option value="sec">Кибербезопасность</option>
+                            <option value="hack">Этичный хакинг</option>
+                            <option value="dev">Программирование</option>
+                            <option value="osint">OSINT / Расследования</option>
+                            <option value="all">Все направления</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Отправить заявку
+                    </button>
+                </form>
             </div>
         </div>
     </section>
@@ -641,25 +724,26 @@
                 <span>🛡️</span>
                 <span>🔐</span>
                 <span>⚡</span>
+                <span>🕶️</span>
             </div>
-            <p>HW School © 2025 | Хакерская школа кибербезопасности</p>
+            <p>HW Pro School © 2025 | Элитная школа кибербезопасности</p>
             <p style="font-size: 0.8rem; color: var(--secondary);">
-                🕶️ Полная анонимность. Zero-Logs. Защита данных. Подготовка кадров для цифровой безопасности.
+                🕶️ Полная анонимность. Zero-Logs. Подготовка кадров для цифровой безопасности.
             </p>
             <div class="hashtags">
-                <span>#WhiteHat</span>
+                <span>#HWPro</span>
                 <span>#Кибербезопасность</span>
                 <span>#БесплатноеОбучение</span>
                 <span>#Анонимность</span>
-                <span>#ZeroLogs</span>
-                <span>#Хакинг</span>
+                <span>#WhiteHat</span>
+                <span>#Набор2025</span>
             </div>
         </div>
     </footer>
 
     <script>
         // ============================================================
-        // МАТРИЦА — ЖИВЫЕ ОБОИ
+        // МАТРИЦА — ЖИВЫЕ ОБОИ (улучшенная версия)
         // ============================================================
         (function() {
             const canvas = document.getElementById('matrix-canvas');
@@ -681,9 +765,10 @@
                     columns.push({
                         x: i * FONT_SIZE,
                         y: Math.random() * height,
-                        speed: 0.5 + Math.random() * 1.2,
+                        speed: 0.3 + Math.random() * 1.0,
                         chars: '0123456789ABCDEF',
-                        length: 5 + Math.floor(Math.random() * 10),
+                        length: 3 + Math.floor(Math.random() * 8),
+                        brightness: 0.3 + Math.random() * 0.7,
                     });
                 }
             }
@@ -694,7 +779,7 @@
             });
 
             function drawMatrix() {
-                ctx.fillStyle = 'rgba(5, 5, 10, 0.04)';
+                ctx.fillStyle = 'rgba(10, 12, 16, 0.04)';
                 ctx.fillRect(0, 0, width, height);
 
                 ctx.font = `${FONT_SIZE}px 'JetBrains Mono', monospace`;
@@ -704,18 +789,18 @@
                     const dx = mouseX - col.x;
                     const dy = mouseY - col.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
-                    const maxDist = 180;
+                    const maxDist = 150;
 
                     if (dist < maxDist && dist > 0) {
-                        const force = (1 - dist / maxDist) * 2.5;
-                        col.speed = 0.8 + force * 2;
+                        const force = (1 - dist / maxDist) * 2.0;
+                        col.speed = 0.6 + force * 1.8;
                     }
 
                     col.y += col.speed;
 
                     if (col.y > height) {
                         col.y = -col.length * FONT_SIZE;
-                        col.speed = 0.5 + Math.random() * 1.2;
+                        col.speed = 0.3 + Math.random() * 1.0;
                     }
 
                     const charLen = col.length;
@@ -725,19 +810,19 @@
 
                         const char = col.chars[Math.floor(Math.random() * col.chars.length)];
                         const brightness = 1 - (i / charLen);
-                        const alpha = 0.3 + brightness * 0.7;
+                        const alpha = 0.2 + brightness * 0.8;
 
-                        const red = Math.floor(150 + 105 * brightness);
-                        ctx.fillStyle = `rgba(${red}, ${Math.floor(10 * brightness)}, ${Math.floor(10 * brightness)}, ${alpha})`;
+                        const green = Math.floor(180 + 75 * brightness);
+                        ctx.fillStyle = `rgba(0, ${green}, ${Math.floor(30 * brightness)}, ${alpha})`;
                         ctx.fillText(char, col.x, yPos);
                     }
 
                     const headY = col.y;
                     if (headY > 0 && headY < height) {
                         const headChar = col.chars[Math.floor(Math.random() * col.chars.length)];
-                        ctx.fillStyle = `rgba(255, 50, 50, 0.9)`;
-                        ctx.shadowColor = 'rgba(255, 0, 0, 0.3)';
-                        ctx.shadowBlur = 8;
+                        ctx.fillStyle = `rgba(0, 255, 65, 0.95)`;
+                        ctx.shadowColor = 'rgba(0, 255, 65, 0.3)';
+                        ctx.shadowBlur = 12;
                         ctx.fillText(headChar, col.x, headY);
                         ctx.shadowBlur = 0;
                     }
@@ -750,6 +835,14 @@
             resize();
             drawMatrix();
         })();
+
+        // Плавный скролл к форме
+        document.querySelectorAll('a[href="#form"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelector('#form').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
     </script>
 </body>
 </html>
