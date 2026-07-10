@@ -20,12 +20,18 @@
             --accent-red: #ff0033;
             --accent-green: #00ff41;
             --accent-cyan: #00ffff;
+            --accent-gold: #ffd700;
+            --accent-purple: #a855f7;
+            --accent-blue: #3b82f6;
             --text-primary: #c0c0c0;
             --text-secondary: #6a6a6a;
             --text-muted: #3a3a3a;
             --border-subtle: #1a1a1a;
             --glow-red: 0 0 30px rgba(255, 0, 51, 0.06);
             --glow-green: 0 0 30px rgba(0, 255, 65, 0.04);
+            --glow-gold: 0 0 30px rgba(255, 215, 0, 0.04);
+            --glow-purple: 0 0 30px rgba(168, 85, 247, 0.04);
+            --glow-blue: 0 0 30px rgba(59, 130, 246, 0.04);
             --font-mono: 'JetBrains Mono', monospace;
         }
 
@@ -63,6 +69,96 @@
         @keyframes scanline {
             0% { transform: translateY(0); }
             100% { transform: translateY(4px); }
+        }
+
+        /* ===== ТЕРМИНАЛЬНАЯ ЗАСТАВКА ===== */
+        .terminal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-deep);
+            z-index: 9998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .terminal-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .terminal-boot {
+            font-family: var(--font-mono);
+            color: var(--accent-green);
+            text-align: center;
+            max-width: 700px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 255, 65, 0.08);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 60px rgba(0, 255, 65, 0.02);
+        }
+
+        .terminal-boot .ascii-art {
+            font-size: 0.4rem;
+            line-height: 1.1;
+            color: var(--accent-red);
+            letter-spacing: 0px;
+            white-space: pre;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 20px rgba(255, 0, 51, 0.08);
+        }
+
+        .terminal-boot .boot-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        .terminal-boot .boot-text .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background: var(--accent-green);
+            animation: blink-cursor 1s step-end infinite;
+            vertical-align: text-bottom;
+            margin-left: 2px;
+        }
+
+        @keyframes blink-cursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .terminal-boot .progress-bar {
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 255, 65, 0.05);
+            margin-top: 1rem;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .terminal-boot .progress-bar .fill {
+            height: 100%;
+            width: 0%;
+            background: var(--accent-green);
+            animation: boot-progress 2.5s ease-in-out forwards;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+        }
+
+        @keyframes boot-progress {
+            0% { width: 0%; }
+            30% { width: 15%; }
+            60% { width: 45%; }
+            80% { width: 75%; }
+            95% { width: 92%; }
+            100% { width: 100%; }
         }
 
         /* ===== МАТРИЦА ===== */
@@ -278,11 +374,6 @@
             vertical-align: text-bottom;
         }
 
-        @keyframes blink-cursor {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
         .terminal-badge {
             background: rgba(0, 255, 65, 0.02);
             border: 1px solid rgba(0, 255, 65, 0.04);
@@ -312,6 +403,18 @@
 
         .content-section .section-title .green {
             color: var(--accent-green);
+        }
+
+        .content-section .section-title .gold {
+            color: var(--accent-gold);
+        }
+
+        .content-section .section-title .purple {
+            color: var(--accent-purple);
+        }
+
+        .content-section .section-title .blue {
+            color: var(--accent-blue);
         }
 
         .content-section .section-title::after {
@@ -355,6 +458,33 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
 
+        .standard-card.hw-card-gold {
+            border-left-color: var(--accent-gold);
+            background: linear-gradient(145deg, rgba(255, 215, 0, 0.02), var(--bg-card));
+        }
+        .standard-card.hw-card-gold:hover {
+            border-color: var(--accent-gold);
+            box-shadow: var(--glow-gold);
+        }
+
+        .standard-card.hw-card-purple {
+            border-left-color: var(--accent-purple);
+            background: linear-gradient(145deg, rgba(168, 85, 247, 0.02), var(--bg-card));
+        }
+        .standard-card.hw-card-purple:hover {
+            border-color: var(--accent-purple);
+            box-shadow: var(--glow-purple);
+        }
+
+        .standard-card.hw-card-blue {
+            border-left-color: var(--accent-blue);
+            background: linear-gradient(145deg, rgba(59, 130, 246, 0.02), var(--bg-card));
+        }
+        .standard-card.hw-card-blue:hover {
+            border-color: var(--accent-blue);
+            box-shadow: var(--glow-blue);
+        }
+
         .standard-card .card-number {
             font-size: 0.6rem;
             color: var(--text-muted);
@@ -368,12 +498,32 @@
             display: block;
         }
 
+        .standard-card .card-icon.gold {
+            color: var(--accent-gold);
+        }
+        .standard-card .card-icon.purple {
+            color: var(--accent-purple);
+        }
+        .standard-card .card-icon.blue {
+            color: var(--accent-blue);
+        }
+
         .standard-card h3 {
             font-size: 1.2rem;
             font-weight: 700;
             font-family: var(--font-mono);
             margin-bottom: 0.5rem;
             color: var(--accent-red);
+        }
+
+        .standard-card h3.gold {
+            color: var(--accent-gold);
+        }
+        .standard-card h3.purple {
+            color: var(--accent-purple);
+        }
+        .standard-card h3.blue {
+            color: var(--accent-blue);
         }
 
         .standard-card p {
@@ -402,6 +552,16 @@
             content: ">";
             color: var(--accent-green);
             font-weight: 700;
+        }
+
+        .standard-features li.gold::before {
+            color: var(--accent-gold);
+        }
+        .standard-features li.purple::before {
+            color: var(--accent-purple);
+        }
+        .standard-features li.blue::before {
+            color: var(--accent-blue);
         }
 
         /* ===== ХАКЕРСКИЕ СТАНДАРТЫ ===== */
@@ -615,6 +775,7 @@
             .hacker-standards ul { grid-template-columns: 1fr; }
             .terminal-banner { flex-direction: column; text-align: center; }
             .terminal-banner .term-text { flex-direction: column; text-align: center; }
+            .terminal-boot .ascii-art { font-size: 0.3rem; }
         }
 
         @media (max-width: 480px) {
@@ -624,8 +785,30 @@
         }
     </style>
 </head>
-
 <body>
+
+    <!-- ===== ТЕРМИНАЛЬНАЯ ЗАСТАВКА ===== -->
+    <div class="terminal-overlay" id="bootScreen">
+        <div class="terminal-boot">
+            <div class="ascii-art">
+   ██╗  ██╗██╗    ██╗    ██████╗ ██████╗  ██████╗ 
+   ██║  ██║██║    ██║    ██╔══██╗██╔══██╗██╔═══██╗
+   ███████║██║ █╗ ██║    ██████╔╝██████╔╝██║   ██║
+   ██╔══██║██║███╗██║    ██╔═══╝ ██╔══██╗██║   ██║
+   ██║  ██║╚███╔███╔╝    ██║     ██║  ██║╚██████╔╝
+   ╚═╝  ╚═╝ ╚══╝╚══╝     ╚═╝     ╚═╝  ╚═╝ ╚═════╝ 
+            </div>
+            <div class="boot-text">
+                <span style="color:var(--accent-red);">> HW Pro Standards System v.3.0</span><br>
+                <span style="color:var(--text-muted);">>> Загрузка модуля стандартов... Инициализация сертификаций...</span><br>
+                <span style="color:var(--text-muted);">>>> Аудит безопасности активирован</span>
+                <span class="cursor"></span>
+            </div>
+            <div class="progress-bar">
+                <div class="fill"></div>
+            </div>
+        </div>
+    </div>
 
     <!-- ===== КАНВАС ДЛЯ МАТРИЦЫ ===== -->
     <canvas id="matrix-canvas"></canvas>
@@ -641,9 +824,8 @@
             <nav>
                 <ul class="nav-list">
                     <li><a href="/">Главная</a></li>
-                    <li><a href="/close.html">HW Школа</a></li>
+                    <li><a href="/HWschool.html">HW Школа</a></li>
                     <li><a href="#" class="active">Стандарты</a></li>
-                    <!-- <li><a href="#">Документация</a></li> -->
                     <li><a href="/portal.html">Портал</a></li>
                 </ul>
             </nav>
@@ -694,6 +876,7 @@
                 <p class="desc">Регулярные аудиты независимых организаций гарантируют соответствие всем требованиям:</p>
 
                 <div class="standards-grid">
+                    <!-- === СУЩЕСТВУЮЩИЕ СТАНДАРТЫ === -->
                     <article class="standard-card">
                         <div class="card-number">[01]</div>
                         <span class="card-icon">🔐</span>
@@ -729,6 +912,89 @@
                             <li>Прозрачность обработки</li>
                         </ul>
                     </article>
+
+                    <!-- === НОВЫЕ СТАНДАРТЫ HW === -->
+                    <article class="standard-card hw-card-gold">
+                        <div class="card-number">[04]</div>
+                        <span class="card-icon gold">⟁</span>
+                        <h3 class="gold">HW-ISO-2026</h3>
+                        <p>Собственный защищённый протокол HW-Proto</p>
+                        <ul class="standard-features">
+                            <li class="gold">HW-Proto — шифрованный протокол передачи</li>
+                            <li class="gold">Полная анонимизация трафика</li>
+                            <li class="gold">Сквозное шифрование без метаданных</li>
+                            <li class="gold">Zero-Logs на уровне протокола</li>
+                        </ul>
+                    </article>
+
+                    <article class="standard-card hw-card-gold">
+                        <div class="card-number">[05]</div>
+                        <span class="card-icon gold">🌐</span>
+                        <h3 class="gold">HW-NET-2026</h3>
+                        <p>Собственная сетевая архитектура HW-Net</p>
+                        <ul class="standard-features">
+                            <li class="gold">Децентрализованная mesh-сеть</li>
+                            <li class="gold">Маршрутизация без идентификации</li>
+                            <li class="gold">Встроенный VPN-стек HW-VPN</li>
+                            <li class="gold">Полная изоляция от внешних сетей</li>
+                        </ul>
+                    </article>
+
+                    <!-- === ЛИЦЕНЗИОННЫЙ СТАНДАРТ === -->
+                    <article class="standard-card hw-card-purple">
+                        <div class="card-number">[06]</div>
+                        <span class="card-icon purple">⚖️</span>
+                        <h3 class="purple">HW-LIC-2026</h3>
+                        <p>Лицензионный стандарт HW Pro</p>
+                        <ul class="standard-features">
+                            <li class="purple">HW-EULA — лицензионное соглашение</li>
+                            <li class="purple">Open Source с сохранением авторских прав</li>
+                            <li class="purple">Запрет на коммерческое использование без согласия</li>
+                            <li class="purple">Полная прозрачность условий</li>
+                        </ul>
+                    </article>
+
+                    <!-- === СТАНДАРТ РАЗРАБОТКИ === -->
+                    <article class="standard-card hw-card-blue">
+                        <div class="card-number">[07]</div>
+                        <span class="card-icon blue">⚙️</span>
+                        <h3 class="blue">HW-DEV-2026</h3>
+                        <p>Стандарт разработки и кода</p>
+                        <ul class="standard-features">
+                            <li class="blue">HW-CodeStyle — стандарт оформления кода</li>
+                            <li class="blue">HW-Review — процесс код-ревью</li>
+                            <li class="blue">HW-Testing — стандарты тестирования</li>
+                            <li class="blue">HW-Docs — документация API</li>
+                        </ul>
+                    </article>
+
+                    <!-- === СТАНДАРТ БЕЗОПАСНОСТИ === -->
+                    <article class="standard-card hw-card-purple">
+                        <div class="card-number">[08]</div>
+                        <span class="card-icon purple">🔒</span>
+                        <h3 class="purple">HW-SEC-2026</h3>
+                        <p>Стандарт безопасности HW Pro</p>
+                        <ul class="standard-features">
+                            <li class="purple">HW-Crypto — криптографические алгоритмы</li>
+                            <li class="purple">HW-Auth — анонимная аутентификация</li>
+                            <li class="purple">HW-Audit — аудит безопасности</li>
+                            <li class="purple">HW-Response — реагирование на инциденты</li>
+                        </ul>
+                    </article>
+
+                    <!-- === СТАНДАРТ СООБЩЕСТВА === -->
+                    <article class="standard-card hw-card-blue">
+                        <div class="card-number">[09]</div>
+                        <span class="card-icon blue">🤝</span>
+                        <h3 class="blue">HW-COM-2026</h3>
+                        <p>Стандарт сообщества и взаимодействия</p>
+                        <ul class="standard-features">
+                            <li class="blue">HW-CoC — кодекс поведения</li>
+                            <li class="blue">HW-Contribute — правила участия</li>
+                            <li class="blue">HW-Support — стандарты поддержки</li>
+                            <li class="blue">HW-Report — система репортов</li>
+                        </ul>
+                    </article>
                 </div>
 
                 <!-- Хакерские стандарты -->
@@ -740,6 +1006,11 @@
                         <li>End-to-End Encryption — сквозное шифрование</li>
                         <li>Penetration Testing — регулярные пентесты</li>
                         <li>Bug Bounty Program — программа по поиску уязвимостей</li>
+                        <li>HW-Proto — собственный защищённый протокол</li>
+                        <li>HW-Net — анонимная сетевая архитектура</li>
+                        <li>HW-EULA — лицензионное соглашение</li>
+                        <li>HW-CodeStyle — стандарты кода</li>
+                        <li>HW-Community — стандарты сообщества</li>
                     </ul>
                 </div>
 
@@ -752,7 +1023,35 @@
                         <li><strong>Тестирование безопасности</strong> — пентест и анализ уязвимостей</li>
                         <li><strong>Проверка анонимности</strong> — аудит политик конфиденциальности</li>
                         <li><strong>Оценка процессов</strong> — анализ системы управления качеством</li>
+                        <li><strong>Аудит HW-Proto</strong> — проверка защищённого протокола</li>
+                        <li><strong>Аудит HW-Net</strong> — проверка сетевой архитектуры</li>
+                        <li><strong>Лицензионный аудит</strong> — проверка HW-EULA</li>
+                        <li><strong>Аудит сообщества</strong> — проверка стандартов взаимодействия</li>
                     </ol>
+                </div>
+
+                <!-- Дополнительный блок о HW-сертификатах -->
+                <div class="security-banner" style="border-left-color: var(--accent-gold); margin-top: 2rem;">
+                    <div class="security-text">
+                        <span class="icon" style="color: var(--accent-gold);">⟁</span>
+                        <div>
+                            <h4 style="color: var(--accent-gold);">HW-ISO-2026 & HW-NET-2026</h4>
+                            <p>Собственные стандарты HW Pro, разработанные для обеспечения полной анонимности и безопасности.</p>
+                        </div>
+                    </div>
+                    <span class="security-badge-lg" style="background: var(--accent-gold); color: #000;">🔒 HW Certified</span>
+                </div>
+
+                <!-- Блок о лицензионном стандарте -->
+                <div class="security-banner" style="border-left-color: var(--accent-purple); margin-top: 1.5rem;">
+                    <div class="security-text">
+                        <span class="icon" style="color: var(--accent-purple);">⚖️</span>
+                        <div>
+                            <h4 style="color: var(--accent-purple);">HW-LIC-2026</h4>
+                            <p>Лицензионный стандарт HW Pro — защита авторских прав и прозрачность использования.</p>
+                        </div>
+                    </div>
+                    <span class="security-badge-lg" style="background: var(--accent-purple); color: #000;">📜 HW Licensed</span>
                 </div>
             </section>
         </div>
@@ -781,6 +1080,16 @@
     </footer>
 
     <script>
+        // ============================================================
+        // ЗАСТАВКА
+        // ============================================================
+        (function() {
+            const bootScreen = document.getElementById('bootScreen');
+            setTimeout(() => {
+                bootScreen.classList.add('hidden');
+            }, 2800);
+        })();
+
         // ============================================================
         // МАТРИЦА
         // ============================================================
