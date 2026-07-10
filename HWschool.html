@@ -1,49 +1,161 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>HW Pro | Набор в школу кибербезопасности</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #0a0c10;
-            --primary-dark: #05070a;
-            --primary-light: #1a1f2a;
-            --accent: #00ff41;
-            --accent-dim: rgba(0, 255, 65, 0.08);
-            --red: #ff0044;
-            --red-dim: rgba(255, 0, 68, 0.08);
-            --secondary: #8899bb;
-            --dark: #0a0c10;
-            --light: #e8edf5;
-            --surface: #11161f;
-            --surface-light: #1a2230;
-            --success: #00ff41;
-            --warning: #ffaa00;
-            --error: #ff0044;
-            --cyan: #00d4ff;
-            --glow-green: 0 0 40px rgba(0, 255, 65, 0.06);
-            --glow-red: 0 0 40px rgba(255, 0, 68, 0.06);
-            --border-glow: rgba(0, 255, 65, 0.12);
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--dark);
-            color: var(--light);
-            line-height: 1.6;
-            position: relative;
-            overflow-x: hidden;
+        :root {
+            --bg-deep: #0a0a0a;
+            --bg-surface: #0f0f0f;
+            --bg-card: #0d0d0d;
+            --accent-red: #ff0033;
+            --accent-green: #00ff41;
+            --accent-cyan: #00ffff;
+            --text-primary: #c0c0c0;
+            --text-secondary: #6a6a6a;
+            --text-muted: #3a3a3a;
+            --border-subtle: #1a1a1a;
+            --glow-red: 0 0 30px rgba(255, 0, 51, 0.06);
+            --glow-green: 0 0 30px rgba(0, 255, 65, 0.04);
+            --font-mono: 'JetBrains Mono', monospace;
         }
 
-        /* Канвас для матрицы (улучшенный) */
+        body {
+            background: var(--bg-deep);
+            font-family: var(--font-mono);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
+            overflow-x: hidden;
+            position: relative;
+            font-size: 14px;
+        }
+
+        /* ===== ЭФФЕКТ СКАНИРОВАНИЯ ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.03) 0px,
+                rgba(0, 0, 0, 0.03) 2px,
+                transparent 2px,
+                transparent 4px
+            );
+            pointer-events: none;
+            z-index: 9999;
+            animation: scanline 0.1s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(4px); }
+        }
+
+        /* ===== ТЕРМИНАЛЬНАЯ ЗАСТАВКА ===== */
+        .terminal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-deep);
+            z-index: 9998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .terminal-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .terminal-boot {
+            font-family: var(--font-mono);
+            color: var(--accent-green);
+            text-align: center;
+            max-width: 700px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 255, 65, 0.08);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 60px rgba(0, 255, 65, 0.02);
+        }
+
+        .terminal-boot .ascii-art {
+            font-size: 0.4rem;
+            line-height: 1.1;
+            color: var(--accent-red);
+            letter-spacing: 0px;
+            white-space: pre;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 20px rgba(255, 0, 51, 0.08);
+        }
+
+        .terminal-boot .boot-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        .terminal-boot .boot-text .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background: var(--accent-green);
+            animation: blink-cursor 1s step-end infinite;
+            vertical-align: text-bottom;
+            margin-left: 2px;
+        }
+
+        @keyframes blink-cursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .terminal-boot .progress-bar {
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 255, 65, 0.05);
+            margin-top: 1rem;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .terminal-boot .progress-bar .fill {
+            height: 100%;
+            width: 0%;
+            background: var(--accent-green);
+            animation: boot-progress 2.5s ease-in-out forwards;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+        }
+
+        @keyframes boot-progress {
+            0% { width: 0%; }
+            30% { width: 15%; }
+            60% { width: 45%; }
+            80% { width: 75%; }
+            95% { width: 92%; }
+            100% { width: 100%; }
+        }
+
+        /* ===== МАТРИЦА ===== */
         #matrix-canvas {
             position: fixed;
             top: 0;
@@ -52,121 +164,142 @@
             height: 100%;
             z-index: 0;
             pointer-events: none;
-            opacity: 0.15;
+            opacity: 0.06;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
-        
-        /* Header — стиль HW Pro */
-        .header {
-            background: rgba(10, 12, 16, 0.92);
-            backdrop-filter: blur(12px);
-            padding: 0.8rem 0;
-            border-bottom: 1px solid var(--border-glow);
+
+        /* ===== ХЕДЕР ===== */
+        .main-header {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 0, 51, 0.04);
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            padding: 0.6rem 0;
         }
-        
-        .header-content {
+
+        .main-header .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 0.8rem;
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--light);
-            text-decoration: none;
-            font-family: 'JetBrains Mono', monospace;
-        }
-        
-        .logo i {
-            font-size: 1.6rem;
-            color: var(--accent);
-        }
-        
-        .logo .badge-pro {
-            font-size: 0.55rem;
-            background: var(--accent);
-            color: var(--dark);
-            padding: 2px 12px;
-            border-radius: 40px;
-            letter-spacing: 0.5px;
-            font-weight: 700;
-            animation: pulse-badge 2s infinite;
-        }
-
-        @keyframes pulse-badge {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(0.95); }
-        }
-
-        .header-buttons {
-            display: flex;
             gap: 10px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.3rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
+        }
+
+        .logo-icon {
+            width: 34px;
+            height: 34px;
+            background: var(--accent-red);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(255, 0, 51, 0.06);
+            border: 1px solid rgba(255, 0, 51, 0.12);
+        }
+
+        .logo-icon span {
+            color: #000;
+            font-weight: 900;
+            font-size: 1rem;
+        }
+
+        .logo-text {
+            color: var(--accent-red);
+            letter-spacing: -0.5px;
+        }
+
+        .logo .badge-recruit {
+            font-size: 0.4rem;
+            background: rgba(0, 255, 65, 0.06);
+            border: 1px solid rgba(0, 255, 65, 0.08);
+            color: var(--accent-green);
+            padding: 2px 8px;
+            border-radius: 40px;
+            font-weight: 600;
+        }
+
+        .nav-list {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
             flex-wrap: wrap;
             align-items: center;
         }
 
-        .status-online {
-            display: flex;
-            align-items: center;
-            gap: 6px;
+        .nav-list a {
+            color: var(--text-secondary);
+            text-decoration: none;
             font-size: 0.7rem;
-            color: var(--accent);
-            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            transition: 0.3s;
+            font-family: var(--font-mono);
+            position: relative;
         }
-        .status-online .dot {
-            width: 8px;
-            height: 8px;
-            background: var(--accent);
-            border-radius: 50%;
-            display: inline-block;
-            animation: pulse-dot 1.5s infinite;
+
+        .nav-list a::before {
+            content: '>';
+            color: var(--accent-green);
+            opacity: 0;
+            transition: opacity 0.3s;
+            margin-right: 4px;
         }
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.2; }
+
+        .nav-list a:hover::before,
+        .nav-list a.active::before {
+            opacity: 1;
         }
-        
-        /* Hero Section — акцент на набор */
-        .hero {
-            background: linear-gradient(180deg, rgba(10, 12, 16, 0.95) 0%, rgba(10, 12, 16, 0.85) 100%), 
-                        radial-gradient(circle at 20% 30%, rgba(0, 255, 65, 0.03) 0%, transparent 60%);
-            padding: 4rem 0 3rem;
+
+        .nav-list a:hover, .nav-list a.active {
+            color: var(--accent-green);
+        }
+
+        /* ===== ГЕРО ===== */
+        .hero-section {
+            padding: 3rem 0 2.5rem;
             text-align: center;
-            border-bottom: 1px solid var(--border-glow);
+            border-bottom: 1px solid rgba(255, 0, 51, 0.02);
+            position: relative;
         }
-        
+
         .hero-badge {
-            display: inline-block;
-            background: var(--accent-dim);
-            border: 1px solid var(--accent);
-            border-radius: 60px;
+            background: rgba(255, 0, 51, 0.04);
+            border: 1px solid rgba(255, 0, 51, 0.06);
+            color: var(--accent-red);
             padding: 0.3rem 1.5rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin-bottom: 1.5rem;
-            color: var(--accent);
+            border-radius: 60px;
+            display: inline-block;
+            font-weight: 700;
+            font-size: 0.6rem;
+            font-family: var(--font-mono);
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 1rem;
         }
-        
+
         .hero-badge .blink {
             animation: blink-text 1.2s infinite;
         }
@@ -174,67 +307,114 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.2; }
         }
-        
+
         .hero-title {
-            font-size: 3.8rem;
-            margin-bottom: 0.5rem;
+            font-size: 3.5rem;
             font-weight: 800;
-            font-family: 'JetBrains Mono', monospace;
-            background: linear-gradient(135deg, #ffffff, var(--accent), var(--cyan));
+            font-family: var(--font-mono);
+            background: linear-gradient(135deg, #ffffff, var(--accent-red), var(--accent-green));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-        }
-        
-        .hero-title .slash {
-            color: var(--red);
-            background: none;
-            -webkit-background-clip: unset;
-            background-clip: unset;
-        }
-        
-        .hero-subtitle {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 1.5rem;
-            color: var(--secondary);
-            font-family: 'JetBrains Mono', monospace;
-        }
-        
-        .hero .highlight {
-            color: var(--accent);
-            font-weight: 600;
-        }
-        .hero .warning {
-            color: var(--red);
-            font-weight: 600;
+            margin-bottom: 0.5rem;
         }
 
-        .hero .date-block {
+        .hero-title .slash {
+            color: var(--accent-green);
+            -webkit-text-fill-color: var(--accent-green);
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin: 0 auto 1.5rem;
+            font-family: var(--font-mono);
+        }
+
+        .hero-subtitle .highlight {
+            color: var(--accent-green);
+        }
+
+        .hero-subtitle .red {
+            color: var(--accent-red);
+        }
+
+        .date-block {
             display: inline-flex;
             align-items: center;
             gap: 12px;
-            background: var(--surface);
-            border: 1px solid var(--border-glow);
+            background: var(--bg-surface);
+            border: 1px solid rgba(0, 255, 65, 0.04);
             border-radius: 60px;
             padding: 0.6rem 1.8rem;
-            margin-top: 0.5rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
         }
-        .hero .date-block i {
-            color: var(--accent);
+
+        .date-block i {
+            color: var(--accent-green);
         }
-        .hero .date-block .countdown {
-            color: var(--accent);
+        .date-block .countdown {
+            color: var(--accent-green);
             font-weight: 700;
         }
 
-        /* Recruitment Banner */
+        /* ===== ТЕРМИНАЛЬНЫЙ БАННЕР ===== */
+        .terminal-banner {
+            background: var(--bg-surface);
+            border: 1px solid rgba(0, 255, 65, 0.02);
+            border-radius: 12px;
+            padding: 1rem 1.8rem;
+            margin: 2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            font-family: var(--font-mono);
+        }
+
+        .terminal-banner .term-text {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .terminal-banner .term-text .prompt {
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .terminal-banner .term-text .cmd {
+            color: var(--text-secondary);
+        }
+
+        .terminal-banner .term-text .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1rem;
+            background: var(--accent-green);
+            animation: blink-cursor 1s step-end infinite;
+            vertical-align: text-bottom;
+        }
+
+        .terminal-badge {
+            background: rgba(0, 255, 65, 0.02);
+            border: 1px solid rgba(0, 255, 65, 0.04);
+            padding: 4px 16px;
+            border-radius: 60px;
+            font-size: 0.6rem;
+            color: var(--accent-green);
+            font-family: var(--font-mono);
+        }
+
+        /* ===== RECRUITMENT BANNER ===== */
         .recruitment-banner {
-            background: linear-gradient(135deg, var(--accent-dim), rgba(255, 0, 68, 0.04));
-            border: 1px solid var(--accent);
-            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(0, 255, 65, 0.02), rgba(255, 0, 51, 0.01));
+            border: 1px solid rgba(0, 255, 65, 0.04);
+            border-radius: 12px;
             padding: 1.5rem 2rem;
             margin: 1.5rem 0 2rem;
             display: flex;
@@ -242,482 +422,653 @@
             align-items: center;
             justify-content: space-between;
             gap: 1rem;
-            box-shadow: 0 0 40px rgba(0, 255, 65, 0.04);
+            font-family: var(--font-mono);
         }
+
         .recruitment-banner .left {
             display: flex;
             align-items: center;
             gap: 16px;
         }
+
         .recruitment-banner .left .icon {
             font-size: 2.5rem;
         }
+
         .recruitment-banner .left h4 {
-            color: var(--light);
+            color: var(--text-primary);
             font-size: 1.1rem;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: var(--font-mono);
         }
+
         .recruitment-banner .left p {
-            color: var(--secondary);
+            color: var(--text-secondary);
             font-size: 0.85rem;
             margin: 0;
         }
+
         .recruitment-banner .right {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
         }
+
         .recruitment-banner .slots {
-            background: var(--surface);
-            border: 1px solid var(--border-glow);
-            border-radius: 40px;
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 255, 65, 0.04);
+            border-radius: 60px;
             padding: 6px 18px;
-            font-size: 0.75rem;
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--secondary);
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
         }
+
         .recruitment-banner .slots span {
-            color: var(--accent);
+            color: var(--accent-green);
             font-weight: 700;
         }
-        
-        /* Cards */
+
+        /* ===== CARDS ===== */
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
             margin: 2rem 0;
         }
-        
+
         .card {
-            background: var(--surface);
-            border-radius: 16px;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 0, 51, 0.02);
+            border-radius: 12px;
             padding: 1.8rem;
             transition: all 0.3s ease;
-            border: 1px solid rgba(0, 255, 65, 0.04);
         }
-        
+
         .card:hover {
+            border-color: var(--accent-green);
             transform: translateY(-4px);
-            border-color: var(--accent);
-            box-shadow: var(--glow-green);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
-        
+
         .card .card-icon {
             font-size: 2rem;
-            color: var(--accent);
+            color: var(--accent-green);
             margin-bottom: 0.8rem;
         }
-        
+
         .card h3 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             margin-bottom: 0.8rem;
-            color: var(--light);
-            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-primary);
+            font-family: var(--font-mono);
         }
-        
+
         .card ul {
             padding-left: 1.2rem;
             list-style: none;
         }
-        
+
         .card li {
             margin-bottom: 0.5rem;
-            color: var(--secondary);
-            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
             position: relative;
             padding-left: 1.2rem;
+            font-family: var(--font-mono);
         }
+
         .card li::before {
             content: '>';
             position: absolute;
             left: 0;
-            color: var(--accent);
-            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-green);
+            font-family: var(--font-mono);
         }
+
         .card li .highlight {
-            color: var(--accent);
+            color: var(--accent-green);
         }
-        
-        /* Form */
+
+        .level-badge {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            font-family: var(--font-mono);
+            margin-top: 4px;
+        }
+
+        .level-beginner {
+            background: rgba(0, 255, 65, 0.08);
+            color: var(--accent-green);
+            border: 1px solid rgba(0, 255, 65, 0.06);
+        }
+
+        .level-advanced {
+            background: rgba(255, 0, 51, 0.08);
+            color: var(--accent-red);
+            border: 1px solid rgba(255, 0, 51, 0.06);
+        }
+
+        .level-intermediate {
+            background: rgba(255, 170, 0, 0.08);
+            color: #ffaa00;
+            border: 1px solid rgba(255, 170, 0, 0.06);
+        }
+
+        /* ===== СЕКЦИИ ===== */
+        .section {
+            padding: 2.5rem 0;
+        }
+
+        .section-alt {
+            background: rgba(0, 255, 65, 0.01);
+            border-top: 1px solid rgba(0, 255, 65, 0.02);
+            border-bottom: 1px solid rgba(0, 255, 65, 0.02);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-green));
+            margin: 0.5rem auto;
+            border-radius: 2px;
+        }
+
+        .section-title .red {
+            color: var(--accent-red);
+        }
+        .section-title .green {
+            color: var(--accent-green);
+        }
+
+        /* ===== FORM ===== */
         .form-container {
             max-width: 700px;
             margin: 2rem auto;
-            background: var(--surface);
-            border-radius: 16px;
+            background: var(--bg-surface);
+            border-radius: 12px;
             padding: 2.5rem;
-            border: 1px solid var(--border-glow);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 255, 65, 0.02);
         }
-        
+
         .form-container h3 {
             text-align: center;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 1.3rem;
             margin-bottom: 0.5rem;
-            color: var(--light);
+            color: var(--text-primary);
         }
+
         .form-container .form-sub {
             text-align: center;
-            color: var(--secondary);
+            color: var(--text-secondary);
             font-size: 0.85rem;
             margin-bottom: 1.5rem;
+            font-family: var(--font-mono);
         }
-        
+
         .form-group {
             margin-bottom: 1.2rem;
         }
+
         .form-group label {
             display: block;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            color: var(--secondary);
+            color: var(--text-secondary);
             margin-bottom: 4px;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: var(--font-mono);
         }
+
         .form-group input, .form-group select {
             width: 100%;
-            padding: 12px 16px;
-            border-radius: 10px;
-            border: 1px solid rgba(0, 255, 65, 0.1);
-            background: var(--primary-dark);
-            color: var(--light);
-            font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 255, 65, 0.04);
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
             outline: none;
             transition: 0.3s;
         }
+
         .form-group input:focus, .form-group select:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.05);
+            border-color: var(--accent-green);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.02);
         }
+
         .form-group .hint {
-            font-size: 0.7rem;
-            color: var(--secondary);
+            font-size: 0.65rem;
+            color: var(--text-muted);
             margin-top: 4px;
-            opacity: 0.7;
+            font-family: var(--font-mono);
         }
-        
+
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 0.75rem 1.8rem;
-            border-radius: 10px;
-            font-weight: 600;
+            padding: 0.7rem 1.8rem;
+            border-radius: 8px;
+            font-weight: 700;
             text-decoration: none;
             transition: all 0.3s ease;
             gap: 8px;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: var(--font-mono);
             font-size: 0.85rem;
             border: none;
             cursor: pointer;
         }
-        
+
         .btn-primary {
-            background: var(--accent);
-            color: var(--dark);
+            background: var(--accent-green);
+            color: #000;
             width: 100%;
         }
+
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 40px rgba(0, 255, 65, 0.2);
+            box-shadow: 0 0 40px rgba(0, 255, 65, 0.1);
         }
-        
+
         .btn-secondary {
-            background: var(--surface-light);
-            color: var(--light);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            color: var(--text-secondary);
+            padding: 0.4rem 1.2rem;
+            font-size: 0.75rem;
         }
+
         .btn-secondary:hover {
-            border-color: var(--accent);
+            border-color: var(--accent-green);
+            color: var(--accent-green);
             transform: translateY(-2px);
         }
-        
-        .btn-outline {
-            background: transparent;
-            color: var(--accent);
-            border: 1px solid var(--accent);
+
+        /* ===== БАННЕР БЕЗОПАСНОСТИ ===== */
+        .security-banner {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 3px solid var(--accent-green);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
         }
-        .btn-outline:hover {
-            background: var(--accent);
-            color: var(--dark);
+
+        .security-banner .security-text {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        
-        /* Sections */
-        .section {
-            padding: 3rem 0;
+
+        .security-banner .security-text .icon {
+            font-size: 2rem;
         }
-        .section-alt {
-            background: rgba(0, 255, 65, 0.01);
-            border-top: 1px solid var(--border-glow);
-            border-bottom: 1px solid var(--border-glow);
+
+        .security-banner .security-text h4 {
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: var(--font-mono);
         }
-        .section-title {
-            font-size: 2.2rem;
+
+        .security-banner .security-text p {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin: 0;
+            font-family: var(--font-mono);
+        }
+
+        .security-badge-lg {
+            background: var(--accent-green);
+            color: #000;
+            padding: 6px 20px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            font-family: var(--font-mono);
+        }
+
+        /* ===== ФУТЕР ===== */
+        .main-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            padding: 1.5rem 0;
+            margin-top: 2rem;
             text-align: center;
-            margin-bottom: 2.5rem;
-            font-family: 'JetBrains Mono', monospace;
-            position: relative;
+            font-size: 0.7rem;
+            color: var(--text-muted);
         }
-        .section-title:after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 3px;
-            background: var(--accent);
-            margin: 0.8rem auto;
-            border-radius: 2px;
-        }
-        
-        /* Footer */
-        .footer {
-            background: var(--primary-dark);
-            padding: 2rem 0;
-            text-align: center;
-            border-top: 1px solid var(--border-glow);
-        }
-        .footer p {
-            margin-bottom: 0.5rem;
-            color: var(--secondary);
-            font-size: 0.85rem;
-        }
-        .footer .icon-row {
+
+        .main-footer .icon-row {
             display: flex;
             justify-content: center;
-            gap: 16px;
-            margin-bottom: 0.8rem;
-            font-size: 1.2rem;
-            opacity: 0.3;
+            gap: 14px;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            opacity: 0.1;
         }
-        .footer .hashtags {
-            color: var(--secondary);
-            font-size: 0.75rem;
-            font-family: 'JetBrains Mono', monospace;
+
+        .main-footer .footer-links {
+            margin-top: 0.6rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
         }
-        .footer .hashtags span {
-            margin: 0 6px;
+
+        .main-footer .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.65rem;
+            font-family: var(--font-mono);
+            transition: color 0.2s;
+        }
+
+        .main-footer .footer-links a:hover {
+            color: var(--accent-green);
+        }
+
+        .hashtags {
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            font-family: var(--font-mono);
+            margin-top: 0.5rem;
+        }
+
+        .hashtags span {
+            margin: 0 4px;
             opacity: 0.5;
         }
-        
+
+        /* ===== АДАПТИВ ===== */
         @media (max-width: 768px) {
-            .hero-title { font-size: 2.4rem; }
-            .hero-subtitle { font-size: 1rem; }
-            .section-title { font-size: 1.8rem; }
-            .card-grid { grid-template-columns: 1fr; }
+            .hero-title { font-size: 2.5rem; }
+            .main-header .container { flex-direction: column; align-items: center; }
+            .nav-list { justify-content: center; gap: 1rem; }
             .recruitment-banner { flex-direction: column; text-align: center; }
             .recruitment-banner .left { flex-direction: column; text-align: center; }
-            .header-content { flex-direction: column; align-items: center; text-align: center; }
-            .header-buttons { justify-content: center; }
+            .security-banner { flex-direction: column; text-align: center; }
+            .security-banner .security-text { flex-direction: column; text-align: center; }
+            .terminal-banner { flex-direction: column; text-align: center; }
+            .terminal-banner .term-text { flex-direction: column; text-align: center; }
+            .date-block { flex-wrap: wrap; justify-content: center; padding: 0.6rem 1rem; }
             .form-container { padding: 1.5rem; }
-            .hero .date-block { flex-wrap: wrap; justify-content: center; padding: 0.6rem 1rem; }
+            .terminal-boot .ascii-art { font-size: 0.3rem; }
         }
+
         @media (max-width: 480px) {
             .hero-title { font-size: 1.8rem; }
+            .hero-subtitle { font-size: 0.9rem; }
+            .section-title { font-size: 1.4rem; }
             .btn { width: 100%; justify-content: center; }
-            .header-buttons { width: 100%; }
         }
     </style>
 </head>
 <body>
 
+    <!-- ===== ТЕРМИНАЛЬНАЯ ЗАСТАВКА ===== -->
+    <div class="terminal-overlay" id="bootScreen">
+        <div class="terminal-boot">
+            <div class="ascii-art">
+   ██╗  ██╗██╗    ██╗    ██████╗ ██████╗  ██████╗ 
+   ██║  ██║██║    ██║    ██╔══██╗██╔══██╗██╔═══██╗
+   ███████║██║ █╗ ██║    ██████╔╝██████╔╝██║   ██║
+   ██╔══██║██║███╗██║    ██╔═══╝ ██╔══██╗██║   ██║
+   ██║  ██║╚███╔███╔╝    ██║     ██║  ██║╚██████╔╝
+   ╚═╝  ╚═╝ ╚══╝╚══╝     ╚═╝     ╚═╝  ╚═╝ ╚═════╝ 
+            </div>
+            <div class="boot-text">
+                <span style="color:var(--accent-red);">> HW Pro Recruitment System v.3.0</span><br>
+                <span style="color:var(--text-muted);">>> Загрузка модуля набора... Инициализация форм...</span><br>
+                <span style="color:var(--text-muted);">>>> Анонимный режим активирован</span>
+                <span class="cursor"></span>
+            </div>
+            <div class="progress-bar">
+                <div class="fill"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- ===== КАНВАС ДЛЯ МАТРИЦЫ ===== -->
     <canvas id="matrix-canvas"></canvas>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="container header-content">
-            <a href="#" class="logo">
-                <i class="fas fa-shield-haltered"></i>
-                <span>HW Pro</span>
-                <span class="badge-pro">⚡ RECRUIT</span>
+    <!-- ===== ХЕДЕР ===== -->
+    <header class="main-header">
+        <div class="container">
+            <a href="/" class="logo">
+                <div class="logo-icon"><span>⟁</span></div>
+                <span class="logo-text">HW Pro</span>
+                <span class="badge-recruit">⚡ RECRUIT</span>
             </a>
-            <div class="header-buttons">
-                <span class="status-online"><span class="dot"></span> Набор открыт</span>
-                <a href="#form" class="btn btn-secondary" style="padding:0.4rem 1.2rem;font-size:0.75rem;">
-                    <i class="fas fa-pen"></i> Подать заявку
-                </a>
-            </div>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="#" class="active">Набор в школу</a></li>
+                    <li><a href="/HWschool.html">HW Школа</a></li>
+                    <li><a href="/portal.html">Портал</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
+    <!-- ===== ГЕРО ===== -->
+    <section class="hero-section">
         <div class="container">
             <div class="hero-badge"><span class="blink">●</span> ИДЁТ НАБОР В ШКОЛУ HW PRO</div>
             <h1 class="hero-title">HW <span class="slash">/</span> PRO SCHOOL</h1>
-            <p class="hero-subtitle">Элитная школа <span class="highlight">кибербезопасности</span> и <span class="highlight">программирования</span> нового поколения</p>
+            <p class="hero-subtitle">
+                Элитная школа <span class="highlight">кибербезопасности</span> и <span class="highlight">программирования</span> нового поколения
+            </p>
             <div class="date-block">
                 <i class="fas fa-calendar-day"></i>
                 Старт набора: <span class="countdown">1 Июля 2025</span>
-                <span style="color:var(--secondary);font-size:0.7rem;">|</span>
+                <span style="color:var(--text-muted);font-size:0.6rem;">|</span>
                 <i class="fas fa-users"></i>
                 <span class="countdown">15 свободных мест</span>
             </div>
         </div>
     </section>
 
-    <!-- Recruitment Banner -->
-    <div class="container">
-        <div class="recruitment-banner">
-            <div class="left">
-                <span class="icon">🕶️</span>
-                <div>
-                    <h4>Мы ищем таланты</h4>
-                    <p>Присоединяйся к команде HW Pro. Полная анонимность, реальные проекты, менторство от экспертов.</p>
-                </div>
-            </div>
-            <div class="right">
-                <span class="slots"><i class="fas fa-user-plus"></i> Мест: <span>15</span></span>
-                <a href="#form" class="btn btn-primary" style="padding:0.5rem 1.5rem;font-size:0.8rem;width:auto;">
-                    <i class="fas fa-rocket"></i> Подать заявку
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- About Section -->
-    <section class="section">
+    <!-- ===== ОСНОВНОЙ КОНТЕНТ ===== -->
+    <main>
         <div class="container">
-            <h2 class="section-title">О школе</h2>
-            
-            <div class="card-grid">
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-bolt"></i></div>
-                    <h3>Что тебя ждёт?</h3>
-                    <ul>
-                        <li>Практический курс от <span class="highlight">нуля до PRO</span></li>
-                        <li>Реальные кейсы: Pentest, Bug Bounty, OSINT</li>
-                        <li>Работа с современными инструментами</li>
-                        <li><span class="highlight">🕶️ Полная анонимность</span></li>
-                        <li>Трудоустройство в команду HW Pro</li>
-                    </ul>
+
+            <!-- Терминальный баннер -->
+            <div class="terminal-banner">
+                <div class="term-text">
+                    <span class="prompt">root@hw_pro:~$</span>
+                    <span class="cmd">./recruit --status --verbose</span>
+                    <span class="cursor"></span>
                 </div>
-                
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-user-astronaut"></i></div>
-                    <h3>Для кого?</h3>
-                    <ul>
-                        <li>Новички с <span class="highlight">нулевым опытом</span></li>
-                        <li>IT-специалисты для смены профиля</li>
-                        <li>Те, кто ценит <span class="highlight">анонимность</span></li>
-                        <li>Будущие White Hat хакеры</li>
-                        <li>Разработчики и исследователи</li>
-                    </ul>
+                <span class="terminal-badge">✅ Набор активен</span>
+            </div>
+
+            <!-- Баннер безопасности -->
+            <div class="security-banner">
+                <div class="security-text">
+                    <span class="icon">🕶️</span>
+                    <div>
+                        <h4>Полная анонимность</h4>
+                        <p>Никаких логов, трекеров и идентификации. Только вы и ваша безопасность.</p>
+                    </div>
                 </div>
-                
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-shield-haltered"></i></div>
-                    <h3>Важно знать</h3>
-                    <ul>
-                        <li>Обучение <span class="highlight">БЕСПЛАТНОЕ</span></li>
-                        <li>Набор ограничен — <span class="highlight">15 мест</span></li>
-                        <li>Регистрация через <span class="highlight">официальный сайт</span></li>
-                        <li>Zero-Logs политика</li>
-                        <li>Старт: <span class="highlight">1 июля 2025</span></li>
-                    </ul>
+                <span class="security-badge-lg">🔒 Zero-Logs Policy</span>
+            </div>
+
+            <!-- Recruitment Banner -->
+            <div class="recruitment-banner">
+                <div class="left">
+                    <span class="icon">⚡</span>
+                    <div>
+                        <h4>Мы ищем таланты</h4>
+                        <p>Присоединяйся к команде HW Pro. Полная анонимность, реальные проекты, менторство от экспертов.</p>
+                    </div>
+                </div>
+                <div class="right">
+                    <span class="slots"><i class="fas fa-user-plus"></i> Мест: <span>15</span></span>
+                    <a href="#form" class="btn btn-secondary" style="padding:0.5rem 1.5rem;font-size:0.75rem;">
+                        <i class="fas fa-rocket"></i> Подать заявку
+                    </a>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Courses Section -->
-    <section class="section section-alt">
-        <div class="container">
-            <h2 class="section-title">Программа обучения</h2>
-            
-            <div class="card-grid">
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h3>Основы кибербезопасности</h3>
-                    <ul>
-                        <li>Базовые принципы защиты</li>
-                        <li>Типы угроз и уязвимостей</li>
-                        <li>Длительность: <span class="highlight">2 месяца</span></li>
-                        <li><span style="display:inline-block;background:rgba(0,255,65,0.12);color:var(--accent);padding:2px 12px;border-radius:40px;font-size:0.7rem;font-weight:600;">Начинающий</span></li>
-                    </ul>
-                </div>
+            <!-- About Section -->
+            <section class="section">
+                <h2 class="section-title"><span class="red">О</span> <span class="green">школе</span></h2>
                 
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-user-secret"></i></div>
-                    <h3>Этичный хакинг</h3>
-                    <ul>
-                        <li>Тестирование на проникновение</li>
-                        <li>Эксплуатация уязвимостей</li>
-                        <li>Длительность: <span class="highlight">4 месяца</span></li>
-                        <li><span style="display:inline-block;background:rgba(255,0,68,0.12);color:var(--red);padding:2px 12px;border-radius:40px;font-size:0.7rem;font-weight:600;">Продвинутый</span></li>
-                    </ul>
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-icon"><i class="fas fa-bolt"></i></div>
+                        <h3>Что тебя ждёт?</h3>
+                        <ul>
+                            <li>Практический курс от <span class="highlight">нуля до PRO</span></li>
+                            <li>Реальные кейсы: Pentest, Bug Bounty, OSINT</li>
+                            <li>Работа с современными инструментами</li>
+                            <li><span class="highlight">🕶️ Полная анонимность</span></li>
+                            <li>Трудоустройство в команду HW Pro</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-icon"><i class="fas fa-user-astronaut"></i></div>
+                        <h3>Для кого?</h3>
+                        <ul>
+                            <li>Новички с <span class="highlight">нулевым опытом</span></li>
+                            <li>IT-специалисты для смены профиля</li>
+                            <li>Те, кто ценит <span class="highlight">анонимность</span></li>
+                            <li>Будущие White Hat хакеры</li>
+                            <li>Разработчики и исследователи</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-icon"><i class="fas fa-shield-haltered"></i></div>
+                        <h3>Важно знать</h3>
+                        <ul>
+                            <li>Обучение <span class="highlight">БЕСПЛАТНОЕ</span></li>
+                            <li>Набор ограничен — <span class="highlight">15 мест</span></li>
+                            <li>Регистрация через <span class="highlight">официальный сайт</span></li>
+                            <li>Zero-Logs политика</li>
+                            <li>Старт: <span class="highlight">1 июля 2025</span></li>
+                        </ul>
+                    </div>
                 </div>
-                
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-code"></i></div>
-                    <h3>Программирование для безопасности</h3>
-                    <ul>
-                        <li>Python, C++, Assembler</li>
-                        <li>Написание эксплойтов</li>
-                        <li>Длительность: <span class="highlight">5 месяцев</span></li>
-                        <li><span style="display:inline-block;background:rgba(255,170,0,0.12);color:var(--warning);padding:2px 12px;border-radius:40px;font-size:0.7rem;font-weight:600;">Средний</span></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- Form Section -->
-    <section class="section" id="form">
-        <div class="container">
-            <h2 class="section-title">Подать заявку</h2>
-            
-            <div class="form-container">
-                <h3>⚡ Вступить в HW Pro</h3>
-                <p class="form-sub">Заполните форму, и мы свяжемся с вами в течение 24 часов</p>
+            <!-- Courses Section -->
+            <section class="section section-alt">
+                <h2 class="section-title"><span class="red">Программа</span> <span class="green">обучения</span></h2>
                 
-                <form id="applicationForm" onsubmit="event.preventDefault(); alert('✅ Заявка принята! Мы свяжемся с вами в ближайшее время.')">
-                    <div class="form-group">
-                        <label><i class="fas fa-user"></i> Псевдоним / Никнейм</label>
-                        <input type="text" placeholder="Введите ваш псевдоним" required>
-                        <div class="hint">🕶️ Анонимность гарантирована</div>
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h3>Основы кибербезопасности</h3>
+                        <ul>
+                            <li>Базовые принципы защиты</li>
+                            <li>Типы угроз и уязвимостей</li>
+                            <li>Длительность: <span class="highlight">2 месяца</span></li>
+                            <li><span class="level-badge level-beginner">Начинающий</span></li>
+                        </ul>
                     </div>
                     
-                    <div class="form-group">
-                        <label><i class="fas fa-envelope"></i> Контакт (Telegram / Email)</label>
-                        <input type="text" placeholder="@username или email" required>
-                        <div class="hint">🔒 Данные используются только для связи</div>
+                    <div class="card">
+                        <div class="card-icon"><i class="fas fa-user-secret"></i></div>
+                        <h3>Этичный хакинг</h3>
+                        <ul>
+                            <li>Тестирование на проникновение</li>
+                            <li>Эксплуатация уязвимостей</li>
+                            <li>Длительность: <span class="highlight">4 месяца</span></li>
+                            <li><span class="level-badge level-advanced">Продвинутый</span></li>
+                        </ul>
                     </div>
                     
-                    <div class="form-group">
-                        <label><i class="fas fa-tag"></i> Уровень подготовки</label>
-                        <select>
-                            <option value="">Выберите ваш уровень</option>
-                            <option value="beginner">Начинающий (с нуля)</option>
-                            <option value="intermediate">Средний (базовые знания)</option>
-                            <option value="advanced">Продвинутый (опыт в IT)</option>
-                            <option value="expert">Эксперт (профессионал)</option>
-                        </select>
+                    <div class="card">
+                        <div class="card-icon"><i class="fas fa-code"></i></div>
+                        <h3>Программирование для безопасности</h3>
+                        <ul>
+                            <li>Python, C++, Assembler</li>
+                            <li>Написание эксплойтов</li>
+                            <li>Длительность: <span class="highlight">5 месяцев</span></li>
+                            <li><span class="level-badge level-intermediate">Средний</span></li>
+                        </ul>
                     </div>
-                    
-                    <div class="form-group">
-                        <label><i class="fas fa-rocket"></i> Интересующие направления</label>
-                        <select>
-                            <option value="">Выберите направление</option>
-                            <option value="sec">Кибербезопасность</option>
-                            <option value="hack">Этичный хакинг</option>
-                            <option value="dev">Программирование</option>
-                            <option value="osint">OSINT / Расследования</option>
-                            <option value="all">Все направления</option>
-                        </select>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-paper-plane"></i> Отправить заявку
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
+                </div>
+            </section>
 
-    <!-- Footer -->
-    <footer class="footer">
+            <!-- Form Section 
+            <section class="section" id="form">
+                <h2 class="section-title"><span class="red">Подать</span> <span class="green">заявку</span></h2>
+                
+                <div class="form-container">
+                    <h3>⚡ Вступить в HW Pro</h3>
+                    <p class="form-sub">Заполните форму, и мы свяжемся с вами в течение 24 часов</p>
+                    
+                    <form id="applicationForm" onsubmit="event.preventDefault(); alert('✅ Заявка принята! Мы свяжемся с вами в ближайшее время.')">
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> Псевдоним / Никнейм</label>
+                            <input type="text" placeholder="Введите ваш псевдоним" required>
+                            <div class="hint">🕶️ Анонимность гарантирована</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-envelope"></i> Контакт (Telegram / Email)</label>
+                            <input type="text" placeholder="@username или email" required>
+                            <div class="hint">🔒 Данные используются только для связи</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-tag"></i> Уровень подготовки</label>
+                            <select>
+                                <option value="">Выберите ваш уровень</option>
+                                <option value="beginner">Начинающий (с нуля)</option>
+                                <option value="intermediate">Средний (базовые знания)</option>
+                                <option value="advanced">Продвинутый (опыт в IT)</option>
+                                <option value="expert">Эксперт (профессионал)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-rocket"></i> Интересующие направления</label>
+                            <select>
+                                <option value="">Выберите направление</option>
+                                <option value="sec">Кибербезопасность</option>
+                                <option value="hack">Этичный хакинг</option>
+                                <option value="dev">Программирование</option>
+                                <option value="osint">OSINT / Расследования</option>
+                                <option value="all">Все направления</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Отправить заявку
+                        </button>
+                    </form>
+                </div>
+            </section>-->
+
+        </div>
+    </main>
+
+    <!-- ===== ФУТЕР ===== -->
+    <footer class="main-footer">
         <div class="container">
             <div class="icon-row">
                 <span>⟁</span>
@@ -727,7 +1078,7 @@
                 <span>🕶️</span>
             </div>
             <p>HW Pro School © 2025 | Элитная школа кибербезопасности</p>
-            <p style="font-size: 0.8rem; color: var(--secondary);">
+            <p style="font-size: 0.6rem; color: var(--text-muted); margin-top: 0.2rem;">
                 🕶️ Полная анонимность. Zero-Logs. Подготовка кадров для цифровой безопасности.
             </p>
             <div class="hashtags">
@@ -738,12 +1089,27 @@
                 <span>#WhiteHat</span>
                 <span>#Набор2025</span>
             </div>
+            <div class="footer-links">
+                <a href="#">Политика анонимности</a>
+                <a href="#">Условия использования</a>
+                <a href="#">Контакты</a>
+            </div>
         </div>
     </footer>
 
     <script>
         // ============================================================
-        // МАТРИЦА — ЖИВЫЕ ОБОИ (улучшенная версия)
+        // ЗАСТАВКА
+        // ============================================================
+        (function() {
+            const bootScreen = document.getElementById('bootScreen');
+            setTimeout(() => {
+                bootScreen.classList.add('hidden');
+            }, 2800);
+        })();
+
+        // ============================================================
+        // МАТРИЦА
         // ============================================================
         (function() {
             const canvas = document.getElementById('matrix-canvas');
@@ -758,17 +1124,15 @@
             function resize() {
                 width = canvas.width = window.innerWidth;
                 height = canvas.height = window.innerHeight;
-
                 const colCount = Math.floor(width / FONT_SIZE);
                 columns = [];
                 for (let i = 0; i < colCount; i++) {
                     columns.push({
                         x: i * FONT_SIZE,
                         y: Math.random() * height,
-                        speed: 0.3 + Math.random() * 1.0,
+                        speed: 0.5 + Math.random() * 1.2,
                         chars: '0123456789ABCDEF',
-                        length: 3 + Math.floor(Math.random() * 8),
-                        brightness: 0.3 + Math.random() * 0.7,
+                        length: 5 + Math.floor(Math.random() * 10),
                     });
                 }
             }
@@ -779,7 +1143,7 @@
             });
 
             function drawMatrix() {
-                ctx.fillStyle = 'rgba(10, 12, 16, 0.04)';
+                ctx.fillStyle = 'rgba(10, 10, 10, 0.04)';
                 ctx.fillRect(0, 0, width, height);
 
                 ctx.font = `${FONT_SIZE}px 'JetBrains Mono', monospace`;
@@ -789,18 +1153,18 @@
                     const dx = mouseX - col.x;
                     const dy = mouseY - col.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
-                    const maxDist = 150;
+                    const maxDist = 180;
 
                     if (dist < maxDist && dist > 0) {
-                        const force = (1 - dist / maxDist) * 2.0;
-                        col.speed = 0.6 + force * 1.8;
+                        const force = (1 - dist / maxDist) * 2.5;
+                        col.speed = 0.8 + force * 2;
                     }
 
                     col.y += col.speed;
 
                     if (col.y > height) {
                         col.y = -col.length * FONT_SIZE;
-                        col.speed = 0.3 + Math.random() * 1.0;
+                        col.speed = 0.5 + Math.random() * 1.2;
                     }
 
                     const charLen = col.length;
@@ -810,19 +1174,19 @@
 
                         const char = col.chars[Math.floor(Math.random() * col.chars.length)];
                         const brightness = 1 - (i / charLen);
-                        const alpha = 0.2 + brightness * 0.8;
+                        const alpha = 0.2 + brightness * 0.6;
 
-                        const green = Math.floor(180 + 75 * brightness);
-                        ctx.fillStyle = `rgba(0, ${green}, ${Math.floor(30 * brightness)}, ${alpha})`;
+                        const green = Math.floor(160 + 95 * brightness);
+                        ctx.fillStyle = `rgba(0, ${green}, ${Math.floor(20 * brightness)}, ${alpha})`;
                         ctx.fillText(char, col.x, yPos);
                     }
 
                     const headY = col.y;
                     if (headY > 0 && headY < height) {
                         const headChar = col.chars[Math.floor(Math.random() * col.chars.length)];
-                        ctx.fillStyle = `rgba(0, 255, 65, 0.95)`;
-                        ctx.shadowColor = 'rgba(0, 255, 65, 0.3)';
-                        ctx.shadowBlur = 12;
+                        ctx.fillStyle = `rgba(0, 255, 65, 0.8)`;
+                        ctx.shadowColor = 'rgba(0, 255, 65, 0.15)';
+                        ctx.shadowBlur = 8;
                         ctx.fillText(headChar, col.x, headY);
                         ctx.shadowBlur = 0;
                     }
@@ -836,7 +1200,32 @@
             drawMatrix();
         })();
 
-        // Плавный скролл к форме
+        // ============================================================
+        // АНИМАЦИЯ КАРТОЧЕК
+        // ============================================================
+        (function() {
+            const cards = document.querySelectorAll('.card, .recruitment-banner, .security-banner, .terminal-banner, .form-container');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.05 });
+
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        })();
+
+        // ============================================================
+        // ПЛАВНЫЙ СКРОЛЛ К ФОРМЕ
+        // ============================================================
         document.querySelectorAll('a[href="#form"]').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
