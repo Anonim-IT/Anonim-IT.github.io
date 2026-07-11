@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="HW Pro Infrastructure — центральный узел управления экосистемой проекта.">
+    <title>HW Pro Infrastructure | Экосистема</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-deep: #0a0a0a;
+            --bg-surface: #0f0f0f;
+            --bg-card: #0d0d0d;
+            --accent-red: #ff0033;
+            --accent-green: #00ff41;
+            --accent-cyan: #00ffff;
+            --accent-gold: #ffd700;
+            --text-primary: #c0c0c0;
+            --text-secondary: #6a6a6a;
+            --text-muted: #3a3a3a;
+            --border-subtle: #1a1a1a;
+            --glow-red: 0 0 30px rgba(255, 0, 51, 0.06);
+            --glow-green: 0 0 30px rgba(0, 255, 65, 0.04);
+            --glow-gold: 0 0 30px rgba(255, 215, 0, 0.04);
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        body {
+            background: var(--bg-deep);
+            font-family: var(--font-mono);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
+            overflow-x: hidden;
+            position: relative;
+            font-size: 14px;
+        }
+
+        /* ===== ЭФФЕКТ СКАНИРОВАНИЯ ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.03) 0px,
+                rgba(0, 0, 0, 0.03) 2px,
+                transparent 2px,
+                transparent 4px
+            );
+            pointer-events: none;
+            z-index: 9999;
+            animation: scanline 0.1s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(4px); }
+        }
+
+        /* ===== ТЕРМИНАЛЬНАЯ ЗАСТАВКА ===== */
+        .terminal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-deep);
+            z-index: 9998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .terminal-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .terminal-boot {
+            font-family: var(--font-mono);
+            color: var(--accent-green);
+            text-align: center;
+            max-width: 700px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 255, 65, 0.08);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 60px rgba(0, 255, 65, 0.02);
+        }
+
+        .terminal-boot .ascii-art {
+            font-size: 0.35rem;
+            line-height: 1.1;
+            color: var(--accent-gold);
+            letter-spacing: 0px;
+            white-space: pre;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.08);
+        }
+
+        .terminal-boot .boot-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        .terminal-boot .boot-text .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background: var(--accent-green);
+            animation: blink-cursor 1s step-end infinite;
+            vertical-align: text-bottom;
+            margin-left: 2px;
+        }
+
+        @keyframes blink-cursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .terminal-boot .progress-bar {
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 255, 65, 0.05);
+            margin-top: 1rem;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .terminal-boot .progress-bar .fill {
+            height: 100%;
+            width: 0%;
+            background: var(--accent-gold);
+            animation: boot-progress 2.5s ease-in-out forwards;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+        }
+
+        @keyframes boot-progress {
+            0% { width: 0%; }
+            30% { width: 15%; }
+            60% { width: 45%; }
+            80% { width: 75%; }
+            95% { width: 92%; }
+            100% { width: 100%; }
+        }
+
+        /* ===== МАТРИЦА ===== */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.06;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== ХЕДЕР ===== */
+        .main-header {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 0, 51, 0.04);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0.6rem 0;
+        }
+
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.3rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
+        }
+
+        .logo-icon {
+            width: 34px;
+            height: 34px;
+            background: var(--accent-gold);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.06);
+            border: 1px solid rgba(255, 215, 0, 0.12);
+        }
+
+        .logo-icon span {
+            color: #000;
+            font-weight: 900;
+            font-size: 1rem;
+        }
+
+        .logo-text {
+            color: var(--accent-gold);
+            letter-spacing: -0.5px;
+        }
+
+        .logo .badge-infra {
+            font-size: 0.4rem;
+            background: rgba(255, 215, 0, 0.06);
+            border: 1px solid rgba(255, 215, 0, 0.08);
+            color: var(--accent-gold);
+            padding: 2px 8px;
+            border-radius: 40px;
+            font-weight: 600;
+        }
+
+        .nav-list {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .nav-list a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 500;
+            transition: 0.3s;
+            font-family: var(--font-mono);
+            position: relative;
+        }
+
+        .nav-list a::before {
+            content: '>';
+            color: var(--accent-green);
+            opacity: 0;
+            transition: opacity 0.3s;
+            margin-right: 4px;
+        }
+
+        .nav-list a:hover::before,
+        .nav-list a.active::before {
+            opacity: 1;
+        }
+
+        .nav-list a:hover, .nav-list a.active {
+            color: var(--accent-green);
+        }
+
+        /* ===== ГЕРО ===== */
+        .hero-section {
+            padding: 3rem 0 2.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 0, 51, 0.02);
+            position: relative;
+        }
+
+        .hero-badge {
+            background: rgba(255, 215, 0, 0.04);
+            border: 1px solid rgba(255, 215, 0, 0.06);
+            color: var(--accent-gold);
+            padding: 0.3rem 1.5rem;
+            border-radius: 60px;
+            display: inline-block;
+            font-weight: 700;
+            font-size: 0.6rem;
+            font-family: var(--font-mono);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .hero-badge .blink {
+            animation: blink-text 1.2s infinite;
+        }
+        @keyframes blink-text {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            background: linear-gradient(135deg, #ffffff, var(--accent-gold), var(--accent-red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-title .slash {
+            color: var(--accent-green);
+            -webkit-text-fill-color: var(--accent-green);
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin: 0 auto 1.5rem;
+            font-family: var(--font-mono);
+        }
+
+        .hero-subtitle .highlight {
+            color: var(--accent-gold);
+        }
+
+        .hero-subtitle .red {
+            color: var(--accent-red);
+        }
+
+        .date-block {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-surface);
+            border: 1px solid rgba(255, 215, 0, 0.04);
+            border-radius: 60px;
+            padding: 0.6rem 1.8rem;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+        }
+
+        .date-block i {
+            color: var(--accent-gold);
+        }
+        .date-block .countdown {
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        /* ===== ТЕРМИНАЛЬНЫЙ БАННЕР ===== */
+        .terminal-banner {
+            background: var(--bg-surface);
+            border: 1px solid rgba(255, 215, 0, 0.02);
+            border-radius: 12px;
+            padding: 1rem 1.8rem;
+            margin: 2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            font-family: var(--font-mono);
+        }
+
+        .terminal-banner .term-text {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .terminal-banner .term-text .prompt {
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .terminal-banner .term-text .cmd {
+            color: var(--text-secondary);
+        }
+
+        .terminal-banner .term-text .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1rem;
+            background: var(--accent-green);
+            animation: blink-cursor 1s step-end infinite;
+            vertical-align: text-bottom;
+        }
+
+        .terminal-badge {
+            background: rgba(255, 215, 0, 0.02);
+            border: 1px solid rgba(255, 215, 0, 0.04);
+            padding: 4px 16px;
+            border-radius: 60px;
+            font-size: 0.6rem;
+            color: var(--accent-gold);
+            font-family: var(--font-mono);
+        }
+
+        /* ===== INFRA BANNER ===== */
+        .infra-banner {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.02), rgba(255, 0, 51, 0.01));
+            border: 1px solid rgba(255, 215, 0, 0.04);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            font-family: var(--font-mono);
+        }
+
+        .infra-banner .left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .infra-banner .left .icon {
+            font-size: 2.5rem;
+            animation: pulse-icon 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-icon {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.95); }
+        }
+
+        .infra-banner .left h4 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-family: var(--font-mono);
+        }
+
+        .infra-banner .left p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        .infra-banner .right {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .infra-banner .slots {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 215, 0, 0.04);
+            border-radius: 60px;
+            padding: 6px 18px;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+        }
+
+        .infra-banner .slots span {
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        /* ===== INFRA GRID ===== */
+        .infra-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .infra-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 215, 0, 0.02);
+            border-radius: 12px;
+            padding: 1.8rem;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .infra-card:hover {
+            border-color: var(--accent-gold);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .infra-card .card-icon {
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 0.8rem;
+        }
+
+        .infra-card .card-icon.red {
+            color: var(--accent-red);
+        }
+        .infra-card .card-icon.green {
+            color: var(--accent-green);
+        }
+
+        .infra-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+        }
+
+        .infra-card p {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-family: var(--font-mono);
+            margin-bottom: 1rem;
+        }
+
+        .infra-card .infra-link {
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            font-family: var(--font-mono);
+            text-decoration: none;
+            transition: all 0.3s;
+            background: rgba(255, 215, 0, 0.04);
+            border: 1px solid rgba(255, 215, 0, 0.06);
+            color: var(--accent-gold);
+        }
+
+        .infra-card .infra-link:hover {
+            background: rgba(255, 215, 0, 0.08);
+            transform: translateY(-2px);
+            box-shadow: var(--glow-gold);
+        }
+
+        .infra-card .infra-link.red {
+            border-color: rgba(255, 0, 51, 0.06);
+            color: var(--accent-red);
+        }
+        .infra-card .infra-link.red:hover {
+            background: rgba(255, 0, 51, 0.08);
+            box-shadow: var(--glow-red);
+        }
+
+        .infra-card .infra-link.green {
+            border-color: rgba(0, 255, 65, 0.06);
+            color: var(--accent-green);
+        }
+        .infra-card .infra-link.green:hover {
+            background: rgba(0, 255, 65, 0.08);
+            box-shadow: var(--glow-green);
+        }
+
+        /* ===== СТАТИСТИКА ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 215, 0, 0.02);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.02);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            color: var(--accent-gold);
+            display: block;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.05);
+        }
+
+        .stat-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            margin-top: 2px;
+        }
+
+        /* ===== СЕКЦИИ ===== */
+        .section {
+            padding: 2.5rem 0;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-red));
+            margin: 0.5rem auto;
+            border-radius: 2px;
+        }
+
+        .section-title .gold {
+            color: var(--accent-gold);
+        }
+        .section-title .red {
+            color: var(--accent-red);
+        }
+
+        /* ===== CONTACT SECTION ===== */
+        .contact-section {
+            background: var(--bg-surface);
+            border: 1px solid rgba(255, 215, 0, 0.02);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .contact-section h3 {
+            font-size: 1.3rem;
+            font-family: var(--font-mono);
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-section .contact-sub {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.7rem 1.8rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 215, 0, 0.04);
+        }
+
+        .contact-btn.gold {
+            background: rgba(255, 215, 0, 0.04);
+            color: var(--accent-gold);
+            border-color: rgba(255, 215, 0, 0.06);
+        }
+
+        .contact-btn.gold:hover {
+            background: rgba(255, 215, 0, 0.08);
+            transform: translateY(-2px);
+            box-shadow: var(--glow-gold);
+        }
+
+        .contact-btn.red {
+            background: rgba(255, 0, 51, 0.04);
+            color: var(--accent-red);
+            border-color: rgba(255, 0, 51, 0.06);
+        }
+
+        .contact-btn.red:hover {
+            background: rgba(255, 0, 51, 0.08);
+            transform: translateY(-2px);
+            box-shadow: var(--glow-red);
+        }
+
+        /* ===== БАННЕР БЕЗОПАСНОСТИ ===== */
+        .security-banner {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 3px solid var(--accent-gold);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .security-banner .security-text {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .security-banner .security-text .icon {
+            font-size: 2rem;
+        }
+
+        .security-banner .security-text h4 {
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: var(--font-mono);
+        }
+
+        .security-banner .security-text p {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin: 0;
+            font-family: var(--font-mono);
+        }
+
+        .security-badge-lg {
+            background: var(--accent-gold);
+            color: #000;
+            padding: 6px 20px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            font-family: var(--font-mono);
+        }
+
+        /* ===== ФУТЕР ===== */
+        .main-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .main-footer .icon-row {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            opacity: 0.1;
+        }
+
+        .main-footer .footer-links {
+            margin-top: 0.6rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .main-footer .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.65rem;
+            font-family: var(--font-mono);
+            transition: color 0.2s;
+        }
+
+        .main-footer .footer-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .hashtags {
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            font-family: var(--font-mono);
+            margin-top: 0.5rem;
+        }
+
+        .hashtags span {
+            margin: 0 4px;
+            opacity: 0.5;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .main-header .container { flex-direction: column; align-items: center; }
+            .nav-list { justify-content: center; gap: 1rem; }
+            .infra-banner { flex-direction: column; text-align: center; }
+            .infra-banner .left { flex-direction: column; text-align: center; }
+            .security-banner { flex-direction: column; text-align: center; }
+            .security-banner .security-text { flex-direction: column; text-align: center; }
+            .terminal-banner { flex-direction: column; text-align: center; }
+            .terminal-banner .term-text { flex-direction: column; text-align: center; }
+            .date-block { flex-wrap: wrap; justify-content: center; padding: 0.6rem 1rem; }
+            .contact-section { padding: 1.5rem; }
+            .contact-links { flex-direction: column; align-items: center; }
+            .contact-btn { width: 100%; max-width: 280px; justify-content: center; }
+            .terminal-boot .ascii-art { font-size: 0.25rem; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title { font-size: 1.8rem; }
+            .hero-subtitle { font-size: 0.9rem; }
+            .section-title { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== ТЕРМИНАЛЬНАЯ ЗАСТАВКА ===== -->
+    <div class="terminal-overlay" id="bootScreen">
+        <div class="terminal-boot">
+            <div class="ascii-art">
+   ██╗  ██╗██╗    ██╗    ██████╗ ██████╗  ██████╗ 
+   ██║  ██║██║    ██║    ██╔══██╗██╔══██╗██╔═══██╗
+   ███████║██║ █╗ ██║    ██████╔╝██████╔╝██║   ██║
+   ██╔══██║██║███╗██║    ██╔═══╝ ██╔══██╗██║   ██║
+   ██║  ██║╚███╔███╔╝    ██║     ██║  ██║╚██████╔╝
+   ╚═╝  ╚═╝ ╚══╝╚══╝     ╚═╝     ╚═╝  ╚═╝ ╚═════╝ 
+   ⚡  ⚡  ⚡  ⚡  ⚡  ⚡  ⚡  ⚡  ⚡  ⚡  ⚡
+            </div>
+            <div class="boot-text">
+                <span style="color:var(--accent-gold);">> HW Pro Infrastructure System v.1.0</span><br>
+                <span style="color:var(--text-muted);">>> Загрузка инфраструктурного модуля... Инициализация экосистемы...</span><br>
+                <span style="color:var(--text-muted);">>>> Все системы активны</span>
+                <span class="cursor"></span>
+            </div>
+            <div class="progress-bar">
+                <div class="fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== КАНВАС ДЛЯ МАТРИЦЫ ===== -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <!-- ===== ХЕДЕР ===== -->
+    <header class="main-header">
+        <div class="container">
+            <a href="/" class="logo">
+                <div class="logo-icon"><span>⟁</span></div>
+                <span class="logo-text">HW Pro Infrastructure</span>
+                <span class="badge-infra">⚡ INFRA</span>
+            </a>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="#" class="active">Инфраструктура</a></li>
+                    <li><a href="/HW_Pro_Audio.html">Аудио</a></li>
+                    <li><a href="/HW_Pro_Lab.html">Лаборатория</a></li>
+                    <li><a href="/portal.html">Портал</a></li>
+                    <li><a href="/HWschool.html">Школа</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== ГЕРО ===== -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-badge"><span class="blink">●</span> ЭКОСИСТЕМА ПРОЕКТА</div>
+            <h1 class="hero-title">HW <span class="slash">/</span> INFRA</h1>
+            <p class="hero-subtitle">
+                <span class="highlight">Центральный узел</span> управления экосистемой <span class="red">HW Pro</span>. 
+                Все сервисы, модули и ресурсы в одном месте.
+            </p>
+            <div class="date-block">
+                <i class="fas fa-server"></i>
+                Инфраструктура <span class="countdown">активна</span>
+                <span style="color:var(--text-muted);font-size:0.6rem;">|</span>
+                <i class="fas fa-shield-haltered"></i>
+                <span class="countdown">100% защита</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ОСНОВНОЙ КОНТЕНТ ===== -->
+    <main>
+        <div class="container">
+
+            <!-- Терминальный баннер -->
+            <div class="terminal-banner">
+                <div class="term-text">
+                    <span class="prompt">root@hw_infra:~$</span>
+                    <span class="cmd">./infra --status --all</span>
+                    <span class="cursor"></span>
+                </div>
+                <span class="terminal-badge">⚡ Все системы активны</span>
+            </div>
+
+            <!-- Баннер безопасности -->
+            <div class="security-banner">
+                <div class="security-text">
+                    <span class="icon">🛡️</span>
+                    <div>
+                        <h4>Защищённая экосистема</h4>
+                        <p>Все сервисы HW Pro интегрированы в единую защищённую инфраструктуру.</p>
+                    </div>
+                </div>
+                <span class="security-badge-lg">🔒 Zero-Logs Infrastructure</span>
+            </div>
+
+            <!-- Infra Banner -->
+            <div class="infra-banner">
+                <div class="left">
+                    <span class="icon">⚡</span>
+                    <div>
+                        <h4>Полная экосистема HW Pro</h4>
+                        <p>Образование, аудио, исследования, портал — всё в единой защищённой среде.</p>
+                    </div>
+                </div>
+                <div class="right">
+                    <span class="slots"><i class="fas fa-microchip"></i> Модулей: <span>6</span></span>
+                    <a href="#modules" class="btn-secondary" style="padding:0.5rem 1.5rem;font-size:0.75rem;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);color:var(--text-secondary);border-radius:60px;text-decoration:none;font-family:var(--font-mono);display:inline-flex;align-items:center;gap:8px;">
+                        <i class="fas fa-rocket"></i> Перейти к модулям
+                    </a>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">6</span>
+                    <span class="stat-label">активных модулей</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">доступность</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">анонимность</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">0</span>
+                    <span class="stat-label">логов</span>
+                </div>
+            </div>
+
+            <!-- Infra Modules -->
+            <section class="section" id="modules">
+                <h2 class="section-title"><span class="gold">Модули</span> <span class="red">экосистемы</span></h2>
+
+                <div class="infra-grid">
+                    <div class="infra-card">
+                        <div class="card-icon">🏠</div>
+                        <h3>Главный портал</h3>
+                        <p>Центральный узел экосистемы HW Pro. Анонимный доступ ко всем ресурсам.</p>
+                        <a href="/" class="infra-link">Перейти →</a>
+                    </div>
+
+                    <div class="infra-card">
+                        <div class="card-icon red">🔐</div>
+                        <h3>HW Portal</h3>
+                        <p>Защищённый портал с полезными ресурсами и инструментами.</p>
+                        <a href="/portal.html" class="infra-link red">Перейти →</a>
+                    </div>
+
+                    <div class="infra-card">
+                        <div class="card-icon green">🏫</div>
+                        <h3>HW School</h3>
+                        <p>Анонимная школа кибербезопасности и программирования.</p>
+                        <a href="/HWschool.html" class="infra-link green">Перейти →</a>
+                    </div>
+
+                    <div class="infra-card">
+                        <div class="card-icon">🎵</div>
+                        <h3>HW Pro Audio</h3>
+                        <p>Профессиональная студия звукозаписи и аудио-монтажа.</p>
+                        <a href="/HW_Pro_Audio.html" class="infra-link">Перейти →</a>
+                    </div>
+
+                    <div class="infra-card">
+                        <div class="card-icon red">🧪</div>
+                        <h3>HW Pro Lab</h3>
+                        <p>Виртуальная лаборатория для экспериментов и исследований.</p>
+                        <a href="/HW_Pro_Lab.html" class="infra-link red">Перейти →</a>
+                    </div>
+
+                    <div class="infra-card">
+                        <div class="card-icon green">📜</div>
+                        <h3>Стандарты HW Pro</h3>
+                        <p>Сертификаты и стандарты качества проекта.</p>
+                        <a href="/ISO.html" class="infra-link green">Перейти →</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Architecture Section -->
+            <section class="section section-alt">
+                <h2 class="section-title"><span class="gold">Архитектура</span> <span class="red">инфраструктуры</span></h2>
+
+                <div class="card-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin:2rem 0;">
+                    <div class="card" style="background:var(--bg-card);border:1px solid rgba(255,215,0,0.02);border-radius:12px;padding:1.8rem;transition:all 0.3s ease;">
+                        <div style="font-size:2rem;color:var(--accent-gold);margin-bottom:0.8rem;">🛡️</div>
+                        <h3 style="font-size:1.2rem;margin-bottom:0.8rem;color:var(--text-primary);font-family:var(--font-mono);">Безопасность</h3>
+                        <ul style="padding-left:1.2rem;list-style:none;">
+                            <li style="margin-bottom:0.5rem;color:var(--text-secondary);font-size:0.85rem;position:relative;padding-left:1.2rem;font-family:var(--font-mono);">Zero-Logs политика</li>
+                            <li style="margin-bottom:0.5rem;color:var(--text-secondary);font-size:0.85rem;position:relative;padding-left:1.2rem;font-family:var(--font-mono);">Сквозное шифрование</li>
+                            <li style="margin-bottom:0.5rem;color:var(--text-secondary);font-size:0.85rem;position:relative;padding-left:1.2rem;font-family:var(--font-mono);">Анонимный доступ</li>
+                        </ul>
+                    </div>
+
+                    <div class="card" style="background:var(--bg-card);border:1px solid rgba(255,215,0,0.02);border-radius:12px;padding:1.8rem;transition:all 0.3s ease;">
+                        <div style="font-size:2rem;color:var(--accent-gold);margin-bottom:0.8rem;">🔗</div>
+                        <h3 style="font-size:1.2rem;margin-bottom:0.8rem;color:var(--text-primary);font-family:var(--font-mono);">Интеграция</h3>
+                        <ul style="padding-left:1.2rem;list-style:none;">
+                            <li style="margin-bottom:0.5rem;color:var(--text-secondary);font-size:0.85rem;position:relative;padding-left:1.2rem;font-family:var(--font-mono);">Единая авторизация</li>
+                            <li style="margin-bottom:0.5rem;color:var(--text-secondary);font-size:0.85rem;position:relative;padding-left:1.2rem;font-family:var(--font-mono);">Межмодульное взаимодействие</li>
+                            <li style="margin-bottom:0.5rem;color:var(--text-secondary);font-size:0.85rem;position:relative;padding-left:1.2rem;font-family:var(--font-mono);">API-шлюз</li>
+                        </ul>
+                    </div>
+
+                    <div class="card" style="background:var(--bg-card);border:1px solid rgba(255,215,0,0.02);border-radius:12px;padding:1.8rem;transition:all 0.3s ease;">
+                        <div style="font-size:2rem;color:var(--accent-gold);margin-bottom:0.8rem;">⚡</div>
+                        <h3 style="font-size:1.2rem;margin-bottom:0.8rem;color:var(--text-primary);font-family:var(--font-mono);">Производительность</h3>
+                        <ul style="padding-left:1.2rem;list-style:none;">
+                            <li style="margin-bottom:0.5rem;color:var(--text-secondary);font-size:0.85rem;position:relative;padding-left:1.2rem;font-family:var(--font-mono);">Оптимизированные серверы</li>
+                            <li style="margin-bottom:0.5rem;color:var(--text-secondary);font-size:0.85rem;position:relative;padding-left:1.2rem;font-family:var(--font-mono);">Минимальная задержка</li>
+                            <li style="margin-bottom:0.5rem;color:var(--text-secondary);font-size:0.85rem;position:relative;padding-left:1.2rem;font-family:var(--font-mono);">Масштабируемость</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section class="section" id="contact">
+                <h2 class="section-title"><span class="gold">Связаться</span> <span class="red">с командой</span></h2>
+
+                <div class="contact-section">
+                    <h3>⚡ Свяжитесь с нами</h3>
+                    <p class="contact-sub">По всем вопросам инфраструктуры и интеграции</p>
+
+                    <div class="contact-links">
+                        <a href="https://t.me/hw_protection" target="_blank" class="contact-btn gold">
+                            <i class="fab fa-telegram"></i> Telegram
+                        </a>
+                        <a href="https://vk.com/hw_protection" target="_blank" class="contact-btn red">
+                            <i class="fab fa-vk"></i> VK
+                        </a>
+                        <a href="mailto:hwpro@anonim-it.ru" class="contact-btn" style="border-color:rgba(0,255,65,0.06);color:var(--accent-green);">
+                            <i class="fas fa-envelope"></i> Email
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- ===== ФУТЕР ===== -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="icon-row">
+                <span>⟁</span>
+                <span>⚡</span>
+                <span>🛡️</span>
+                <span>🔐</span>
+                <span>🕶️</span>
+            </div>
+            <p>HW Pro Infrastructure © 2025 | Единая экосистема проекта</p>
+            <p style="font-size: 0.6rem; color: var(--text-muted); margin-top: 0.2rem;">
+                ⚡ Анонимность. Безопасность. Масштабируемость.
+            </p>
+            <div class="hashtags">
+                <span>#HWProInfra</span>
+                <span>#Экосистема</span>
+                <span>#Безопасность</span>
+                <span>#Инфраструктура</span>
+            </div>
+            <div class="footer-links">
+                <a href="#">Политика анонимности</a>
+                <a href="#">Условия использования</a>
+                <a href="#">Контакты</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================================
+        // ЗАСТАВКА
+        // ============================================================
+        (function() {
+            const bootScreen = document.getElementById('bootScreen');
+            setTimeout(() => {
+                bootScreen.classList.add('hidden');
+            }, 2800);
+        })();
+
+        // ============================================================
+        // МАТРИЦА
+        // ============================================================
+        (function() {
+            const canvas = document.getElementById('matrix-canvas');
+            const ctx = canvas.getContext('2d');
+
+            let width, height;
+            let columns = [];
+            let mouseX = 0;
+            let mouseY = 0;
+            const FONT_SIZE = 16;
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+                const colCount = Math.floor(width / FONT_SIZE);
+                columns = [];
+                for (let i = 0; i < colCount; i++) {
+                    columns.push({
+                        x: i * FONT_SIZE,
+                        y: Math.random() * height,
+                        speed: 0.5 + Math.random() * 1.2,
+                        chars: '0123456789ABCDEF',
+                        length: 5 + Math.floor(Math.random() * 10),
+                    });
+                }
+            }
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function drawMatrix() {
+                ctx.fillStyle = 'rgba(10, 10, 10, 0.04)';
+                ctx.fillRect(0, 0, width, height);
+
+                ctx.font = `${FONT_SIZE}px 'JetBrains Mono', monospace`;
+                ctx.textAlign = 'center';
+
+                columns.forEach(col => {
+                    const dx = mouseX - col.x;
+                    const dy = mouseY - col.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const maxDist = 180;
+
+                    if (dist < maxDist && dist > 0) {
+                        const force = (1 - dist / maxDist) * 2.5;
+                        col.speed = 0.8 + force * 2;
+                    }
+
+                    col.y += col.speed;
+
+                    if (col.y > height) {
+                        col.y = -col.length * FONT_SIZE;
+                        col.speed = 0.5 + Math.random() * 1.2;
+                    }
+
+                    const charLen = col.length;
+                    for (let i = 0; i < charLen; i++) {
+                        const yPos = col.y - i * FONT_SIZE;
+                        if (yPos < 0 || yPos > height) continue;
+
+                        const char = col.chars[Math.floor(Math.random() * col.chars.length)];
+                        const brightness = 1 - (i / charLen);
+                        const alpha = 0.2 + brightness * 0.6;
+
+                        const gold = Math.floor(160 + 95 * brightness);
+                        ctx.fillStyle = `rgba(${gold}, ${Math.floor(160 + 95 * brightness)}, ${Math.floor(20 * brightness)}, ${alpha})`;
+                        ctx.fillText(char, col.x, yPos);
+                    }
+
+                    const headY = col.y;
+                    if (headY > 0 && headY < height) {
+                        const headChar = col.chars[Math.floor(Math.random() * col.chars.length)];
+                        ctx.fillStyle = `rgba(255, 215, 0, 0.8)`;
+                        ctx.shadowColor = 'rgba(255, 215, 0, 0.15)';
+                        ctx.shadowBlur = 8;
+                        ctx.fillText(headChar, col.x, headY);
+                        ctx.shadowBlur = 0;
+                    }
+                });
+
+                requestAnimationFrame(drawMatrix);
+            }
+
+            window.addEventListener('resize', resize);
+            resize();
+            drawMatrix();
+        })();
+
+        // ============================================================
+        // АНИМАЦИЯ КАРТОЧЕК
+        // ============================================================
+        (function() {
+            const cards = document.querySelectorAll('.infra-card, .card, .infra-banner, .security-banner, .terminal-banner, .contact-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.05 });
+
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        })();
+
+        // ============================================================
+        // ПЛАВНЫЙ СКРОЛЛ К МОДУЛЯМ
+        // ============================================================
+        document.querySelectorAll('a[href="#modules"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelector('#modules').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
