@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="HW Porisk — анонимный хакерский поисковик с защитой данных.">
+    <title>HW Porisk | Анонимный поиск</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-deep: #0a0a0a;
+            --bg-surface: #0f0f0f;
+            --bg-card: #0d0d0d;
+            --accent-red: #ff0033;
+            --accent-green: #00ff41;
+            --accent-cyan: #00ffff;
+            --accent-blue: #3b82f6;
+            --accent-purple: #a855f7;
+            --accent-gold: #ffd700;
+            --text-primary: #c0c0c0;
+            --text-secondary: #6a6a6a;
+            --text-muted: #3a3a3a;
+            --border-subtle: #1a1a1a;
+            --glow-red: 0 0 30px rgba(255, 0, 51, 0.06);
+            --glow-green: 0 0 30px rgba(0, 255, 65, 0.04);
+            --glow-blue: 0 0 30px rgba(59, 130, 246, 0.04);
+            --glow-gold: 0 0 30px rgba(255, 215, 0, 0.04);
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        body {
+            background: var(--bg-deep);
+            font-family: var(--font-mono);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
+            overflow-x: hidden;
+            position: relative;
+            font-size: 14px;
+        }
+
+        /* ===== ЭФФЕКТ СКАНИРОВАНИЯ ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.03) 0px,
+                rgba(0, 0, 0, 0.03) 2px,
+                transparent 2px,
+                transparent 4px
+            );
+            pointer-events: none;
+            z-index: 9999;
+            animation: scanline 0.1s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(4px); }
+        }
+
+        /* ===== ТЕРМИНАЛЬНАЯ ЗАСТАВКА ===== */
+        .terminal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-deep);
+            z-index: 9998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .terminal-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .terminal-boot {
+            font-family: var(--font-mono);
+            color: var(--accent-green);
+            text-align: center;
+            max-width: 700px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 255, 65, 0.08);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 60px rgba(0, 255, 65, 0.02);
+        }
+
+        .terminal-boot .ascii-art {
+            font-size: 0.4rem;
+            line-height: 1.1;
+            color: var(--accent-blue);
+            letter-spacing: 0px;
+            white-space: pre;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.08);
+        }
+
+        .terminal-boot .boot-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        .terminal-boot .boot-text .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background: var(--accent-green);
+            animation: blink-cursor 1s step-end infinite;
+            vertical-align: text-bottom;
+            margin-left: 2px;
+        }
+
+        @keyframes blink-cursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .terminal-boot .progress-bar {
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 255, 65, 0.05);
+            margin-top: 1rem;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .terminal-boot .progress-bar .fill {
+            height: 100%;
+            width: 0%;
+            background: var(--accent-blue);
+            animation: boot-progress 2.5s ease-in-out forwards;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+        }
+
+        @keyframes boot-progress {
+            0% { width: 0%; }
+            30% { width: 15%; }
+            60% { width: 45%; }
+            80% { width: 75%; }
+            95% { width: 92%; }
+            100% { width: 100%; }
+        }
+
+        /* ===== МАТРИЦА ===== */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.06;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== ХЕДЕР ===== */
+        .main-header {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 0, 51, 0.04);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0.6rem 0;
+        }
+
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.3rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
+        }
+
+        .logo-icon {
+            width: 34px;
+            height: 34px;
+            background: var(--accent-blue);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.06);
+            border: 1px solid rgba(59, 130, 246, 0.12);
+        }
+
+        .logo-icon span {
+            color: #000;
+            font-weight: 900;
+            font-size: 1rem;
+        }
+
+        .logo-text {
+            color: var(--accent-blue);
+            letter-spacing: -0.5px;
+        }
+
+        .logo .badge-search {
+            font-size: 0.4rem;
+            background: rgba(59, 130, 246, 0.06);
+            border: 1px solid rgba(59, 130, 246, 0.08);
+            color: var(--accent-blue);
+            padding: 2px 8px;
+            border-radius: 40px;
+            font-weight: 600;
+        }
+
+        .nav-list {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .nav-list a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 500;
+            transition: 0.3s;
+            font-family: var(--font-mono);
+            position: relative;
+        }
+
+        .nav-list a::before {
+            content: '>';
+            color: var(--accent-green);
+            opacity: 0;
+            transition: opacity 0.3s;
+            margin-right: 4px;
+        }
+
+        .nav-list a:hover::before,
+        .nav-list a.active::before {
+            opacity: 1;
+        }
+
+        .nav-list a:hover, .nav-list a.active {
+            color: var(--accent-green);
+        }
+
+        /* ===== ГЕРО ===== */
+        .hero-section {
+            padding: 2.5rem 0 2rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 0, 51, 0.02);
+            position: relative;
+        }
+
+        .hero-badge {
+            background: rgba(59, 130, 246, 0.04);
+            border: 1px solid rgba(59, 130, 246, 0.06);
+            color: var(--accent-blue);
+            padding: 0.3rem 1.5rem;
+            border-radius: 60px;
+            display: inline-block;
+            font-weight: 700;
+            font-size: 0.6rem;
+            font-family: var(--font-mono);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .hero-badge .blink {
+            animation: blink-text 1.2s infinite;
+        }
+        @keyframes blink-text {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            background: linear-gradient(135deg, #ffffff, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-title .slash {
+            color: var(--accent-green);
+            -webkit-text-fill-color: var(--accent-green);
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin: 0 auto 1.5rem;
+            font-family: var(--font-mono);
+        }
+
+        .hero-subtitle .highlight {
+            color: var(--accent-blue);
+        }
+        .hero-subtitle .gold {
+            color: var(--accent-gold);
+        }
+
+        /* ===== ПОИСКОВАЯ ФОРМА ===== */
+        .search-container {
+            max-width: 900px;
+            margin: 1.5rem auto;
+            padding: 2rem;
+            background: var(--bg-surface);
+            border: 1px solid rgba(59, 130, 246, 0.04);
+            border-radius: 16px;
+        }
+
+        .search-tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 1.2rem;
+            background: var(--bg-deep);
+            border-radius: 10px;
+            padding: 4px;
+            flex-wrap: wrap;
+        }
+
+        .search-tab {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .search-tab:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .search-tab.active {
+            background: var(--accent-blue);
+            color: #000;
+        }
+
+        .search-tab.active.gold-tab {
+            background: var(--accent-gold);
+            color: #000;
+        }
+
+        .search-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .search-input-wrapper {
+            display: flex;
+            align-items: center;
+            background: var(--bg-deep);
+            border: 1px solid rgba(59, 130, 246, 0.06);
+            border-radius: 12px;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-input-wrapper:focus-within {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.04);
+        }
+
+        .search-input-wrapper .search-icon {
+            color: var(--accent-blue);
+            font-size: 1.2rem;
+            margin-right: 12px;
+        }
+
+        .search-input-wrapper input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            padding: 10px 0;
+        }
+
+        .search-input-wrapper input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-input-wrapper .clear-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 4px 8px;
+            transition: 0.3s;
+            display: none;
+        }
+
+        .search-input-wrapper .clear-btn.visible {
+            display: block;
+        }
+
+        .search-input-wrapper .clear-btn:hover {
+            color: var(--accent-red);
+        }
+
+        .search-engine-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 0;
+        }
+
+        .engine-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            color: var(--text-secondary);
+            padding: 5px 14px;
+            border-radius: 40px;
+            font-size: 0.65rem;
+            font-family: var(--font-mono);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .engine-btn:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .engine-btn.active {
+            background: rgba(59, 130, 246, 0.06);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .engine-btn.gold {
+            border-color: rgba(255, 215, 0, 0.06);
+        }
+        .engine-btn.gold:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+        .engine-btn.gold.active {
+            background: rgba(255, 215, 0, 0.06);
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        .search-btn {
+            background: var(--accent-blue);
+            color: #000;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.15);
+        }
+
+        .search-btn.gold-btn {
+            background: var(--accent-gold);
+        }
+
+        .search-btn.gold-btn:hover {
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.15);
+        }
+
+        /* ===== РЕЗУЛЬТАТЫ ===== */
+        .results-container {
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .results-container.active {
+            display: block;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            margin-bottom: 1rem;
+        }
+
+        .results-header .count {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        .results-header .count span {
+            color: var(--accent-blue);
+        }
+
+        .result-item {
+            background: var(--bg-card);
+            border: 1px solid rgba(59, 130, 246, 0.02);
+            border-radius: 12px;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+
+        .result-item:hover {
+            border-color: var(--accent-blue);
+            transform: translateX(4px);
+        }
+
+        .result-item .result-title {
+            color: var(--accent-blue);
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .result-item .result-title:hover {
+            text-decoration: underline;
+        }
+
+        .result-item .result-url {
+            color: var(--accent-green);
+            font-size: 0.7rem;
+            display: block;
+            margin-bottom: 0.3rem;
+            opacity: 0.7;
+        }
+
+        .result-item .result-desc {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .result-item .result-tag {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.04);
+            border: 1px solid rgba(59, 130, 246, 0.04);
+            color: var(--accent-blue);
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-size: 0.6rem;
+            margin-top: 6px;
+        }
+
+        .result-item .result-tag.gold {
+            background: rgba(255, 215, 0, 0.04);
+            border-color: rgba(255, 215, 0, 0.04);
+            color: var(--accent-gold);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+
+        .no-results .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        /* ===== СТАТИСТИКА ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(59, 130, 246, 0.02);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.02);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            color: var(--accent-blue);
+            display: block;
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.05);
+        }
+
+        .stat-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            margin-top: 2px;
+        }
+
+        /* ===== БАННЕР ===== */
+        .security-banner {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 3px solid var(--accent-blue);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .security-banner .security-text {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .security-banner .security-text .icon {
+            font-size: 2rem;
+        }
+
+        .security-banner .security-text h4 {
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: var(--font-mono);
+        }
+
+        .security-banner .security-text p {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin: 0;
+            font-family: var(--font-mono);
+        }
+
+        .security-badge-lg {
+            background: var(--accent-blue);
+            color: #000;
+            padding: 6px 20px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            font-family: var(--font-mono);
+        }
+
+        /* ===== ФУТЕР ===== */
+        .main-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .main-footer .icon-row {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            opacity: 0.1;
+        }
+
+        .main-footer .footer-links {
+            margin-top: 0.6rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .main-footer .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.65rem;
+            font-family: var(--font-mono);
+            transition: color 0.2s;
+        }
+
+        .main-footer .footer-links a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .main-header .container { flex-direction: column; align-items: center; }
+            .nav-list { justify-content: center; gap: 1rem; }
+            .search-container { padding: 1.5rem; }
+            .security-banner { flex-direction: column; text-align: center; }
+            .security-banner .security-text { flex-direction: column; text-align: center; }
+            .search-tabs { justify-content: center; }
+            .search-engine-selector { justify-content: center; }
+            .terminal-boot .ascii-art { font-size: 0.3rem; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title { font-size: 1.8rem; }
+            .hero-subtitle { font-size: 0.9rem; }
+            .search-input-wrapper input { font-size: 0.9rem; }
+            .search-btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== ТЕРМИНАЛЬНАЯ ЗАСТАВКА ===== -->
+    <div class="terminal-overlay" id="bootScreen">
+        <div class="terminal-boot">
+            <div class="ascii-art">
+   ██╗  ██╗██╗    ██╗    ██████╗ ██████╗  ██████╗ 
+   ██║  ██║██║    ██║    ██╔══██╗██╔══██╗██╔═══██╗
+   ███████║██║ █╗ ██║    ██████╔╝██████╔╝██║   ██║
+   ██╔══██║██║███╗██║    ██╔═══╝ ██╔══██╗██║   ██║
+   ██║  ██║╚███╔███╔╝    ██║     ██║  ██║╚██████╔╝
+   ╚═╝  ╚═╝ ╚══╝╚══╝     ╚═╝     ╚═╝  ╚═╝ ╚═════╝ 
+   🔍  🔍  🔍  🔍  🔍  🔍  🔍  🔍  🔍  🔍  🔍
+            </div>
+            <div class="boot-text">
+                <span style="color:var(--accent-blue);">> HW Porisk Search Engine v.2.0</span><br>
+                <span style="color:var(--text-muted);">>> Загрузка поискового модуля... Инициализация...</span><br>
+                <span style="color:var(--text-muted);">>>> Анонимный поиск активирован</span>
+                <span class="cursor"></span>
+            </div>
+            <div class="progress-bar">
+                <div class="fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== КАНВАС ДЛЯ МАТРИЦЫ ===== -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <!-- ===== ХЕДЕР ===== -->
+    <header class="main-header">
+        <div class="container">
+            <a href="/" class="logo">
+                <div class="logo-icon"><span>⟁</span></div>
+                <span class="logo-text">HW Porisk</span>
+                <span class="badge-search">🔍 SEARCH</span>
+            </a>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="#" class="active">Поиск</a></li>
+                    <li><a href="/portal.html">Портал</a></li>
+                    <li><a href="/HW_Pro_Audio.html">Аудио</a></li>
+                    <li><a href="/HW_Pro_Lab.html">Лаборатория</a></li>
+                    <li><a href="/HW_Pro_Infrastructure.html">Инфраструктура</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== ГЕРО ===== -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-badge"><span class="blink">●</span> АНОНИМНЫЙ ПОИСКОВИК</div>
+            <h1 class="hero-title">HW <span class="slash">/</span> PORISK</h1>
+            <p class="hero-subtitle">
+                <span class="highlight">Безопасный</span> поиск через <span class="gold">любой</span> поисковик. 
+                Или ищите по <span class="gold">проектам HW Pro</span>.
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== ОСНОВНОЙ КОНТЕНТ ===== -->
+    <main>
+        <div class="container">
+
+            <!-- Баннер безопасности -->
+            <div class="security-banner">
+                <div class="security-text">
+                    <span class="icon">🕶️</span>
+                    <div>
+                        <h4>Анонимный поиск</h4>
+                        <p>Никаких логов, трекеров и идентификации. Ваш запрос — только ваш.</p>
+                    </div>
+                </div>
+                <span class="security-badge-lg">🔒 Zero-Logs Search</span>
+            </div>
+
+            <!-- Поисковая форма -->
+            <div class="search-container">
+                <!-- Вкладки -->
+                <div class="search-tabs">
+                    <button class="search-tab active" data-tab="web">🌐 Веб-поиск</button>
+                    <button class="search-tab gold-tab" data-tab="project">⟁ Проект HW</button>
+                </div>
+
+                <form class="search-form" id="searchForm">
+                    <div class="search-input-wrapper">
+                        <span class="search-icon"><i class="fas fa-search"></i></span>
+                        <input type="text" id="searchInput" placeholder=">_ введите запрос..." autofocus>
+                        <button type="button" class="clear-btn" id="clearBtn"><i class="fas fa-times"></i></button>
+                    </div>
+
+                    <!-- Выбор движка (для веб-поиска) -->
+                    <div class="search-engine-selector" id="engineSelector">
+                        <button type="button" class="engine-btn active" data-engine="ddg">DuckDuckGo</button>
+                        <button type="button" class="engine-btn" data-engine="google">Google</button>
+                        <button type="button" class="engine-btn" data-engine="yandex">Яндекс</button>
+                        <button type="button" class="engine-btn" data-engine="startpage">Startpage</button>
+                    </div>
+
+                    <button type="submit" class="search-btn" id="searchBtn">
+                        <i class="fas fa-arrow-right"></i> <span id="searchBtnText">Найти</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Результаты -->
+            <div class="results-container" id="resultsContainer">
+                <div class="results-header">
+                    <span class="count">Найдено: <span id="resultCount">0</span> результатов</span>
+                    <span style="color:var(--text-muted);font-size:0.65rem;"><i class="fas fa-shield-haltered"></i> Анонимно</span>
+                </div>
+                <div id="resultsList"></div>
+            </div>
+
+            <!-- Статистика -->
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">0</span>
+                    <span class="stat-label">логов • трекеров</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">256</span>
+                    <span class="stat-label">бит шифрования</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">анонимность</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">∞</span>
+                    <span class="stat-label">безлимит запросов</span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ===== ФУТЕР ===== -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="icon-row">
+                <span>⟁</span>
+                <span>🔍</span>
+                <span>🛡️</span>
+                <span>🔐</span>
+                <span>🕶️</span>
+            </div>
+            <p>HW Porisk © 2025 | Анонимный хакерский поисковик</p>
+            <p style="font-size: 0.6rem; color: var(--text-muted); margin-top: 0.2rem;">
+                🔍 Анонимность. Безопасность. Свобода поиска.
+            </p>
+            <div class="footer-links">
+                <a href="#">Политика анонимности</a>
+                <a href="#">Условия использования</a>
+                <a href="#">Контакты</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================================
+        // ЗАСТАВКА
+        // ============================================================
+        (function() {
+            const bootScreen = document.getElementById('bootScreen');
+            setTimeout(() => {
+                bootScreen.classList.add('hidden');
+            }, 2800);
+        })();
+
+        // ============================================================
+        // МАТРИЦА
+        // ============================================================
+        (function() {
+            const canvas = document.getElementById('matrix-canvas');
+            const ctx = canvas.getContext('2d');
+
+            let width, height;
+            let columns = [];
+            let mouseX = 0;
+            let mouseY = 0;
+            const FONT_SIZE = 16;
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+                const colCount = Math.floor(width / FONT_SIZE);
+                columns = [];
+                for (let i = 0; i < colCount; i++) {
+                    columns.push({
+                        x: i * FONT_SIZE,
+                        y: Math.random() * height,
+                        speed: 0.5 + Math.random() * 1.2,
+                        chars: '0123456789ABCDEF',
+                        length: 5 + Math.floor(Math.random() * 10),
+                    });
+                }
+            }
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function drawMatrix() {
+                ctx.fillStyle = 'rgba(10, 10, 10, 0.04)';
+                ctx.fillRect(0, 0, width, height);
+
+                ctx.font = `${FONT_SIZE}px 'JetBrains Mono', monospace`;
+                ctx.textAlign = 'center';
+
+                columns.forEach(col => {
+                    const dx = mouseX - col.x;
+                    const dy = mouseY - col.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const maxDist = 180;
+
+                    if (dist < maxDist && dist > 0) {
+                        const force = (1 - dist / maxDist) * 2.5;
+                        col.speed = 0.8 + force * 2;
+                    }
+
+                    col.y += col.speed;
+
+                    if (col.y > height) {
+                        col.y = -col.length * FONT_SIZE;
+                        col.speed = 0.5 + Math.random() * 1.2;
+                    }
+
+                    const charLen = col.length;
+                    for (let i = 0; i < charLen; i++) {
+                        const yPos = col.y - i * FONT_SIZE;
+                        if (yPos < 0 || yPos > height) continue;
+
+                        const char = col.chars[Math.floor(Math.random() * col.chars.length)];
+                        const brightness = 1 - (i / charLen);
+                        const alpha = 0.2 + brightness * 0.6;
+
+                        const blue = Math.floor(160 + 95 * brightness);
+                        ctx.fillStyle = `rgba(${Math.floor(20 * brightness)}, ${blue}, ${Math.floor(160 + 95 * brightness)}, ${alpha})`;
+                        ctx.fillText(char, col.x, yPos);
+                    }
+
+                    const headY = col.y;
+                    if (headY > 0 && headY < height) {
+                        const headChar = col.chars[Math.floor(Math.random() * col.chars.length)];
+                        ctx.fillStyle = `rgba(59, 130, 246, 0.8)`;
+                        ctx.shadowColor = 'rgba(59, 130, 246, 0.15)';
+                        ctx.shadowBlur = 8;
+                        ctx.fillText(headChar, col.x, headY);
+                        ctx.shadowBlur = 0;
+                    }
+                });
+
+                requestAnimationFrame(drawMatrix);
+            }
+
+            window.addEventListener('resize', resize);
+            resize();
+            drawMatrix();
+        })();
+
+        // ============================================================
+        // ПОИСК
+        // ============================================================
+        (function() {
+            const searchForm = document.getElementById('searchForm');
+            const searchInput = document.getElementById('searchInput');
+            const clearBtn = document.getElementById('clearBtn');
+            const resultsContainer = document.getElementById('resultsContainer');
+            const resultsList = document.getElementById('resultsList');
+            const resultCount = document.getElementById('resultCount');
+            const searchBtnText = document.getElementById('searchBtnText');
+
+            const engineBtns = document.querySelectorAll('.engine-btn');
+            const tabBtns = document.querySelectorAll('.search-tab');
+
+            let currentEngine = 'ddg';
+            let currentTab = 'web';
+
+            // ===== HW PRO PROJECT SITES =====
+            const hwProjectSites = [
+                { title: 'HW Pro — Официальный сайт', url: 'https://anonim-it.github.io/', desc: 'Главная страница проекта HW Pro. Хакерская платформа, объединяющая анонимность, кибербезопасность и инновации.', tag: 'Главная' },
+                { title: 'HW Portal — Анонимный портал', url: 'https://anonim-it.github.io/portal.html', desc: 'Защищённый портал с полезными ресурсами и инструментами для кибербезопасности.', tag: 'Портал' },
+                { title: 'HW School — Школа кибербезопасности', url: 'https://anonim-it.github.io/HWschool.html', desc: 'Анонимная школа кибербезопасности и программирования нового поколения. Бесплатное обучение.', tag: 'Образование' },
+                { title: 'HW Pro Audio — Студия звукозаписи', url: 'https://anonim-it.github.io/HW_Pro_Audio.html', desc: 'Профессиональная студия звукозаписи, монтажа и создания музыкального сопровождения.', tag: 'Аудио' },
+                { title: 'HW Pro Lab — Виртуальная лаборатория', url: 'https://anonim-it.github.io/HW_Pro_Lab.html', desc: 'Лаборатория для экспериментов, тестирования и обучения в безопасной изолированной среде.', tag: 'Лаборатория' },
+                { title: 'HW Pro Infrastructure — Экосистема', url: 'https://anonim-it.github.io/HW_Pro_Infrastructure.html', desc: 'Центральный узел управления экосистемой HW Pro. Все сервисы в одном месте.', tag: 'Инфраструктура' },
+                { title: 'Стандарты HW Pro', url: 'https://anonim-it.github.io/ISO.html', desc: 'Сертификаты и стандарты качества проекта HW Pro.', tag: 'Стандарты' },
+                { title: 'HW Pro — Minecraft', url: 'https://anonim-it.github.io/close.html', desc: 'Страница проекта HW Pro Minecraft.', tag: 'Minecraft' },
+                { title: 'HW Pro — HWHellBlock', url: 'https://anonim-it.github.io/HWHellBlock.html', desc: 'Страница проекта HWHellBlock.', tag: 'Инструменты' },
+                { title: 'HW Pro — HWPro_OS', url: 'https://anonim-it.github.io/HWPro_OS.html', desc: 'Страница операционной системы HWPro_OS.', tag: 'OS' }
+            ];
+
+            // ===== ВКЛАДКИ =====
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentTab = btn.dataset.tab;
+
+                    // Показываем/скрываем выбор движка
+                    const engineSelector = document.getElementById('engineSelector');
+                    if (currentTab === 'project') {
+                        engineSelector.style.display = 'none';
+                        searchBtnText.textContent = 'Поиск по проекту';
+                        document.getElementById('searchBtn').classList.add('gold-btn');
+                        document.getElementById('searchBtn').style.background = 'var(--accent-gold)';
+                    } else {
+                        engineSelector.style.display = 'flex';
+                        searchBtnText.textContent = 'Найти';
+                        document.getElementById('searchBtn').classList.remove('gold-btn');
+                        document.getElementById('searchBtn').style.background = '';
+                    }
+                });
+            });
+
+            // ===== ДВИЖКИ =====
+            engineBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    engineBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentEngine = btn.dataset.engine;
+                });
+            });
+
+            // ===== ОЧИСТКА =====
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                clearBtn.classList.remove('visible');
+                searchInput.focus();
+                resultsContainer.classList.remove('active');
+            });
+
+            searchInput.addEventListener('input', () => {
+                if (searchInput.value.length > 0) {
+                    clearBtn.classList.add('visible');
+                } else {
+                    clearBtn.classList.remove('visible');
+                }
+            });
+
+            // ===== ОТПРАВКА =====
+            searchForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const query = searchInput.value.trim();
+                if (!query) return;
+
+                if (currentTab === 'project') {
+                    searchProject(query);
+                } else {
+                    searchWeb(query);
+                }
+            });
+
+            // ===== ВЕБ-ПОИСК (реальный) =====
+            function searchWeb(query) {
+                const engines = {
+                    ddg: `https://duckduckgo.com/?q=${encodeURIComponent(query)}`,
+                    google: `https://www.google.com/search?q=${encodeURIComponent(query)}`,
+                    yandex: `https://yandex.ru/search/?text=${encodeURIComponent(query)}`,
+                    startpage: `https://www.startpage.com/sp/search?q=${encodeURIComponent(query)}`
+                };
+
+                // Открываем в новой вкладке
+                window.open(engines[currentEngine], '_blank');
+
+                // Показываем уведомление
+                resultsContainer.classList.add('active');
+                resultsList.innerHTML = `
+                    <div class="result-item" style="border-color:var(--accent-blue);">
+                        <div style="display:flex;align-items:center;gap:12px;">
+                            <span style="font-size:2rem;">🔍</span>
+                            <div>
+                                <span class="result-title" style="font-size:0.9rem;">Поиск выполнен</span>
+                                <p class="result-desc" style="margin-top:4px;">
+                                    Запрос <strong>"${query}"</strong> отправлен в 
+                                    <strong style="color:var(--accent-blue);">
+                                        ${engineBtns.find(b => b.dataset.engine === currentEngine)?.textContent || currentEngine}
+                                    </strong>
+                                </p>
+                                <p class="result-desc" style="font-size:0.8rem;color:var(--text-muted);">
+                                    Результаты откроются в новой вкладке. 
+                                    <a href="${engines[currentEngine]}" target="_blank" style="color:var(--accent-blue);text-decoration:underline;">Открыть вручную →</a>
+                                </p>
+                                <span class="result-tag" style="margin-top:8px;">🕶️ Анонимно</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                resultCount.textContent = '1';
+            }
+
+            // ===== ПОИСК ПО ПРОЕКТУ =====
+            function searchProject(query) {
+                resultsContainer.classList.add('active');
+
+                const lowerQuery = query.toLowerCase();
+                const results = hwProjectSites.filter(site =>
+                    site.title.toLowerCase().includes(lowerQuery) ||
+                    site.desc.toLowerCase().includes(lowerQuery) ||
+                    site.tag.toLowerCase().includes(lowerQuery)
+                );
+
+                if (results.length === 0) {
+                    resultCount.textContent = '0';
+                    resultsList.innerHTML = `
+                        <div class="no-results">
+                            <div class="icon">🔍</div>
+                            <p>Ничего не найдено в проектах HW по запросу "${query}"</p>
+                            <p style="font-size:0.7rem;color:var(--text-muted);margin-top:0.5rem;">
+                                Попробуйте изменить запрос или переключиться на веб-поиск
+                            </p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                resultCount.textContent = results.length;
+
+                let html = '';
+                results.forEach(result => {
+                    html += `
+                        <div class="result-item" style="border-color:rgba(255,215,0,0.1);">
+                            <a href="${result.url}" target="_blank" class="result-title" style="color:var(--accent-gold);">${result.title}</a>
+                            <span class="result-url">${result.url}</span>
+                            <p class="result-desc">${result.desc}</p>
+                            <span class="result-tag gold">⟁ ${result.tag}</span>
+                        </div>
+                    `;
+                });
+                resultsList.innerHTML = html;
+            }
+
+            // ===== КЛАВИША ENTER =====
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    searchForm.dispatchEvent(new Event('submit'));
+                }
+            });
+
+            // ===== ФОКУС =====
+            searchInput.focus();
+
+            // ===== УСТАНОВКА ТАБА ПО УМОЛЧАНИЮ =====
+            document.querySelector('.search-tab[data-tab="web"]').click();
+        })();
+    </script>
+</body>
+</html>
