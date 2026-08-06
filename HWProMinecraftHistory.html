@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="Полная история мира HW Pro Minecraft — RP-сервера с уникальной вселенной.">
+    <title>HW Pro Minecraft | История мира</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-deep: #0a0a0a;
+            --bg-surface: #0f0f0f;
+            --bg-card: #0d0d0d;
+            --accent-red: #ff0033;
+            --accent-green: #00ff41;
+            --accent-cyan: #00ffff;
+            --accent-gold: #ffd700;
+            --accent-purple: #a855f7;
+            --text-primary: #c0c0c0;
+            --text-secondary: #6a6a6a;
+            --text-muted: #3a3a3a;
+            --border-subtle: #1a1a1a;
+            --glow-red: 0 0 30px rgba(255, 0, 51, 0.06);
+            --glow-green: 0 0 30px rgba(0, 255, 65, 0.04);
+            --glow-gold: 0 0 30px rgba(255, 215, 0, 0.04);
+            --glow-purple: 0 0 30px rgba(168, 85, 247, 0.04);
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        body {
+            background: var(--bg-deep);
+            font-family: var(--font-mono);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
+            overflow-x: hidden;
+            position: relative;
+            font-size: 14px;
+        }
+
+        /* ===== ЭФФЕКТ СКАНИРОВАНИЯ ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.03) 0px,
+                rgba(0, 0, 0, 0.03) 2px,
+                transparent 2px,
+                transparent 4px
+            );
+            pointer-events: none;
+            z-index: 9999;
+            animation: scanline 0.1s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(4px); }
+        }
+
+        /* ===== ТЕРМИНАЛЬНАЯ ЗАСТАВКА ===== */
+        .terminal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-deep);
+            z-index: 9998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .terminal-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .terminal-boot {
+            font-family: var(--font-mono);
+            color: var(--accent-green);
+            text-align: center;
+            max-width: 700px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 255, 65, 0.08);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 60px rgba(0, 255, 65, 0.02);
+        }
+
+        .terminal-boot .ascii-art {
+            font-size: 0.35rem;
+            line-height: 1.1;
+            color: var(--accent-gold);
+            letter-spacing: 0px;
+            white-space: pre;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.08);
+        }
+
+        .terminal-boot .boot-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        .terminal-boot .boot-text .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background: var(--accent-green);
+            animation: blink-cursor 1s step-end infinite;
+            vertical-align: text-bottom;
+            margin-left: 2px;
+        }
+
+        @keyframes blink-cursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .terminal-boot .progress-bar {
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 255, 65, 0.05);
+            margin-top: 1rem;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .terminal-boot .progress-bar .fill {
+            height: 100%;
+            width: 0%;
+            background: var(--accent-gold);
+            animation: boot-progress 2.5s ease-in-out forwards;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+        }
+
+        @keyframes boot-progress {
+            0% { width: 0%; }
+            30% { width: 15%; }
+            60% { width: 45%; }
+            80% { width: 75%; }
+            95% { width: 92%; }
+            100% { width: 100%; }
+        }
+
+        /* ===== МАТРИЦА ===== */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.05;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== ХЕДЕР ===== */
+        .main-header {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 0, 51, 0.04);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0.6rem 0;
+        }
+
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.3rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
+        }
+
+        .logo-icon {
+            width: 34px;
+            height: 34px;
+            background: var(--accent-gold);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.06);
+            border: 1px solid rgba(255, 215, 0, 0.12);
+        }
+
+        .logo-icon span {
+            color: #000;
+            font-weight: 900;
+            font-size: 1rem;
+        }
+
+        .logo-text {
+            color: var(--accent-gold);
+            letter-spacing: -0.5px;
+        }
+
+        .logo .badge-history {
+            font-size: 0.4rem;
+            background: rgba(255, 215, 0, 0.06);
+            border: 1px solid rgba(255, 215, 0, 0.08);
+            color: var(--accent-gold);
+            padding: 2px 8px;
+            border-radius: 40px;
+            font-weight: 600;
+        }
+
+        .nav-list {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .nav-list a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 500;
+            transition: 0.3s;
+            font-family: var(--font-mono);
+            position: relative;
+        }
+
+        .nav-list a::before {
+            content: '>';
+            color: var(--accent-green);
+            opacity: 0;
+            transition: opacity 0.3s;
+            margin-right: 4px;
+        }
+
+        .nav-list a:hover::before,
+        .nav-list a.active::before {
+            opacity: 1;
+        }
+
+        .nav-list a:hover, .nav-list a.active {
+            color: var(--accent-green);
+        }
+
+        /* ===== ГЕРО ===== */
+        .hero-section {
+            padding: 3rem 0 2.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 0, 51, 0.02);
+            position: relative;
+        }
+
+        .hero-badge {
+            background: rgba(255, 215, 0, 0.04);
+            border: 1px solid rgba(255, 215, 0, 0.06);
+            color: var(--accent-gold);
+            padding: 0.3rem 1.5rem;
+            border-radius: 60px;
+            display: inline-block;
+            font-weight: 700;
+            font-size: 0.6rem;
+            font-family: var(--font-mono);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .hero-badge .blink {
+            animation: blink-text 1.2s infinite;
+        }
+        @keyframes blink-text {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            background: linear-gradient(135deg, #ffffff, var(--accent-gold), var(--accent-red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-title .slash {
+            color: var(--accent-green);
+            -webkit-text-fill-color: var(--accent-green);
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin: 0 auto 1.5rem;
+            font-family: var(--font-mono);
+        }
+
+        .hero-subtitle .highlight {
+            color: var(--accent-gold);
+        }
+        .hero-subtitle .red {
+            color: var(--accent-red);
+        }
+
+        /* ===== HISTORY CONTENT ===== */
+        .history-content {
+            background: var(--bg-surface);
+            border: 1px solid rgba(255, 215, 0, 0.02);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            line-height: 1.8;
+        }
+
+        .history-content .chapter {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.02);
+        }
+
+        .history-content .chapter:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .history-content .chapter h3 {
+            font-size: 1.5rem;
+            color: var(--accent-gold);
+            font-family: var(--font-mono);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .history-content .chapter h3 .chapter-icon {
+            font-size: 1.8rem;
+        }
+
+        .history-content .chapter p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+            font-family: var(--font-mono);
+        }
+
+        .history-content .chapter .highlight {
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        .history-content .chapter .red {
+            color: var(--accent-red);
+            font-weight: 600;
+        }
+
+        .history-content .chapter .green {
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .history-content .chapter .purple {
+            color: var(--accent-purple);
+            font-weight: 600;
+        }
+
+        .history-content .chapter ul {
+            padding-left: 1.5rem;
+            list-style: none;
+            margin-top: 0.5rem;
+        }
+
+        .history-content .chapter ul li {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-family: var(--font-mono);
+            margin-bottom: 0.5rem;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .history-content .chapter ul li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+        }
+
+        .history-content .chapter .quote {
+            background: var(--bg-card);
+            border-left: 3px solid var(--accent-gold);
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+        }
+
+        .history-content .chapter .quote .author {
+            display: block;
+            margin-top: 0.5rem;
+            color: var(--accent-gold);
+            font-style: normal;
+            font-size: 0.8rem;
+        }
+
+        /* ===== МИНИ-ТАЙМЛАЙН ===== */
+        .mini-timeline {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 215, 0, 0.02);
+        }
+
+        .mini-timeline .tl-point {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 0 1rem;
+        }
+
+        .mini-timeline .tl-point .tl-year {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            font-family: var(--font-mono);
+        }
+
+        .mini-timeline .tl-point .tl-event {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            text-align: center;
+        }
+
+        .mini-timeline .tl-point .tl-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+        }
+
+        /* ===== CONTACT SECTION ===== */
+        .contact-section {
+            background: var(--bg-surface);
+            border: 1px solid rgba(255, 215, 0, 0.02);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .contact-section h3 {
+            font-size: 1.3rem;
+            font-family: var(--font-mono);
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-section .contact-sub {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.7rem 1.8rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 215, 0, 0.04);
+        }
+
+        .contact-btn.gold {
+            background: rgba(255, 215, 0, 0.04);
+            color: var(--accent-gold);
+            border-color: rgba(255, 215, 0, 0.06);
+        }
+
+        .contact-btn.gold:hover {
+            background: rgba(255, 215, 0, 0.08);
+            transform: translateY(-2px);
+            box-shadow: var(--glow-gold);
+        }
+
+        .contact-btn.red {
+            background: rgba(255, 0, 51, 0.04);
+            color: var(--accent-red);
+            border-color: rgba(255, 0, 51, 0.06);
+        }
+
+        .contact-btn.red:hover {
+            background: rgba(255, 0, 51, 0.08);
+            transform: translateY(-2px);
+            box-shadow: var(--glow-red);
+        }
+
+        .contact-btn.purple {
+            background: rgba(168, 85, 247, 0.04);
+            color: var(--accent-purple);
+            border-color: rgba(168, 85, 247, 0.06);
+        }
+
+        .contact-btn.purple:hover {
+            background: rgba(168, 85, 247, 0.08);
+            transform: translateY(-2px);
+            box-shadow: var(--glow-purple);
+        }
+
+        /* ===== БАННЕР ===== */
+        .security-banner {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 3px solid var(--accent-gold);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .security-banner .security-text {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .security-banner .security-text .icon {
+            font-size: 2rem;
+        }
+
+        .security-banner .security-text h4 {
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: var(--font-mono);
+        }
+
+        .security-banner .security-text p {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin: 0;
+            font-family: var(--font-mono);
+        }
+
+        .security-badge-lg {
+            background: var(--accent-gold);
+            color: #000;
+            padding: 6px 20px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            font-family: var(--font-mono);
+        }
+
+        /* ===== ФУТЕР ===== */
+        .main-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .main-footer .icon-row {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            opacity: 0.1;
+        }
+
+        .main-footer .footer-links {
+            margin-top: 0.6rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .main-footer .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.65rem;
+            font-family: var(--font-mono);
+            transition: color 0.2s;
+        }
+
+        .main-footer .footer-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .hashtags {
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            font-family: var(--font-mono);
+            margin-top: 0.5rem;
+        }
+
+        .hashtags span {
+            margin: 0 4px;
+            opacity: 0.5;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .main-header .container { flex-direction: column; align-items: center; }
+            .nav-list { justify-content: center; gap: 1rem; }
+            .history-content { padding: 1.5rem; }
+            .history-content .chapter h3 { font-size: 1.2rem; }
+            .security-banner { flex-direction: column; text-align: center; }
+            .security-banner .security-text { flex-direction: column; text-align: center; }
+            .terminal-banner { flex-direction: column; text-align: center; }
+            .terminal-banner .term-text { flex-direction: column; text-align: center; }
+            .contact-section { padding: 1.5rem; }
+            .contact-links { flex-direction: column; align-items: center; }
+            .contact-btn { width: 100%; max-width: 280px; justify-content: center; }
+            .terminal-boot .ascii-art { font-size: 0.25rem; }
+            .mini-timeline { flex-direction: column; align-items: center; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title { font-size: 1.8rem; }
+            .hero-subtitle { font-size: 0.9rem; }
+            .section-title { font-size: 1.4rem; }
+            .history-content .chapter p { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== ТЕРМИНАЛЬНАЯ ЗАСТАВКА ===== -->
+    <div class="terminal-overlay" id="bootScreen">
+        <div class="terminal-boot">
+            <div class="ascii-art">
+   ██╗  ██╗██╗    ██╗    ██████╗ ██████╗  ██████╗ 
+   ██║  ██║██║    ██║    ██╔══██╗██╔══██╗██╔═══██╗
+   ███████║██║ █╗ ██║    ██████╔╝██████╔╝██║   ██║
+   ██╔══██║██║███╗██║    ██╔═══╝ ██╔══██╗██║   ██║
+   ██║  ██║╚███╔███╔╝    ██║     ██║  ██║╚██████╔╝
+   ╚═╝  ╚═╝ ╚══╝╚══╝     ╚═╝     ╚═╝  ╚═╝ ╚═════╝ 
+   📖  📖  📖  📖  📖  📖  📖  📖  📖  📖  📖
+            </div>
+            <div class="boot-text">
+                <span style="color:var(--accent-gold);">> HW Pro Minecraft History v.1.0</span><br>
+                <span style="color:var(--text-muted);">>> Загрузка исторического модуля...</span><br>
+                <span style="color:var(--text-muted);">>>> Летописи мира загружены</span>
+                <span class="cursor"></span>
+            </div>
+            <div class="progress-bar">
+                <div class="fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== КАНВАС ДЛЯ МАТРИЦЫ ===== -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <!-- ===== ХЕДЕР ===== -->
+    <header class="main-header">
+        <div class="container">
+            <a href="/" class="logo">
+                <div class="logo-icon"><span>📖</span></div>
+                <span class="logo-text">HW Pro MC History</span>
+                <span class="badge-history">⚡ LORE</span>
+            </a>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/HWProMinecraft.html">Minecraft</a></li>
+                    <li><a href="#" class="active">История</a></li>
+                    <li><a href="/portal.html">Портал</a></li>
+                    <li><a href="/HW_Pro_Audio.html">Аудио</a></li>
+                    <li><a href="/HW_Pro_Lab.html">Лаборатория</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== ГЕРО ===== -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-badge"><span class="blink">●</span> ИСТОРИЯ МИРА HW PRO MC</div>
+            <h1 class="hero-title">HW <span class="slash">/</span> PRO MC <span style="color:var(--accent-gold);">LORE</span></h1>
+            <p class="hero-subtitle">
+                Полная <span class="highlight">история</span> зарождения и развития мира <span class="red">HW Pro</span> 
+                в Minecraft. От первых поселенцев до современной <span class="highlight">индустриальной эпохи</span>.
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== ОСНОВНОЙ КОНТЕНТ ===== -->
+    <main>
+        <div class="container">
+
+            <!-- Баннер безопасности -->
+            <div class="security-banner">
+                <div class="security-text">
+                    <span class="icon">📖</span>
+                    <div>
+                        <h4>Хроники мира</h4>
+                        <p>Летописи, записанные первыми поселенцами и хранителями знаний.</p>
+                    </div>
+                </div>
+                <span class="security-badge-lg">📜 Летопись активна</span>
+            </div>
+
+            <!-- Mini Timeline -->
+            <div class="mini-timeline">
+                <div class="tl-point">
+                    <div class="tl-dot"></div>
+                    <span class="tl-year">2026</span>
+                    <span class="tl-event">Основание мира</span>
+                </div>
+                <div class="tl-point">
+                    <div class="tl-dot"></div>
+                    <span class="tl-year">2027</span>
+                    <span class="tl-event">Индустриальная революция</span>
+                </div>
+                <div class="tl-point">
+                    <div class="tl-dot"></div>
+                    <span class="tl-year">2028</span>
+                    <span class="tl-event">Открытие артефактов</span>
+                </div>
+                <div class="tl-point">
+                    <div class="tl-dot"></div>
+                    <span class="tl-year">2029</span>
+                    <span class="tl-event">Война фракций</span>
+                </div>
+                <div class="tl-point">
+                    <div class="tl-dot"></div>
+                    <span class="tl-year">2030</span>
+                    <span class="tl-event">Новая эра</span>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- ====== ЗДЕСЬ ВЫ МОЖЕТЕ ВПИСАТЬ СВОЙ ТЕКСТ ИСТОРИИ ====== -->
+            <!-- ============================================================ -->
+            <div class="history-content">
+
+                <!-- Глава 1: Зарождение -->
+                <div class="chapter">
+                    <h3><span class="chapter-icon">🌍</span> Глава 1: Зарождение мира</h3>
+                    <p>
+                        <!-- Вставьте сюда текст о зарождении мира -->
+                        В начале был пустой мир. Бескрайние равнины, океаны и леса, в которых не ступала нога человека. 
+                        Но однажды <span class="highlight">Первопроходцы</span> ступили на эту землю, принеся с собой 
+                        надежду и мечту о новом доме. Это было <span class="red">2026 год</span> — год основания нашего мира.
+                    </p>
+                    <p>
+                        <!-- Продолжайте вставлять текст -->
+                        Первые поселения были примитивны: деревянные стены, костры и простые инструменты. 
+                        Но дух исследований и стремление к прогрессу вели поселенцев вперёд.
+                    </p>
+                    <div class="quote">
+                        «Мы пришли в этот мир, чтобы построить не просто дома, а целую цивилизацию. 
+                        Мы стали первыми, кто зажёг огонь в этом мире.»
+                        <span class="author">— Из хроник Первопроходцев</span>
+                    </div>
+                </div>
+
+                <!-- Глава 2: Индустриальная революция -->
+                <div class="chapter">
+                    <h3><span class="chapter-icon">🏭</span> Глава 2: Индустриальная революция</h3>
+                    <p>
+                        <!-- Вставьте текст об индустриализации -->
+                        К <span class="green">2027 году</span> мир изменился. Деревянные постройки сменились каменными, 
+                        а ручной труд — механизированным. Появились первые <span class="highlight">фабрики</span> 
+                        и автоматизированные производства.
+                    </p>
+                    <p>
+                        <!-- Продолжайте -->
+                        Ресурсы стали добываться быстрее, появились новые технологии. 
+                        Энергетические системы начали питать целые города. 
+                        Мир вступил в эру <span class="red">Индустриальной революции</span>.
+                    </p>
+                    <ul>
+                        <li>Появление первых паровых двигателей</li>
+                        <li>Строительство железных дорог</li>
+                        <li>Развитие металлургии</li>
+                        <li>Создание энергетических систем</li>
+                    </ul>
+                </div>
+
+                <!-- Глава 3: Открытие артефактов -->
+                <div class="chapter">
+                    <h3><span class="chapter-icon">🔮</span> Глава 3: Открытие артефактов</h3>
+                    <p>
+                        <!-- Вставьте текст об артефактах -->
+                        В <span class="purple">2028 году</span> произошло событие, изменившее мир навсегда. 
+                        В древних руинах были найдены <span class="highlight">артефакты</span> — технологии, 
+                        оставленные цивилизацией, существовавшей задолго до Первопроходцев.
+                    </p>
+                    <p>
+                        <!-- Продолжайте -->
+                        Эти артефакты дали невероятные возможности: создание материалов, 
+                        невозможных ранее, управление энергией, преобразование реальности. 
+                        Но вместе с ними пришла и <span class="red">опасность</span> — те, кто владел артефактами, 
+                        получали неограниченную власть.
+                    </p>
+                    <ul>
+                        <li>Обнаружение первых кристаллов силы</li>
+                        <li>Изучение древних технологий</li>
+                        <li>Создание первых кибер-имплантов</li>
+                        <li>Разделение на фракции</li>
+                    </ul>
+                </div>
+
+                <!-- Глава 4: Война фракций -->
+                <div class="chapter">
+                    <h3><span class="chapter-icon">⚔️</span> Глава 4: Война фракций</h3>
+                    <p>
+                        <!-- Вставьте текст о войне -->
+                        <span class="red">2029 год</span> стал годом Великого конфликта. 
+                        Те, кто обладал артефактами, решили использовать их для достижения собственных целей. 
+                        <span class="highlight">Фракции</span> вступили в борьбу за контроль над технологиями и ресурсами.
+                    </p>
+                    <p>
+                        <!-- Продолжайте -->
+                        Война длилась долгие месяцы. Города пали, технологии были уничтожены, 
+                        а мир оказался на грани катастрофы. Но даже в самые тёмные времена 
+                        находились те, кто стремился к <span class="green">миру и созиданию</span>.
+                    </p>
+                    <div class="quote">
+                        «Война — это не всегда смерть и разрушение. Иногда это рождение нового мира, 
+                        свободного от ошибок прошлого.»
+                        <span class="author">— Из дневников Миротворца</span>
+                    </div>
+                </div>
+
+                <!-- Глава 5: Новая эра -->
+                <div class="chapter">
+                    <h3><span class="chapter-icon">🤝</span> Глава 5: Новая эра</h3>
+                    <p>
+                        <!-- Вставьте текст о новой эре -->
+                        К <span class="purple">2030 году</span> мир пришёл к перемирию. 
+                        Фракции осознали, что совместное развитие гораздо эффективнее бесконечных войн. 
+                        Началась <span class="highlight">Новая эра</span> — время сотрудничества и прогресса.
+                    </p>
+                    <p>
+                        <!-- Продолжайте -->
+                        Сегодня HW Pro MC — это процветающий мир с развитой <span class="green">индустрией</span>, 
+                        мощной <span class="highlight">экономикой</span> и уникальной <span class="purple">культурой</span>. 
+                        Но история продолжается, и каждый игрок может <span class="red">вписать своё имя</span> 
+                        в летописи этого мира.
+                    </p>
+                    <ul>
+                        <li>Восстановление городов</li>
+                        <li>Совместные технологические проекты</li>
+                        <li>Развитие культуры и искусства</li>
+                        <li>Создание единой экономики</li>
+                    </ul>
+                </div>
+
+            </div>
+            <!-- ============================================================ -->
+            <!-- ====== КОНЕЦ БЛОКА ДЛЯ ВСТАВКИ ТЕКСТА ====== -->
+            <!-- ============================================================ -->
+
+            <!-- Contact Section -->
+            <section class="section" id="contact">
+                <h2 class="section-title"><span class="gold">Стать</span> <span class="red">частью истории</span></h2>
+
+                <div class="contact-section">
+                    <h3>📖 Впиши своё имя в летописи</h3>
+                    <p class="contact-sub">Присоединяйся к серверу и стань частью истории мира HW Pro MC</p>
+
+                    <div class="contact-links">
+                        <a href="/HWProMinecraft.html" class="contact-btn gold">
+                            <i class="fas fa-server"></i> На сервер
+                        </a>
+                        <a href="https://t.me/hw_protection" target="_blank" class="contact-btn red">
+                            <i class="fab fa-telegram"></i> Telegram
+                        </a>
+                        <a href="https://vk.com/hw_protection" target="_blank" class="contact-btn purple">
+                            <i class="fab fa-vk"></i> VK
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- ===== ФУТЕР ===== -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="icon-row">
+                <span>⟁</span>
+                <span>📖</span>
+                <span>⛏️</span>
+                <span>🛡️</span>
+                <span>⚡</span>
+            </div>
+            <p>HW Pro Minecraft History © 2026-2030 | Летописи мира</p>
+            <p style="font-size: 0.6rem; color: var(--text-muted); margin-top: 0.2rem;">
+                📖 История пишется сегодня. Стань её частью.
+            </p>
+            <div class="hashtags">
+                <span>#HWProMC</span>
+                <span>#История</span>
+                <span>#Летописи</span>
+                <span>#MinecraftRP</span>
+                <span>#Лор</span>
+            </div>
+            <div class="footer-links">
+                <a href="#">Политика анонимности</a>
+                <a href="#">Условия использования</a>
+                <a href="#">Контакты</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================================
+        // ЗАСТАВКА
+        // ============================================================
+        (function() {
+            const bootScreen = document.getElementById('bootScreen');
+            setTimeout(() => {
+                bootScreen.classList.add('hidden');
+            }, 2800);
+        })();
+
+        // ============================================================
+        // МАТРИЦА
+        // ============================================================
+        (function() {
+            const canvas = document.getElementById('matrix-canvas');
+            const ctx = canvas.getContext('2d');
+
+            let width, height;
+            let columns = [];
+            let mouseX = 0;
+            let mouseY = 0;
+            const FONT_SIZE = 16;
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+                const colCount = Math.floor(width / FONT_SIZE);
+                columns = [];
+                for (let i = 0; i < colCount; i++) {
+                    columns.push({
+                        x: i * FONT_SIZE,
+                        y: Math.random() * height,
+                        speed: 0.5 + Math.random() * 1.2,
+                        chars: '0123456789ABCDEF',
+                        length: 5 + Math.floor(Math.random() * 10),
+                    });
+                }
+            }
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function drawMatrix() {
+                ctx.fillStyle = 'rgba(10, 10, 10, 0.04)';
+                ctx.fillRect(0, 0, width, height);
+
+                ctx.font = `${FONT_SIZE}px 'JetBrains Mono', monospace`;
+                ctx.textAlign = 'center';
+
+                columns.forEach(col => {
+                    const dx = mouseX - col.x;
+                    const dy = mouseY - col.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const maxDist = 180;
+
+                    if (dist < maxDist && dist > 0) {
+                        const force = (1 - dist / maxDist) * 2.5;
+                        col.speed = 0.8 + force * 2;
+                    }
+
+                    col.y += col.speed;
+
+                    if (col.y > height) {
+                        col.y = -col.length * FONT_SIZE;
+                        col.speed = 0.5 + Math.random() * 1.2;
+                    }
+
+                    const charLen = col.length;
+                    for (let i = 0; i < charLen; i++) {
+                        const yPos = col.y - i * FONT_SIZE;
+                        if (yPos < 0 || yPos > height) continue;
+
+                        const char = col.chars[Math.floor(Math.random() * col.chars.length)];
+                        const brightness = 1 - (i / charLen);
+                        const alpha = 0.2 + brightness * 0.6;
+
+                        const gold = Math.floor(160 + 95 * brightness);
+                        ctx.fillStyle = `rgba(${gold}, ${Math.floor(160 + 95 * brightness)}, ${Math.floor(20 * brightness)}, ${alpha})`;
+                        ctx.fillText(char, col.x, yPos);
+                    }
+
+                    const headY = col.y;
+                    if (headY > 0 && headY < height) {
+                        const headChar = col.chars[Math.floor(Math.random() * col.chars.length)];
+                        ctx.fillStyle = `rgba(255, 215, 0, 0.8)`;
+                        ctx.shadowColor = 'rgba(255, 215, 0, 0.15)';
+                        ctx.shadowBlur = 8;
+                        ctx.fillText(headChar, col.x, headY);
+                        ctx.shadowBlur = 0;
+                    }
+                });
+
+                requestAnimationFrame(drawMatrix);
+            }
+
+            window.addEventListener('resize', resize);
+            resize();
+            drawMatrix();
+        })();
+
+        // ============================================================
+        // АНИМАЦИЯ КАРТОЧЕК
+        // ============================================================
+        (function() {
+            const cards = document.querySelectorAll('.history-content, .mini-timeline, .security-banner, .contact-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.05 });
+
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        })();
+    </script>
+</body>
+</html>
