@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="HW Pro Press — архив выпусков газеты HW Pro. Хакерская газета, кибербезопасность, анонимность.">
+    <title>HW Pro Press | Архив газеты</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-deep: #0a0a0a;
+            --bg-surface: #0f0f0f;
+            --bg-card: #0d0d0d;
+            --accent-red: #ff0033;
+            --accent-green: #00ff41;
+            --accent-cyan: #00ffff;
+            --accent-gold: #ffd700;
+            --text-primary: #c0c0c0;
+            --text-secondary: #6a6a6a;
+            --text-muted: #3a3a3a;
+            --border-subtle: #1a1a1a;
+            --glow-red: 0 0 30px rgba(255, 0, 51, 0.1);
+            --glow-green: 0 0 30px rgba(0, 255, 65, 0.08);
+            --glow-gold: 0 0 30px rgba(255, 215, 0, 0.06);
+            --font-mono: 'JetBrains Mono', monospace;
+            --scanline: rgba(0, 0, 0, 0.03);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg-deep);
+            font-family: var(--font-mono);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
+            overflow-x: hidden;
+            position: relative;
+            cursor: default;
+            font-size: 14px;
+        }
+
+        /* ===== ЭФФЕКТ СКАНИРОВАНИЯ ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.03) 0px,
+                rgba(0, 0, 0, 0.03) 2px,
+                transparent 2px,
+                transparent 4px
+            );
+            pointer-events: none;
+            z-index: 9999;
+            animation: scanline 0.1s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(4px); }
+        }
+
+        /* ===== МАТРИЦА ===== */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.06;
+        }
+
+        /* ===== ТЕРМИНАЛЬНАЯ ЗАСТАВКА ===== */
+        .terminal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-deep);
+            z-index: 9998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .terminal-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .terminal-boot {
+            font-family: var(--font-mono);
+            color: var(--accent-green);
+            text-align: center;
+            max-width: 700px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 255, 65, 0.1);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 60px rgba(0, 255, 65, 0.02);
+        }
+
+        .terminal-boot .ascii-art {
+            font-size: 0.45rem;
+            line-height: 1.1;
+            color: var(--accent-gold);
+            letter-spacing: 0px;
+            white-space: pre;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.08);
+        }
+
+        .terminal-boot .boot-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .terminal-boot .boot-text .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background: var(--accent-green);
+            animation: blink-cursor 1s step-end infinite;
+            vertical-align: text-bottom;
+            margin-left: 2px;
+        }
+
+        @keyframes blink-cursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .terminal-boot .progress-bar {
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 255, 65, 0.05);
+            margin-top: 1rem;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .terminal-boot .progress-bar .fill {
+            height: 100%;
+            width: 0%;
+            background: var(--accent-gold);
+            animation: boot-progress 2.5s ease-in-out forwards;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+        }
+
+        @keyframes boot-progress {
+            0% { width: 0%; }
+            30% { width: 15%; }
+            60% { width: 45%; }
+            80% { width: 75%; }
+            95% { width: 92%; }
+            100% { width: 100%; }
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== ХЕДЕР ===== */
+        .glass-header {
+            background: rgba(10, 10, 10, 0.95);
+            border-bottom: 1px solid rgba(255, 0, 51, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0.4rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.3rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--accent-gold);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .logo-icon span {
+            color: #000;
+            font-weight: 900;
+            font-size: 1.1rem;
+        }
+
+        .logo-text {
+            color: var(--accent-gold);
+            letter-spacing: -0.5px;
+        }
+
+        .logo .badge-press {
+            font-size: 0.45rem;
+            background: var(--accent-gold);
+            color: #000;
+            padding: 2px 8px;
+            border-radius: 40px;
+            font-weight: 700;
+            animation: pulse-badge 2s infinite;
+        }
+
+        @keyframes pulse-badge {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: 0.3s;
+            font-family: var(--font-mono);
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '>';
+            color: var(--accent-green);
+            opacity: 0;
+            transition: opacity 0.3s;
+            margin-right: 4px;
+        }
+
+        .nav-links a:hover::before,
+        .nav-links a.active::before {
+            opacity: 1;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-green);
+        }
+
+        .rule-trigger {
+            background: rgba(255, 0, 51, 0.04);
+            border: 1px solid rgba(255, 0, 51, 0.15);
+            padding: 6px 16px;
+            border-radius: 60px;
+            font-weight: 600;
+            color: var(--accent-red);
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .rule-trigger:hover {
+            background: rgba(255, 0, 51, 0.08);
+            box-shadow: 0 0 20px rgba(255, 0, 51, 0.05);
+        }
+
+        /* ===== ГЕРО ===== */
+        .hero-section {
+            padding: 3rem 0 2.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.03);
+            border: 1px solid rgba(255, 215, 0, 0.08);
+            border-radius: 60px;
+            padding: 0.3rem 1.5rem;
+            font-size: 0.6rem;
+            font-family: var(--font-mono);
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            font-size: 3.8rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 0.8rem;
+            font-family: var(--font-mono);
+            background: linear-gradient(135deg, #ffffff, var(--accent-gold), var(--accent-red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-title .slash {
+            color: var(--accent-green);
+            -webkit-text-fill-color: var(--accent-green);
+        }
+
+        .hero-desc {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .hero-desc .accent-text {
+            color: var(--accent-gold);
+        }
+
+        .hero-desc .red-text {
+            color: var(--accent-red);
+        }
+
+        .legal-note {
+            font-size: 0.6rem;
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+            background: rgba(0, 0, 0, 0.3);
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 40px;
+            margin-top: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        /* ===== СТАТИСТИКА ГАЗЕТЫ ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0 1rem;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 215, 0, 0.02);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.02);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            color: var(--accent-gold);
+            display: block;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.05);
+        }
+
+        .stat-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            margin-top: 2px;
+        }
+
+        /* ===== ТЕРМИНАЛЬНЫЙ БАННЕР ===== */
+        .terminal-banner {
+            background: var(--bg-surface);
+            border: 1px solid rgba(255, 215, 0, 0.04);
+            border-radius: 12px;
+            padding: 1.2rem 1.8rem;
+            margin: 2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            font-family: var(--font-mono);
+        }
+
+        .terminal-banner .term-text {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .terminal-banner .term-text .prompt {
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .terminal-banner .term-text .cmd {
+            color: var(--text-secondary);
+        }
+
+        .terminal-banner .term-text .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1rem;
+            background: var(--accent-green);
+            animation: blink-cursor 1s step-end infinite;
+            vertical-align: text-bottom;
+        }
+
+        .terminal-badge {
+            background: rgba(255, 215, 0, 0.03);
+            border: 1px solid rgba(255, 215, 0, 0.06);
+            padding: 6px 18px;
+            border-radius: 60px;
+            font-size: 0.6rem;
+            font-family: var(--font-mono);
+            color: var(--accent-gold);
+        }
+
+        /* ===== АРХИВ ГАЗЕТ ===== */
+        .archive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.8rem;
+            margin: 2.5rem 0;
+        }
+
+        .newspaper-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 215, 0, 0.04);
+            border-radius: 16px;
+            padding: 1.8rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .newspaper-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-red), var(--accent-gold));
+            opacity: 0.3;
+            transition: opacity 0.3s;
+        }
+
+        .newspaper-card:hover::before {
+            opacity: 1;
+        }
+
+        .newspaper-card:hover {
+            border-color: var(--accent-gold);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), var(--glow-gold);
+        }
+
+        .newspaper-card .issue-number {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            margin-bottom: 0.5rem;
+        }
+
+        .newspaper-card .issue-icon {
+            font-size: 3rem;
+            color: var(--accent-gold);
+            margin-bottom: 0.8rem;
+            display: block;
+            opacity: 0.6;
+        }
+
+        .newspaper-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .newspaper-card .issue-date {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            margin-bottom: 0.8rem;
+        }
+
+        .newspaper-card .issue-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
+        }
+
+        .newspaper-card .issue-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .newspaper-card .issue-tags span {
+            background: rgba(255, 215, 0, 0.04);
+            border: 1px solid rgba(255, 215, 0, 0.04);
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-size: 0.55rem;
+            color: var(--accent-gold);
+            font-family: var(--font-mono);
+        }
+
+        .pdf-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-gold);
+            color: #000;
+            padding: 10px 28px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            font-family: var(--font-mono);
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .pdf-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.2);
+        }
+
+        .pdf-btn.red {
+            background: var(--accent-red);
+            color: #000;
+        }
+
+        .pdf-btn.red:hover {
+            box-shadow: 0 0 40px rgba(255, 0, 51, 0.2);
+        }
+
+        /* ===== АНОНИМ БАННЕР ===== */
+        .anonym-banner {
+            background: rgba(0, 0, 0, 0.4);
+            border-left: 3px solid var(--accent-gold);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .anonym-banner .anon-text {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .anonym-banner .anon-text .icon {
+            font-size: 2rem;
+        }
+
+        .anonym-banner .anon-text p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .anonym-banner .anon-text .highlight {
+            color: var(--accent-gold);
+        }
+
+        .anon-tag {
+            font-size: 0.6rem;
+            font-family: var(--font-mono);
+            background: rgba(255, 215, 0, 0.02);
+            padding: 4px 14px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 215, 0, 0.04);
+            color: var(--accent-gold);
+        }
+
+        /* ===== ФУТЕР ===== */
+        .footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            padding: 2rem 0;
+            margin-top: 2.5rem;
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .footer .icon-row {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 0.6rem;
+            font-size: 1rem;
+            opacity: 0.15;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.6rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.65rem;
+            font-family: var(--font-mono);
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        /* ===== МОДАЛКА ПРАВИЛ ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 2, 2, 0.98);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s ease;
+            font-family: var(--font-mono);
+            backdrop-filter: blur(20px);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background: var(--bg-deep);
+            border: 1px solid rgba(255, 215, 0, 0.04);
+            border-radius: 16px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            transform: scale(0.95);
+            transition: transform 0.3s;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-container::-webkit-scrollbar {
+            width: 3px;
+        }
+        .modal-container::-webkit-scrollbar-thumb {
+            background: var(--accent-gold);
+            border-radius: 2px;
+        }
+
+        .modal-header {
+            padding: 1.2rem 1.8rem 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .modal-header h2 {
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: 0.3s;
+            padding: 0 4px;
+        }
+
+        .close-modal:hover {
+            color: var(--accent-red);
+        }
+
+        .modal-body {
+            padding: 1.2rem 1.8rem 1.8rem;
+        }
+
+        .rule-article {
+            margin-bottom: 1.2rem;
+            border-left: 2px solid var(--accent-red);
+            padding-left: 0.8rem;
+        }
+
+        .rule-article h4 {
+            font-size: 0.9rem;
+            color: var(--accent-red);
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+        }
+
+        .rule-article p, .rule-article li {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            line-height: 1.6;
+            margin-bottom: 0.2rem;
+        }
+
+        .legal-stamp {
+            margin-top: 1.5rem;
+            padding-top: 0.8rem;
+            text-align: center;
+            font-size: 0.6rem;
+            border-top: 1px dashed rgba(255, 255, 255, 0.02);
+            color: var(--text-muted);
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .container { padding: 0 1rem; }
+            .header-inner { flex-direction: column; align-items: center; text-align: center; }
+            .nav-links { justify-content: center; gap: 0.8rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .archive-grid { grid-template-columns: 1fr; }
+            .anonym-banner { flex-direction: column; text-align: center; }
+            .anonym-banner .anon-text { flex-direction: column; text-align: center; }
+            .terminal-banner { flex-direction: column; text-align: center; }
+            .terminal-banner .term-text { flex-direction: column; text-align: center; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title { font-size: 2rem; }
+            .stats-grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+            .stat-number { font-size: 1.6rem; }
+            .modal-container { width: 95%; }
+            .terminal-boot .ascii-art { font-size: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== ТЕРМИНАЛЬНАЯ ЗАСТАВКА ===== -->
+    <div class="terminal-overlay" id="bootScreen">
+        <div class="terminal-boot">
+            <div class="ascii-art">
+   ██╗  ██╗██╗    ██╗    ██████╗ ██████╗  ██████╗ 
+   ██║  ██║██║    ██║    ██╔══██╗██╔══██╗██╔═══██╗
+   ███████║██║ █╗ ██║    ██████╔╝██████╔╝██║   ██║
+   ██╔══██║██║███╗██║    ██╔═══╝ ██╔══██╗██║   ██║
+   ██║  ██║╚███╔███╔╝    ██║     ██║  ██║╚██████╔╝
+   ╚═╝  ╚═╝ ╚══╝╚══╝     ╚═╝     ╚═╝  ╚═╝ ╚═════╝ 
+   📰  📰  📰  📰  📰  📰  📰  📰  📰  📰  📰
+            </div>
+            <div class="boot-text">
+                <span style="color:var(--accent-gold);">> HW Pro Press System v.1.0</span><br>
+                <span style="color:var(--text-muted);">>> Загрузка архива газет... Инициализация выпусков...</span><br>
+                <span style="color:var(--text-muted);">>>> Анонимный доступ активирован</span>
+                <span class="cursor"></span>
+            </div>
+            <div class="progress-bar">
+                <div class="fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== ИНТЕРАКТИВНАЯ МАТРИЦА ===== -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <header class="glass-header">
+        <div class="container header-inner">
+            <a href="/" class="logo">
+                <div class="logo-icon"><span>⟁</span></div>
+                <span class="logo-text">HW Pro Press</span>
+                <span class="badge-press">📰 NEWS</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#" class="active">Архив</a></li>
+                    <li><a href="#newspapers">Выпуски</a></li>
+                    <li><a href="/portal.html">Портал</a></li>
+                    <li><a href="/HW_Pro_Audio.html">Аудио</a></li>
+                    <li><a href="/close.html">Minecraft</a></li>
+                </ul>
+            </nav>
+            <button class="rule-trigger" id="openRulesBtn">📜 О проекте</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <!-- ===== ГЕРО ===== -->
+            <section class="hero-section">
+                <div class="badge"><span class="icon">📰</span> // АРХИВ ГАЗЕТЫ HW PRO</div>
+                <h1 class="hero-title">
+                    HW <span class="slash">/</span> PRESS
+                </h1>
+                <p class="hero-desc">
+                    <span class="red-text">>_</span> Полный архив выпусков газеты <span class="accent-text">HW Pro</span>. 
+                    Анонимность, кибербезопасность и свобода слова.
+                </p>
+                <div class="legal-note">📄 Все выпуски в формате PDF • Zero-Logs • Анонимный доступ</div>
+            </section>
+
+            <!-- ===== СТАТИСТИКА ===== -->
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalIssues">0</span>
+                    <span class="stat-label">всего выпусков</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">256</span>
+                    <span class="stat-label">бит шифрования</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">анонимность</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">∞</span>
+                    <span class="stat-label">свобода слова</span>
+                </div>
+            </div>
+
+            <!-- ===== ТЕРМИНАЛЬНЫЙ БАННЕР ===== -->
+            <div class="terminal-banner">
+                <div class="term-text">
+                    <span class="prompt">root@hw_press:~$</span>
+                    <span class="cmd">./archive --list --format=pdf</span>
+                    <span class="cursor"></span>
+                </div>
+                <span class="terminal-badge">📄 Архив загружен</span>
+            </div>
+
+            <!-- ===== АНОНИМНЫЙ БАННЕР ===== -->
+            <div class="anonym-banner">
+                <div class="anon-text">
+                    <span class="icon">🕶️</span>
+                    <div>
+                        <p><span class="highlight">>_</span> Полная анонимность чтения. Никаких логов, трекеров и идентификации. 
+                        Ваша цифровая тень не покинет этого портала.</p>
+                    </div>
+                </div>
+                <span class="anon-tag">#no_track · #zero_fingerprint</span>
+            </div>
+
+            <!-- ===== АРХИВ ГАЗЕТ ===== -->
+            <section id="newspapers" style="padding: 1rem 0 2rem;">
+                <h2 style="font-size: 1.8rem; font-weight: 700; font-family: var(--font-mono); text-align: center; margin-bottom: 1.5rem; position: relative;">
+                    <span style="color: var(--accent-gold);">Архив</span> 
+                    <span style="color: var(--accent-red);">выпусков</span>
+                    <div style="content: ''; display: block; width: 50px; height: 2px; background: linear-gradient(90deg, var(--accent-gold), var(--accent-red)); margin: 0.5rem auto; border-radius: 2px;"></div>
+                </h2>
+
+                <div class="archive-grid" id="newspaperGrid">
+                    <!-- Выпуски будут загружены через JavaScript -->
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- ===== ФУТЕР ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="icon-row">
+                <span>⟁</span>
+                <span>📰</span>
+                <span>🛡️</span>
+                <span>🔐</span>
+                <span>🕶️</span>
+            </div>
+            <p>HW Pro Press © 2025 — Архив газеты. Анонимность и свобода слова.</p>
+            <p style="font-size: 0.6rem; color: var(--text-muted); margin-top: 0.2rem;">Все выпуски доступны для анонимного чтения в формате PDF</p>
+            <div class="footer-links">
+                <a href="#">Политика анонимности</a>
+                <a href="#" id="footerRuleLink">О проекте</a>
+                <a href="#">Реестр HW_Sandbox · #2406</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== МОДАЛКА ===== -->
+    <div id="rulesModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>📰 О проекте HW Pro Press</h2>
+                <button class="close-modal" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="rule-article">
+                    <h4>Статус проекта</h4>
+                    <p>HW Pro Press — независимый архив газеты, посвящённой кибербезопасности, анонимности и свободе информации.</p>
+                    <p>Все выпуски распространяются бесплатно в формате PDF.</p>
+                </div>
+                <div class="rule-article">
+                    <h4>Принципы анонимности</h4>
+                    <p>Платформа не собирает cookies и не использует метрики слежения.</p>
+                    <p>Логирование сведений о пользователях сведено к абсолютному минимуму.</p>
+                </div>
+                <div class="rule-article">
+                    <h4>Свобода слова</h4>
+                    <p>Газета публикует материалы на темы кибербезопасности, хакинга, анонимности и цифровых прав.</p>
+                </div>
+                <div class="legal-stamp">
+                    🕶️ HW Pro Press — анонимность и свобода слова<br>
+                    📦 Зарегистрировано в HW_Sandbox (ID: HW-PRESS-001)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // 1. ИНТЕРАКТИВНАЯ МАТРИЦА
+        // ============================================================
+        (function() {
+            const canvas = document.getElementById('matrix-canvas');
+            const ctx = canvas.getContext('2d');
+
+            let width, height;
+            let columns = [];
+            let mouseX = 0;
+            let mouseY = 0;
+            const chars = '0123456789ABCDEF';
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+                const fontSize = 16;
+                const colCount = Math.floor(width / fontSize);
+                columns = [];
+                for (let i = 0; i < colCount; i++) {
+                    columns.push({
+                        x: i * fontSize,
+                        y: Math.random() * height,
+                        speed: 0.5 + Math.random() * 1.2,
+                        length: 5 + Math.floor(Math.random() * 15),
+                    });
+                }
+            }
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function drawMatrix() {
+                ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
+                ctx.fillRect(0, 0, width, height);
+
+                const fontSize = 16;
+                ctx.font = `${fontSize}px 'JetBrains Mono', monospace`;
+
+                columns.forEach(col => {
+                    const dx = mouseX - col.x;
+                    const dy = mouseY - col.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const maxDist = 180;
+
+                    if (dist < maxDist && dist > 0) {
+                        col.speed = 0.8 + (1 - dist / maxDist) * 2.5;
+                    }
+
+                    col.y += col.speed;
+
+                    if (col.y > height) {
+                        col.y = -col.length * fontSize;
+                        col.speed = 0.5 + Math.random() * 1.2;
+                    }
+
+                    const charLen = col.length;
+                    for (let i = 0; i < charLen; i++) {
+                        const yPos = col.y - i * fontSize;
+                        if (yPos < 0 || yPos > height) continue;
+
+                        const char = chars[Math.floor(Math.random() * chars.length)];
+                        const brightness = 1 - (i / charLen);
+                        const alpha = 0.2 + brightness * 0.6;
+
+                        const gold = Math.floor(180 + 75 * brightness);
+                        ctx.fillStyle = `rgba(${gold}, ${Math.floor(160 + 95 * brightness)}, ${Math.floor(20 * brightness)}, ${alpha})`;
+                        ctx.fillText(char, col.x, yPos);
+                    }
+
+                    const headY = col.y;
+                    if (headY > 0 && headY < height) {
+                        const headChar = chars[Math.floor(Math.random() * chars.length)];
+                        ctx.fillStyle = `rgba(255, 215, 0, 0.9)`;
+                        ctx.shadowColor = 'rgba(255, 215, 0, 0.2)';
+                        ctx.shadowBlur = 10;
+                        ctx.fillText(headChar, col.x, headY);
+                        ctx.shadowBlur = 0;
+                    }
+                });
+
+                requestAnimationFrame(drawMatrix);
+            }
+
+            window.addEventListener('resize', resize);
+            resize();
+            drawMatrix();
+        })();
+
+        // ============================================================
+        // 2. ЗАСТАВКА
+        // ============================================================
+        (function() {
+            const bootScreen = document.getElementById('bootScreen');
+            setTimeout(() => {
+                bootScreen.classList.add('hidden');
+            }, 3000);
+        })();
+
+        // ============================================================
+        // 3. ДАННЫЕ ВЫПУСКОВ ГАЗЕТЫ
+        // ============================================================
+        const newspaperIssues = [
+            {
+                id: 1,
+                number: "№1",
+                title: "Первый выпуск",
+                date: "... 2026",
+                description: "HW Pro выходит в свет.",
+                tags: ["Открытие", "Новости IT", "Кибербезопасность", "Отдых"],
+                file: "HWProPress/hwpro_issue_1.pdf",
+                icon: "📰"
+            }
+            //{
+            //    id: 2,
+            //    number: "№2",
+            //    title: "Тёмная сторона сети",
+            //    date: "Февраль 2025",
+            //    description: "Исследование Deep Web, технологии анонимизации и инструменты для защиты данных.",
+            //    tags: ["Deep Web", "Анонимизация", "Защита", "Отдых"],
+            //    file: "HWProPress/hwpro_issue_2.pdf",
+            //    icon: "🌐"
+            //},
+            //{
+            //    id: 3,
+            //    number: "№3",
+            //    title: "Кибервойны и хактивизм",
+            //    date: "Март 2025",
+            //    description: "Анализ современных киберконфликтов, роль хактивизма и цифровое сопротивление.",
+            //    tags: ["Хактивизм", "Кибервойны", "Сопротивление", "Отдых"],
+            //    file: "HWProPress/hwpro_issue_3.pdf",
+            //    icon: "⚔️"
+            //},
+            //{
+            //    id: 4,
+            //    number: "№4",
+            //    title: "Искусственный интеллект",
+            //    date: "Апрель 2025",
+            //    description: "Влияние AI на безопасность, этические аспекты и будущее технологий.",
+            //    tags: ["AI", "Этика", "Будущее", "Отдых"],
+            //    file: "HWProPress/hwpro_issue_4.pdf",
+            //    icon: "🤖"
+            //},
+            //{
+            //    id: 5,
+            //    number: "№5",
+            //    title: "Спецвыпуск: HWPro_OS",
+            //    date: "Май 2025",
+            //    description: "Полный обзор операционной системы HWPro_OS, её архитектура и возможности.",
+            //    tags: ["HWPro_OS", "ОС", "Анонимность", "Отдых"],
+            //    file: "HWProPress/hwpro_issue_5.pdf",
+            //    icon: "💻"
+            //},
+            //{
+            //    id: 6,
+            //    number: "№6",
+            //    title: "Цифровая безопасность",
+            //    date: "Июнь 2025",
+            //    description: "Практические советы по защите данных, шифрованию и анонимной работе в сети.",
+            //    tags: ["Безопасность", "Шифрование", "Практика", "Отдых"],
+            //    file: "HWProPress/hwpro_issue_6.pdf",
+            //    icon: "🛡️"
+            //}
+        ];
+
+        // ============================================================
+        // 4. ОТРИСОВКА ВЫПУСКОВ
+        // ============================================================
+        function renderNewspapers() {
+            const grid = document.getElementById('newspaperGrid');
+            if (!grid) return;
+
+            let html = '';
+            newspaperIssues.forEach(issue => {
+                html += `
+                    <div class="newspaper-card">
+                        <div class="issue-number">${issue.number}</div>
+                        <span class="issue-icon">${issue.icon}</span>
+                        <h3>${issue.title}</h3>
+                        <div class="issue-date">📅 ${issue.date}</div>
+                        <div class="issue-desc">${issue.description}</div>
+                        <div class="issue-tags">
+                            ${issue.tags.map(tag => `<span>#${tag}</span>`).join('')}
+                        </div>
+                        <a href="pdf/${issue.file}" target="_blank" class="pdf-btn">
+                            <i class="fas fa-file-pdf"></i> Читать PDF
+                        </a>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+
+            // Обновляем счётчик
+            document.getElementById('totalIssues').textContent = newspaperIssues.length;
+        }
+
+        // ============================================================
+        // 5. МОДАЛКА
+        // ============================================================
+        (function() {
+            const modal = document.getElementById('rulesModal');
+            const openBtns = document.querySelectorAll('#openRulesBtn, #footerRuleLink');
+            const closeBtn = document.getElementById('closeModalBtn');
+
+            function openModal() {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal() {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            openBtns.forEach(btn => {
+                if(btn) btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openModal();
+                });
+            });
+
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+        })();
+
+        // ============================================================
+        // 6. ЗАПУСК
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            renderNewspapers();
+
+            // Анимация карточек при появлении
+            const cards = document.querySelectorAll('.newspaper-card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
