@@ -47,7 +47,137 @@
             position: relative;
         }
 
-        /* === КАНВАС ДЛЯ МАТРИЦЫ (живые обои) === */
+        /* === ЭКРАН ВХОДА === */
+        .login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .login-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .login-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem 3rem;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .login-box .logo {
+            font-family: var(--font-mono);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .login-box .logo .green {
+            color: var(--accent-green);
+        }
+
+        .login-box .subtitle {
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            margin-bottom: 1.5rem;
+            font-family: var(--font-mono);
+        }
+
+        .login-box .subtitle .highlight {
+            color: var(--accent);
+        }
+
+        .login-box .input-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .login-box .input-group label {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            font-family: var(--font-mono);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .login-box .input-group input {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .login-box .input-group input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.05);
+        }
+
+        .login-box .input-group input::placeholder {
+            color: var(--text-dim);
+            opacity: 0.5;
+        }
+
+        .login-box .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 0.5rem;
+        }
+
+        .login-box .login-btn:hover {
+            background: #cc0000;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.15);
+        }
+
+        .login-box .hint {
+            color: var(--text-dim);
+            font-size: 0.65rem;
+            margin-top: 1rem;
+            font-family: var(--font-mono);
+            opacity: 0.5;
+        }
+
+        .login-box .hint .key {
+            color: var(--accent-green);
+            background: rgba(0, 255, 65, 0.04);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 255, 65, 0.06);
+        }
+
+        /* === КАНВАС ДЛЯ МАТРИЦЫ === */
         #matrix-canvas {
             position: fixed;
             top: 40px;
@@ -59,7 +189,7 @@
             opacity: 0.35;
         }
 
-        /* === ВЕРХНЯЯ ПАНЕЛЬ (TASKBAR) === */
+        /* === ВЕРХНЯЯ ПАНЕЛЬ === */
         .taskbar {
             height: 40px;
             background: var(--surface);
@@ -680,6 +810,12 @@
                 top: 40px;
                 height: calc(100% - 68px);
             }
+            .login-box {
+                padding: 2rem 1.5rem;
+            }
+            .login-box .logo {
+                font-size: 1.6rem;
+            }
         }
 
         @media (max-width: 500px) {
@@ -705,16 +841,38 @@
                 top: 36px;
                 height: calc(100% - 64px);
             }
+            .login-box .input-group input {
+                font-size: 0.8rem;
+                padding: 8px 12px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== КАНВАС ДЛЯ МАТРИЦЫ (живые обои) ===== -->
+    <!-- ===== ЭКРАН ВХОДА ===== -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-box">
+            <div class="logo">⟁ HW<span class="green">Pro</span>_OS</div>
+            <div class="subtitle">Анонимная ОС на ядре <span class="highlight">Arch Linux</span></div>
+            <div class="input-group">
+                <label>👤 Пользователь</label>
+                <input type="text" id="loginUser" value="hwpro" placeholder="Имя пользователя">
+            </div>
+            <div class="input-group">
+                <label>🔑 Пароль</label>
+                <input type="password" id="loginPass" placeholder="Введите пароль">
+            </div>
+            <button class="login-btn" id="loginBtn">⟁ Войти в систему</button>
+            <div class="hint">Подсказка: пароль <span class="key">hack</span></div>
+        </div>
+    </div>
+
+    <!-- ===== КАНВАС ДЛЯ МАТРИЦЫ ===== -->
     <canvas id="matrix-canvas"></canvas>
 
     <!-- ===== TASKBAR ===== -->
-    <div class="taskbar">
+    <div class="taskbar" id="taskbar" style="display:none;">
         <div class="logo">
             <span>⟁</span> HW<span>Pro</span>_OS
             <span class="hack-badge">⚡ HACK</span>
@@ -733,8 +891,7 @@
     </div>
 
     <!-- ===== РАБОЧИЙ СТОЛ ===== -->
-    <div class="desktop">
-
+    <div class="desktop" id="desktop" style="display:none;">
         <!-- ИКОНКИ ДЕСКТОПА -->
         <div class="desktop-icons" id="desktop-icons">
             <button class="desktop-icon" data-window="window-left">
@@ -752,6 +909,14 @@
             <button class="desktop-icon" data-modal="apply">
                 <span class="icon">📩</span>
                 <span class="label">Apply</span>
+            </button>
+            <button class="desktop-icon" data-modal="files">
+                <span class="icon">📁</span>
+                <span class="label">Файлы</span>
+            </button>
+            <button class="desktop-icon" data-modal="arch">
+                <span class="icon">🐧</span>
+                <span class="label">Arch Linux</span>
             </button>
         </div>
 
@@ -787,6 +952,9 @@
                         <div class="term-line"><span class="success">✅ Zero-Logs: активен.</span></div>
                         <div class="term-line" style="margin-top:6px;"><span class="prompt">$</span> <span class="cmd">echo "HWPro_OS — анонимная операционная система"</span></div>
                         <div class="term-line"><span class="output highlight">HWPro_OS — анонимная операционная система</span></div>
+                        <div class="term-line" style="margin-top:6px;"><span class="prompt">$</span> <span class="cmd">./systemctl --status</span></div>
+                        <div class="term-line"><span class="success">✅ Система работает стабильно. Утечек памяти не обнаружено.</span></div>
+                        <div class="term-line"><span class="success">✅ Arch Linux — основа системы. Кастомные репозитории подключены.</span></div>
                     </div>
                 </div>
             </div>
@@ -802,6 +970,14 @@
                 </div>
                 <div class="window-body">
                     <div class="kernel-info">
+                        <h2>🐧 Arch Linux — HWPro_OS</h2>
+                        <p><span class="key">Основа:</span> <span class="val">Arch Linux (ядро Linux 6.9.4)</span></p>
+                        <p><span class="key">Сборка:</span> <span class="val">Кастомная, с вырезанными GUI-компонентами</span></p>
+                        <p><span class="key">Менеджер пакетов:</span> <span class="val">Pacman + HW-репозиторий</span></p>
+                        <p><span class="key">Состояние:</span> <span class="val" style="color:var(--accent-green);">Активная разработка</span></p>
+
+                        <hr class="divider">
+
                         <h2>🖥️ HWKernel 1.0.0-rc</h2>
                         <p><span class="key">Архитектура:</span> <span class="val">x86_64, ARM64 (в разработке)</span></p>
                         <p><span class="key">Тип:</span> <span class="val">Монолитное ядро с модульной загрузкой</span></p>
@@ -839,11 +1015,13 @@
                             <span class="badge">🧩 Модульная</span>
                             <span class="badge">⚡ HWPro_OS</span>
                             <span class="badge">🕶️ Zero-Logs</span>
+                            <span class="badge">🐧 Arch Linux</span>
                         </div>
 
                         <p style="margin-top:12px; color:var(--text-dim); font-size:11px;">
                             <span class="highlight">HWPro_OS</span> разрабатывается как полностью зашифрованная и анонимная операционная система 
-                            исключительно для нужд проекта. <span style="color:var(--accent);">Полная анонимность и защита данных.</span>
+                            на основе <span style="color:var(--accent);">Arch Linux</span>. Исключительно для нужд проекта. 
+                            <span style="color:var(--accent);">Полная анонимность и защита данных.</span>
                         </p>
                     </div>
                 </div>
@@ -852,12 +1030,13 @@
     </div>
 
     <!-- ===== СТАТУСБАР ===== -->
-    <div class="statusbar">
+    <div class="statusbar" id="statusbar" style="display:none;">
         <span class="status-item"><span class="dot"></span> HWKernel 1.0.0</span>
         <span class="status-item">🔐 Шифрование: <span style="color:var(--accent-green);">активно</span></span>
         <span class="status-item">🕶️ Анонимность: <span style="color:var(--accent);">включена</span></span>
         <span class="status-item">📦 Сборка: 2026-06-23</span>
         <span class="status-item"><span style="color:var(--accent);">⚡</span> Zero-Logs</span>
+        <span class="status-item">🐧 Arch Linux</span>
         <span style="margin-left:auto;">⌨️ Ctrl+Alt+T — терминал | F3 — просмотр</span>
     </div>
 
@@ -876,7 +1055,7 @@
 
     <script>
         // ============================================================
-        // 1. МАТРИЦА — ЖИВЫЕ ОБОИ (следят за мышью)
+        // 1. МАТРИЦА — ЖИВЫЕ ОБОИ
         // ============================================================
         (function() {
             const canvas = document.getElementById('matrix-canvas');
@@ -974,7 +1153,68 @@
         })();
 
         // ============================================================
-        // 2. ОСНОВНОЙ JS (окна, модалки, часы)
+        // 2. ВХОД В СИСТЕМУ
+        // ============================================================
+        (function() {
+            const loginScreen = document.getElementById('loginScreen');
+            const loginBtn = document.getElementById('loginBtn');
+            const loginPass = document.getElementById('loginPass');
+            const loginUser = document.getElementById('loginUser');
+            const taskbar = document.getElementById('taskbar');
+            const desktop = document.getElementById('desktop');
+            const statusbar = document.getElementById('statusbar');
+
+            const correctPass = 'hack';
+
+            function login() {
+                const pass = loginPass.value.trim();
+                const user = loginUser.value.trim() || 'hwpro';
+
+                if (pass === correctPass) {
+                    // Успешный вход
+                    loginScreen.classList.add('hidden');
+                    taskbar.style.display = 'flex';
+                    desktop.style.display = 'flex';
+                    statusbar.style.display = 'flex';
+                    
+                    // Инициализация окон
+                    document.getElementById('window-left').classList.remove('hidden');
+                    document.getElementById('window-right').classList.remove('hidden');
+                    document.querySelectorAll('.desktop-icons').forEach(el => el.classList.remove('hidden'));
+                    
+                    console.log(`✅ Пользователь ${user} вошёл в систему HWPro_OS`);
+                    console.log('⚡ Zero-Logs. Полная анонимность. Arch Linux основа.');
+                    
+                    // Скрываем подсказку
+                    document.querySelector('.login-box .hint').style.opacity = '0.3';
+                } else {
+                    // Неправильный пароль
+                    loginPass.style.borderColor = 'var(--accent-red)';
+                    loginPass.style.boxShadow = '0 0 30px rgba(255, 0, 0, 0.1)';
+                    loginPass.value = '';
+                    loginPass.placeholder = '❌ Неверный пароль';
+                    setTimeout(() => {
+                        loginPass.style.borderColor = '';
+                        loginPass.style.boxShadow = '';
+                        loginPass.placeholder = 'Введите пароль';
+                    }, 2000);
+                }
+            }
+
+            loginBtn.addEventListener('click', login);
+            loginPass.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') login();
+            });
+            loginUser.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') loginPass.focus();
+            });
+
+            // Фокус на поле пароля при загрузке
+            loginPass.focus();
+        })();
+
+        // ============================================================
+        // 3. ОСНОВНОЙ JS (окна, модалки, часы)
         // ============================================================
         (function() {
             'use strict';
@@ -985,25 +1225,26 @@
                     <h2>HWPro_OS — Анонимная операционная система</h2>
                     <p><span class="highlight">Кодовое имя:</span> HWPro_OS</p>
                     <p><span class="highlight">Ядро:</span> HWKernel 1.0.0-rc</p>
+                    <p><span class="highlight">Основа:</span> Arch Linux (ядро Linux 6.9.4)</p>
                     <p><span class="highlight">Статус:</span> Активная разработка</p>
                     <p><span class="highlight">Целевая среда:</span> Исключительно для нужд проекта HW</p>
 
                     <h2>Что такое HWPro_OS?</h2>
-                    <p>Полностью зашифрованная и анонимная операционная система, построенная на собственном ядре <span class="highlight">HWKernel</span>.</p>
+                    <p>Полностью зашифрованная и анонимная операционная система, построенная на <span class="highlight">Arch Linux</span> с собственным ядром <span class="highlight">HWKernel</span>.</p>
                     <ul>
                         <li>Полное шифрование диска (LUKS2 + AES-256-XTS).</li>
                         <li>Никакой телеметрии, никакого слежения.</li>
                         <li>Zero-Logs — логи не сохраняются.</li>
                         <li>Изолированная среда для разработки и тестирования.</li>
+                        <li>Вырезаны все GUI-компоненты — только консоль.</li>
                     </ul>
 
-                    <h2>HWKernel — основа системы</h2>
-                    <p>Собственное ядро, написанное с нуля. Основные принципы:</p>
+                    <h2>Архитектура</h2>
                     <ul>
-                        <li>Минимальная поверхность атаки.</li>
+                        <li>Монолитное ядро с модульной загрузкой.</li>
+                        <li>Поддержка x86_64 и ARM64 (в разработке).</li>
                         <li>Встроенный крипто-стек.</li>
-                        <li>Поддержка только необходимых драйверов.</li>
-                        <li><span class="highlight">Анонимность и защита данных — наш приоритет.</span></li>
+                        <li>Минимальная поверхность атаки.</li>
                     </ul>
                 `,
                 kernel: `
@@ -1011,6 +1252,7 @@
                     <p><span class="highlight">Тип:</span> Монолитное ядро</p>
                     <p><span class="highlight">Архитектуры:</span> x86_64, ARM64 (в разработке)</p>
                     <p><span class="highlight">Языки:</span> C, Rust (встраиваемые модули)</p>
+                    <p><span class="highlight">Основа:</span> Arch Linux (ядро Linux 6.9.4)</p>
 
                     <h2>Особенности</h2>
                     <ul>
@@ -1018,6 +1260,7 @@
                         <li>Стек обфускации метаданных (анонимность).</li>
                         <li>Модульная загрузка драйверов.</li>
                         <li>Zero-Logs — полное отсутствие логирования.</li>
+                        <li>Вырезаны все GUI-компоненты.</li>
                     </ul>
 
                     <h2>Текущий статус</h2>
@@ -1025,6 +1268,7 @@
                         <li>Загрузчик: стабилен.</li>
                         <li>Крипто-модуль: протестирован.</li>
                         <li>Сеть: только loopback (режим разработки).</li>
+                        <li>Совместимость с Arch Linux: полная.</li>
                     </ul>
                 `,
                 console: `
@@ -1034,13 +1278,14 @@
                         <li>Нет графического окружения.</li>
                         <li>Нет оконного менеджера.</li>
                         <li>Только текст, команды, шифрование.</li>
+                        <li>Arch Linux в основе.</li>
                     </ul>
                     <p>Это сознательный выбор. В мире HWPro_OS мы уходим от рабочих столов. Мы работаем напрямую с машиной, сохраняя полную анонимность.</p>
                 `,
                 apply: `
                     <h2>Подача заявки тестировщика</h2>
                     <p>Отправьте PGP-зашифрованное письмо на адрес:</p>
-                    <p class="highlight email-link">hwmail@hwpro.online</p>
+                    <p class="highlight email-link">hwpro2025@icloud.com</p>
                     <p>Тема: <span class="highlight">HWProOS-TESTER-APP</span></p>
 
                     <h2>Что должно быть в заявке</h2>
@@ -1049,6 +1294,51 @@
                         <li>Открытый PGP-ключ (RSA 4096).</li>
                         <li>Опыт работы в консоли.</li>
                         <li>Фраза: «Я принимаю, что HWPro_OS не имеет GUI».</li>
+                        <li>Опыт работы с Arch Linux.</li>
+                    </ul>
+                `,
+                files: `
+                    <h2>📁 Файловая система HWPro_OS</h2>
+                    <p>Структура основана на <span class="highlight">Arch Linux</span> с кастомными модификациями:</p>
+                    <ul>
+                        <li><span class="highlight">/boot</span> — загрузчик, HWKernel</li>
+                        <li><span class="highlight">/etc/hwpro</span> — конфигурация HWPro_OS</li>
+                        <li><span class="highlight">/usr/local/hw</span> — утилиты и скрипты проекта</li>
+                        <li><span class="highlight">/home/hwpro</span> — домашняя папка</li>
+                        <li><span class="highlight">/var/log/hw</span> — логи (пусто, Zero-Logs)</li>
+                    </ul>
+                    <h2>Структура диска</h2>
+                    <ul>
+                        <li>LUKS2 + AES-256-XTS</li>
+                        <li>Разделы: /boot (не зашифрован), / (зашифрован)</li>
+                        <li>Файловая система: ext4</li>
+                    </ul>
+                `,
+                arch: `
+                    <h2>🐧 Arch Linux — основа HWPro_OS</h2>
+                    <p><span class="highlight">HWPro_OS</span> базируется на <span class="highlight">Arch Linux</span> — минималистичном и гибком дистрибутиве.</p>
+
+                    <h2>Кастомизация Arch Linux</h2>
+                    <ul>
+                        <li>Вырезаны все GUI-компоненты (Xorg, Wayland, DE).</li>
+                        <li>Установлены только минимальные пакеты для работы.</li>
+                        <li>Кастомное ядро HWKernel поверх ядра Linux.</li>
+                        <li>Собственные репозитории HW-пакетов.</li>
+                    </ul>
+
+                    <h2>Преимущества подхода</h2>
+                    <ul>
+                        <li>Минимальная поверхность атаки.</li>
+                        <li>Полный контроль над каждым компонентом.</li>
+                        <li>Совместимость с AUR (Arch User Repository).</li>
+                        <li>Высокая производительность.</li>
+                    </ul>
+
+                    <h2>Статус сборки</h2>
+                    <ul>
+                        <li>Последняя сборка: 2026-06-23</li>
+                        <li>Версия ядра: 6.9.4</li>
+                        <li>Состояние: стабильно</li>
                     </ul>
                 `
             };
@@ -1145,7 +1435,9 @@
                     if (modalId && modalContents[modalId]) {
                         const titles = {
                             console: 'Терминал HWPro_OS',
-                            apply: 'Подача заявки тестировщика'
+                            apply: 'Подача заявки тестировщика',
+                            files: 'Файловая система HWPro_OS',
+                            arch: 'Arch Linux — основа HWPro_OS'
                         };
                         openModal(modalId, titles[modalId] || modalId);
                     }
@@ -1210,6 +1502,7 @@
 
             console.log('HWPro_OS — Анонимная операционная система загружена.');
             console.log('⚡ Zero-Logs. Полная анонимность. Защита данных.');
+            console.log('🐧 Основа: Arch Linux (ядро Linux 6.9.4)');
             console.log('Управление окнами: кнопки "─" (свернуть) и "✕" (закрыть).');
             console.log('На рабочем столе — живые матричные обои.');
         })();
