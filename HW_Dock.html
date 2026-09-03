@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW Pro | Загрузка документов</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: #0a0a0a;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            color: #c0c0c0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: #0f0f0f;
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid #1a1a1a;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        }
+        
+        h1 {
+            font-size: 2rem;
+            color: #ff0033;
+            text-align: center;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #6a6a6a;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+        
+        .drop-zone {
+            border: 2px dashed rgba(255, 0, 51, 0.2);
+            border-radius: 16px;
+            padding: 50px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            background: #0d0d0d;
+            position: relative;
+        }
+        
+        .drop-zone:hover {
+            border-color: #ff0033;
+            background: rgba(255, 0, 51, 0.03);
+        }
+        
+        .drop-zone.dragover {
+            border-color: #00ff41;
+            background: rgba(0, 255, 65, 0.03);
+        }
+        
+        .drop-zone .icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 12px;
+        }
+        
+        .drop-zone h3 {
+            font-size: 1.2rem;
+            color: #c0c0c0;
+            margin-bottom: 6px;
+        }
+        
+        .drop-zone p {
+            color: #6a6a6a;
+            font-size: 0.9rem;
+        }
+        
+        .drop-zone .browse-btn {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 12px 32px;
+            background: #ff0033;
+            color: #000;
+            border: none;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        
+        .drop-zone .browse-btn:hover {
+            background: #cc0028;
+            transform: scale(1.02);
+        }
+        
+        .drop-zone input[type="file"] {
+            display: none;
+        }
+        
+        .file-list {
+            margin-top: 20px;
+        }
+        
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: #0d0d0d;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 0, 51, 0.06);
+            margin-bottom: 8px;
+        }
+        
+        .file-item .info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .file-item .info .name {
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .file-item .info .size {
+            font-size: 0.75rem;
+            color: #6a6a6a;
+        }
+        
+        .file-item .status {
+            font-size: 0.7rem;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .status.pending {
+            background: rgba(255, 170, 0, 0.1);
+            color: #ffaa00;
+            border: 1px solid rgba(255, 170, 0, 0.1);
+        }
+        
+        .status.uploading {
+            background: rgba(0, 170, 255, 0.1);
+            color: #00aaff;
+            border: 1px solid rgba(0, 170, 255, 0.1);
+            animation: pulse 1s infinite;
+        }
+        
+        .status.done {
+            background: rgba(0, 255, 65, 0.1);
+            color: #00ff41;
+            border: 1px solid rgba(0, 255, 65, 0.1);
+        }
+        
+        .status.error {
+            background: rgba(255, 0, 51, 0.1);
+            color: #ff0033;
+            border: 1px solid rgba(255, 0, 51, 0.1);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #6a6a6a;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 4px 8px;
+            transition: 0.2s;
+        }
+        
+        .remove-btn:hover {
+            color: #ff0033;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        .btn-primary {
+            background: #ff0033;
+            color: #000;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            background: #cc0028;
+            transform: scale(1.02);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.4;
+            cursor: default;
+            transform: none;
+        }
+        
+        .btn-secondary {
+            background: #1a1a1a;
+            color: #c0c0c0;
+            border: 1px solid #2a2a2a;
+        }
+        
+        .btn-secondary:hover {
+            border-color: #ff0033;
+            color: #ff0033;
+        }
+        
+        .btn-success {
+            background: #00ff41;
+            color: #000;
+        }
+        
+        .btn-success:hover {
+            background: #00cc34;
+        }
+        
+        .progress-container {
+            margin-top: 16px;
+            display: none;
+        }
+        
+        .progress-container.show {
+            display: block;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #1a1a1a;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-bar .fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff0033, #ff0066);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #6a6a6a;
+            margin-top: 6px;
+        }
+        
+        .result-box {
+            margin-top: 20px;
+            padding: 16px;
+            background: #0d0d0d;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 65, 0.1);
+            display: none;
+        }
+        
+        .result-box.show {
+            display: block;
+        }
+        
+        .result-box .link {
+            color: #00ff41;
+            word-break: break-all;
+            font-size: 0.85rem;
+        }
+        
+        .result-box .link a {
+            color: #00ff41;
+            text-decoration: none;
+        }
+        
+        .result-box .link a:hover {
+            text-decoration: underline;
+        }
+        
+        .copy-btn {
+            background: rgba(0, 255, 65, 0.1);
+            color: #00ff41;
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            padding: 4px 12px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: 0.2s;
+            margin-left: 8px;
+        }
+        
+        .copy-btn:hover {
+            background: rgba(0, 255, 65, 0.2);
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a1a;
+            color: #c0c0c0;
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 1px solid #2a2a2a;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: 0.3s;
+            pointer-events: none;
+            z-index: 999;
+            text-align: center;
+            max-width: 90%;
+        }
+        
+        .toast.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .toast.success { border-color: #00ff41; color: #00ff41; }
+        .toast.error { border-color: #ff0033; color: #ff0033; }
+        
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #3a3a3a;
+            border-top: 1px solid #1a1a1a;
+            padding-top: 20px;
+        }
+        
+        .footer a {
+            color: #6a6a6a;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            color: #ff0033;
+        }
+        
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            h1 { font-size: 1.5rem; }
+            .drop-zone { padding: 30px 15px; }
+            .file-item { flex-wrap: wrap; gap: 6px; }
+            .actions { flex-direction: column; }
+            .btn { min-width: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📄 HW Pro</h1>
+    <p class="subtitle">Загрузка документов на file.io</p>
+    
+    <!-- Дроп-зона -->
+    <div class="drop-zone" id="dropZone">
+        <span class="icon">📤</span>
+        <h3>Перетащите файлы сюда</h3>
+        <p>или нажмите для выбора</p>
+        <input type="file" id="fileInput" multiple>
+        <button class="browse-btn" id="browseBtn">Выбрать файлы</button>
+    </div>
+    
+    <!-- Прогресс -->
+    <div class="progress-container" id="progressContainer">
+        <div class="progress-bar">
+            <div class="fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text">
+            <span id="progressLabel">Загрузка...</span>
+            <span id="progressPercent">0%</span>
+        </div>
+    </div>
+    
+    <!-- Список файлов -->
+    <div class="file-list" id="fileList"></div>
+    
+    <!-- Результат -->
+    <div class="result-box" id="resultBox">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <span style="color:#00ff41; font-weight:600;">✅ Файл загружен!</span>
+            <span style="font-size:0.7rem; color:#6a6a6a;">Ссылка действительна 24 часа</span>
+        </div>
+        <div class="link" id="resultLink"></div>
+    </div>
+    
+    <!-- Кнопки -->
+    <div class="actions">
+        <button class="btn btn-primary" id="uploadBtn" disabled>
+            <span id="uploadBtnText">🚀 Загрузить все</span>
+        </button>
+        <button class="btn btn-secondary" id="clearBtn">🗑️ Очистить</button>
+    </div>
+    
+    <div class="footer">
+        <p>Файлы автоматически удаляются после первого скачивания</p>
+        <p style="margin-top:4px;">
+            <a href="#">Политика анонимности</a> · 
+            <a href="#">HW_Sandbox #2406</a>
+        </p>
+    </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+(function() {
+    'use strict';
+
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const browseBtn = document.getElementById('browseBtn');
+    const fileList = document.getElementById('fileList');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const uploadBtnText = document.getElementById('uploadBtnText');
+    const clearBtn = document.getElementById('clearBtn');
+    const progressContainer = document.getElementById('progressContainer');
+    const progressFill = document.getElementById('progressFill');
+    const progressLabel = document.getElementById('progressLabel');
+    const progressPercent = document.getElementById('progressPercent');
+    const resultBox = document.getElementById('resultBox');
+    const resultLink = document.getElementById('resultLink');
+    const toast = document.getElementById('toast');
+
+    let files = [];
+    let isUploading = false;
+    let uploadedLinks = [];
+
+    // ===== ВЫБОР ФАЙЛОВ =====
+    browseBtn.addEventListener('click', () => fileInput.click());
+    dropZone.addEventListener('click', () => fileInput.click());
+
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+            addFiles(e.target.files);
+            fileInput.value = '';
+        }
+    });
+
+    // ===== ПЕРЕТАСКИВАНИЕ =====
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('dragover');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('dragover');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+        if (e.dataTransfer.files.length > 0) {
+            addFiles(e.dataTransfer.files);
+        }
+    });
+
+    // ===== ДОБАВЛЕНИЕ ФАЙЛОВ =====
+    function addFiles(fileList) {
+        const maxSize = 100 * 1024 * 1024; // 100 МБ
+        
+        for (let file of fileList) {
+            // Проверка размера
+            if (file.size > maxSize) {
+                showToast(`❌ Файл "${file.name}" превышает 100 МБ`, 'error');
+                continue;
+            }
+            
+            // Проверка на дубликат
+            const exists = files.some(f => f.name === file.name && f.size === file.size);
+            if (exists) {
+                showToast(`⚠️ Файл "${file.name}" уже добавлен`, 'error');
+                continue;
+            }
+            
+            files.push({
+                id: Date.now() + '_' + Math.random().toString(36).substr(2, 6),
+                name: file.name,
+                size: file.size,
+                file: file,
+                status: 'pending', // pending | uploading | done | error
+                link: null
+            });
+        }
+        
+        renderFileList();
+        updateUI();
+    }
+
+    // ===== ОТОБРАЖЕНИЕ СПИСКА =====
+    function renderFileList() {
+        if (files.length === 0) {
+            fileList.innerHTML = `
+                <div style="text-align:center; color:#3a3a3a; padding:20px 0; font-size:0.9rem;">
+                    📭 Файлы не выбраны
+                </div>
+            `;
+            return;
+        }
+        
+        let html = '';
+        files.forEach((file, index) => {
+            const size = (file.size / 1024 / 1024).toFixed(2) + ' МБ';
+            const icon = file.name.endsWith('.pdf') ? '📄' :
+                        file.name.endsWith('.doc') || file.name.endsWith('.docx') ? '📝' :
+                        file.name.endsWith('.zip') || file.name.endsWith('.rar') ? '📦' :
+                        '📎';
+            
+            const statusMap = {
+                'pending': 'Ожидает',
+                'uploading': '⏳ Загрузка...',
+                'done': '✅ Готово',
+                'error': '❌ Ошибка'
+            };
+            
+            html += `
+                <div class="file-item" data-id="${file.id}">
+                    <div class="info">
+                        <span>${icon}</span>
+                        <span class="name">${file.name}</span>
+                        <span class="size">${size}</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
+                        <span class="status ${file.status}">${statusMap[file.status] || file.status}</span>
+                        ${file.status !== 'uploading' ? `<button class="remove-btn" onclick="removeFile('${file.id}')">✕</button>` : ''}
+                    </div>
+                </div>
+            `;
+        });
+        
+        fileList.innerHTML = html;
+    }
+
+    // ===== УДАЛЕНИЕ ФАЙЛА =====
+    window.removeFile = function(id) {
+        if (isUploading) {
+            showToast('⏳ Дождитесь окончания загрузки', 'error');
+            return;
+        }
+        files = files.filter(f => f.id !== id);
+        renderFileList();
+        updateUI();
+        if (files.length === 0) {
+            resultBox.classList.remove('show');
+            uploadedLinks = [];
+        }
+    };
+
+    // ===== ОБНОВЛЕНИЕ UI =====
+    function updateUI() {
+        const hasFiles = files.some(f => f.status === 'pending' || f.status === 'error');
+        const allDone = files.length > 0 && files.every(f => f.status === 'done');
+        const hasPending = files.some(f => f.status === 'pending');
+        
+        uploadBtn.disabled = !hasPending || isUploading;
+        
+        if (isUploading) {
+            uploadBtnText.textContent = '⏳ Загрузка...';
+        } else if (allDone) {
+            uploadBtnText.textContent = '✅ Все загружено';
+        } else {
+            uploadBtnText.textContent = '🚀 Загрузить все';
+        }
+        
+        // Кнопка очистки
+        clearBtn.textContent = files.length > 0 ? '🗑️ Очистить (' + files.length + ')' : '🗑️ Очистить';
+    }
+
+    // ===== ЗАГРУЗКА =====
+    uploadBtn.addEventListener('click', async () => {
+        if (isUploading) return;
+        
+        const pendingFiles = files.filter(f => f.status === 'pending');
+        if (pendingFiles.length === 0) {
+            showToast('Нет файлов для загрузки', 'error');
+            return;
+        }
+        
+        isUploading = true;
+        progressContainer.classList.add('show');
+        let completed = 0;
+        const total = pendingFiles.length;
+        
+        for (let i = 0; i < pendingFiles.length; i++) {
+            const file = pendingFiles[i];
+            const fileIndex = files.findIndex(f => f.id === file.id);
+            
+            try {
+                // Обновляем статус
+                files[fileIndex].status = 'uploading';
+                renderFileList();
+                updateUI();
+                
+                progressLabel.textContent = `Загрузка ${file.name} (${i+1}/${total})...`;
+                
+                // Отправляем на file.io
+                const formData = new FormData();
+                formData.append('file', file.file);
+                
+                const response = await fetch('https://file.io/', {
+                    method: 'POST',
+                    body: formData,
+                    mode: 'cors'
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const result = await response.json();
+                
+                if (result.success && result.link) {
+                    files[fileIndex].status = 'done';
+                    files[fileIndex].link = result.link;
+                    uploadedLinks.push({
+                        name: file.name,
+                        link: result.link
+                    });
+                } else {
+                    throw new Error(result.message || 'Неизвестная ошибка');
+                }
+                
+            } catch (error) {
+                console.error('Ошибка загрузки:', error);
+                files[fileIndex].status = 'error';
+                showToast(`❌ Ошибка загрузки "${file.name}": ${error.message}`, 'error');
+            }
+            
+            completed++;
+            const percent = Math.round((completed / total) * 100);
+            progressFill.style.width = percent + '%';
+            progressPercent.textContent = percent + '%';
+            
+            renderFileList();
+            updateUI();
+        }
+        
+        // Завершение
+        isUploading = false;
+        progressLabel.textContent = '✅ Загрузка завершена!';
+        
+        setTimeout(() => {
+            progressContainer.classList.remove('show');
+            progressFill.style.width = '0%';
+            progressPercent.textContent = '0%';
+        }, 1500);
+        
+        // Показываем ссылки
+        const doneFiles = files.filter(f => f.status === 'done');
+        if (doneFiles.length > 0) {
+            showResultLinks();
+            showToast(`✅ Загружено ${doneFiles.length} файлов`, 'success');
+        }
+        
+        updateUI();
+    });
+
+    // ===== ПОКАЗ ССЫЛОК =====
+    function showResultLinks() {
+        const doneFiles = files.filter(f => f.status === 'done');
+        if (doneFiles.length === 0) {
+            resultBox.classList.remove('show');
+            return;
+        }
+        
+        resultBox.classList.add('show');
+        
+        let html = '';
+        doneFiles.forEach((file, index) => {
+            html += `
+                <div style="display:flex; align-items:center; gap:8px; padding:4px 0; flex-wrap:wrap;">
+                    <span style="color:#6a6a6a; font-size:0.8rem;">${index+1}.</span>
+                    <span style="color:#c0c0c0; font-size:0.8rem; max-width:150px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${file.name}</span>
+                    <a href="${file.link}" target="_blank" style="color:#00ff41; word-break:break-all; font-size:0.8rem; flex:1;">${file.link}</a>
+                    <button class="copy-btn" onclick="copyLink('${file.link}')">📋 Копировать</button>
+                </div>
+            `;
+        });
+        
+        resultLink.innerHTML = html;
+    }
+
+    // ===== КОПИРОВАНИЕ =====
+    window.copyLink = function(link) {
+        navigator.clipboard.writeText(link).then(() => {
+            showToast('✅ Ссылка скопирована!', 'success');
+        }).catch(() => {
+            // fallback
+            const input = document.createElement('input');
+            input.value = link;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+            showToast('✅ Ссылка скопирована!', 'success');
+        });
+    };
+
+    // ===== ОЧИСТКА =====
+    clearBtn.addEventListener('click', () => {
+        if (isUploading) {
+            showToast('⏳ Дождитесь окончания загрузки', 'error');
+            return;
+        }
+        if (files.length === 0) return;
+        
+        if (confirm('Очистить список файлов?')) {
+            files = [];
+            uploadedLinks = [];
+            renderFileList();
+            updateUI();
+            resultBox.classList.remove('show');
+            progressContainer.classList.remove('show');
+            showToast('🗑️ Список очищен', 'success');
+        }
+    });
+
+    // ===== TOAST =====
+    function showToast(message, type = 'info') {
+        toast.textContent = message;
+        toast.className = 'toast show ' + type;
+        clearTimeout(toast._timeout);
+        toast._timeout = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 4000);
+    }
+
+    // ===== ИНИЦИАЛИЗАЦИЯ =====
+    updateUI();
+    console.log('📄 HW Pro — Загрузка на file.io');
+    console.log('🔗 file.io автоматически удаляет файлы после скачивания');
+
+})();
+</script>
+
+</body>
+</html>

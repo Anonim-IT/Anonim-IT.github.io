@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="dark">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta name="description" content="HW Pro Rules — Свод правил проекта HW Pro для Lolka, Telegram, MAX, Twitch и других платформ.">
-    <title>HW Pro Rules | Свод правил</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW Pro | Правила сервера</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -19,1475 +15,610 @@
         }
 
         :root {
-            --bg-deep: #0a0a0a;
-            --bg-surface: #0f0f0f;
-            --bg-card: #0d0d0d;
-            --accent-red: #ff0033;
-            --accent-green: #00ff41;
-            --accent-cyan: #00ffff;
-            --accent-gold: #ffd700;
-            --accent-purple: #a855f7;
-            --accent-blue: #3b82f6;
-            --text-primary: #c0c0c0;
-            --text-secondary: #6a6a6a;
-            --text-muted: #3a3a3a;
-            --border-subtle: #1a1a1a;
-            --glow-red: 0 0 30px rgba(255, 0, 51, 0.1);
-            --glow-green: 0 0 30px rgba(0, 255, 65, 0.08);
-            --glow-gold: 0 0 30px rgba(255, 215, 0, 0.06);
-            --font-mono: 'JetBrains Mono', monospace;
-            --scanline: rgba(0, 0, 0, 0.03);
-        }
-
-        html {
-            scroll-behavior: smooth;
+            --bg: #0b0b0b;
+            --surface: #121212;
+            --card: #1a1a1a;
+            --border: #2a2a2a;
+            --red: #e53935;
+            --gold: #f5c842;
+            --green: #66bb6a;
+            --text: #e8e8e8;
+            --text-secondary: #9e9e9e;
+            --text-muted: #616161;
+            --radius: 12px;
+            --font: 'Inter', system-ui, -apple-system, sans-serif;
         }
 
         body {
-            background: var(--bg-deep);
-            font-family: var(--font-mono);
-            color: var(--text-primary);
+            background: var(--bg);
+            font-family: var(--font);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
             min-height: 100vh;
-            line-height: 1.5;
-            overflow-x: hidden;
-            position: relative;
-            cursor: default;
-            font-size: 14px;
-        }
-
-        /* ===== ЭФФЕКТ СКАНИРОВАНИЯ ===== */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.03) 0px,
-                rgba(0, 0, 0, 0.03) 2px,
-                transparent 2px,
-                transparent 4px
-            );
-            pointer-events: none;
-            z-index: 9999;
-            animation: scanline 0.1s linear infinite;
-        }
-
-        @keyframes scanline {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(4px); }
-        }
-
-        /* ===== МАТРИЦА ===== */
-        #matrix-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0.06;
-        }
-
-        /* ===== ТЕРМИНАЛЬНАЯ ЗАСТАВКА ===== */
-        .terminal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--bg-deep);
-            z-index: 9998;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            transition: opacity 1s ease, visibility 1s ease;
-        }
-
-        .terminal-overlay.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .terminal-boot {
-            font-family: var(--font-mono);
-            color: var(--accent-green);
-            text-align: center;
-            max-width: 700px;
-            padding: 2rem;
-            border: 1px solid rgba(0, 255, 65, 0.1);
-            border-radius: 12px;
-            background: rgba(0, 0, 0, 0.8);
-            box-shadow: 0 0 60px rgba(0, 255, 65, 0.02);
-        }
-
-        .terminal-boot .ascii-art {
-            font-size: 0.45rem;
-            line-height: 1.1;
-            color: var(--accent-gold);
-            letter-spacing: 0px;
-            white-space: pre;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.08);
-        }
-
-        .terminal-boot .boot-text {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-top: 0.5rem;
-        }
-
-        .terminal-boot .boot-text .cursor {
-            display: inline-block;
-            width: 10px;
-            height: 1.2rem;
-            background: var(--accent-green);
-            animation: blink-cursor 1s step-end infinite;
-            vertical-align: text-bottom;
-            margin-left: 2px;
-        }
-
-        @keyframes blink-cursor {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        .terminal-boot .progress-bar {
-            width: 100%;
-            height: 2px;
-            background: rgba(0, 255, 65, 0.05);
-            margin-top: 1rem;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .terminal-boot .progress-bar .fill {
-            height: 100%;
-            width: 0%;
-            background: var(--accent-gold);
-            animation: boot-progress 2.5s ease-in-out forwards;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
-        }
-
-        @keyframes boot-progress {
-            0% { width: 0%; }
-            30% { width: 15%; }
-            60% { width: 45%; }
-            80% { width: 75%; }
-            95% { width: 92%; }
-            100% { width: 100%; }
         }
 
         .container {
-            max-width: 1280px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 0 20px;
-            position: relative;
-            z-index: 1;
         }
 
         /* ===== ХЕДЕР ===== */
-        .glass-header {
-            background: rgba(10, 10, 10, 0.95);
-            border-bottom: 1px solid rgba(255, 0, 51, 0.06);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            padding: 0.4rem 0;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-inner {
+        .header {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px 30px;
+            margin-bottom: 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 0.8rem;
+            gap: 15px;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-family: var(--font-mono);
-            font-weight: 700;
+            gap: 12px;
             font-size: 1.3rem;
-            text-decoration: none;
-            transition: all 0.3s;
+            font-weight: 800;
         }
 
-        .logo:hover {
-            transform: scale(1.02);
-        }
-
-        .logo-icon {
-            width: 36px;
-            height: 36px;
-            background: var(--accent-gold);
+        .logo .icon {
+            background: var(--red);
+            color: #fff;
+            width: 38px;
+            height: 38px;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
-            border: 1px solid rgba(255, 215, 0, 0.2);
+            font-size: 1.2rem;
         }
 
-        .logo-icon span {
-            color: #000;
-            font-weight: 900;
-            font-size: 1.1rem;
+        .logo span {
+            color: var(--gold);
         }
 
-        .logo-text {
-            color: var(--accent-gold);
+        .nav {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav a:hover {
+            color: var(--gold);
+        }
+
+        /* ===== ЗАГОЛОВОК ===== */
+        .page-title {
+            text-align: center;
+            padding: 30px 0 20px;
+        }
+
+        .page-title h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
             letter-spacing: -0.5px;
         }
 
-        .logo .badge-rules {
-            font-size: 0.45rem;
-            background: var(--accent-red);
-            color: #000;
-            padding: 2px 8px;
-            border-radius: 40px;
-            font-weight: 700;
-            animation: pulse-badge 2s infinite;
+        .page-title h1 span {
+            color: var(--gold);
         }
 
-        @keyframes pulse-badge {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            list-style: none;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .nav-links a {
+        .page-title p {
             color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.75rem;
-            font-weight: 500;
-            transition: 0.3s;
-            font-family: var(--font-mono);
-            position: relative;
-        }
-
-        .nav-links a::before {
-            content: '>';
-            color: var(--accent-green);
-            opacity: 0;
-            transition: opacity 0.3s;
-            margin-right: 4px;
-        }
-
-        .nav-links a:hover::before,
-        .nav-links a.active::before {
-            opacity: 1;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--accent-green);
-        }
-
-        /* ===== ГЕРО ===== */
-        .hero-section {
-            padding: 3rem 0 2.5rem;
-            text-align: center;
-            position: relative;
-        }
-
-        .badge {
-            display: inline-block;
-            background: rgba(255, 215, 0, 0.03);
-            border: 1px solid rgba(255, 215, 0, 0.08);
-            border-radius: 60px;
-            padding: 0.3rem 1.5rem;
-            font-size: 0.6rem;
-            font-family: var(--font-mono);
-            letter-spacing: 2px;
-            margin-bottom: 1rem;
-            color: var(--accent-gold);
-            text-transform: uppercase;
-        }
-
-        .hero-title {
-            font-size: 3.8rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 0.8rem;
-            font-family: var(--font-mono);
-            background: linear-gradient(135deg, #ffffff, var(--accent-gold), var(--accent-red));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .hero-title .slash {
-            color: var(--accent-green);
-            -webkit-text-fill-color: var(--accent-green);
-        }
-
-        .hero-desc {
             font-size: 1rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto 1.5rem;
+            margin-top: 6px;
         }
 
-        .hero-desc .accent-text {
-            color: var(--accent-gold);
+        /* ===== БЛОКИ ПРАВИЛ ===== */
+        .rules-block {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 25px 30px;
+            margin-bottom: 25px;
         }
 
-        .hero-desc .red-text {
-            color: var(--accent-red);
-        }
-
-        /* ===== СТАТИСТИКА ПРАВИЛ ===== */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0 1rem;
-            padding: 1.5rem 0;
-            border-top: 1px solid rgba(255, 215, 0, 0.02);
-            border-bottom: 1px solid rgba(255, 215, 0, 0.02);
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 800;
-            font-family: var(--font-mono);
-            color: var(--accent-gold);
-            display: block;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.05);
-        }
-
-        .stat-label {
-            font-size: 0.6rem;
-            color: var(--text-muted);
-            font-family: var(--font-mono);
-            margin-top: 2px;
-        }
-
-        /* ===== ТЕРМИНАЛЬНЫЙ БАННЕР ===== */
-        .terminal-banner {
-            background: var(--bg-surface);
-            border: 1px solid rgba(255, 215, 0, 0.04);
-            border-radius: 12px;
-            padding: 1.2rem 1.8rem;
-            margin: 2rem 0;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            font-family: var(--font-mono);
-        }
-
-        .terminal-banner .term-text {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .terminal-banner .term-text .prompt {
-            color: var(--accent-green);
-            font-weight: 600;
-        }
-
-        .terminal-banner .term-text .cmd {
-            color: var(--text-secondary);
-        }
-
-        .terminal-banner .term-text .cursor {
-            display: inline-block;
-            width: 8px;
-            height: 1rem;
-            background: var(--accent-green);
-            animation: blink-cursor 1s step-end infinite;
-            vertical-align: text-bottom;
-        }
-
-        .terminal-badge {
-            background: rgba(255, 215, 0, 0.03);
-            border: 1px solid rgba(255, 215, 0, 0.06);
-            padding: 6px 18px;
-            border-radius: 60px;
-            font-size: 0.6rem;
-            font-family: var(--font-mono);
-            color: var(--accent-gold);
-        }
-
-        /* ===== ОБЩИЕ СТИЛИ ДЛЯ СЕКЦИЙ ПРАВИЛ ===== */
-        .rules-section {
-            margin: 2.5rem 0;
-            padding: 2rem;
-            background: var(--bg-surface);
-            border: 1px solid rgba(255, 215, 0, 0.04);
-            border-radius: 16px;
-            transition: all 0.3s;
-        }
-
-        .rules-section:hover {
-            border-color: rgba(255, 215, 0, 0.08);
-        }
-
-        .rules-section .section-header {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 1.2rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.06);
-        }
-
-        .rules-section .section-header .icon {
-            font-size: 2.2rem;
-        }
-
-        .rules-section .section-header h2 {
-            font-size: 1.5rem;
+        .rules-block .block-title {
+            font-size: 1.2rem;
             font-weight: 700;
-            font-family: var(--font-mono);
-            color: var(--text-primary);
-        }
-
-        .rules-section .section-header h2 .gold {
-            color: var(--accent-gold);
-        }
-        .rules-section .section-header h2 .red {
-            color: var(--accent-red);
-        }
-        .rules-section .section-header h2 .green {
-            color: var(--accent-green);
-        }
-        .rules-section .section-header h2 .purple {
-            color: var(--accent-purple);
-        }
-        .rules-section .section-header h2 .blue {
-            color: var(--accent-blue);
-        }
-
-        .rule-item {
-            padding: 0.8rem 1rem 0.8rem 1.8rem;
-            margin-bottom: 0.6rem;
-            border-left: 2px solid rgba(255, 215, 0, 0.1);
-            transition: all 0.2s;
-            position: relative;
-        }
-
-        .rule-item:hover {
-            border-left-color: var(--accent-gold);
-            background: rgba(255, 215, 0, 0.02);
-        }
-
-        .rule-item .rule-number {
-            position: absolute;
-            left: 0;
-            top: 0.8rem;
-            color: var(--accent-gold);
-            font-size: 0.6rem;
-            font-weight: 700;
-        }
-
-        .rule-item strong {
-            color: var(--accent-gold);
-        }
-
-        .rule-item .rule-text {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            line-height: 1.6;
-        }
-
-        .rule-item .rule-text .highlight {
-            color: var(--accent-gold);
-        }
-        .rule-item .rule-text .red {
-            color: var(--accent-red);
-        }
-        .rule-item .rule-text .green {
-            color: var(--accent-green);
-        }
-        .rule-item .rule-text .purple {
-            color: var(--accent-purple);
-        }
-
-        /* ===== ПРАВИЛА ЗАХОДА НА LOLKA ===== */
-        .join-rules-box {
-            background: rgba(255, 215, 0, 0.03);
-            border: 1px solid rgba(255, 215, 0, 0.06);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 0.5rem 0 1rem;
-        }
-
-        .join-rules-box h4 {
-            color: var(--accent-gold);
-            font-size: 1rem;
-            margin-bottom: 0.8rem;
-            font-family: var(--font-mono);
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .join-step {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 0.6rem 0;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.03);
+        .rules-block .block-title .badge {
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 2px 12px;
+            border-radius: 20px;
+            background: var(--red);
+            color: #fff;
         }
 
-        .join-step:last-child {
+        .rule {
+            padding: 10px 0 10px 18px;
+            border-left: 3px solid var(--border);
+            margin-bottom: 4px;
+            transition: border-color 0.2s;
+        }
+
+        .rule:hover {
+            border-left-color: var(--gold);
+        }
+
+        .rule .num {
+            font-weight: 600;
+            color: var(--gold);
+            font-size: 0.8rem;
+            display: inline-block;
+            min-width: 32px;
+        }
+
+        .rule .text {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+        }
+
+        .rule .text strong {
+            color: var(--text);
+        }
+
+        .rule .text .red {
+            color: var(--red);
+            font-weight: 600;
+        }
+
+        .rule .text .green {
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .rule .text .highlight {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* ===== СПЕЦИАЛЬНЫЙ БЛОК ДЛЯ ВЕРИФИКАЦИИ ===== */
+        .verify-box {
+            background: rgba(245, 200, 66, 0.04);
+            border: 1px solid rgba(245, 200, 66, 0.12);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            margin: 10px 0 16px;
+        }
+
+        .verify-box .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .verify-box .step:last-child {
             border-bottom: none;
         }
 
-        .join-step .step-num {
-            font-size: 0.8rem;
+        .verify-box .step .num {
             font-weight: 700;
-            color: var(--accent-gold);
-            min-width: 28px;
-            font-family: var(--font-mono);
-        }
-
-        .join-step .step-text {
-            color: var(--text-secondary);
+            color: var(--gold);
             font-size: 0.85rem;
-            line-height: 1.6;
+            min-width: 28px;
         }
 
-        .join-step .step-text .highlight {
-            color: var(--accent-gold);
-        }
-        .join-step .step-text .red {
-            color: var(--accent-red);
-        }
-        .join-step .step-text .green {
-            color: var(--accent-green);
+        .verify-box .step .text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
         }
 
-        /* ===== ЭТИКА ПРОЕКТА ===== */
-        .ethics-box {
-            background: rgba(255, 215, 0, 0.03);
-            border: 1px solid rgba(255, 215, 0, 0.06);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-top: 0.5rem;
+        .verify-box .step .text strong {
+            color: var(--text);
+        }
+
+        .verify-box .warning {
+            margin-top: 14px;
+            padding: 12px 16px;
+            background: rgba(229, 57, 53, 0.06);
+            border-left: 3px solid var(--red);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .verify-box .warning .red {
+            color: var(--red);
+            font-weight: 600;
+        }
+
+        .verify-box .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .verify-box .status-grid .item {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            padding: 4px 0;
+        }
+
+        .verify-box .status-grid .item .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .dot.yellow { background: #ffaa00; }
+        .dot.blue { background: #3b82f6; }
+        .dot.green { background: #66bb6a; }
+        .dot.red { background: #e53935; }
+
+        .verify-box .schema {
+            margin-top: 14px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
             text-align: center;
+            font-family: monospace;
+            letter-spacing: 0.3px;
         }
 
-        .ethics-box h4 {
-            color: var(--accent-gold);
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-            font-family: var(--font-mono);
+        /* ===== ЭТИКА ===== */
+        .ethics-box {
+            background: rgba(102, 187, 106, 0.03);
+            border: 1px solid rgba(102, 187, 106, 0.08);
+            border-radius: var(--radius);
+            padding: 20px 24px;
         }
 
         .ethics-box p {
             color: var(--text-secondary);
-            font-size: 0.85rem;
-            line-height: 1.6;
-            max-width: 700px;
-            margin: 0 auto;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 6px;
         }
 
-        /* ===== АНОНИМ БАННЕР ===== */
-        .anonym-banner {
-            background: rgba(0, 0, 0, 0.4);
-            border-left: 3px solid var(--accent-gold);
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            margin: 2rem 0;
+        .ethics-box p strong {
+            color: var(--text);
+        }
+
+        /* ===== БАННЕР ===== */
+        .banner {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px 24px;
+            margin: 25px 0;
             display: flex;
-            flex-wrap: wrap;
-            align-items: center;
             justify-content: space-between;
-            gap: 1rem;
-        }
-
-        .anonym-banner .anon-text {
-            display: flex;
             align-items: center;
+            flex-wrap: wrap;
             gap: 12px;
         }
 
-        .anonym-banner .anon-text .icon {
-            font-size: 2rem;
-        }
-
-        .anonym-banner .anon-text p {
-            font-size: 0.85rem;
+        .banner .text {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             color: var(--text-secondary);
-            margin: 0;
+            font-size: 0.85rem;
         }
 
-        .anonym-banner .anon-text .highlight {
-            color: var(--accent-gold);
+        .banner .text .icon {
+            font-size: 1.6rem;
         }
 
-        .anon-tag {
+        .banner .tag {
             font-size: 0.6rem;
-            font-family: var(--font-mono);
-            background: rgba(255, 215, 0, 0.02);
             padding: 4px 14px;
-            border-radius: 40px;
-            border: 1px solid rgba(255, 215, 0, 0.04);
-            color: var(--accent-gold);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: var(--text-muted);
+            font-weight: 500;
         }
 
         /* ===== ФУТЕР ===== */
         .footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.02);
-            padding: 2rem 0;
-            margin-top: 2.5rem;
+            border-top: 1px solid var(--border);
+            padding: 20px 0;
+            margin-top: 30px;
             text-align: center;
             font-size: 0.7rem;
             color: var(--text-muted);
         }
 
-        .footer .icon-row {
-            display: flex;
-            justify-content: center;
-            gap: 14px;
-            margin-bottom: 0.6rem;
-            font-size: 1rem;
-            opacity: 0.15;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            margin-top: 0.6rem;
-        }
-
-        .footer-links a {
+        .footer a {
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.65rem;
-            font-family: var(--font-mono);
-            transition: color 0.3s;
+            margin: 0 10px;
+            transition: color 0.2s;
         }
 
-        .footer-links a:hover {
-            color: var(--accent-gold);
-        }
-
-        /* ===== МОДАЛКА ===== */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(2, 2, 2, 0.98);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.3s ease;
-            font-family: var(--font-mono);
-            backdrop-filter: blur(20px);
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-container {
-            background: var(--bg-deep);
-            border: 1px solid rgba(255, 215, 0, 0.04);
-            border-radius: 16px;
-            max-width: 700px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-            transform: scale(0.95);
-            transition: transform 0.3s;
-        }
-
-        .modal-overlay.active .modal-container {
-            transform: scale(1);
-        }
-
-        .modal-container::-webkit-scrollbar {
-            width: 3px;
-        }
-        .modal-container::-webkit-scrollbar-thumb {
-            background: var(--accent-gold);
-            border-radius: 2px;
-        }
-
-        .modal-header {
-            padding: 1.2rem 1.8rem 0.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
-        }
-
-        .modal-header h2 {
-            font-size: 1.2rem;
-            color: var(--accent-gold);
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.8rem;
-            cursor: pointer;
-            transition: 0.3s;
-            padding: 0 4px;
-        }
-
-        .close-modal:hover {
-            color: var(--accent-red);
-        }
-
-        .modal-body {
-            padding: 1.2rem 1.8rem 1.8rem;
-        }
-
-        .rule-article {
-            margin-bottom: 1.2rem;
-            border-left: 2px solid var(--accent-red);
-            padding-left: 0.8rem;
-        }
-
-        .rule-article h4 {
-            font-size: 0.9rem;
-            color: var(--accent-red);
-            margin-bottom: 0.3rem;
-            font-weight: 600;
-        }
-
-        .rule-article p {
-            color: var(--text-secondary);
-            font-size: 0.75rem;
-            line-height: 1.6;
-            margin-bottom: 0.2rem;
-        }
-
-        .legal-stamp {
-            margin-top: 1.5rem;
-            padding-top: 0.8rem;
-            text-align: center;
-            font-size: 0.6rem;
-            border-top: 1px dashed rgba(255, 255, 255, 0.02);
-            color: var(--text-muted);
+        .footer a:hover {
+            color: var(--gold);
         }
 
         /* ===== АДАПТИВ ===== */
-        @media (max-width: 768px) {
-            .hero-title { font-size: 2.5rem; }
-            .container { padding: 0 1rem; }
-            .header-inner { flex-direction: column; align-items: center; text-align: center; }
-            .nav-links { justify-content: center; gap: 0.8rem; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-            .rules-section { padding: 1.2rem; }
-            .rules-section .section-header { flex-direction: column; text-align: center; }
-            .anonym-banner { flex-direction: column; text-align: center; }
-            .anonym-banner .anon-text { flex-direction: column; text-align: center; }
-            .terminal-banner { flex-direction: column; text-align: center; }
-            .terminal-banner .term-text { flex-direction: column; text-align: center; }
-            .rule-item { padding-left: 1.2rem; }
-            .rule-item .rule-number { position: static; display: inline-block; margin-right: 6px; }
-            .join-step { flex-direction: column; gap: 4px; }
-            .join-step .step-num { min-width: auto; }
-        }
-
-        @media (max-width: 480px) {
-            .hero-title { font-size: 2rem; }
-            .stats-grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-            .stat-number { font-size: 1.6rem; }
-            .modal-container { width: 95%; }
-            .terminal-boot .ascii-art { font-size: 0.3rem; }
+        @media (max-width: 640px) {
+            body { padding: 12px; }
+            .header { flex-direction: column; text-align: center; padding: 16px 20px; }
+            .nav { justify-content: center; gap: 12px; }
+            .page-title h1 { font-size: 1.8rem; }
+            .rules-block { padding: 18px 16px; }
+            .rule { padding-left: 12px; }
+            .verify-box { padding: 16px; }
+            .verify-box .step { gap: 10px; }
+            .banner { flex-direction: column; text-align: center; }
+            .banner .text { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== ТЕРМИНАЛЬНАЯ ЗАСТАВКА ===== -->
-    <div class="terminal-overlay" id="bootScreen">
-        <div class="terminal-boot">
-            <div class="ascii-art">
-   ██╗  ██╗██╗    ██╗    ██████╗ ██████╗  ██████╗ 
-   ██║  ██║██║    ██║    ██╔══██╗██╔══██╗██╔═══██╗
-   ███████║██║ █╗ ██║    ██████╔╝██████╔╝██║   ██║
-   ██╔══██║██║███╗██║    ██╔═══╝ ██╔══██╗██║   ██║
-   ██║  ██║╚███╔███╔╝    ██║     ██║  ██║╚██████╔╝
-   ╚═╝  ╚═╝ ╚══╝╚══╝     ╚═╝     ╚═╝  ╚═╝ ╚═════╝ 
-   📜  📜  📜  📜  📜  📜  📜  📜  📜  📜  📜
+<div class="container">
+
+    <!-- ===== ХЕДЕР ===== -->
+    <header class="header">
+        <div class="logo">
+            <div class="icon">⚡</div>
+            <span>HW</span> Pro
+        </div>
+        <nav class="nav">
+            <a href="#verify">Верификация</a>
+            <a href="#general">Общие правила</a>
+            <a href="#lolka">Правила Lolka</a>
+            <a href="#ethics">Этика</a>
+        </nav>
+    </header>
+
+    <!-- ===== ЗАГОЛОВОК ===== -->
+    <div class="page-title">
+        <h1>📜 Правила сервера <span>HW Pro</span></h1>
+        <p>Обязательны для всех участников. Нарушение влечёт наказание.</p>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- БЛОК 1: ВЕРИФИКАЦИЯ -->
+    <!-- ============================================================ -->
+    <div class="rules-block" id="verify">
+        <div class="block-title">
+            🤖 Верификация
+            <span class="badge">Обязательно</span>
+        </div>
+
+        <div class="verify-box">
+            <div class="step">
+                <span class="num">1</span>
+                <div class="text"><strong>Получите сообщение</strong> — После входа на сервер бот <strong>HW Pro Lolka Bot</strong> напишет вам в личные сообщения Discord.</div>
             </div>
-            <div class="boot-text">
-                <span style="color:var(--accent-gold);">> HW Pro Rules System v.2.1</span><br>
-                <span style="color:var(--text-muted);">>> Загрузка свода правил... Инициализация...</span><br>
-                <span style="color:var(--text-muted);">>>> Все правила загружены</span>
-                <span class="cursor"></span>
+            <div class="step">
+                <span class="num">2</span>
+                <div class="text"><strong>Отправьте команду</strong> — Напишите боту: <span class="highlight">НАЧАТЬ</span>. Бот запустит анкету.</div>
             </div>
-            <div class="progress-bar">
-                <div class="fill"></div>
+            <div class="step">
+                <span class="num">3</span>
+                <div class="text"><strong>Ответьте на вопросы</strong> — Бот задаст несколько вопросов. Отвечайте <strong>честно и по существу</strong>.</div>
             </div>
+            <div class="step">
+                <span class="num">4</span>
+                <div class="text"><strong>Заявка отправлена</strong> — После всех ответов ваша заявка уходит проверяющим. Статус: <span class="highlight">Ожидает проверки</span>.</div>
+            </div>
+            <div class="step">
+                <span class="num">5</span>
+                <div class="text"><strong>Дождитесь решения</strong> — Проверяющие изучат ваши ответы и примут решение. Вы получите уведомление.</div>
+            </div>
+            <div class="step">
+                <span class="num">6</span>
+                <div class="text"><strong>Доступ открыт</strong> — При одобрении вы получите роль <strong>@User</strong> и доступ ко всем каналам.</div>
+            </div>
+
+            <div class="warning">
+                <span class="red">⚠️ Важно:</span> Без верификации вы <span class="red">не увидите</span> основные каналы сервера. Проверка обязательна для всех.
+            </div>
+
+            <div class="status-grid">
+                <div class="item"><span class="dot yellow"></span> Заполнение — вы отвечаете</div>
+                <div class="item"><span class="dot blue"></span> Ожидает проверки</div>
+                <div class="item"><span class="dot green"></span> Проверено — доступ есть</div>
+                <div class="item"><span class="dot red"></span> Отклонено — доступ закрыт</div>
+            </div>
+
+            <div class="schema">
+                ➜ Вход → сообщение от бота → НАЧАТЬ → анкета → заявка → решение → доступ
+            </div>
+        </div>
+
+        <!-- Запреты при верификации -->
+        <div class="rule">
+            <span class="num">0.1</span>
+            <div class="text"><strong>Запрещено при прохождении верификации:</strong></div>
+        </div>
+        <div class="rule">
+            <span class="num">•</span>
+            <div class="text">предоставлять <span class="red">ложную информацию</span>;</div>
+        </div>
+        <div class="rule">
+            <span class="num">•</span>
+            <div class="text">пытаться <span class="red">обойти</span> вопросы или систему;</div>
+        </div>
+        <div class="rule">
+            <span class="num">•</span>
+            <div class="text">использовать <span class="red">несколько аккаунтов</span> для обхода;</div>
+        </div>
+        <div class="rule">
+            <span class="num">•</span>
+            <div class="text">вмешиваться в <span class="red">работу бота</span>;</div>
+        </div>
+        <div class="rule">
+            <span class="num">•</span>
+            <div class="text">передавать прохождение <span class="red">другому человеку</span>.</div>
         </div>
     </div>
 
-    <!-- ===== ИНТЕРАКТИВНАЯ МАТРИЦА ===== -->
-    <canvas id="matrix-canvas"></canvas>
-
-    <header class="glass-header">
-        <div class="container header-inner">
-            <a href="/" class="logo">
-                <div class="logo-icon"><span>⟁</span></div>
-                <span class="logo-text">HW Pro Rules</span>
-                <span class="badge-rules">📜 RULES</span>
-            </a>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="#" class="active">Правила</a></li>
-                    <li><a href="#lolka">Lolka</a></li>
-                    <li><a href="#telegram">Telegram</a></li>
-                    <li><a href="#max">MAX</a></li>
-                    <li><a href="#twitch">Twitch</a></li>
-                    <li><a href="/portal.html">Портал</a></li>
-                </ul>
-            </nav>
-            <button class="rule-trigger" id="openRulesBtn">📜 О проекте</button>
+    <!-- ============================================================ -->
+    <!-- БЛОК 2: ОБЩИЕ ПРАВИЛА -->
+    <!-- ============================================================ -->
+    <div class="rules-block" id="general">
+        <div class="block-title">
+            ⚡ Общие правила HW Pro
         </div>
-    </header>
 
-    <main>
-        <div class="container">
-
-            <!-- ===== ГЕРО ===== -->
-            <section class="hero-section">
-                <div class="badge"><span class="icon">📜</span> // СВОД ПРАВИЛ HW PRO</div>
-                <h1 class="hero-title">
-                    HW <span class="slash">/</span> RULES
-                </h1>
-                <p class="hero-desc">
-                    <span class="red-text">>_</span> Единый свод правил для всех платформ проекта <span class="accent-text">HW Pro</span>. 
-                    Lolka, Telegram, MAX, Twitch и общие правила сообщества.
-                </p>
-            </section>
-
-            <!-- ===== СТАТИСТИКА ===== -->
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <span class="stat-number">6</span>
-                    <span class="stat-label">разделов правил</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">48</span>
-                    <span class="stat-label">всего правил</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">100%</span>
-                    <span class="stat-label">анонимность</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">∞</span>
-                    <span class="stat-label">уважение к участникам</span>
-                </div>
-            </div>
-
-            <!-- ===== ТЕРМИНАЛЬНЫЙ БАННЕР ===== -->
-            <div class="terminal-banner">
-                <div class="term-text">
-                    <span class="prompt">root@hw_rules:~$</span>
-                    <span class="cmd">./rules --list --all</span>
-                    <span class="cursor"></span>
-                </div>
-                <span class="terminal-badge">📜 Правила загружены</span>
-            </div>
-
-            <!-- ===== ОБЩИЕ ПРАВИЛА HW PRO ===== -->
-            <section class="rules-section" id="general">
-                <div class="section-header">
-                    <span class="icon">⚡</span>
-                    <h2><span class="gold">Общие</span> <span class="red">правила</span> <span class="green">HW Pro</span></h2>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">1.1</span>
-                    <div class="rule-text"><strong>Анонимность и приватность</strong> — Уважайте анонимность других участников. Запрещён доксинг, деанонимизация и распространение личной информации без согласия.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">1.2</span>
-                    <div class="rule-text"><strong>Zero-Logs политика</strong> — Проект не ведёт логи активности пользователей. Мы не храним данные о ваших действиях.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">1.3</span>
-                    <div class="rule-text"><strong>Белый хакинг</strong> — Все действия должны быть в рамках закона. Запрещены взломы, фишинг, распространение вредоносного ПО.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">1.4</span>
-                    <div class="rule-text"><strong>Уважение</strong> — Запрещены оскорбления, травля, разжигание ненависти по любым признакам.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">1.5</span>
-                    <div class="rule-text"><strong>Open Source</strong> — Проект поддерживает открытость кода и знаний. Делитесь опытом и помогайте другим.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">1.6</span>
-                    <div class="rule-text"><strong>Запрещён спам</strong> — Не допускается массовая рассылка, реклама без согласия и флуд.</div>
-                </div>
-            </section>
-
-            <!-- ===== ПРАВИЛА LOLKA ===== -->
-            <section class="rules-section" id="lolka">
-                <div class="section-header">
-                    <span class="icon">💬</span>
-                    <h2><span class="purple">Правила</span> <span class="gold">Lolka</span> <span class="red">сервера</span></h2>
-                </div>
-
-                <!-- ===== ПРАВИЛА ЗАХОДА ===== -->
-                <div class="join-rules-box">
-                    <h4>🎯 Как зайти на сервер Lolka</h4>
-                    
-                    <div class="join-step">
-                        <span class="step-num">1</span>
-                        <div class="step-text"><strong>Зарегистрируйтесь</strong> — Создайте аккаунт на платформе Lolka. Используйте <span class="highlight">анонимный ник</span>, не связанный с вашей реальной личностью.</div>
-                    </div>
-
-                    <div class="join-step">
-                        <span class="step-num">2</span>
-                        <div class="step-text"><strong>Найдите сервер</strong> — Введите адрес сервера HW Pro или найдите его через поиск по названию <span class="highlight">HW Pro Community</span>.</div>
-                    </div>
-
-                    <div class="join-step">
-                        <span class="step-num">3</span>
-                        <div class="step-text"><strong>Ознакомьтесь с правилами</strong> — Перед заходом на сервер обязательно прочитайте <span class="highlight">свод правил</span> (этот документ). Вы соглашаетесь с ними автоматически.</div>
-                    </div>
-
-                    <div class="join-step">
-                        <span class="step-num">4</span>
-                        <div class="step-text"><strong>Зайдите в голосовой канал проверки</strong> — После входа на сервер перейдите в специальный голосовой канал <span class="highlight">🔊 Проверка №1- 5</span> (В любой канал под любой цыфрой).</div>
-                    </div>
-
-                    <div class="join-step">
-                        <span class="step-num">5</span>
-                        <div class="step-text"><strong>Пройдите собеседование</strong> — <span class="green">Администратор проекта</span> задаст вам несколько вопросов по правилам проекта и правилам сервера. Ответы помогут понять ваши интересы и уровень подготовки.</div>
-                    </div>
-
-                    <div class="join-step">
-                        <span class="step-num">6</span>
-                        <div class="step-text"><strong>Получите доступ</strong> — После успешной проверки администратор выдаст вам <span class="highlight">роль @User</span> и доступ ко всем каналам сервера.</div>
-                    </div>
-
-                    <div style="margin-top: 1rem; padding: 0.8rem; background: rgba(255, 0, 51, 0.04); border-radius: 8px; border-left: 3px solid var(--accent-red);">
-                        <p style="color: var(--text-secondary); font-size: 0.8rem; line-height: 1.6;">
-                            <span class="red">⚠️ Важно:</span> Без прохождения проверки вы <span class="red">не получите доступ</span> к основным каналам сервера. 
-                            Проверка проводится для обеспечения <span class="highlight">безопасности</span> и <span class="highlight">анонимности</span> сообщества.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">2.1</span>
-                    <div class="rule-text"><strong>Каналы и темы</strong> — Общайтесь в соответствующих каналах. Не офтопьте в тематических разделах.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">2.2</span>
-                    <div class="rule-text"><strong>Голосовые каналы</strong> — В голосовых каналах соблюдайте правила вежливости. Не включайте громкую музыку без разрешения.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">2.3</span>
-                    <div class="rule-text"><strong>Боты и интеграции</strong> — Использование ботов без разрешения администрации запрещено.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">2.4</span>
-                    <div class="rule-text"><strong>Ники и аватары</strong> — Не используйте оскорбительные, провокационные или вводящие в заблуждение имена.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">2.5</span>
-                    <div class="rule-text"><strong>Ссылки и контент</strong> — Запрещены ссылки на вредоносные ресурсы, NSFW-контент и материалы, нарушающие закон.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">2.6</span>
-                    <div class="rule-text"><strong>Модерация</strong> — Решения модераторов обязательны к исполнению. Спорные вопросы решаются через тикеты.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">2.7</span>
-                    <div class="rule-text"><span class="red">🚫 Интимный контент</span> — Категорически запрещена публикация, обсуждение и распространение материалов интимного характера (NSFW, порнография, эротика). Нарушение влечёт немедленную блокировку.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">2.8</span>
-                    <div class="rule-text"><span class="red">🚫 Оскорбления и буллинг</span> — Запрещены любые формы оскорблений, унижений, травли (буллинга) и обзывательств в адрес других участников. Относитесь к другим так, как хотите, чтобы относились к вам.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">2.9</span>
-                    <div class="rule-text"><span class="red">🚫 Хоррор и шок-контент</span> — Запрещена публикация хоррор-контента, шокирующих изображений, видео и материалов, которые могут вызвать психологический дискомфорт у других участников.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">2.10</span>
-                    <div class="rule-text"><span class="red">🚫 Деструктивный контент</span> — Запрещены материалы, наносящие вред психическому здоровью: пропаганда суицида, членовредительства, анорексии и других опасных для жизни практик.</div>
-                </div>
-            </section>
-
-            <!-- ===== ПРАВИЛА TELEGRAM ===== -->
-            <section class="rules-section" id="telegram">
-                <div class="section-header">
-                    <span class="icon">📱</span>
-                    <h2><span class="blue">Правила</span> <span class="gold">Telegram</span> <span class="red">каналов и чатов</span></h2>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">3.1</span>
-                    <div class="rule-text"><strong>Чат-этика</strong> — Общайтесь уважительно. Личные оскорбления и агрессия запрещены.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">3.2</span>
-                    <div class="rule-text"><strong>Анонимность в чатах</strong> — Все участники могут оставаться анонимными. Запрещено требовать раскрытия личности.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">3.3</span>
-                    <div class="rule-text"><strong>Контент каналов</strong> — В каналах публикуется только официальная информация HW Pro. Репосты только с разрешения.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">3.4</span>
-                    <div class="rule-text"><strong>Реклама и спам</strong> — Любая реклама без согласования с администрацией запрещена.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">3.5</span>
-                    <div class="rule-text"><strong>Безопасность</strong> — Не пересылайте сомнительные файлы. Используйте только официальные ссылки HW Pro.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">3.6</span>
-                    <div class="rule-text"><strong>Боты в чатах</strong> — Использование ботов без согласования запрещено.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">3.7</span>
-                    <div class="rule-text"><span class="red">🚫 Интимный контент</span> — Запрещена публикация и обсуждение NSFW, порнографических и эротических материалов.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">3.8</span>
-                    <div class="rule-text"><span class="red">🚫 Уважение к участникам</span> — Запрещены оскорбления, унижения, травля и обзывательства. Будьте вежливы.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">3.9</span>
-                    <div class="rule-text"><span class="red">🚫 Психологическая безопасность</span> — Запрещён контент, наносящий вред психике: хоррор, шок-контент, пропаганда опасных практик.</div>
-                </div>
-            </section>
-
-            <!-- ===== ПРАВИЛА MAX ===== -->
-            <section class="rules-section" id="max">
-                <div class="section-header">
-                    <span class="icon">💬</span>
-                    <h2><span class="green">Правила</span> <span class="gold">MAX</span> <span class="red">Мессенджера</span></h2>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">4.1</span>
-                    <div class="rule-text"><strong>Корпоративная этика</strong> — В MAX общение ведётся в рамках проекта. Личные дела и флуд запрещены.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">4.2</span>
-                    <div class="rule-text"><strong>Безопасность переписки</strong> — Все сообщения шифруются. Запрещено передавать пароли и личные данные.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">4.3</span>
-                    <div class="rule-text"><strong>Групповые чаты</strong> — В групповых чатах соблюдайте иерархию и не перебивайте друг друга.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">4.4</span>
-                    <div class="rule-text"><strong>Файлы и вложения</strong> — Запрещена отправка вредоносных файлов. Используйте только проверенные ресурсы.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">4.5</span>
-                    <div class="rule-text"><strong>Каналы и группы</strong> — В каналах публикуются только официальные объявления. Обсуждения только в группах.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">4.6</span>
-                    <div class="rule-text"><span class="red">🚫 Этические нормы</span> — Запрещены оскорбления, интимный контент, хоррор и материалы, наносящие вред психике.</div>
-                </div>
-            </section>
-
-            <!-- ===== ПРАВИЛА TWITCH ===== -->
-            <section class="rules-section" id="twitch">
-                <div class="section-header">
-                    <span class="icon">🎥</span>
-                    <h2><span class="purple">Правила</span> <span class="gold">Twitch</span> <span class="red">эфиров</span></h2>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">5.1</span>
-                    <div class="rule-text"><strong>Чат этика</strong> — Уважайте стримера и зрителей. Запрещены оскорбления и провокации.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">5.2</span>
-                    <div class="rule-text"><strong>Контент эфиров</strong> — Транслируется только контент, связанный с HW Pro. Запрещены посторонние темы.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">5.3</span>
-                    <div class="rule-text"><strong>Анонимность в чате</strong> — Зрители могут использовать никапы. Запрещена деанонимизация.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">5.4</span>
-                    <div class="rule-text"><strong>Ссылки и реклама</strong> — Запрещена реклама сторонних проектов без согласования.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">5.5</span>
-                    <div class="rule-text"><strong>Запись эфиров</strong> — Запись и распространение эфиров только с разрешения администрации.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">5.6</span>
-                    <div class="rule-text"><span class="red">🚫 Этичное поведение</span> — В чате и голосовом общении запрещены оскорбления, интимные темы, шок-контент и любые материалы, нарушающие психологическую безопасность.</div>
-                </div>
-            </section>
-
-            <!-- ===== ЭТИКА ПРОЕКТА ===== -->
-            <section class="rules-section" id="ethics">
-                <div class="section-header">
-                    <span class="icon">⚖️</span>
-                    <h2><span class="gold">Этика</span> <span class="red">проекта</span> <span class="green">HW Pro</span></h2>
-                </div>
-
-                <div class="ethics-box">
-                    <h4>📜 Кодекс этики HW Pro</h4>
-                    <p>
-                        <strong>1. Уважение к личности</strong> — Каждый участник проекта заслуживает уважения, независимо от его взглядов, происхождения, возраста или уровня знаний. Мы ценим <span class="highlight">разнообразие</span> и <span class="highlight">инклюзивность</span>.
-                        <br><br>
-                        <strong>2. Безопасная среда</strong> — Мы создаём пространство, свободное от травли, оскорблений, дискриминации и любых форм насилия. <span class="red">Запрещены</span> интимный контент, хоррор, шок-контент и материалы, наносящие вред психике.
-                        <br><br>
-                        <strong>3. Ответственность</strong> — Каждый участник несёт ответственность за свои слова и действия. Мы придерживаемся принципов <span class="highlight">белого хакинга</span> и действуем в рамках закона.
-                        <br><br>
-                        <strong>4. Помощь и поддержка</strong> — Проект создан для обмена знаниями и взаимопомощи. Мы поощряем конструктивный диалог и <span class="highlight">открытость</span> к новым идеям.
-                        <br><br>
-                        <strong>5. Анонимность</strong> — Мы уважаем право каждого на анонимность. Никто не обязан раскрывать свою личность. <span class="highlight">Zero-Logs</span> — наш главный принцип.
-                        <br><br>
-                        <strong>6. Саморазвитие</strong> — Проект способствует развитию навыков в области кибербезопасности, программирования и цифровой грамотности. Учитесь, делитесь опытом и <span class="highlight">растите</span> вместе с нами.
-                    </p>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">6.1</span>
-                    <div class="rule-text"><strong>Нарушение этики</strong> — Любое нарушение этических норм будет рассматриваться индивидуально. Наказание может варьироваться от предупреждения до полной блокировки.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">6.2</span>
-                    <div class="rule-text"><strong>Конфиденциальность</strong> — Вся информация, полученная в рамках проекта, не подлежит разглашению третьим лицам без согласия участников.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">6.3</span>
-                    <div class="rule-text"><strong>Психологическая безопасность</strong> — Проект заботится о психическом здоровье участников. Любой контент, способный нанести вред, строго запрещён.</div>
-                </div>
-            </section>
-
-            <!-- ===== ДОПОЛНИТЕЛЬНЫЕ ПРАВИЛА ===== -->
-            <section class="rules-section" id="additional">
-                <div class="section-header">
-                    <span class="icon">⚖️</span>
-                    <h2><span class="gold">Дополнительные</span> <span class="red">положения</span></h2>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">7.1</span>
-                    <div class="rule-text"><strong>Изменение правил</strong> — Администрация оставляет за собой право изменять правила. Об изменениях сообщается заранее.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">7.2</span>
-                    <div class="rule-text"><strong>Наказания</strong> — За нарушение правил предусмотрены: предупреждение, ограничение прав, блокировка.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">7.3</span>
-                    <div class="rule-text"><strong>Апелляции</strong> — В случае блокировки вы можете подать апелляцию через тикет-систему.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">7.4</span>
-                    <div class="rule-text"><strong>Ответственность</strong> — Каждый участник несёт личную ответственность за свои действия на всех платформах.</div>
-                </div>
-
-                <div class="rule-item">
-                    <span class="rule-number">7.5</span>
-                    <div class="rule-text"><strong>Соблюдение законов РФ</strong> — Все участники обязаны соблюдать законодательство Российской Федерации.</div>
-                </div>
-            </section>
-
-            <!-- ===== АНОНИМНЫЙ БАННЕР ===== -->
-            <div class="anonym-banner">
-                <div class="anon-text">
-                    <span class="icon">🕶️</span>
-                    <div>
-                        <p><span class="highlight">>_</span> Полная анонимность соблюдения правил. Никаких логов, трекеров и идентификации.</p>
-                    </div>
-                </div>
-                <span class="anon-tag">#no_track · #zero_fingerprint</span>
-            </div>
-
+        <div class="rule">
+            <span class="num">1.1</span>
+            <div class="text"><strong>Анонимность</strong> — Уважайте анонимность других. <span class="red">Запрещён</span> доксинг, деанонимизация, распространение личной информации.</div>
         </div>
-    </main>
+        <div class="rule">
+            <span class="num">1.2</span>
+            <div class="text"><strong>Zero-Logs</strong> — Проект не ведёт логи активности. Ваши данные не хранятся.</div>
+        </div>
+        <div class="rule">
+            <span class="num">1.3</span>
+            <div class="text"><strong>Белый хакинг</strong> — Все действия в рамках закона. <span class="red">Запрещены</span> взломы, фишинг, вирусы.</div>
+        </div>
+        <div class="rule">
+            <span class="num">1.4</span>
+            <div class="text"><strong>Уважение</strong> — <span class="red">Запрещены</span> оскорбления, травля, разжигание ненависти.</div>
+        </div>
+        <div class="rule">
+            <span class="num">1.5</span>
+            <div class="text"><strong>Спам</strong> — <span class="red">Запрещена</span> массовая рассылка, реклама без согласия, флуд.</div>
+        </div>
+        <div class="rule">
+            <span class="num">1.6</span>
+            <div class="text"><strong>Соблюдение законов РФ</strong> — Все участники обязаны соблюдать законодательство РФ.</div>
+        </div>
+    </div>
 
-    <!-- ===== ФУТЕР ===== -->
+    <!-- ============================================================ -->
+    <!-- БЛОК 3: ПРАВИЛА LOLKA -->
+    <!-- ============================================================ -->
+    <div class="rules-block" id="lolka">
+        <div class="block-title">
+            💬 Правила Lolka сервера
+            <span class="badge">Активно</span>
+        </div>
+
+        <div class="rule">
+            <span class="num">2.1</span>
+            <div class="text"><strong>Каналы</strong> — Общайтесь в соответствующих каналах. <span class="red">Не офтопьте</span> в тематических разделах.</div>
+        </div>
+        <div class="rule">
+            <span class="num">2.2</span>
+            <div class="text"><strong>Голосовые каналы</strong> — Соблюдайте вежливость. <span class="red">Не включайте</span> громкую музыку без разрешения.</div>
+        </div>
+        <div class="rule">
+            <span class="num">2.3</span>
+            <div class="text"><strong>Боты</strong> — Использование ботов <span class="red">только с разрешения</span> администрации.</div>
+        </div>
+        <div class="rule">
+            <span class="num">2.4</span>
+            <div class="text"><strong>Ники и аватары</strong> — <span class="red">Запрещены</span> оскорбительные, провокационные или вводящие в заблуждение имена.</div>
+        </div>
+        <div class="rule">
+            <span class="num">2.5</span>
+            <div class="text"><strong>Ссылки и контент</strong> — <span class="red">Запрещены</span> ссылки на вредоносные ресурсы, NSFW-контент, материалы, нарушающие закон.</div>
+        </div>
+        <div class="rule">
+            <span class="num">2.6</span>
+            <div class="text"><strong>Модерация</strong> — Решения модераторов <span class="red">обязательны</span> к исполнению. Спорные вопросы — через тикеты.</div>
+        </div>
+        <div class="rule">
+            <span class="num">2.7</span>
+            <div class="text"><span class="red">🚫 Интимный контент</span> — Категорически запрещена публикация и обсуждение NSFW, порнографии, эротики. Нарушение = <span class="red">блокировка</span>.</div>
+        </div>
+        <div class="rule">
+            <span class="num">2.8</span>
+            <div class="text"><span class="red">🚫 Оскорбления и буллинг</span> — Запрещены оскорбления, унижения, травля, обзывательства. Относитесь к другим с уважением.</div>
+        </div>
+        <div class="rule">
+            <span class="num">2.9</span>
+            <div class="text"><span class="red">🚫 Хоррор и шок-контент</span> — Запрещена публикация материалов, вызывающих психологический дискомфорт.</div>
+        </div>
+        <div class="rule">
+            <span class="num">2.10</span>
+            <div class="text"><span class="red">🚫 Деструктивный контент</span> — Запрещена пропаганда суицида, членовредительства, анорексии и других опасных практик.</div>
+        </div>
+        <div class="rule">
+            <span class="num">2.11</span>
+            <div class="text"><span class="red">🚫 Обход системы</span> — Запрещено создавать несколько аккаунтов для обхода верификации или использовать чужие данные.</div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- БЛОК 4: ЭТИКА -->
+    <!-- ============================================================ -->
+    <div class="rules-block" id="ethics">
+        <div class="block-title">
+            ⚖️ Этика проекта HW Pro
+        </div>
+
+        <div class="ethics-box">
+            <p><strong>1. Уважение к личности</strong> — Каждый участник заслуживает уважения, независимо от взглядов, происхождения или уровня знаний.</p>
+            <p><strong>2. Безопасная среда</strong> — Мы создаём пространство без травли, оскорблений и дискриминации. <span class="red">Запрещены</span> интимный контент, хоррор и материалы, наносящие вред психике.</p>
+            <p><strong>3. Ответственность</strong> — Каждый отвечает за свои слова и действия. Мы придерживаемся <span class="green">белого хакинга</span> и закона.</p>
+            <p><strong>4. Помощь и поддержка</strong> — Проект создан для обмена знаниями. Поощряется конструктивный диалог и <span class="highlight">открытость</span>.</p>
+            <p><strong>5. Анонимность</strong> — Никто не обязан раскрывать личность. <span class="highlight">Zero-Logs</span> — наш главный принцип.</p>
+            <p><strong>6. Саморазвитие</strong> — Проект помогает развивать навыки в кибербезопасности, программировании и цифровой грамотности. Учитесь и <span class="highlight">растите</span> вместе с нами.</p>
+        </div>
+
+        <div class="rule">
+            <span class="num">6.1</span>
+            <div class="text"><strong>Нарушение этики</strong> — Рассматривается индивидуально. Наказание: от предупреждения до блокировки.</div>
+        </div>
+        <div class="rule">
+            <span class="num">6.2</span>
+            <div class="text"><strong>Конфиденциальность</strong> — Информация, полученная в проекте, не разглашается третьим лицам.</div>
+        </div>
+        <div class="rule">
+            <span class="num">6.3</span>
+            <div class="text"><strong>Психологическая безопасность</strong> — Любой контент, способный нанести вред, <span class="red">строго запрещён</span>.</div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- БАННЕР -->
+    <!-- ============================================================ -->
+    <div class="banner">
+        <div class="text">
+            <span class="icon">🕶️</span>
+            <span><strong>Анонимность</strong> — мы не храним логи и не следим за вами.</span>
+        </div>
+        <span class="tag">#ZeroLogs #Privacy</span>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ФУТЕР -->
+    <!-- ============================================================ -->
     <footer class="footer">
-        <div class="container">
-            <div class="icon-row">
-                <span>⟁</span>
-                <span>📜</span>
-                <span>🛡️</span>
-                <span>🔐</span>
-                <span>🕶️</span>
-            </div>
-            <p>HW Pro Rules © 2025 — Свод правил проекта.</p>
-            <p style="font-size: 0.6rem; color: var(--text-muted); margin-top: 0.2rem;">Уважение. Анонимность. Безопасность.</p>
-            <div class="footer-links">
-                <a href="#">Политика анонимности</a>
-                <a href="#" id="footerRuleLink">О проекте</a>
-                <a href="#">Реестр HW_Sandbox · #2406</a>
-            </div>
+        <p>HW Pro Rules © 2025 — Все права защищены.</p>
+        <div>
+            <a href="#">Политика анонимности</a>
+            <a href="#">Реестр HW_Sandbox #2406</a>
+            <a href="#">Контакты</a>
         </div>
     </footer>
 
-    <!-- ===== МОДАЛКА ===== -->
-    <div id="rulesModal" class="modal-overlay">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h2>📜 О проекте HW Pro Rules</h2>
-                <button class="close-modal" id="closeModalBtn">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="rule-article">
-                    <h4>Статус проекта</h4>
-                    <p>HW Pro Rules — единый свод правил для всех платформ проекта HW Pro.</p>
-                    <p>Правила разработаны для обеспечения безопасности, анонимности и комфортного общения.</p>
-                </div>
-                <div class="rule-article">
-                    <h4>Принципы</h4>
-                    <p>1. Уважение к каждому участнику</p>
-                    <p>2. Полная анонимность</p>
-                    <p>3. Zero-Logs политика</p>
-                    <p>4. Белый хакинг</p>
-                    <p>5. Психологическая безопасность</p>
-                </div>
-                <div class="rule-article">
-                    <h4>Платформы</h4>
-                    <p>Правила распространяются на все платформы проекта: Lolka, Telegram, MAX, Twitch.</p>
-                </div>
-                <div class="legal-stamp">
-                    🕶️ HW Pro Rules — анонимность и уважение<br>
-                    📦 Зарегистрировано в HW_Sandbox (ID: HW-RULES-001)
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
 
-    <script>
-        // ============================================================
-        // 1. ИНТЕРАКТИВНАЯ МАТРИЦА
-        // ============================================================
-        (function() {
-            const canvas = document.getElementById('matrix-canvas');
-            const ctx = canvas.getContext('2d');
-
-            let width, height;
-            let columns = [];
-            let mouseX = 0;
-            let mouseY = 0;
-            const chars = '0123456789ABCDEF';
-
-            function resize() {
-                width = canvas.width = window.innerWidth;
-                height = canvas.height = window.innerHeight;
-                const fontSize = 16;
-                const colCount = Math.floor(width / fontSize);
-                columns = [];
-                for (let i = 0; i < colCount; i++) {
-                    columns.push({
-                        x: i * fontSize,
-                        y: Math.random() * height,
-                        speed: 0.5 + Math.random() * 1.2,
-                        length: 5 + Math.floor(Math.random() * 15),
-                    });
-                }
-            }
-
-            document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-            });
-
-            function drawMatrix() {
-                ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
-                ctx.fillRect(0, 0, width, height);
-
-                const fontSize = 16;
-                ctx.font = `${fontSize}px 'JetBrains Mono', monospace`;
-
-                columns.forEach(col => {
-                    const dx = mouseX - col.x;
-                    const dy = mouseY - col.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    const maxDist = 180;
-
-                    if (dist < maxDist && dist > 0) {
-                        col.speed = 0.8 + (1 - dist / maxDist) * 2.5;
-                    }
-
-                    col.y += col.speed;
-
-                    if (col.y > height) {
-                        col.y = -col.length * fontSize;
-                        col.speed = 0.5 + Math.random() * 1.2;
-                    }
-
-                    const charLen = col.length;
-                    for (let i = 0; i < charLen; i++) {
-                        const yPos = col.y - i * fontSize;
-                        if (yPos < 0 || yPos > height) continue;
-
-                        const char = chars[Math.floor(Math.random() * chars.length)];
-                        const brightness = 1 - (i / charLen);
-                        const alpha = 0.2 + brightness * 0.6;
-
-                        const gold = Math.floor(180 + 75 * brightness);
-                        ctx.fillStyle = `rgba(${gold}, ${Math.floor(160 + 95 * brightness)}, ${Math.floor(20 * brightness)}, ${alpha})`;
-                        ctx.fillText(char, col.x, yPos);
-                    }
-
-                    const headY = col.y;
-                    if (headY > 0 && headY < height) {
-                        const headChar = chars[Math.floor(Math.random() * chars.length)];
-                        ctx.fillStyle = `rgba(255, 215, 0, 0.9)`;
-                        ctx.shadowColor = 'rgba(255, 215, 0, 0.2)';
-                        ctx.shadowBlur = 10;
-                        ctx.fillText(headChar, col.x, headY);
-                        ctx.shadowBlur = 0;
-                    }
-                });
-
-                requestAnimationFrame(drawMatrix);
-            }
-
-            window.addEventListener('resize', resize);
-            resize();
-            drawMatrix();
-        })();
-
-        // ============================================================
-        // 2. ЗАСТАВКА
-        // ============================================================
-        (function() {
-            const bootScreen = document.getElementById('bootScreen');
-            setTimeout(() => {
-                bootScreen.classList.add('hidden');
-            }, 3000);
-        })();
-
-        // ============================================================
-        // 3. МОДАЛКА
-        // ============================================================
-        (function() {
-            const modal = document.getElementById('rulesModal');
-            const openBtns = document.querySelectorAll('#openRulesBtn, #footerRuleLink');
-            const closeBtn = document.getElementById('closeModalBtn');
-
-            function openModal() {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-
-            function closeModal() {
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-
-            openBtns.forEach(btn => {
-                if(btn) btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    openModal();
-                });
-            });
-
-            closeBtn.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeModal();
-            });
-
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && modal.classList.contains('active')) {
-                    closeModal();
-                }
-            });
-        })();
-
-        // ============================================================
-        // 4. АНИМАЦИЯ КАРТОЧЕК ПРАВИЛ
-        // ============================================================
-        (function() {
-            const sections = document.querySelectorAll('.rules-section');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.05 });
-
-            sections.forEach(section => {
-                section.style.opacity = '0';
-                section.style.transform = 'translateY(20px)';
-                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                observer.observe(section);
-            });
-        })();
-    </script>
 </body>
 </html>
