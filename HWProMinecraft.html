@@ -478,6 +478,220 @@
             font-weight: 700;
         }
 
+        /* ===== КАРТА МИРА ===== */
+        .map-section {
+            margin: 2.5rem 0;
+        }
+
+        .map-container {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 215, 0, 0.04);
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .map-header {
+            background: var(--bg-surface);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.04);
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .map-header .map-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-primary);
+        }
+
+        .map-header .map-title i {
+            color: var(--accent-gold);
+            font-size: 1rem;
+        }
+
+        .map-header .map-controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .map-header .map-controls a,
+        .map-header .map-controls button {
+            background: rgba(255, 215, 0, 0.04);
+            border: 1px solid rgba(255, 215, 0, 0.08);
+            color: var(--accent-gold);
+            padding: 5px 14px;
+            border-radius: 60px;
+            font-size: 0.65rem;
+            font-family: var(--font-mono);
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .map-header .map-controls a:hover,
+        .map-header .map-controls button:hover {
+            background: rgba(255, 215, 0, 0.1);
+            box-shadow: var(--glow-gold);
+        }
+
+        .map-frame-wrapper {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            background: #060606;
+            overflow: hidden;
+        }
+
+        .map-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            background: #060606;
+        }
+
+        /* Заглушка (fallback) */
+        .map-fallback {
+            position: absolute;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 2rem;
+            background: 
+                linear-gradient(135deg, rgba(255, 215, 0, 0.02), rgba(255, 0, 51, 0.02)),
+                repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255, 215, 0, 0.02) 20px, rgba(255, 215, 0, 0.02) 21px);
+            z-index: 5;
+        }
+
+        .map-fallback.visible {
+            display: flex;
+        }
+
+        .map-fallback .fallback-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.4;
+        }
+
+        .map-fallback h3 {
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .map-fallback p {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            max-width: 450px;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .map-fallback .fallback-link {
+            background: var(--accent-gold);
+            color: #000;
+            padding: 12px 32px;
+            border-radius: 60px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .map-fallback .fallback-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.2);
+        }
+
+        .map-fallback .fallback-note {
+            margin-top: 1rem;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        .map-footer {
+            background: var(--bg-surface);
+            border-top: 1px solid rgba(255, 215, 0, 0.04);
+            padding: 0.6rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+        }
+
+        .map-footer .coords {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .map-footer .coords span {
+            color: var(--accent-gold);
+        }
+
+        .map-loading {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1rem;
+            background: #060606;
+            z-index: 4;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        .map-loading.hidden {
+            opacity: 0;
+        }
+
+        .map-loading .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 215, 0, 0.1);
+            border-top-color: var(--accent-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .map-loading p {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
         /* ===== CARDS ===== */
         .card-grid {
             display: grid;
@@ -506,15 +720,9 @@
             margin-bottom: 0.8rem;
         }
 
-        .card .card-icon.red {
-            color: var(--accent-red);
-        }
-        .card .card-icon.green {
-            color: var(--accent-green);
-        }
-        .card .card-icon.purple {
-            color: var(--accent-purple);
-        }
+        .card .card-icon.red { color: var(--accent-red); }
+        .card .card-icon.green { color: var(--accent-green); }
+        .card .card-icon.purple { color: var(--accent-purple); }
 
         .card h3 {
             font-size: 1.2rem;
@@ -523,15 +731,9 @@
             font-family: var(--font-mono);
         }
 
-        .card h3 .gold {
-            color: var(--accent-gold);
-        }
-        .card h3 .red {
-            color: var(--accent-red);
-        }
-        .card h3 .green {
-            color: var(--accent-green);
-        }
+        .card h3 .gold { color: var(--accent-gold); }
+        .card h3 .red { color: var(--accent-red); }
+        .card h3 .green { color: var(--accent-green); }
 
         .card ul {
             padding-left: 1.2rem;
@@ -555,12 +757,30 @@
             font-family: var(--font-mono);
         }
 
-        .card li .highlight {
-            color: var(--accent-gold);
+        .card li .highlight { color: var(--accent-gold); }
+        .card li .red { color: var(--accent-red); }
+
+        /* ===== SECTION ===== */
+        .section {
+            padding: 2.5rem 0;
         }
-        .card li .red {
-            color: var(--accent-red);
+
+        .section-alt {
+            background: rgba(0, 0, 0, 0.2);
+            margin: 0 -20px;
+            padding: 2.5rem 20px;
         }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-family: var(--font-mono);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .section-title .gold { color: var(--accent-gold); }
+        .section-title .red { color: var(--accent-red); }
 
         /* ===== SERVER INFO ===== */
         .server-info {
@@ -927,12 +1147,17 @@
             .contact-links { flex-direction: column; align-items: center; }
             .contact-btn { width: 100%; max-width: 280px; justify-content: center; }
             .terminal-boot .ascii-art { font-size: 0.25rem; }
+            .map-frame-wrapper { height: 400px; }
+            .map-header { flex-direction: column; align-items: stretch; }
+            .map-header .map-controls { justify-content: center; }
         }
 
         @media (max-width: 480px) {
             .hero-title { font-size: 1.8rem; }
             .hero-subtitle { font-size: 0.9rem; }
             .section-title { font-size: 1.4rem; }
+            .map-frame-wrapper { height: 320px; }
+            .map-footer { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
@@ -977,11 +1202,11 @@
                 <ul class="nav-list">
                     <li><a href="#">Главная</a></li>
                     <li><a href="#" class="active">Minecraft</a></li>
+                    <li><a href="#map">Карта</a></li>
                     <li><a href="/HWProMinecraftHistory.html">История</a></li>
                     <li><a href="/portal.html">Портал</a></li>
                     <li><a href="/HW_Pro_Audio.html">Аудио</a></li>
                     <li><a href="/HW_Pro_Lab.html">Лаборатория</a></li>
-                    <li><a href="/HW_Pro_Infrastructure.html">Инфраструктура</a></li>
                     <li><a href="/HW_Porisk.html">Поиск</a></li>
                 </ul>
             </nav>
@@ -1044,11 +1269,81 @@
                 </div>
                 <div class="right">
                     <span class="slots"><i class="fas fa-users"></i> Игроков: <span>12/50</span></span>
-                    <a href="#connect" class="btn-secondary" style="padding:0.5rem 1.5rem;font-size:0.75rem;background:rgba(255,215,0,0.02);border:1px solid rgba(255,215,0,0.04);color:var(--text-secondary);border-radius:60px;text-decoration:none;font-family:var(--font-mono);display:inline-flex;align-items:center;gap:8px;">
-                        <i class="fas fa-rocket"></i> Играть
+                    <a href="#map" class="btn-secondary" style="padding:0.5rem 1.5rem;font-size:0.75rem;background:rgba(255,215,0,0.02);border:1px solid rgba(255,215,0,0.04);color:var(--text-secondary);border-radius:60px;text-decoration:none;font-family:var(--font-mono);display:inline-flex;align-items:center;gap:8px;">
+                        <i class="fas fa-map"></i> Карта мира
                     </a>
                 </div>
             </div>
+
+            <!-- ===== КАРТА МИРА ===== -->
+            <section class="map-section" id="map">
+                <h2 class="section-title"><span class="gold">Карта</span> <span class="red">мира</span></h2>
+
+                <div class="map-container">
+                    <div class="map-header">
+                        <div class="map-title">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <span>Интерактивная карта HW Pro Minecraft</span>
+                        </div>
+                        <div class="map-controls">
+                            <button id="refreshMap"><i class="fas fa-sync-alt"></i> Обновить</button>
+                            <a href="http://hwpro.good-mc.ru:18592/#world:187:62:193:84:0:0:0:1:flat" target="_blank" rel="noopener">
+                                <i class="fas fa-external-link-alt"></i> Открыть в новой вкладке
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="map-frame-wrapper">
+                        <!-- Загрузка -->
+                        <div class="map-loading" id="mapLoading">
+                            <div class="spinner"></div>
+                            <p>Загрузка карты мира...</p>
+                        </div>
+
+                        <!-- Iframe карты -->
+                        <iframe 
+                            id="mapFrame"
+                            class="map-iframe"
+                            src="http://hwpro.good-mc.ru:18592/#world:187:62:193:84:0:0:0:1:flat"
+                            title="Карта мира HW Pro Minecraft"
+                            allowfullscreen
+                            loading="lazy"
+                            referrerpolicy="no-referrer"
+                        ></iframe>
+
+                        <!-- Fallback если iframe не загрузился -->
+                        <div class="map-fallback" id="mapFallback">
+                            <div class="fallback-icon">🗺️</div>
+                            <h3>Карта временно недоступна</h3>
+                            <p>
+                                Не удалось загрузить карту напрямую в эту страницу. 
+                                Скорее всего, сервер карты блокирует встраивание из соображений безопасности. 
+                                Откройте карту в новой вкладке — там она работает.
+                            </p>
+                            <a href="http://hwpro.good-mc.ru:18592/#world:187:62:193:84:0:0:0:1:flat" 
+                               target="_blank" rel="noopener" class="fallback-link">
+                                <i class="fas fa-external-link-alt"></i> Открыть карту в новой вкладке
+                            </a>
+                            <div class="fallback-note">
+                                ⛏️ Координаты: X: 187 • Y: 62 • Z: 193 • Мир: overworld • Слой: flat
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="map-footer">
+                        <div class="coords">
+                            <span>📍 X: <span>187</span></span>
+                            <span>Y: <span>62</span></span>
+                            <span>Z: <span>193</span></span>
+                            <span>🌍 Мир: <span>overworld</span></span>
+                        </div>
+                        <div>
+                            <i class="fas fa-sync-alt" style="color:var(--accent-green);"></i>
+                            Обновляется в реальном времени
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             <!-- Server Info -->
             <section class="section" id="connect">
@@ -1057,11 +1352,11 @@
                 <div class="server-info">
                     <h3>⛏️ IP-адрес сервера</h3>
                     <div class="server-ip">
-                        <span id="serverIp">mc.hwpro.ru</span>
+                        <span id="serverIp">HWPro.good-mc.ru</span>
                         <button class="copy-btn" onclick="copyIP()"><i class="fas fa-copy"></i></button>
                     </div>
                     <div class="server-status">
-                        <span class="status-item"><span class="dot green"></span> Версия: 1.20.4</span>
+                        <span class="status-item"><span class="dot green"></span> Версия: 1.16.5-1.21.x</span>
                         <span class="status-item"><span class="dot gold"></span> Статус: RP-режим</span>
                         <span class="status-item"><i class="fas fa-shield-haltered" style="color:var(--accent-green);"></i> Анти-чит: активен</span>
                     </div>
@@ -1383,6 +1678,75 @@
         })();
 
         // ============================================================
+        // КАРТА МИРА — ПРОВЕРКА ЗАГРУЗКИ + FALLBACK
+        // ============================================================
+        (function() {
+            const mapFrame = document.getElementById('mapFrame');
+            const mapLoading = document.getElementById('mapLoading');
+            const mapFallback = document.getElementById('mapFallback');
+            const refreshBtn = document.getElementById('refreshMap');
+            const MAP_URL = 'http://hwpro.good-mc.ru:18592/#world:187:62:193:84:0:0:0:1:flat';
+            let loaded = false;
+
+            // Скрываем загрузку при успешной загрузке iframe
+            mapFrame.addEventListener('load', () => {
+                loaded = true;
+                setTimeout(() => {
+                    mapLoading.classList.add('hidden');
+                }, 500);
+            });
+
+            // Если iframe не загрузился за 8 секунд — показываем fallback
+            setTimeout(() => {
+                if (!loaded) {
+                    mapLoading.classList.add('hidden');
+                    mapFallback.classList.add('visible');
+                }
+            }, 8000);
+
+            // Обработка ошибки загрузки
+            mapFrame.addEventListener('error', () => {
+                mapLoading.classList.add('hidden');
+                mapFallback.classList.add('visible');
+            });
+
+            // Проверка на доступность через fetch (может не сработать из-за CORS)
+            async function checkMapAvailability() {
+                try {
+                    await fetch(MAP_URL, { method: 'HEAD', mode: 'no-cors' });
+                    // no-cors не даёт реального ответа, но если не выбросило — вероятно доступен
+                } catch (e) {
+                    // Игнорируем — просто ждём таймаут
+                }
+            }
+            checkMapAvailability();
+
+            // Кнопка обновления карты
+            refreshBtn.addEventListener('click', () => {
+                loaded = false;
+                mapFallback.classList.remove('visible');
+                mapLoading.classList.remove('hidden');
+                mapFrame.src = MAP_URL;
+
+                // Если через 8 секунд не загрузилось — показываем fallback
+                setTimeout(() => {
+                    if (!loaded) {
+                        mapLoading.classList.add('hidden');
+                        mapFallback.classList.add('visible');
+                    }
+                }, 8000);
+            });
+
+            // Слушаем сообщения от iframe (если карта попытается сообщить об ошибке)
+            window.addEventListener('message', (e) => {
+                if (e.data && e.data.type === 'map-error') {
+                    mapLoading.classList.add('hidden');
+                    mapFallback.classList.add('visible');
+                }
+            });
+        })();
+
+        // ============================================================
         // КОПИРОВАНИЕ IP
         // ============================================================
         function copyIP() {
@@ -1402,7 +1766,7 @@
         // АНИМАЦИЯ КАРТОЧЕК
         // ============================================================
         (function() {
-            const cards = document.querySelectorAll('.card, .mc-banner, .security-banner, .terminal-banner, .contact-section, .server-info, .timeline-item');
+            const cards = document.querySelectorAll('.card, .mc-banner, .security-banner, .terminal-banner, .contact-section, .server-info, .timeline-item, .map-container');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1424,10 +1788,15 @@
         // ============================================================
         // ПЛАВНЫЙ СКРОЛЛ
         // ============================================================
-        document.querySelectorAll('a[href="#connect"]').forEach(link => {
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
             link.addEventListener('click', (e) => {
-                e.preventDefault();
-                document.querySelector('#connect').scrollIntoView({ behavior: 'smooth' });
+                const href = link.getAttribute('href');
+                if (href === '#') return;
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
             });
         });
     </script>
