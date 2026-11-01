@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HW LAUNCHER // мини-браузер</title>
+<style>
+:root{
+  --bg:#05070a;
+  --bg-2:#0a0e14;
+  --panel:#0d1219;
+  --panel-2:#111823;
+  --line:#1b2532;
+  --text:#c9d4e2;
+  --muted:#5f6d80;
+  --accent:#00ff88;
+  --accent-2:#00c8ff;
+  --danger:#ff3b5c;
+  --mono:"JetBrains Mono","Fira Code","SF Mono",Consolas,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(0,255,136,.07), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(0,200,255,.06), transparent 60%),
+    var(--bg);
+  color:var(--text);
+  font-family:var(--mono);
+  overflow:hidden;
+  display:flex;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px);
+  opacity:.25;mix-blend-mode:overlay;
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+  width:280px;flex-shrink:0;background:linear-gradient(180deg,var(--panel),var(--bg-2));
+  border-right:1px solid var(--line);display:flex;flex-direction:column;
+}
+.brand{padding:16px 18px;border-bottom:1px solid var(--line)}
+.brand .glitch{
+  font-weight:800;font-size:15px;letter-spacing:1px;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.brand .sub{font-size:10px;color:var(--muted);letter-spacing:2px;margin-top:2px}
+.status{
+  display:flex;align-items:center;gap:8px;padding:8px 18px;
+  font-size:10px;color:var(--muted);border-bottom:1px solid var(--line);
+  letter-spacing:1px;
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 8px var(--accent);animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+.search-box{padding:12px}
+.search-box input{
+  width:100%;background:var(--bg);border:1px solid var(--line);
+  color:var(--text);padding:9px 12px;border-radius:6px;
+  font-family:var(--mono);font-size:12px;outline:none;
+}
+.search-box input:focus{border-color:var(--accent);box-shadow:0 0 0 2px rgba(0,255,136,.12)}
+.search-box input::placeholder{color:var(--muted)}
+
+.nav{flex:1;overflow-y:auto;padding:0 10px 12px}
+.nav::-webkit-scrollbar{width:6px}
+.nav::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+
+.nav-title{
+  font-size:10px;letter-spacing:2px;color:var(--muted);
+  padding:14px 8px 6px;text-transform:uppercase;
+}
+.nav-item{
+  width:100%;text-align:left;background:transparent;border:1px solid transparent;
+  color:var(--text);padding:8px 10px;border-radius:6px;cursor:pointer;
+  font-family:var(--mono);font-size:12.5px;display:flex;align-items:center;gap:9px;
+  transition:.15s;
+}
+.nav-item:hover{background:var(--panel-2);border-color:var(--line)}
+.nav-item.active{background:rgba(0,255,136,.08);border-color:var(--accent);color:var(--accent)}
+.nav-item .em{font-size:14px}
+.nav-item .tag{margin-left:auto;font-size:9px;color:var(--muted);letter-spacing:1px}
+
+.footer{padding:12px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+.btn-add{
+  width:100%;padding:9px;background:transparent;color:var(--accent);
+  border:1px dashed var(--accent);border-radius:6px;cursor:pointer;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:1px;
+}
+.btn-add:hover{background:rgba(0,255,136,.08)}
+
+/* ---------- MAIN ---------- */
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+
+/* Browser chrome */
+.chrome{
+  display:flex;align-items:center;gap:6px;padding:8px 10px;
+  background:var(--panel);border-bottom:1px solid var(--line);
+}
+.chrome button{
+  background:var(--bg-2);border:1px solid var(--line);color:var(--text);
+  width:32px;height:32px;border-radius:6px;cursor:pointer;font-size:14px;
+  font-family:var(--mono);transition:.15s;flex-shrink:0;
+}
+.chrome button:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.chrome button:disabled{opacity:.35;cursor:not-allowed}
+
+.url-wrap{
+  flex:1;display:flex;align-items:center;gap:8px;background:var(--bg);
+  border:1px solid var(--line);border-radius:6px;padding:0 10px;height:32px;
+  transition:.15s;min-width:0;
+}
+.url-wrap:focus-within{border-color:var(--accent);box-shadow:0 0 0 2px rgba(0,255,136,.12)}
+.url-wrap .proto{color:var(--accent);font-size:11px;flex-shrink:0}
+.url-wrap input{
+  flex:1;background:transparent;border:none;outline:none;color:var(--text);
+  font-family:var(--mono);font-size:12.5px;min-width:0;
+}
+.url-wrap .secure{
+  font-size:10px;color:var(--accent);flex-shrink:0;opacity:.8;
+}
+
+.tabs{
+  display:flex;gap:4px;overflow-x:auto;padding:6px 8px;
+  background:var(--bg-2);border-bottom:1px solid var(--line);
+  min-height:36px;align-items:center;
+}
+.tabs::-webkit-scrollbar{height:0}
+.tab{
+  padding:6px 10px;background:var(--panel);border:1px solid var(--line);
+  color:var(--muted);cursor:pointer;border-radius:6px;white-space:nowrap;
+  font-family:var(--mono);font-size:11px;display:flex;align-items:center;gap:8px;
+  max-width:220px;
+}
+.tab span.title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:160px}
+.tab.active{color:var(--accent);border-color:var(--accent);background:rgba(0,255,136,.06)}
+.tab .close{opacity:.5;font-size:10px}
+.tab .close:hover{opacity:1;color:var(--danger)}
+
+/* ---------- CONTENT ---------- */
+.content{flex:1;position:relative;background:var(--bg)}
+iframe{
+  width:100%;height:100%;border:none;display:none;background:#fff;
+}
+iframe.active{display:block}
+
+/* ---------- WELCOME / ТЕРМИНАЛ ---------- */
+.welcome{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:30px;gap:16px;text-align:center;
+  overflow-y:auto;
+}
+.welcome.hidden{display:none}
+.welcome h1{
+  font-size:clamp(26px,4vw,42px);font-weight:800;letter-spacing:1px;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.welcome .lead{color:var(--muted);font-size:13px;max-width:560px;line-height:1.7}
+.badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:6px}
+.badge{
+  font-size:10px;letter-spacing:1px;color:var(--accent);
+  border:1px solid rgba(0,255,136,.35);padding:5px 10px;border-radius:20px;
+  background:rgba(0,255,136,.05);
+}
+
+.terminal{
+  width:min(720px,100%);background:#02060b;border:1px solid var(--line);
+  border-radius:8px;padding:14px 16px;text-align:left;font-size:12px;
+  line-height:1.9;box-shadow:0 0 40px rgba(0,255,136,.06);
+}
+.terminal .head{color:var(--muted);font-size:10px;letter-spacing:2px;margin-bottom:8px;
+  display:flex;justify-content:space-between;border-bottom:1px dashed var(--line);padding-bottom:6px}
+.terminal .p{color:var(--accent)}
+.terminal .ok{color:var(--accent)}
+.terminal .warn{color:#ffcc00}
+.terminal .dim{color:var(--muted)}
+.cursor{display:inline-block;width:8px;height:14px;background:var(--accent);
+  animation:blink 1s steps(1) infinite;vertical-align:middle;margin-left:2px}
+@keyframes blink{50%{opacity:0}}
+
+.hint-note{
+  margin-top:4px;font-size:10.5px;color:var(--muted);max-width:640px;line-height:1.6;
+  border-left:2px solid var(--danger);padding:8px 12px;background:rgba(255,59,92,.05);
+  border-radius:0 6px 6px 0;text-align:left;
+}
+.hint-note b{color:#ff8098}
+.hint-note code{color:var(--accent);background:rgba(0,255,136,.08);padding:1px 5px;border-radius:3px}
+
+/* Индикатор загрузки */
+.loader{
+  position:absolute;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  width:0;transition:width .3s;z-index:100;
+  box-shadow:0 0 8px var(--accent);
+}
+.loader.active{animation:load 2s ease-in-out infinite}
+@keyframes load{0%{width:0;opacity:1}70%{width:90%;opacity:1}100%{width:100%;opacity:0}}
+</style>
+</head>
+<body>
+
+<!-- ============ SIDEBAR ============ -->
+<aside class="sidebar">
+  <div class="brand">
+    <div class="glitch">HW LAUNCHER</div>
+    <div class="sub">// MINI-BROWSER v1.0</div>
+  </div>
+  <div class="status">
+    <span class="dot"></span> ZERO-LOGS • IFRAME SANDBOX
+  </div>
+
+  <div class="search-box">
+    <input id="search" type="text" placeholder="> поиск сервиса...">
+  </div>
+
+  <nav class="nav" id="nav">
+    <div class="nav-section">
+      <div class="nav-title">// Таблицы</div>
+      <button class="nav-item" data-url="https://docs.yandex.ru/docs" data-name="Яндекс Таблицы">
+        <span class="em">🔴</span> Яндекс Таблицы <span class="tag">Y</span>
+      </button>
+      <button class="nav-item" data-url="https://docs.google.com/spreadsheets/u/0/" data-name="Google Sheets">
+        <span class="em">🟢</span> Google Sheets <span class="tag">G</span>
+      </button>
+      <button class="nav-item" data-url="https://ethercalc.net/" data-name="EtherCalc">
+        <span class="em">📊</span> EtherCalc <span class="tag">IFR</span>
+      </button>
+      <button class="nav-item" data-url="https://www.office.com/" data-name="Office Online">
+        <span class="em">🟩</span> Office Online <span class="tag">MS</span>
+      </button>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-title">// Документы</div>
+      <button class="nav-item" data-url="https://docs.yandex.ru/docs" data-name="Яндекс Документы">
+        <span class="em">📃</span> Яндекс Документы <span class="tag">Y</span>
+      </button>
+      <button class="nav-item" data-url="https://docs.google.com/document/u/0/" data-name="Google Docs">
+        <span class="em">📝</span> Google Docs <span class="tag">G</span>
+      </button>
+      <button class="nav-item" data-url="https://cryptpad.fr/" data-name="CryptPad">
+        <span class="em">🔐</span> CryptPad <span class="tag">ENC</span>
+      </button>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-title">// Конвертеры</div>
+      <button class="nav-item" data-url="https://convertio.co/ru/" data-name="Convertio">
+        <span class="em">🔄</span> Convertio
+      </button>
+      <button class="nav-item" data-url="https://www.ilovepdf.com/ru" data-name="iLovePDF">
+        <span class="em">📑</span> iLovePDF
+      </button>
+      <button class="nav-item" data-url="https://cloudconvert.com/" data-name="CloudConvert">
+        <span class="em">☁️</span> CloudConvert
+      </button>
+      <button class="nav-item" data-url="https://smallpdf.com/ru" data-name="Smallpdf">
+        <span class="em">📐</span> Smallpdf
+      </button>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-title">// Утилиты</div>
+      <button class="nav-item" data-url="https://www.remove.bg/ru" data-name="Remove.bg">
+        <span class="em">✂️</span> Remove.bg
+      </button>
+      <button class="nav-item" data-url="https://www.deepl.com/translator" data-name="DeepL">
+        <span class="em">🌐</span> DeepL
+      </button>
+      <button class="nav-item" data-url="https://excalidraw.com/" data-name="Excalidraw">
+        <span class="em">✏️</span> Excalidraw
+      </button>
+      <button class="nav-item" data-url="https://draw.io/" data-name="diagrams.net">
+        <span class="em">📈</span> draw.io
+      </button>
+    </div>
+  </nav>
+
+  <div class="footer">
+    <button class="btn-add" id="addCustom">+ ДОБАВИТЬ САЙТ</button>
+  </div>
+</aside>
+
+<!-- ============ MAIN ============ -->
+<main class="main">
+
+  <!-- Browser chrome: кнопки + адресная строка -->
+  <div class="chrome">
+    <button id="backBtn"    title="Назад"       disabled>←</button>
+    <button id="forwardBtn" title="Вперёд"      disabled>→</button>
+    <button id="reloadBtn"  title="Перезагрузить">↻</button>
+    <div class="url-wrap">
+      <span class="proto">https://</span>
+      <input id="urlInput" type="text" placeholder="введите адрес или поиск..." spellcheck="false">
+      <span class="secure" id="secureIcon">🔒</span>
+    </div>
+    <button id="externalBtn" title="Открыть в новой вкладке">↗</button>
+  </div>
+
+  <!-- Вкладки -->
+  <div class="tabs" id="tabs"></div>
+
+  <!-- Контент -->
+  <div class="content">
+    <div class="loader" id="loader"></div>
+
+    <div class="welcome" id="welcome">
+      <h1>HW LAUNCHER</h1>
+      <p class="lead">
+        Мини-браузер для работы с таблицами, документами, конвертерами
+        и веб-утилитами. Всё в одном окне — без лишних вкладок в системе.
+      </p>
+
+      <div class="badges">
+        <span class="badge">0 ЛОГОВ</span>
+        <span class="badge">БЕЗ ТРЕКЕРОВ</span>
+        <span class="badge">ЛОКАЛЬНАЯ ИСТОРИЯ</span>
+        <span class="badge">IFRAME SANDBOX</span>
+      </div>
+
+      <div class="terminal">
+        <div class="head"><span>root@hw-launcher:~$</span><span>tty0</span></div>
+        <div><span class="p">root@hw-launcher:~$</span> ./browser --init</div>
+        <div><span class="dim">&gt; Инициализация мини-браузера...</span></div>
+        <div><span class="ok">✓</span> Адресная строка: активна</div>
+        <div><span class="ok">✓</span> История навигации: подключена</div>
+        <div><span class="ok">✓</span> Вкладки: движок запущен</div>
+        <div><span class="ok">✓</span> Менеджер закладок: загружен</div>
+        <div><span class="warn">⚠</span> Часть сайтов блокирует iframe — откроется через «↗»</div>
+        <div><span class="ok">✓</span> Статус: <b class="ok">READY</b></div>
+        <div><span class="p">root@hw-launcher:~$</span> <span class="cursor"></span></div>
+      </div>
+
+      <div class="hint-note">
+        <b>Про iframe:</b> Google Docs/Sheets, Яндекс и Microsoft 365 физически
+        запрещают встраивание (заголовок <code>X-Frame-Options: DENY</code> — защита
+        от кликджекинга). Обойти это из браузера нельзя. Используйте кнопку «↗» —
+        откроется в новой вкладке. EtherCalc, CryptPad, Convertio, Excalidraw и
+        большинство конвертеров работают <b>внутри</b> мини-браузера.
+      </div>
+    </div>
+
+    <iframe id="frame"
+      sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-downloads allow-popups-to-escape-sandbox allow-modals"
+      referrerpolicy="no-referrer"></iframe>
+  </div>
+</main>
+
+<script>
+/* ============================================================
+   HW LAUNCHER — мини-браузер
+   ============================================================ */
+const frame      = document.getElementById('frame');
+const welcome    = document.getElementById('welcome');
+const tabsEl     = document.getElementById('tabs');
+const nav        = document.getElementById('nav');
+const searchInp  = document.getElementById('search');
+const urlInput   = document.getElementById('urlInput');
+const backBtn    = document.getElementById('backBtn');
+const forwardBtn = document.getElementById('forwardBtn');
+const reloadBtn  = document.getElementById('reloadBtn');
+const externalBtn= document.getElementById('externalBtn');
+const secureIcon = document.getElementById('secureIcon');
+const loader     = document.getElementById('loader');
+
+const STORAGE_CUSTOM = 'hwlauncher_custom_sites';
+const STORAGE_HISTORY = 'hwlauncher_history';
+
+/* ---------- КАСТОМНЫЕ САЙТЫ (localStorage) ---------- */
+function loadCustomSites(){
+  try { return JSON.parse(localStorage.getItem(STORAGE_CUSTOM)) || []; }
+  catch { return []; }
+}
+function saveCustomSites(list){
+  localStorage.setItem(STORAGE_CUSTOM, JSON.stringify(list));
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c =>
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ---------- ВКЛАДКИ ---------- */
+let tabs = [];           // {id, name, url, history:[], idx}
+let activeTabId = null;
+
+function newTab(name = 'Новая вкладка', url = null){
+  const tab = {
+    id: 't' + Date.now() + Math.random().toString(36).slice(2,6),
+    name,
+    url: url || 'about:blank',
+    history: url ? [url] : [],
+    idx: url ? 0 : -1
+  };
+  tabs.push(tab);
+  activeTabId = tab.id;
+  renderTabs();
+  if(url) navigate(url, name);
+  else    showWelcome();
+  return tab;
+}
+
+function getActiveTab(){
+  return tabs.find(t => t.id === activeTabId);
+}
+
+function closeTab(id){
+  const i = tabs.findIndex(t => t.id === id);
+  if(i === -1) return;
+  tabs.splice(i, 1);
+  if(activeTabId === id){
+    if(tabs.length){
+      activeTabId = tabs[tabs.length - 1].id;
+      const t = getActiveTab();
+      if(t.url && t.url !== 'about:blank') navigate(t.url, t.name, false);
+      else showWelcome();
+    } else {
+      activeTabId = null;
+      showWelcome();
+    }
+  }
+  renderTabs();
+}
+
+function renderTabs(){
+  tabsEl.innerHTML = '';
+  tabs.forEach(t => {
+    const el = document.createElement('div');
+    el.className = 'tab' + (t.id === activeTabId ? ' active' : '');
+    el.innerHTML = `<span class="title">${escapeHtml(t.name)}</span>
+                    <span class="close" title="Закрыть">✕</span>`;
+    el.onclick = (e) => {
+      if(e.target.classList.contains('close')){
+        e.stopPropagation();
+        closeTab(t.id);
+        return;
+      }
+      activeTabId = t.id;
+      renderTabs();
+      if(t.url && t.url !== 'about:blank'){
+        frame.src = t.url;
+        frame.classList.add('active');
+        welcome.classList.add('hidden');
+        syncChrome();
+      } else {
+        showWelcome();
+      }
+    };
+    tabsEl.appendChild(el);
+  });
+}
+
+/* ---------- НАВИГАЦИЯ ---------- */
+function normalizeUrl(input){
+  let s = input.trim();
+  if(!s) return null;
+  if(/^about:/.test(s)) return s;
+  // похоже на поисковый запрос?
+  if(!/^https?:\/\//i.test(s) && !/^[\w-]+\.[\w.-]+/.test(s)){
+    return 'https://duckduckgo.com/?q=' + encodeURIComponent(s);
+  }
+  if(!/^https?:\/\//i.test(s)) s = 'https://' + s;
+  return s;
+}
+
+function navigate(url, name, addToHistory = true){
+  const tab = getActiveTab();
+  if(!tab) { newTab(name, url); return; }
+
+  if(addToHistory){
+    // обрезаем forward-историю
+    tab.history = tab.history.slice(0, tab.idx + 1);
+    tab.history.push(url);
+    tab.idx = tab.history.length - 1;
+  }
+  tab.url = url;
+  if(name) tab.name = name;
+  else {
+    try { tab.name = new URL(url).hostname.replace(/^www\./,''); }
+    catch { tab.name = url.slice(0,30); }
+  }
+
+  urlInput.value = url;
+  frame.src = url;
+  frame.classList.add('active');
+  welcome.classList.add('hidden');
+  loader.classList.add('active');
+  setTimeout(()=>loader.classList.remove('active'), 1500);
+
+  renderTabs();
+  syncChrome();
+  highlightNav(url);
+
+  // история просмотров (локально)
+  pushHistory(url, tab.name);
+}
+
+function syncChrome(){
+  const tab = getActiveTab();
+  if(!tab){ backBtn.disabled = true; forwardBtn.disabled = true; return; }
+  backBtn.disabled    = tab.idx <= 0;
+  forwardBtn.disabled = tab.idx >= tab.history.length - 1;
+}
+
+function showWelcome(){
+  welcome.classList.remove('hidden');
+  frame.classList.remove('active');
+  frame.src = 'about:blank';
+  urlInput.value = '';
+  backBtn.disabled = true;
+  forwardBtn.disabled = true;
+  highlightNav('');
+  renderTabs();
+}
+
+/* ---------- КНОПКИ БРАУЗЕРА ---------- */
+backBtn.onclick = () => {
+  const tab = getActiveTab();
+  if(!tab || tab.idx <= 0) return;
+  tab.idx--;
+  tab.url = tab.history[tab.idx];
+  urlInput.value = tab.url;
+  frame.src = tab.url;
+  try { tab.name = new URL(tab.url).hostname; } catch {}
+  renderTabs(); syncChrome(); highlightNav(tab.url);
+};
+
+forwardBtn.onclick = () => {
+  const tab = getActiveTab();
+  if(!tab || tab.idx >= tab.history.length - 1) return;
+  tab.idx++;
+  tab.url = tab.history[tab.idx];
+  urlInput.value = tab.url;
+  frame.src = tab.url;
+  try { tab.name = new URL(tab.url).hostname; } catch {}
+  renderTabs(); syncChrome(); highlightNav(tab.url);
+};
+
+reloadBtn.onclick = () => {
+  const tab = getActiveTab();
+  if(!tab || !tab.url || tab.url === 'about:blank') return;
+  frame.src = tab.url;
+  loader.classList.add('active');
+  setTimeout(()=>loader.classList.remove('active'), 1200);
+};
+
+externalBtn.onclick = () => {
+  const tab = getActiveTab();
+  if(tab && tab.url && tab.url !== 'about:blank') window.open(tab.url, '_blank', 'noopener');
+};
+
+/* ---------- АДРЕСНАЯ СТРОКА ---------- */
+urlInput.addEventListener('keydown', e => {
+  if(e.key === 'Enter'){
+    const url = normalizeUrl(urlInput.value);
+    if(url) navigate(url);
+  }
+});
+urlInput.addEventListener('focus', () => urlInput.select());
+
+/* ---------- ПРИВЯЗКА СЕРВИСОВ ИЗ САЙДБАРА ---------- */
+function bindNavItems(){
+  document.querySelectorAll('.nav-item').forEach(btn => {
+    btn.onclick = (e) => {
+      if(e.target.classList.contains('tag') && e.target.textContent === '✕') return;
+      const url  = btn.dataset.url;
+      const name = btn.dataset.name || btn.textContent.trim();
+      navigate(url, name);
+    };
+  });
+}
+
+function highlightNav(url){
+  document.querySelectorAll('.nav-item').forEach(b => {
+    b.classList.toggle('active', b.dataset.url === url);
+  });
+}
+
+/* ---------- КАСТОМНЫЕ САЙТЫ ---------- */
+function renderCustomSites(){
+  document.querySelectorAll('.custom-section').forEach(el => el.remove());
+  const sites = loadCustomSites();
+  if(!sites.length) return;
+
+  const section = document.createElement('div');
+  section.className = 'nav-section custom-section';
+  section.innerHTML = '<div class="nav-title">// Мои сайты</div>';
+
+  sites.forEach(site => {
+    const btn = document.createElement('button');
+    btn.className = 'nav-item';
+    btn.dataset.url  = site.url;
+    btn.dataset.name = site.name;
+    btn.innerHTML = `<span class="em">🔗</span> ${escapeHtml(site.name)}
+      <span class="tag" style="color:var(--danger);cursor:pointer" title="Удалить">✕</span>`;
+    btn.querySelector('.tag').addEventListener('click', e => {
+      e.stopPropagation();
+      saveCustomSites(loadCustomSites().filter(s => s.url !== site.url));
+      renderCustomSites();
+      bindNavItems();
+    });
+    section.appendChild(btn);
+  });
+
+  nav.appendChild(section);
+  bindNavItems();
+}
+
+document.getElementById('addCustom').onclick = () => {
+  let url = prompt('URL сайта (например, example.com):');
+  if(!url) return;
+  url = normalizeUrl(url);
+  if(!url) return;
+
+  let name;
+  try { name = prompt('Название:', new URL(url).hostname) || new URL(url).hostname; }
+  catch { alert('Некорректный URL'); return; }
+
+  const list = loadCustomSites();
+  if(!list.find(s => s.url === url)){
+    list.push({ name, url });
+    saveCustomSites(list);
+    renderCustomSites();
+  }
+  navigate(url, name);
+};
+
+/* ---------- ПОИСК ПО СЕРВИСАМ ---------- */
+searchInp.addEventListener('input', () => {
+  const q = searchInp.value.toLowerCase().trim();
+  document.querySelectorAll('.nav-item').forEach(b => {
+    b.style.display = (!q || b.textContent.toLowerCase().includes(q)) ? '' : 'none';
+  });
+  document.querySelectorAll('.nav-section').forEach(sec => {
+    const visible = [...sec.querySelectorAll('.nav-item')]
+      .some(b => b.style.display !== 'none');
+    sec.style.display = visible ? '' : 'none';
+  });
+});
+
+/* ---------- ЛОКАЛЬНАЯ ИСТОРИЯ ---------- */
+function pushHistory(url, name){
+  try{
+    const arr = JSON.parse(localStorage.getItem(STORAGE_HISTORY)) || [];
+    if(arr[0] && arr[0].url === url) return;
+    arr.unshift({url, name, ts: Date.now()});
+    localStorage.setItem(STORAGE_HISTORY, JSON.stringify(arr.slice(0, 200)));
+  }catch{}
+}
+
+/* ---------- ОБРАБОТКА ОШИБОК IFRAME (X-Frame-Options) ---------- */
+frame.addEventListener('error', () => {
+  loader.classList.remove('active');
+});
+
+/* ---------- ГОРЯЧИЕ КЛАВИШИ ---------- */
+document.addEventListener('keydown', e => {
+  if((e.ctrlKey || e.metaKey) && e.key === 'l'){
+    e.preventDefault();
+    urlInput.focus();
+  }
+  if((e.ctrlKey || e.metaKey) && e.key === 't'){
+    e.preventDefault();
+    newTab();
+  }
+  if((e.ctrlKey || e.metaKey) && e.key === 'w'){
+    e.preventDefault();
+    if(activeTabId) closeTab(activeTabId);
+  }
+  if((e.ctrlKey || e.metaKey) && e.key === 'r'){
+    e.preventDefault();
+    reloadBtn.click();
+  }
+});
+
+/* ---------- ИНИЦИАЛИЗАЦИЯ ---------- */
+bindNavItems();
+renderCustomSites();
+newTab('Новая вкладка');
+</script>
+</body>
+</html>
